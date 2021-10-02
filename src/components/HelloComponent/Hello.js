@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/Hello.css';
+import './style.css';
 import HelloList from './HelloList';
 import HelloForm from '../form/HelloForm';
 import { useSelector, useDispatch } from 'react-redux';

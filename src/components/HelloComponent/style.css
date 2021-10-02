@@ -1,0 +1,5 @@
+/* Hello list */
+ul.hello-list > li {
+    transition: background-color 0.6s ease-in-out;
+    cursor: pointer;
+}

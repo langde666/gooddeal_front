@@ -1,0 +1,141 @@
+:root {
+    --header-height: 80px;
+}
+
+.form-control:focus,
+.btn:focus,
+.btn-close:focus {
+    box-shadow: none;
+}
+
+/* Ripple effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+.ripple:after {
+    content: "";
+    background: rgba(255, 255, 255, 0.3);
+    display: block;
+    position: absolute;
+    left: 50%;
+    border-radius: 50%;
+    padding-top: 240%;
+    padding-left: 240%;
+    margin-top: -120%;
+    margin-left: -120%;
+    opacity: 0;
+    transition: all 1.2s ease;
+}
+
+.ripple:active::after {
+    padding-top: 0;
+    padding-left: 0;
+    margin-top: 0;
+    margin-left: 0;
+    opacity: 1;
+    transition: 0s;
+}
+
+/* cus-input-group */
+.cus-input-group {
+    position: relative;
+    margin-top: 24px;
+    min-height: 46px;
+}
+
+.cus-input-group-input {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+}
+
+.cus-input-group-label {
+    position: absolute;
+    color: #6c757d;
+    pointer-events: none;
+    left: 22px;
+    top: 6px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.cus-input-group-input:focus ~ .cus-input-group-label {
+    top: -16px;
+    color: #0d6efd;
+    font-size: 0.8rem;
+}
+
+.cus-input-group-input:valid ~ .cus-input-group-label {
+    top: -16px;
+    font-size: 0.8rem;
+}
+
+.cus-input-group-bar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.cus-input-group-bar::before {
+    content: "";
+    height: 1.6px;
+    width: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: #0d6efd;
+    transition: all 0.3s ease-in-out;
+    left: 0%;
+}
+
+.cus-input-group-input:focus ~ .cus-input-group-bar::before,
+.cus-input-group-input:valid ~ .cus-input-group-bar::before {
+    width: 100%;
+}
+
+.cus-input-group-input--password {
+    padding-right: 60px;
+}
+
+.cus-input-group i.show-hide-password {
+    position: absolute;
+    bottom: 16px;
+    right: 30px;
+    padding: 1px;
+    cursor: pointer;
+}
+
+/* z-index */
+.fixed-top {
+    z-index: 3;
+}
+
+/* modal */
+.modal-backdrop {
+    display: none;
+}
+
+.cus-modal-dialog {
+    z-index: 5;
+}
+
+.cus-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: none;
+}
+
+.cus-modal.show ~ .cus-modal-backdrop {
+    opacity: 0.5;
+    display: unset;
+}
+
+.cus-modal-dialog .modal-footer {
+    border-top: 0;
+}

@@ -1,11 +1,15 @@
 import React from 'react';
-import Hello from '../components/core/Hello';
+import MainLayout from '../components/layout/MainLayout';
+import Hello from '../components/HelloComponent/Hello';
 
 const HomePage = () => {
     return (
-        <div className="home-page">
+        <MainLayout className="home-page">
             <Hello />
-        </div>
+            <Hello />
+            <Hello />
+            <Hello />
+        </MainLayout>
     );
 };
 
