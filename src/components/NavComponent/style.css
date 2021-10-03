@@ -7,32 +7,41 @@ header {
 }
 
 /* Logo */
-@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 .logo {
     text-transform: uppercase;
     font-size: 32px;
-    font-family: "Luckiest Guy", cursive;
+    font-family: 'Luckiest Guy', cursive;
+    min-width: var(--logo-width);
 }
 
 /* Search bar */
 .search-bar {
-    max-width: 600px;
+    max-width: var(--search-bar-width);
 }
 
-.search-bar button:hover,
-.sign-up > button:hover {
+.search-bar button:hover {
     background-color: unset !important;
 }
 
 .search-bar input.form-control {
-    width: 360px;
+    width: calc(var(--search-bar-width) * 2 / 4);
 }
 
 .search-bar select.form-select {
-    min-width: 110px;
+    max-width: calc(var(--search-bar-width) * 1 / 4);
     cursor: pointer;
 }
 
 .search-bar select.form-select:focus {
     box-shadow: unset;
+}
+
+/* sign-in-item */
+.sign-in-item {
+    cursor: pointer;
+}
+
+.sign-in-item.btn-outline-light:hover {
+    color: var(--primary-color);
 }

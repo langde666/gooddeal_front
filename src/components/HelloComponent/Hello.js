@@ -7,8 +7,8 @@ import { addNewHello, setActiveHello } from '../../actions/hello';
 import faker from 'faker';
 
 const Hello = (props) => {
-    const helloList = useSelector(state => state.hello.list);
-    const activeId = useSelector(state => state.hello.activeId);
+    const helloList = useSelector((state) => state.hello.list);
+    const activeId = useSelector((state) => state.hello.activeId);
 
     const dispatch = useDispatch();
 
@@ -16,22 +16,20 @@ const Hello = (props) => {
         const newhello = {
             id: faker.datatype.uuid(),
             content: helloContent,
-        }
+        };
 
         const action = addNewHello(newhello);
         dispatch(action);
-    }
+    };
 
     const handleActiveHello = (hello) => {
         const action = setActiveHello(hello);
         dispatch(action);
-    }
+    };
 
     return (
         <div className="hello">
-            <HelloForm
-                onSubmit={handleAddHello}
-            />
+            <HelloForm onSubmit={handleAddHello} />
 
             <HelloList
                 helloList={helloList}

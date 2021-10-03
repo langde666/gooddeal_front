@@ -11,7 +11,7 @@ const MainLayout = ({ className = null, children = null }) => {
                 <div className={className}>{children}</div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default MainLayout;

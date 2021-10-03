@@ -6,9 +6,6 @@ const HomePage = () => {
     return (
         <MainLayout className="home-page">
             <Hello />
-            <Hello />
-            <Hello />
-            <Hello />
         </MainLayout>
     );
 };

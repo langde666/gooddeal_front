@@ -1,7 +1,7 @@
 const initalState = {
     list: [],
     actionId: null,
-}
+};
 
 const helloReducer = (state = initalState, action) => {
     switch (action.type) {
@@ -15,7 +15,7 @@ const helloReducer = (state = initalState, action) => {
                 ...state,
                 list: newList,
                 activeId: newActiveId,
-            }
+            };
         }
 
         case 'SET_ACTIVE_HELLO': {
@@ -25,13 +25,13 @@ const helloReducer = (state = initalState, action) => {
             return {
                 ...state,
                 activeId: newActiveId,
-            }
+            };
         }
 
         default: {
             return state;
         }
     }
-}
+};
 
 export default helloReducer;

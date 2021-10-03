@@ -2,43 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useToggle from '../../hooks/useToggle';
 
-const SignupForm = ({ onToggle = () => {} }) => {
+const SigninForm = ({ onToggle = () => {} }) => {
     const [showPasswordFlag, togglePasswordFlag] = useToggle(true);
 
     return (
-        <form className="sign-up-form mb-2 row">
-            <div className="col-6 cus-input-group">
-                <input
-                    type="text"
-                    required
-                    className="cus-input-group-input form-control"
-                    id="inputFirstname"
-                />
-                <label
-                    htmlFor="inputFirstname"
-                    className="cus-input-group-label"
-                >
-                    First name
-                </label>
-                <span className="cus-input-group-bar"></span>
-            </div>
-
-            <div className="col-6 cus-input-group">
-                <input
-                    type="text"
-                    required
-                    className="cus-input-group-input form-control"
-                    id="inputLastname"
-                />
-                <label
-                    htmlFor="inputLastname"
-                    className="cus-input-group-label"
-                >
-                    Last name
-                </label>
-                <span className="cus-input-group-bar"></span>
-            </div>
-
+        <form className="sign-in-form mb-2 row">
             <div className="col-12 cus-input-group">
                 <input
                     type="text"
@@ -85,18 +53,18 @@ const SignupForm = ({ onToggle = () => {} }) => {
                     className="btn btn-primary ripple fw-bold"
                     onClick={() => {}}
                 >
-                    Sign up
+                    Sign in
                 </button>
             </div>
 
             <div className="col-12 mt-4">
                 <small className="text-center d-block text-muted">
-                    Have an account?{' '}
+                    Don't have an account?{' '}
                     <span
                         className="sign-in-item text-primary text-decoration-underline"
                         onClick={onToggle}
                     >
-                        Sign in
+                        Sign up
                     </span>
                 </small>
             </div>
@@ -136,21 +104,21 @@ const SignupForm = ({ onToggle = () => {} }) => {
             <div className="col-12 mt-4">
                 <small className="text-center d-block mx-4">
                     <span className="text-muted">
-                        By Signing up or Continue with Google or Facebook, you
+                        By Signing in or Continue with Google or Facebook, you
                         agree to GoodDeal's{' '}
                     </span>
                     <Link to="/legal/termsOfUse" target="_blank">
                         Terms of Use
                     </Link>
-                    <span className="text-muted" target="_blank">
-                        {' '}
-                        and{' '}
-                    </span>
-                    <Link to="/legal/privacy">Privacy Policy</Link>.
+                    <span className="text-muted"> and </span>
+                    <Link to="/legal/privacy" target="_blank">
+                        Privacy Policy
+                    </Link>
+                    .
                 </small>
             </div>
         </form>
     );
 };
 
-export default SignupForm;
+export default SigninForm;
