@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import Modal from '../form/Modal';
+import { Fragment } from 'react';
+import Modal from '../other/Modal';
 import SignupForm from '../form/SignupForm';
 import SigninForm from '../form/SigninForm';
 import useToggle from '../../hooks/useToggle';
@@ -24,9 +24,9 @@ const SigninItem = ({ title = 'Sign in' }) => {
                 subTitle={!signinFlag ? 'Signing up is easy.' : 'Welcome back!'}
             >
                 {signinFlag ? (
-                    <SigninForm onToggle={toggleSigninFlag} />
+                    <SigninForm onSwap={toggleSigninFlag} />
                 ) : (
-                    <SignupForm onToggle={toggleSigninFlag} />
+                    <SignupForm onSwap={toggleSigninFlag} />
                 )}
             </Modal>
         </Fragment>

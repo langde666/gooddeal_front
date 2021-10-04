@@ -3,15 +3,33 @@ header {
     height: var(--header-height);
     display: flex;
     align-items: center;
-    overflow: hidden;
+}
+
+.cus-nav .btn-outline-light {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.cus-nav .btn-outline-light:hover {
+    background-color: #0b5ed7 !important;
+}
+
+.cus-nav i {
+    color: var(--muted-color);
 }
 
 /* Logo */
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+.cus-navbar-brand {
+    display: block;
+    min-width: var(--logo-width);
+}
+
 .logo {
     text-transform: uppercase;
     font-size: 32px;
     font-family: 'Luckiest Guy', cursive;
+    display: block;
     min-width: var(--logo-width);
 }
 
@@ -20,21 +38,27 @@ header {
     max-width: var(--search-bar-width);
 }
 
-.search-bar button:hover {
-    background-color: unset !important;
+.search-bar i {
+    color: var(--white-color);
 }
 
 .search-bar input.form-control {
-    width: calc(var(--search-bar-width) * 2 / 4);
+    border: 0;
 }
 
-.search-bar select.form-select {
-    max-width: calc(var(--search-bar-width) * 1 / 4);
-    cursor: pointer;
+.search-bar input.form-control {
+    margin-left: 0 !important;
 }
 
-.search-bar select.form-select:focus {
-    box-shadow: unset;
+.search-bar .cus-dropdown-btn {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-right: 1px solid var(--muted-color);
+}
+
+/* subnav */
+.cus-subnav {
+    min-width: var(--header-subnav-width);
 }
 
 /* sign-in-item */
@@ -42,6 +66,89 @@ header {
     cursor: pointer;
 }
 
-.sign-in-item.btn-outline-light:hover {
+/* your accout */
+.your-account {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.your-account-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.your-account-img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    margin-right: 4px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.your-account-name {
+    font-size: 0.9rem;
+    color: var(--white-color);
+}
+
+.your-account-options {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.your-account-options::before {
+    content: '';
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    top: -5%;
+    /* background-color: red; */
+    left: 0;
+    cursor: pointer;
+}
+
+.your-account-options::after {
+    content: '';
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--white-color) transparent;
+    cursor: pointer;
+}
+
+.your-account:hover .your-account-options {
+    display: block;
+}
+
+.your-account-options-item {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.your-account-options-item:hover,
+.your-account-options-item:hover i {
     color: var(--primary-color);
+}
+
+.your-account-options-item i {
+    display: block;
+    font-size: 1.2rem;
+    width: 24px;
+    margin-right: 2px;
 }

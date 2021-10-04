@@ -1,9 +1,9 @@
-import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import ProductSearchPage from './pages/ProductSearchPage';
 import StoreSearchPage from './pages/StoreSearchPage';
 import UserSearchPage from './pages/UserSearchPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 const Routes = () => {
     return (
@@ -21,6 +21,7 @@ const Routes = () => {
                     component={StoreSearchPage}
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
+                <Route path="/user/profile" exact component={UserProfilePage} />
             </Switch>
         </BrowserRouter>
     );

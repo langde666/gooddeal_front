@@ -1,10 +1,14 @@
 :root {
     --header-height: 80px;
     --logo-width: 180px;
-    --search-bar-width: 600px;
+    --header-subnav-width: 180px;
+    --search-bar-width: calc(
+        100vw - var(--logo-width) - var(--header-subnav-width)
+    );
 
     --primary-color: #0d6efd;
     --muted-color: #6c757d;
+    --white-color: #fff;
 }
 
 .form-control:focus,
@@ -15,6 +19,19 @@
 
 p {
     margin: 0 !important;
+}
+
+small {
+    font-size: 0.8rem !important;
+}
+
+.is-invalid:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.invalid-feedback {
+    font-size: 0.8rem;
 }
 
 /* Ripple effect */
@@ -64,7 +81,7 @@ p {
     position: absolute;
     color: var(--muted-color);
     pointer-events: none;
-    left: 22px;
+    left: 12px;
     top: 6px;
     transition: all 0.3s ease;
     font-size: 1rem;
@@ -103,14 +120,15 @@ p {
     width: 100%;
 }
 
-.cus-input-group-input--password {
+.cus-input-group-input--password,
+.cus-input-group-input--password.is-invalid {
     padding-right: 60px;
 }
 
 .cus-input-group .show-hide-password-icon {
     position: absolute;
-    bottom: 16px;
-    right: 30px;
+    top: 11px;
+    right: 31px;
     padding: 1px;
     cursor: pointer;
 }
@@ -167,7 +185,7 @@ p {
 
 .cus-decoration-paragraph-p {
     display: inline-block;
-    background-color: #fff;
+    background-color: var(--white-color);
     padding: 0 16px;
     position: relative;
     z-index: 2;
@@ -203,7 +221,114 @@ p {
 }
 
 .social-img {
-    background-color: #fff;
+    background-color: var(--white-color);
     width: 30px;
     height: 30px;
+}
+
+/* cus loading */
+.cus-loading {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+}
+
+.cus-loading.small .cus-loading-circle {
+    width: 1.6rem;
+    height: 1.6rem;
+    top: 0;
+}
+
+.cus-loading-circle {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+}
+
+/* drop-down */
+.cus-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.cus-dropdown i {
+    display: inline-block;
+    padding: 0 4px;
+    color: var(--muted-color);
+}
+
+.cus-dropdown-btn {
+    position: relative;
+    z-index: 1;
+    min-width: 106px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+    border-radius: 0;
+}
+
+.cus-dropdown:hover .cus-dropdown-btn,
+.cus-dropdown:hover .cus-dropdown-btn i,
+.cus-dropdown-menu.show ~ .cus-dropdown-btn,
+.cus-dropdown-menu.show ~ .cus-dropdown-btn i {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.cus-dropdown-btn span {
+    display: block;
+    flex: 1;
+    margin-right: 16px;
+}
+
+.cus-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    background-color: var(--white-color);
+    border-radius: 0;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.cus-dropdown-menu-item {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+}
+
+.cus-dropdown-menu-item i {
+    display: block;
+    width: 28px;
+    color: var(--muted-color);
+    margin-right: 2px;
+}
+
+.cus-dropdown-menu-item:hover,
+.cus-dropdown-menu-item:hover i {
+    color: var(--primary-color);
+}
+
+.cus-dropdown-menu.show {
+    display: block;
 }

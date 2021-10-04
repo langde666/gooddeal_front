@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Logo = ({ noBackground = false }) => {
     return (
         <h1

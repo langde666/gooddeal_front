@@ -1,10 +1,9 @@
-import React from 'react';
-import './style.css';
 import HelloList from './HelloList';
 import HelloForm from '../form/HelloForm';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNewHello, setActiveHello } from '../../actions/hello';
 import faker from 'faker';
+import './style.css';
 
 const Hello = (props) => {
     const helloList = useSelector((state) => state.hello.list);

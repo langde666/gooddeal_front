@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useToggle from '../../hooks/useToggle';
 
-const SignupForm = ({ onToggle = () => {} }) => {
+const SignupForm = ({ onSwap = () => {} }) => {
     const [showPasswordFlag, togglePasswordFlag] = useToggle(true);
 
     return (
@@ -94,7 +94,7 @@ const SignupForm = ({ onToggle = () => {} }) => {
                     Have an account?{' '}
                     <span
                         className="sign-in-item text-primary text-decoration-underline"
-                        onClick={onToggle}
+                        onClick={onSwap}
                     >
                         Sign in
                     </span>

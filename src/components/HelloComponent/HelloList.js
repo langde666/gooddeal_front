@@ -1,5 +1,3 @@
-import React from 'react';
-
 const HelloList = ({ helloList = [], activeId = null, onClick = () => {} }) => {
     const handlerClick = (hello) => {
         if (onClick) {
