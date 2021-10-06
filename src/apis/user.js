@@ -1,6 +1,22 @@
+import { refreshToken, getToken } from './auth';
 const API = process.env.REACT_APP_API_URL;
+const jwt = require('jsonwebtoken');
 
-export const getUserProfile = (userId, token) => {
+export const getUserProfile = async (userId, token, rfToken) => {
+    //user validate
+    const decoded = jwt.decode(token);
+    const timeout = decoded.exp * 1000 - 60 * 1000;
+    if (Date.now() >= timeout) {
+        await refreshToken(rfToken);
+        const { accessToken } = getToken();
+        token = accessToken;
+    } else {
+        setTimeout(() => {
+            refreshToken(rfToken);
+        }, timeout);
+    }
+
+    // getuser
     return fetch(`${API}/user/profile/${userId}`, {
         method: 'GET',
         headers: {

@@ -1,0 +1,113 @@
+import { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { authsocial, setToken } from '../../apis/auth';
+import Loading from '../other/Loading';
+import Error from '../other/Error';
+
+const AuthSocial = (props) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    let history = useHistory();
+
+    const onSuccess = (res) => {
+        if (!res.profileObj && !res.accessToken) {
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(true);
+        const data = res.profileObj || res;
+        const user = {
+            firstname: data.givenName || data.name.split(' ')[0],
+            lastname:
+                (data.familyName ? data.familyName : data.givenName) ||
+                data.name.split(' ')[1],
+            email: data.email,
+        };
+
+        if (data.googleId) user.googleId = data.googleId;
+        if (data.userID) user.facebookId = data.userID;
+
+        authsocial(user)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                } else {
+                    const { accessToken, refreshToken, user } = data;
+                    setToken({ accessToken, refreshToken, user }, () => {
+                        history.go(0);
+                    });
+                }
+            })
+            .catch((error) => {
+                setError('Server error!');
+                setIsLoading(false);
+            });
+    };
+
+    const onFailure = (res) => {
+        setError(res.details);
+        setIsLoading(false);
+    };
+
+    const onRequest = () => {
+        setIsLoading(true);
+    };
+
+    return (
+        <Fragment>
+            {isloading && <Loading />}
+            {error && (
+                <div className="col-12">
+                    <Error msg={error} />
+                </div>
+            )}
+            <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                onRequest={onRequest}
+                cookiePolicy={'single_host_origin'}
+                render={(renderProps) => (
+                    <button
+                        type="button"
+                        className="btn btn--with-img btn-outline-primary ripple fw-bold"
+                        onClick={renderProps.onClick}
+                    >
+                        <img
+                            className="social-img me-2 rounded-circle"
+                            src="https://img.icons8.com/color/48/000000/google-logo.png"
+                        />
+                        Continue with Google
+                    </button>
+                )}
+            />
+
+            <FacebookLogin
+                appId="1038015060349155"
+                autoLoad
+                fields="name,email,picture"
+                onClick={onRequest}
+                callback={onSuccess}
+                render={(renderProps) => (
+                    <button
+                        type="button"
+                        className="btn btn--with-img btn-outline-primary ripple fw-bold"
+                        onClick={renderProps.onClick}
+                    >
+                        <img
+                            className="social-img me-2 rounded-circle"
+                            src="https://img.icons8.com/color/48/000000/facebook-new.png"
+                        />
+                        Continue with Facebook
+                    </button>
+                )}
+            />
+        </Fragment>
+    );
+};
+
+export default AuthSocial;

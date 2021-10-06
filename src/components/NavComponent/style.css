@@ -85,6 +85,7 @@ header {
 .your-account-img {
     width: 26px;
     height: 26px;
+    border: 1px solid var(--white-color);
     border-radius: 50%;
     margin-right: 4px;
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
@@ -92,6 +93,9 @@ header {
 
 .your-account-name {
     font-size: 0.9rem;
+    max-width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
     color: var(--white-color);
 }
 

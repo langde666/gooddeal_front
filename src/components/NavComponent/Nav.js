@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { isAuthenticated } from '../../apis/auth';
+import { getToken } from '../../apis/auth';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
 import SigninItem from './SigninItem';
@@ -21,13 +21,13 @@ const Nav = (props) => {
                 <SearchBar />
 
                 <ul className="nav cus-subnav mx-4">
-                    {!isAuthenticated() && (
+                    {!getToken() && (
                         <li className="nav-item">
                             <SigninItem />
                         </li>
                     )}
 
-                    {isAuthenticated() && (
+                    {getToken() && (
                         <li className="nav-item position-relative">
                             <YourAccount />
                         </li>

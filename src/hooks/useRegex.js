@@ -1,5 +1,6 @@
 const useRegex = () => {
     const regexes = {
+        name: /^(?=.*[a-zA-Z])[A-Za-z\d\s_'-]*$/,
         email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
         phone: /^\d{10,11}$/,
         password:

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { isAuthenticated, signout } from '../../apis/auth';
+import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
 import { addUser } from '../../actions/user';
 import Loading from '../other/Loading';
@@ -12,8 +12,6 @@ const IMG = process.env.REACT_APP_STATIC_URL;
 const YourAccount = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const { user, token, isExpired } = isAuthenticated();
-
     const [userProfile, setUserProfile] = useState({});
 
     let history = useHistory();
@@ -21,36 +19,43 @@ const YourAccount = (props) => {
     const userRedux = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
 
-    const init = () => {
-        setIsLoading(true);
-        setError('');
-
-        getUserProfile(user._id, token)
-            .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
-                    setUserProfile(data.user);
-                    setIsLoading(false);
-                    dispatch(addUser(data.user));
-                }
-            })
-            .catch((error) => {
-                setError('Server error');
-            });
-    };
+    const { user, accessToken, refreshToken } = getToken();
 
     useEffect(() => {
-        if (userRedux && Object.keys(userRedux).length === 0) {
+        if (
+            userRedux &&
+            Object.keys(userRedux).length === 0 &&
+            Object.getPrototypeOf(userRedux) === Object.prototype
+        ) {
             init();
         } else {
             setUserProfile(userRedux);
         }
     }, []);
 
+    const init = () => {
+        setIsLoading(true);
+        setError('');
+
+        getUserProfile(user._id, accessToken, refreshToken)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                } else {
+                    setUserProfile(data.user);
+                    dispatch(addUser(data.user));
+                    setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                setError('Server error');
+                setIsLoading(false);
+            });
+    };
+
     const handleSignout = () => {
-        signout(() => {
+        signout(refreshToken, () => {
             history.go(0);
         });
     };
@@ -60,7 +65,7 @@ const YourAccount = (props) => {
     ) : (
         <div className="your-account">
             <div
-                className="your-account-card ripple"
+                className="your-account-card btn btn-outline-light ripple"
                 onClick={() => {
                     history.push('/user/profile');
                 }}
@@ -72,7 +77,7 @@ const YourAccount = (props) => {
 
                 <span className="your-account-name noselect">
                     {userProfile.firstname + ' ' + userProfile.lastname}
-                    {error && <Error error={error} />}
+                    {error && <Error msg={error} />}
                 </span>
             </div>
 
@@ -88,7 +93,7 @@ const YourAccount = (props) => {
                 </li>
 
                 <li className="list-group-item your-account-options-item">
-                    <i className="fas fa-clipboard"></i>
+                    <i className="fas fa-shopping-bag"></i>
                     <Link
                         className="text-decoration-none text-reset"
                         to="/user/purchase"

@@ -1,6 +1,6 @@
-const Error = ({ error = 'Something is wrong!' }) => (
+const Error = ({ msg = 'Something is wrong!' }) => (
     <p className="text-danger" role="alert">
-        {error}
+        {msg}
     </p>
 );
 
