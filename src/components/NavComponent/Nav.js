@@ -28,7 +28,7 @@ const Nav = (props) => {
                     )}
 
                     {getToken() && (
-                        <li className="nav-item position-relative">
+                        <li className="nav-item cus-position-relative">
                             <YourAccount />
                         </li>
                     )}

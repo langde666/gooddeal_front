@@ -7,9 +7,11 @@ import Error from '../other/Error';
 import Success from '../other/Success';
 import AuthSocial from './AuthSocial';
 import useRegex from '../../hooks/useRegex';
+import ConfirmDialog from '../other/ConfirmDialog';
 
-const SignupForm = ({ onSwap = () => {} }) => {
+const SignupForm = ({ onSwap = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [account, setAccount] = useState({
@@ -131,6 +133,11 @@ const SignupForm = ({ onSwap = () => {} }) => {
         )
             return;
 
+        setIsConfirming(true);
+    };
+
+    const onSignupSubmit = () => {
+        const { firstname, lastname, username, password } = account;
         const user = { firstname, lastname, password };
         regexTest('email', username) && (user.email = username);
         regexTest('phone', username) && (user.phone = username);
@@ -138,6 +145,7 @@ const SignupForm = ({ onSwap = () => {} }) => {
         setIsLoading(true);
         setError('');
         setSuccess('');
+
         signup(user)
             .then((data) => {
                 if (data.error) {
@@ -151,6 +159,7 @@ const SignupForm = ({ onSwap = () => {} }) => {
                         username: '',
                         password: '',
                     });
+
                     setSuccess(data.success);
                     setIsLoading(false);
                 }
@@ -159,11 +168,27 @@ const SignupForm = ({ onSwap = () => {} }) => {
                 setError('Server error!');
                 setIsLoading(false);
             });
-    };
+    }
 
     return (
         <Fragment>
             {isloading && <Loading />}
+            {isConfirming && <ConfirmDialog
+                title='Sign up'
+                message={
+                    <small className="">
+                        By Signing up or Continue with Google or Facebook,
+                        you agree to GoodDeal's{' '}
+                        <Link to="/legal/termsOfUse" target="_blank">
+                            Terms of Use
+                        </Link>
+                        {' '}and{' '}
+                        <Link to="/legal/privacy">Privacy Policy</Link>.
+                    </small>
+                }
+                onSubmit={onSignupSubmit}
+                onClose={() => setIsConfirming(false)}
+            />}
             <form className="sign-up-form mb-2 row" onSubmit={handleSubmit}>
                 <div className="col-6">
                     <Input
@@ -267,8 +292,7 @@ const SignupForm = ({ onSwap = () => {} }) => {
                             Terms of Use
                         </Link>
                         <span className="text-muted" target="_blank">
-                            {' '}
-                            and{' '}
+                            {' '}and{' '}
                         </span>
                         <Link to="/legal/privacy">Privacy Policy</Link>.
                     </small>

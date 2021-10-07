@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getToken, signout } from '../../apis/auth';
@@ -6,11 +6,13 @@ import { getUserProfile } from '../../apis/user';
 import { addUser } from '../../actions/user';
 import Loading from '../other/Loading';
 import Error from '../other/Error';
+import ConfirmDialog from '../other/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const YourAccount = (props) => {
     const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [userProfile, setUserProfile] = useState({});
 
@@ -55,62 +57,74 @@ const YourAccount = (props) => {
     };
 
     const handleSignout = () => {
+        setIsConfirming(true);
+    };
+
+    const onSignoutSubmit = () => {
+        setIsLoading(true);
         signout(refreshToken, () => {
             history.go(0);
         });
-    };
+    }
 
     return isloading ? (
         <Loading size="small" />
     ) : (
-        <div className="your-account">
-            <div
-                className="your-account-card btn btn-outline-light ripple"
-                onClick={() => {
-                    history.push('/user/profile');
-                }}
-            >
-                <img
-                    src={`${IMG + userProfile.avatar}`}
-                    className="your-account-img"
-                />
-
-                <span className="your-account-name noselect">
-                    {userProfile.firstname + ' ' + userProfile.lastname}
-                    {error && <Error msg={error} />}
-                </span>
-            </div>
-
-            <ul className="list-group your-account-options">
-                <li className="list-group-item your-account-options-item">
-                    <i className="fas fa-user-circle"></i>
-                    <Link
-                        className="text-decoration-none text-reset"
-                        to="/user/profile"
-                    >
-                        Your profile
-                    </Link>
-                </li>
-
-                <li className="list-group-item your-account-options-item">
-                    <i className="fas fa-shopping-bag"></i>
-                    <Link
-                        className="text-decoration-none text-reset"
-                        to="/user/purchase"
-                    >
-                        Purchases
-                    </Link>
-                </li>
-
-                <li
-                    className="list-group-item your-account-options-item"
-                    onClick={handleSignout}
+        <Fragment>
+            {isConfirming && (<ConfirmDialog
+                title="Sign out"
+                onSubmit={onSignoutSubmit}
+                onClose={() => setIsConfirming(false)}
+            />)}
+            <div className="your-account">
+                <div
+                    className="your-account-card btn btn-outline-light ripple"
+                    onClick={() => {
+                        history.push('/user/profile');
+                    }}
                 >
-                    <i className="fas fa-sign-out-alt"></i>
-                    <span>Sign out</span>
-                </li>
-            </ul>
-        </div>
+                    <img
+                        src={userProfile && userProfile.avatar && `${IMG + userProfile.avatar}`}
+                        className="your-account-img"
+                    />
+
+                    <span className="your-account-name noselect">
+                        {userProfile && userProfile.firstname && userProfile.firstname + ' ' + userProfile.lastname}
+                        {error && <Error msg={error} />}
+                    </span>
+                </div>
+
+                <ul className="list-group your-account-options">
+                    <li className="list-group-item your-account-options-item">
+                        <i className="fas fa-user-circle"></i>
+                        <Link
+                            className="text-decoration-none text-reset"
+                            to="/user/profile"
+                        >
+                            Your profile
+                        </Link>
+                    </li>
+
+                    <li className="list-group-item your-account-options-item">
+                        <i className="fas fa-shopping-bag"></i>
+                        <Link
+                            className="text-decoration-none text-reset"
+                            to="/user/purchase"
+                        >
+                            Purchases
+                        </Link>
+                    </li>
+
+                    <li
+                        className="list-group-item your-account-options-item"
+                        onClick={handleSignout}
+                    >
+                        <i className="fas fa-sign-out-alt"></i>
+                        <span>Sign out</span>
+                    </li>
+                </ul>
+            </div>
+        </Fragment>
     );
 };
 

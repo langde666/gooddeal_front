@@ -76,19 +76,17 @@ export const signin = (user) => {
 };
 
 export const signout = (refreshToken, next) => {
-    return fetch(`${API}/signout`, {
+    fetch(`${API}/signout`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ refreshToken }),
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            removeJwt();
-            next();
-        });
+    });
+
+    removeJwt();
+    next();
 };
 
 export const authsocial = (user) => {

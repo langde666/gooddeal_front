@@ -2,9 +2,7 @@
     --header-height: 80px;
     --logo-width: 180px;
     --header-subnav-width: 180px;
-    --search-bar-width: calc(
-        100vw - var(--logo-width) - var(--header-subnav-width)
-    );
+    --search-bar-width: calc(100vw - var(--logo-width) - var(--header-subnav-width));
 
     --primary-color: #0d6efd;
     --muted-color: #6c757d;
@@ -40,7 +38,7 @@ small {
     overflow: hidden;
 }
 .ripple:after {
-    content: '';
+    content: "";
     background: rgba(255, 255, 255, 0.3);
     display: block;
     position: absolute;
@@ -105,7 +103,7 @@ small {
 }
 
 .cus-input-group-bar::before {
-    content: '';
+    content: "";
     height: 1.6px;
     width: 0;
     bottom: 0;
@@ -177,6 +175,43 @@ small {
     /* padding-bottom: 0; */
 }
 
+.cus-dialog {
+    animation: show 0.6s ease;
+}
+
+.cus-dialog ~ .cus-modal-backdrop {
+    animation: fade 0.6s ease;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+        transform: translateY(-60%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
 /* decoration-paragraph */
 .cus-decoration-paragraph {
     text-align: center;
@@ -192,7 +227,7 @@ small {
 }
 
 .cus-decoration-paragraph::before {
-    content: '';
+    content: "";
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -241,7 +276,7 @@ small {
 .cus-loading.small .cus-loading-circle {
     width: 1.6rem;
     height: 1.6rem;
-    top: 0;
+    top: -40%;
 }
 
 .cus-loading-circle {
@@ -258,6 +293,11 @@ small {
     left: 50%;
     transform: translateX(-50%);
     z-index: 4;
+}
+
+.cus-position-relative {
+    position: relative !important;
+    min-height: 20px;
 }
 
 /* drop-down */
