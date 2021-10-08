@@ -4,3 +4,10 @@ export const addUser = (user) => {
         payload: user,
     };
 };
+
+export const updateAvatar = (avatar) => {
+    return {
+        type: 'UPDATE_AVATAR',
+        payload: avatar,
+    };
+};

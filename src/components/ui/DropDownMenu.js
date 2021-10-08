@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
 
-const DropDownMenu = ({ listItem = null, value = '', setValue = () => {} }) => {
+const DropDownMenu = ({ listItem = null, value = '', setValue = () => { } }) => {
     const selectedItemDefault =
         listItem.find((item) => item.value == value) || listItem[0];
     const [selectedItem, setSelectedItem] = useState(selectedItemDefault);
@@ -16,11 +16,7 @@ const DropDownMenu = ({ listItem = null, value = '', setValue = () => {} }) => {
     return (
         <div className="cus-dropdown">
             <ul
-                className={
-                    showDropDownFlag
-                        ? 'list-group cus-dropdown-menu show'
-                        : 'list-group cus-dropdown-menu'
-                }
+                className={`list-group cus-dropdown-menu ${showDropDownFlag ? 'show' : ''}`}
             >
                 {listItem &&
                     listItem.map((item, index) => (

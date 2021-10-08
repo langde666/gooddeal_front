@@ -8,12 +8,6 @@ export const setToken = (data, next) => {
     }
 };
 
-export const removeJwt = () => {
-    if (typeof window !== 'undefined') {
-        localStorage.removeItem('jwt');
-    }
-};
-
 export const getToken = () => {
     if (typeof window == 'undefined') {
         return false;
@@ -24,6 +18,12 @@ export const getToken = () => {
     }
 
     return false;
+};
+
+export const removeToken = () => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem('jwt');
+    }
 };
 
 export const refreshToken = (refreshToken) => {
@@ -42,7 +42,6 @@ export const refreshToken = (refreshToken) => {
                 const auth = JSON.parse(localStorage.getItem('jwt'));
                 auth.accessToken = accessToken;
                 auth.refreshToken = refreshToken;
-
                 localStorage.setItem('jwt', JSON.stringify(auth));
             }
         });
@@ -85,7 +84,7 @@ export const signout = (refreshToken, next) => {
         body: JSON.stringify({ refreshToken }),
     });
 
-    removeJwt();
+    removeToken();
     next();
 };
 

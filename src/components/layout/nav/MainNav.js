@@ -7,7 +7,6 @@ import SearchBar from '../../ui/SearchBar';
 import SigninItem from '../../ui/SigninItem';
 import YourAccountItem from '../../ui/YourAccountItem';
 import DashboardItem from '../../ui/DashboardItem';
-import ShopManagerItem from '../../ui/ShopManagerItem';
 import CartItem from '../../ui/CartItem';
 
 const MainNav = (props) => {
@@ -39,14 +38,35 @@ const MainNav = (props) => {
                     )}
 
                     {getToken() && role == 'admin' && (
-                        <li className="nav-item">
-                            <DashboardItem />
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/">
+                                <i className="fas fa-user-tie"></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Dashboard</small>
                         </li>
                     )}
 
                     {getToken() && role == 'user' && (
-                        <li className="nav-item">
-                            <ShopManagerItem />
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/">
+                                <i className="fas fa-store"></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Shop Manager</small>
+                        </li>
+                    )}
+
+                    {getToken() && role == 'user' && (
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/user/following">
+                                <i className="fas fa-heart"></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Following</small>
                         </li>
                     )}
 

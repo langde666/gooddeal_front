@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../../actions/user';
 import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
 import { addUser } from '../../actions/user';
@@ -14,26 +16,11 @@ const YourAccountItem = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
-    const [userProfile, setUserProfile] = useState({});
 
-    let history = useHistory();
-
-    const userRedux = useSelector((state) => state.user.user);
+    let { firstname, lastname, avatar } = useSelector(state => state.user.user);
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const { _id, accessToken, refreshToken } = getToken();
-
-    useEffect(() => {
-        if (
-            userRedux &&
-            Object.keys(userRedux).length === 0 &&
-            Object.getPrototypeOf(userRedux) === Object.prototype
-        ) {
-            init();
-        } else {
-            setUserProfile(userRedux);
-        }
-    }, []);
 
     const init = () => {
         setIsLoading(true);
@@ -45,16 +32,22 @@ const YourAccountItem = (props) => {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    setUserProfile(data.user);
                     dispatch(addUser(data.user));
                     setIsLoading(false);
                 }
             })
             .catch((error) => {
                 setError('Server error');
-                // setIsLoading(false);
+                setIsLoading(false);
             });
     };
+
+    useEffect(() => {
+        if (!firstname && !lastname && !avatar) {
+            init();
+        }
+        return;
+    }, []);
 
     const handleSignout = () => {
         setIsConfirming(true);
@@ -67,67 +60,76 @@ const YourAccountItem = (props) => {
         });
     }
 
-    return isloading ? (
-        <div className="cus-position-relative-loading">
-            <Loading size="small" />
-        </div>
-    ) : (
-        <div className="your-account-wrap">
-            {isConfirming && (<ConfirmDialog
-                title="Sign out"
-                onSubmit={onSignoutSubmit}
-                onClose={() => setIsConfirming(false)}
-            />)}
-            <div className="your-account">
-                <div
-                    className="your-account-card btn btn-outline-light cus-outline ripple"
-                    onClick={() => {
-                        history.push('/user/profile');
-                    }}
-                >
-                    <img
-                        src={userProfile && userProfile.avatar && `${IMG + userProfile.avatar}`}
-                        className="your-account-img"
-                    />
-
-                    <span className="your-account-name noselect">
-                        {userProfile && userProfile.firstname && userProfile.firstname + ' ' + userProfile.lastname}
-                        {error && <Error msg={error} />}
-                    </span>
-                </div>
-
-                <ul className="list-group your-account-options">
-                    <li className="list-group-item your-account-options-item">
-                        <i className="fas fa-user-circle"></i>
-                        <Link
-                            className="text-decoration-none text-reset"
-                            to="/user/profile"
-                        >
-                            Your profile
-                        </Link>
-                    </li>
-
-                    <li className="list-group-item your-account-options-item">
-                        <i className="fas fa-shopping-bag"></i>
-                        <Link
-                            className="text-decoration-none text-reset"
-                            to="/user/purchase"
-                        >
-                            Purchases
-                        </Link>
-                    </li>
-
-                    <li
-                        className="list-group-item your-account-options-item"
-                        onClick={handleSignout}
-                    >
-                        <i className="fas fa-sign-out-alt"></i>
-                        <span>Sign out</span>
-                    </li>
-                </ul>
+    return (
+        isloading ? (
+            <div className="cus-position-relative-loading">
+                <Loading size="small" />
             </div>
-        </div>
-    );
+        ) : (
+            <div className="your-account-wrap">
+                {isConfirming && (<ConfirmDialog
+                    title="Sign out"
+                    onSubmit={onSignoutSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />)}
+                <div className="your-account">
+                    <div
+                        className="your-account-card btn btn-outline-light cus-outline ripple"
+                        onClick={() => {
+                            history.push('/user/profile');
+                        }}
+                    >
+                        <img
+                            src={avatar ? `${IMG + avatar}` : ''}
+                            className="your-account-img"
+                        />
+
+                        <span className="your-account-name noselect">
+                            {firstname && lastname && firstname + ' ' + lastname}
+                            {error && <Error msg={error} />}
+                        </span>
+                    </div>
+
+                    <ul className="list-group your-account-options">
+                        <li className="list-group-item your-account-options-item">
+                            <i className="fas fa-user-circle"></i>
+                            <Link
+                                className="text-decoration-none text-reset"
+                                to="/user/profile"
+                            >
+                                Your profile
+                            </Link>
+                        </li>
+
+                        <li className="list-group-item your-account-options-item">
+                            <i className="fas fa-shopping-bag"></i>
+                            <Link
+                                className="text-decoration-none text-reset"
+                                to="/user/purchase"
+                            >
+                                Purchases
+                            </Link>
+                        </li>
+
+                        <li
+                            className="list-group-item your-account-options-item"
+                            onClick={handleSignout}
+                        >
+                            <i className="fas fa-sign-out-alt"></i>
+                            <span>Sign out</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        ));
 };
 
-export default YourAccountItem;
+function mapStateToProps(state) {
+    return { user: state.user }
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: bindActionCreators(actionCreators, dispatch) }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(YourAccountItem);

@@ -28,3 +28,17 @@ export const getUserProfile = async (userId, token, rfToken) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
+
+export const updateAvatar = (userId, token, photo) => {
+    return fetch(`${API}/user/avatar/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: photo,
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
