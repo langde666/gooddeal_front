@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import DropDownMenu from '../other/DropDownMenu';
+import DropDownMenu from './DropDownMenu';
 
 const SearchBar = (props) => {
     let location = useLocation();
@@ -59,13 +59,10 @@ const SearchBar = (props) => {
                 placeholder="Search"
                 value={query}
                 onChange={handleChange}
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Tooltip on top"
             />
 
             <button
-                className="btn btn-outline-light text-white ripple"
+                className="btn btn-outline-light cus-outline text-white ripple"
                 type="button"
                 onClick={handleFormSubmit}
             >

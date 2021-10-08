@@ -1,9 +1,11 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import ProductSearchPage from './pages/ProductSearchPage';
-import StoreSearchPage from './pages/StoreSearchPage';
-import UserSearchPage from './pages/UserSearchPage';
-import UserProfilePage from './pages/UserProfilePage';
+import PrivateRoute from '../components/auth/route/PrivateRoute';
+import AdminRoute from '../components/auth/route/AdminRoute';
+import HomePage from './core/HomePage';
+import ProductSearchPage from './core/ProductSearchPage';
+import StoreSearchPage from './core/StoreSearchPage';
+import UserSearchPage from './core/UserSearchPage';
+import UserProfilePage from './user/UserProfilePage';
 
 const Routes = () => {
     return (
@@ -21,7 +23,8 @@ const Routes = () => {
                     component={StoreSearchPage}
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
-                <Route path="/user/profile" exact component={UserProfilePage} />
+
+                <PrivateRoute path="/user/profile" exact component={UserProfilePage} />
             </Switch>
         </BrowserRouter>
     );

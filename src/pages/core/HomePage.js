@@ -1,10 +1,9 @@
-import MainLayout from '../components/layout/MainLayout';
-import Hello from '../components/HelloComponent/Hello';
+import MainLayout from '../../components/layout/MainLayout';
 
 const HomePage = () => {
     return (
         <MainLayout className="home-page">
-            <Hello />
+
         </MainLayout>
     );
 };

@@ -1,13 +1,13 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { signin, setToken } from '../../apis/auth';
-import Input from '../other/Input';
-import Loading from '../other/Loading';
-import Error from '../other/Error';
-import AuthSocial from './AuthSocial';
-import useRegex from '../../hooks/useRegex';
+import { signin, setToken } from '../../../apis/auth';
+import useRegex from '../../../hooks/useRegex';
+import Input from '../../ui/Input';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
+import SocialForm from './SocialForm';
 
-const SigninForm = ({ onSwap = () => {} }) => {
+const SigninForm = ({ onSwap = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [account, setAccount] = useState({
@@ -98,8 +98,9 @@ const SigninForm = ({ onSwap = () => {} }) => {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    const { accessToken, refreshToken, user } = data;
-                    setToken({ accessToken, refreshToken, user }, () => {
+                    const { accessToken, refreshToken, _id } = data;
+                    console.log(data);
+                    setToken({ accessToken, refreshToken, _id }, () => {
                         history.go(0);
                     });
                 }
@@ -111,7 +112,7 @@ const SigninForm = ({ onSwap = () => {} }) => {
     };
 
     return (
-        <Fragment>
+        <div className="sign-in-form-wrap position-relative">
             {isloading && <Loading />}
 
             <form className="sign-in-form mb-2 row" onSubmit={handleFormSubmit}>
@@ -174,7 +175,7 @@ const SigninForm = ({ onSwap = () => {} }) => {
                 </div>
 
                 <div className="col-12 d-grid gap-2 mt-4">
-                    <AuthSocial />
+                    <SocialForm />
                 </div>
 
                 <div className="col-12 mt-4">
@@ -194,7 +195,7 @@ const SigninForm = ({ onSwap = () => {} }) => {
                     </small>
                 </div>
             </form>
-        </Fragment>
+        </div>
     );
 };
 

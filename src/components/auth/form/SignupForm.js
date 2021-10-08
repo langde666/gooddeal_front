@@ -1,13 +1,13 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signup } from '../../apis/auth';
-import Input from '../other/Input';
-import Loading from '../other/Loading';
-import Error from '../other/Error';
-import Success from '../other/Success';
-import AuthSocial from './AuthSocial';
-import useRegex from '../../hooks/useRegex';
-import ConfirmDialog from '../other/ConfirmDialog';
+import { signup } from '../../../apis/auth';
+import useRegex from '../../../hooks/useRegex';
+import Input from '../../ui/Input';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
+import Success from '../../ui/Success';
+import ConfirmDialog from '../../ui/ConfirmDialog';
+import SocialForm from './SocialForm';
 
 const SignupForm = ({ onSwap = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
@@ -118,18 +118,11 @@ const SignupForm = ({ onSwap = () => { } }) => {
             });
             return;
         }
-
-        const {
-            isValidFirstname,
-            isValidLastname,
-            isValidUsername,
-            isValidPassword,
-        } = account;
         if (
-            !isValidFirstname ||
-            !isValidLastname ||
-            !isValidUsername ||
-            !isValidPassword
+            !account.isValidFirstname ||
+            !account.isValidLastname ||
+            !account.isValidUsername ||
+            !account.isValidPassword
         )
             return;
 
@@ -171,7 +164,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
     }
 
     return (
-        <Fragment>
+        <div className="sign-up-form-wrap position-relative">
             {isloading && <Loading />}
             {isConfirming && <ConfirmDialog
                 title='Sign up'
@@ -183,7 +176,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
                             Terms of Use
                         </Link>
                         {' '}and{' '}
-                        <Link to="/legal/privacy">Privacy Policy</Link>.
+                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.
                     </small>
                 }
                 onSubmit={onSignupSubmit}
@@ -279,7 +272,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
                 </div>
 
                 <div className="col-12 d-grid gap-2 mt-4">
-                    <AuthSocial />
+                    <SocialForm />
                 </div>
 
                 <div className="col-12 mt-4">
@@ -291,14 +284,14 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         <Link to="/legal/termsOfUse" target="_blank">
                             Terms of Use
                         </Link>
-                        <span className="text-muted" target="_blank">
+                        <span className="text-muted">
                             {' '}and{' '}
                         </span>
-                        <Link to="/legal/privacy">Privacy Policy</Link>.
+                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.
                     </small>
                 </div>
             </form>
-        </Fragment>
+        </div>
     );
 };
 

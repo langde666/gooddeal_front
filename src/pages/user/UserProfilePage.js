@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import MainLayout from '../components/layout/MainLayout';
+import MainLayout from '../../components/layout/MainLayout';
 
 const UserProfilePage = () => {
     const userRedux = useSelector((state) => state.user.user);

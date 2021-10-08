@@ -7,8 +7,10 @@
     --primary-color: #0d6efd;
     --muted-color: #6c757d;
     --white-color: #fff;
+    --black-color: #000;
 }
 
+/* boostrap */
 .form-control:focus,
 .btn:focus,
 .btn-close:focus {
@@ -32,7 +34,21 @@ small {
     font-size: 0.8rem;
 }
 
-/* Ripple effect */
+.fixed-top {
+    z-index: 3;
+}
+
+/* No select text */
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Ripple effect for button */
 .ripple {
     position: relative;
     overflow: hidden;
@@ -59,6 +75,135 @@ small {
     margin-left: 0;
     opacity: 1;
     transition: 0s;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+.cus-navbar-brand {
+    display: block;
+    min-width: var(--logo-width);
+}
+
+.logo {
+    text-transform: uppercase;
+    font-size: 32px;
+    font-family: "Luckiest Guy", cursive;
+    display: block;
+    min-width: var(--logo-width);
+}
+
+/* search bar */
+.search-bar i {
+    color: var(--white-color);
+}
+
+.search-bar input.form-control {
+    border: 0;
+}
+
+.search-bar input.form-control {
+    margin-left: 0 !important;
+}
+
+.search-bar .cus-dropdown-btn {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-right: 1px solid var(--muted-color);
+}
+
+/* sign-in-item */
+.sign-in-item {
+    cursor: pointer;
+}
+
+/* your accout */
+.your-account {
+    display: block;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.your-account-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.your-account-img {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--white-color);
+    border-radius: 50%;
+    margin-right: 4px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.your-account-name {
+    font-size: 0.9rem;
+    max-width: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--white-color);
+}
+
+.your-account-options {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.your-account-options::before {
+    content: "";
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    top: -5%;
+    /* background-color: red; */
+    left: 0;
+    cursor: pointer;
+}
+
+.your-account-options::after {
+    content: "";
+    position: absolute;
+    top: -12%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent var(--white-color) transparent;
+    cursor: pointer;
+}
+
+.your-account:hover .your-account-options {
+    display: block;
+}
+
+.your-account-options-item {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.your-account-options-item:hover,
+.your-account-options-item:hover i {
+    color: var(--primary-color);
+}
+
+.your-account-options-item i {
+    display: block;
+    font-size: 1.2rem;
+    width: 24px;
+    margin-right: 2px;
 }
 
 /* cus-input-group */
@@ -131,11 +276,6 @@ small {
     cursor: pointer;
 }
 
-/* z-index */
-.fixed-top {
-    z-index: 3;
-}
-
 /* modal */
 .modal-backdrop {
     display: none;
@@ -175,6 +315,7 @@ small {
     /* padding-bottom: 0; */
 }
 
+/* dialog */
 .cus-dialog {
     animation: show 0.6s ease;
 }
@@ -200,15 +341,6 @@ small {
     }
     to {
         opacity: 0.5;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
     }
 }
 
@@ -238,16 +370,6 @@ small {
     background-color: var(--muted-color);
 }
 
-/* No select */
-.noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-}
-
 /* social */
 .btn--with-img {
     display: inline-flex;
@@ -273,10 +395,20 @@ small {
     z-index: 3;
 }
 
+.cus-loading.large .cus-loading-circle {
+    top: 50%;
+}
+
 .cus-loading.small .cus-loading-circle {
     width: 1.6rem;
     height: 1.6rem;
     top: -40%;
+}
+
+.cus-loading-circle-animation {
+    width: 100%;
+    height: 100%;
+    animation: show 0.6s ease;
 }
 
 .cus-loading-circle {
@@ -295,7 +427,8 @@ small {
     z-index: 4;
 }
 
-.cus-position-relative {
+/* for loading */
+.cus-position-relative-loading {
     position: relative !important;
     min-height: 20px;
 }
@@ -371,4 +504,47 @@ small {
 
 .cus-dropdown-menu.show {
     display: block;
+}
+
+/* btn outline */
+.cus-outline.btn-outline-light {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    text-decoration: none;
+}
+
+.cus-outline.btn-outline-light i {
+    color: var(--white-color);
+}
+
+.cus-outline.btn-outline-light:hover {
+    background-color: #0b5ed7 !important;
+}
+
+/* cus tooltip, need wrap in div.position-relative */
+.cus-tooltip-msg {
+    position: absolute;
+    top: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    display: none;
+    background-color: var(--black-color);
+    color: var(--white-color);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+.cus-tooltip-msg::after {
+    content: "";
+    position: absolute;
+    top: -46%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent var(--black-color) transparent;
+}
+
+.cus-tooltip:hover ~ .cus-tooltip-msg {
+    display: block !important;
 }

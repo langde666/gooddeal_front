@@ -1,12 +1,12 @@
 import { Fragment, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { authsocial, setToken } from '../../../apis/auth';
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { authsocial, setToken } from '../../apis/auth';
-import Loading from '../other/Loading';
-import Error from '../other/Error';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
 
-const AuthSocial = (props) => {
+const SocialForm = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     let history = useHistory();
@@ -36,8 +36,8 @@ const AuthSocial = (props) => {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    const { accessToken, refreshToken, user } = data;
-                    setToken({ accessToken, refreshToken, user }, () => {
+                    const { accessToken, refreshToken, _id } = data;
+                    setToken({ accessToken, refreshToken, _id }, () => {
                         history.go(0);
                     });
                 }
@@ -110,4 +110,4 @@ const AuthSocial = (props) => {
     );
 };
 
-export default AuthSocial;
+export default SocialForm;

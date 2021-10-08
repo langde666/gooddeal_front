@@ -1,16 +1,16 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
 import { addUser } from '../../actions/user';
-import Loading from '../other/Loading';
-import Error from '../other/Error';
-import ConfirmDialog from '../other/ConfirmDialog';
+import Loading from './Loading';
+import Error from './Error';
+import ConfirmDialog from './ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const YourAccount = (props) => {
+const YourAccountItem = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -21,7 +21,7 @@ const YourAccount = (props) => {
     const userRedux = useSelector((state) => state.user.user);
     const dispatch = useDispatch();
 
-    const { user, accessToken, refreshToken } = getToken();
+    const { _id, accessToken, refreshToken } = getToken();
 
     useEffect(() => {
         if (
@@ -39,7 +39,7 @@ const YourAccount = (props) => {
         setIsLoading(true);
         setError('');
 
-        getUserProfile(user._id, accessToken, refreshToken)
+        getUserProfile(_id, accessToken, refreshToken)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -52,7 +52,7 @@ const YourAccount = (props) => {
             })
             .catch((error) => {
                 setError('Server error');
-                setIsLoading(false);
+                // setIsLoading(false);
             });
     };
 
@@ -68,9 +68,11 @@ const YourAccount = (props) => {
     }
 
     return isloading ? (
-        <Loading size="small" />
+        <div className="cus-position-relative-loading">
+            <Loading size="small" />
+        </div>
     ) : (
-        <Fragment>
+        <div className="your-account-wrap">
             {isConfirming && (<ConfirmDialog
                 title="Sign out"
                 onSubmit={onSignoutSubmit}
@@ -78,7 +80,7 @@ const YourAccount = (props) => {
             />)}
             <div className="your-account">
                 <div
-                    className="your-account-card btn btn-outline-light ripple"
+                    className="your-account-card btn btn-outline-light cus-outline ripple"
                     onClick={() => {
                         history.push('/user/profile');
                     }}
@@ -124,8 +126,8 @@ const YourAccount = (props) => {
                     </li>
                 </ul>
             </div>
-        </Fragment>
+        </div>
     );
 };
 
-export default YourAccount;
+export default YourAccountItem;

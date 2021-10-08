@@ -2,3 +2,30 @@
 .body {
     margin-top: calc(var(--header-height) + 20px);
 }
+
+/* custome main-nav */
+header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+}
+
+.cus-nav i {
+    color: var(--muted-color);
+}
+
+/* custome main-nav Search bar */
+.search-bar {
+    flex: 1;
+}
+
+/* custome main-nav subnav */
+.cus-subnav {
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: var(--header-subnav-width);
+}
+
+.cus-subnav > li + li {
+    margin-left: 6px;
+}

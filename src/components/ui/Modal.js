@@ -1,5 +1,4 @@
-import { Fragment } from 'react';
-import Logo from '../NavComponent/Logo';
+import Logo from './Logo';
 
 const Modal = ({
     id,
@@ -9,7 +8,7 @@ const Modal = ({
     children = null,
 }) => {
     return (
-        <Fragment>
+        <div className="cus-modal-wrap">
             <div
                 className="cus-modal modal fade"
                 id={id}
@@ -59,7 +58,7 @@ const Modal = ({
             </div>
 
             <div className="cus-modal-backdrop fade"></div>
-        </Fragment>
+        </div>
     );
 };
 

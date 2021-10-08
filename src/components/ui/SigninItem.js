@@ -1,16 +1,15 @@
-import { Fragment } from 'react';
-import Modal from '../other/Modal';
-import SignupForm from '../form/SignupForm';
-import SigninForm from '../form/SigninForm';
+import Modal from './Modal';
+import SignupForm from '../auth/form/SignupForm';
+import SigninForm from '../auth/form/SigninForm';
 import useToggle from '../../hooks/useToggle';
 
 const SigninItem = ({ title = 'Sign in' }) => {
     const [signinFlag, toggleSigninFlag] = useToggle(true);
 
     return (
-        <Fragment>
+        <div className="sign-in-item-wrap position-relative">
             <button
-                className="sign-in-item btn btn-outline-light ripple"
+                className="sign-in-item btn btn-outline-light cus-outline cus-tooltip ripple"
                 data-bs-toggle="modal"
                 data-bs-target="#signup-form"
                 onClick={() => toggleSigninFlag(true)}
@@ -29,7 +28,9 @@ const SigninItem = ({ title = 'Sign in' }) => {
                     <SignupForm onSwap={toggleSigninFlag} />
                 )}
             </Modal>
-        </Fragment>
+
+            <small className="cus-tooltip-msg">Join with us!</small>
+        </div>
     );
 };
 
