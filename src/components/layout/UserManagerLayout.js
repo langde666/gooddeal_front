@@ -5,12 +5,12 @@ const UserManagerLayout = ({ children }) => {
 
     return (
         <MainLayout className="user-account-page">
-            <div className="row flex-nowrap">
-                <div className="col">
+            <div className="row flex-nowrap position">
+                <div className="col-3">
                     <UserSideBar />
                 </div>
 
-                <div className="col-9">
+                <div className="col-9 p-3 shadow mb-5 bg-body rounded">
                     {children}
                 </div>
             </div>

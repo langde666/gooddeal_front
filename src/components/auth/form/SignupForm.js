@@ -223,6 +223,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
                     <Input
                         type="password"
                         label="Password"
+                        hasEditBtn={true}
                         value={account.password}
                         isValid={account.isValidPassword}
                         feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."

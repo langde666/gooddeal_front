@@ -42,3 +42,47 @@ export const updateAvatar = (userId, token, photo) => {
         .then(res => res.json())
         .catch(error => console.log(error));
 }
+
+export const updateCover = (userId, token, photo) => {
+    return fetch(`${API}/user/cover/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: photo,
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
+
+export const updateProfile = (userId, token, user) => {
+    return fetch(`${API}/user/profile/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(user),
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
+
+export const updateAccount = (userId, token, user) => {
+    return fetch(`${API}/user/account/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(user),
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}

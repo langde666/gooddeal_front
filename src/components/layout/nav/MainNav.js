@@ -6,7 +6,6 @@ import Logo from '../../ui/Logo';
 import SearchBar from '../../ui/SearchBar';
 import SigninItem from '../../ui/SigninItem';
 import YourAccountItem from '../../ui/YourAccountItem';
-import DashboardItem from '../../ui/DashboardItem';
 import CartItem from '../../ui/CartItem';
 
 const MainNav = (props) => {
@@ -16,7 +15,7 @@ const MainNav = (props) => {
         <header className="cus-nav navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div className="container">
                 <Link
-                    className="navbar-brand cus-navbar-brand mx-4 ripple"
+                    className="navbar-brand cus-navbar-brand me-4 ripple"
                     to="/"
                 >
                     <Logo />
@@ -24,7 +23,7 @@ const MainNav = (props) => {
 
                 <SearchBar />
 
-                <ul className="nav cus-subnav mx-4">
+                <ul className="nav cus-subnav ms-4">
                     {!getToken() && (
                         <li className="nav-item">
                             <SigninItem />
@@ -34,6 +33,34 @@ const MainNav = (props) => {
                     {getToken() && (
                         <li className="nav-item">
                             <YourAccountItem />
+                        </li>
+                    )}
+
+                    {getToken() && (
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/user/following">
+                                <i className="fas fa-heart" style={{ color: '#ed4956' }}></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Following</small>
+                        </li>
+                    )}
+
+                    {getToken() && role == 'user' && (
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/user/stores">
+                                <i className="fas fa-store"></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Shop Manager</small>
+                        </li>
+                    )}
+
+                    {getToken() && role == 'user' && (
+                        <li className="nav-item">
+                            <CartItem />
                         </li>
                     )}
 
@@ -47,35 +74,6 @@ const MainNav = (props) => {
                             <small className="cus-tooltip-msg">Dashboard</small>
                         </li>
                     )}
-
-                    {getToken() && role == 'user' && (
-                        <li className="nav-item position-relative">
-                            <Link
-                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/">
-                                <i className="fas fa-store"></i>
-                            </Link>
-                            <small className="cus-tooltip-msg">Shop Manager</small>
-                        </li>
-                    )}
-
-                    {getToken() && role == 'user' && (
-                        <li className="nav-item position-relative">
-                            <Link
-                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/user/following">
-                                <i className="fas fa-heart"></i>
-                            </Link>
-                            <small className="cus-tooltip-msg">Following</small>
-                        </li>
-                    )}
-
-                    {getToken() && role == 'user' && (
-                        <li className="nav-item">
-                            <CartItem />
-                        </li>
-                    )}
-
                 </ul>
             </div>
         </header>

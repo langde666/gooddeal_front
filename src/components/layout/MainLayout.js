@@ -1,14 +1,18 @@
 import MainNav from './nav/MainNav';
 import './style.css';
 
-const MainLayout = ({ className = null, children = null }) => {
+const MainLayout = ({ children = null }) => {
     return (
         <div className="main-layout">
             <MainNav />
 
-            <div className="body container">
-                <div className={className}>{children}</div>
-            </div>
+            <main className="body container">
+                {children}
+            </main>
+
+            {/* <footer className="bg-primary mt-4" style={{ height: '50vh', display: 'block' }}>
+                footer
+            </footer> */}
         </div>
     );
 };

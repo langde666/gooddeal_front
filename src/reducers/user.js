@@ -24,6 +24,17 @@ const userReducer = (state = initialState, action) => {
             }
         }
 
+        case 'UPDATE_COVER': {
+            const cover = action.payload;
+            const newUser = state.user;
+            newUser.cover = cover;
+
+            return {
+                ...state,
+                user: newUser,
+            }
+        }
+
         default: {
             return state;
         }

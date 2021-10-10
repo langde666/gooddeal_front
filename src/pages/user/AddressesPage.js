@@ -1,15 +1,14 @@
 import { useSelector } from 'react-redux';
 import UserManagerLayout from '../../components/layout/UserManagerLayout';
-import Profile from '../../components/user/Profile';
 
-const ProfilePage = (props) => {
+const AddressesPage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-profile-page">
-            <Profile />
+        <UserManagerLayout className="user-addresses-page">
+            Addresses List...
         </UserManagerLayout>
     );
 };
 
-export default ProfilePage;
+export default AddressesPage;

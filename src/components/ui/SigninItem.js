@@ -9,6 +9,7 @@ const SigninItem = ({ title = 'Sign in' }) => {
     return (
         <div className="sign-in-item-wrap position-relative">
             <button
+                type="button"
                 className="sign-in-item btn btn-outline-light cus-outline cus-tooltip ripple"
                 data-bs-toggle="modal"
                 data-bs-target="#signup-form"

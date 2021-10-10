@@ -91,32 +91,22 @@ const YourAccountItem = (props) => {
                     </div>
 
                     <ul className="list-group your-account-options">
-                        <li className="list-group-item your-account-options-item">
+                        <Link className="list-group-item your-account-options-item ripple" to="/user/profile">
                             <i className="fas fa-user-circle"></i>
-                            <Link
-                                className="text-decoration-none text-reset"
-                                to="/user/profile"
-                            >
-                                Your profile
-                            </Link>
-                        </li>
+                            Your profile
+                        </Link>
 
-                        <li className="list-group-item your-account-options-item">
+                        <Link className="list-group-item your-account-options-item ripple" to="/user/purchase">
                             <i className="fas fa-shopping-bag"></i>
-                            <Link
-                                className="text-decoration-none text-reset"
-                                to="/user/purchase"
-                            >
-                                Purchases
-                            </Link>
-                        </li>
+                            Purchases
+                        </Link>
 
                         <li
-                            className="list-group-item your-account-options-item"
+                            className="list-group-item your-account-options-item ripple"
                             onClick={handleSignout}
                         >
                             <i className="fas fa-sign-out-alt"></i>
-                            <span>Sign out</span>
+                            Sign out
                         </li>
                     </ul>
                 </div>

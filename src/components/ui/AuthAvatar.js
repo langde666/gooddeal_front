@@ -9,7 +9,7 @@ import Loading from './Loading';
 import Error from './Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const AuthAvatar = (props) => {
+const AuthAvatar = ({ isEditable = false }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -28,6 +28,9 @@ const AuthAvatar = (props) => {
             .then(data => {
                 if (data.error) {
                     setError(data.error);
+                    setTimeout(() => {
+                        setError('');
+                    }, 3000);
                 }
                 else {
                     dispatch(dispatchAvt(data.avatar));
@@ -37,21 +40,32 @@ const AuthAvatar = (props) => {
             .catch(error => {
                 setError('Server Error');
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
             })
     }
 
     return (
         <div className="cus-avatar-wrap">
-            <div className="cus-avatar--custiomize">
-                {isloading && <Loading />}
-                <img src={`${IMG + avatar}`} className="cus-avatar rounded-circle" alt="avatar" />
-                {avatar && <label htmlFor='upload' className="cus-avatar-icon">
-                    <i className="fas fa-camera"></i>
-                    <input id='upload' className="visually-hidden" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" onChange={handleChange} />
-                </label>}
+            <div className="cus-avatar-box">
+                <div className="cus-avatar">
+                    {isloading && <Loading />}
+                    <img src={`${IMG + avatar}`} className="cus-avatar-img" alt="avatar" />
+                    {avatar && isEditable && (
+                        <label htmlFor='uploadAuthAvatar' className="cus-avatar-icon">
+                            <i className="fas fa-camera"></i>
+                            {error && <span><Error msg={error} /></span>}
+                            <input id='uploadAuthAvatar' className="visually-hidden" type="file"
+                                accept="image/png, image/jpeg, image/jpg, image/gif"
+                                onChange={handleChange}
+                            />
+                        </label>
+                    )}
+                </div>
             </div>
-            {error && <Error msg={error} />}
-            <h1 className="d-block mt-2 text-primary fs-4">{firstname && lastname && firstname + ' ' + lastname}</h1>
+
+            <h1 className="mt-2 fs-4">{firstname && lastname && firstname + ' ' + lastname}</h1>
         </div>
     )
 }

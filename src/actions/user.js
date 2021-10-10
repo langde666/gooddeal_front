@@ -11,3 +11,10 @@ export const updateAvatar = (avatar) => {
         payload: avatar,
     };
 };
+
+export const updateCover = (cover) => {
+    return {
+        type: 'UPDATE_COVER',
+        payload: cover,
+    };
+};
