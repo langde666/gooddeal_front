@@ -12,6 +12,8 @@ import FollowingPage from './user/FollowingPage';
 import GiftWalletPage from './user/GiftWalletPage';
 import GDCoinsPage from './user/GDCoinsPage';
 import StoresPage from './user/StoresPage';
+import VerifyEmailPage from './user/VerifyEmailPage';
+import UserVisitPage from './user/UserVisitPage';
 
 const Routes = () => {
     return (
@@ -37,6 +39,9 @@ const Routes = () => {
                 <PrivateRoute path="/user/giftWallet" exact component={GiftWalletPage} />
                 <PrivateRoute path="/user/GDCoins" exact component={GDCoinsPage} />
                 <PrivateRoute path="/user/stores" exact component={StoresPage} />
+
+                <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
+                <Route path="/user/:userId" exact component={UserVisitPage} />
 
             </Switch>
         </BrowserRouter>

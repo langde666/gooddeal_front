@@ -36,7 +36,7 @@ small {
 }
 
 .fixed-top {
-    z-index: 3;
+    z-index: 4;
 }
 
 /* No select text */
@@ -557,6 +557,7 @@ small {
     color: var(--white-color);
     padding: 1px 6px;
     border-radius: 4px;
+    z-index: 3;
 }
 .cus-tooltip-msg::after {
     content: "";

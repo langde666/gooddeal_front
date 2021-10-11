@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getToken } from '../../apis/auth';
-import { updateCover } from '../../apis/user';
-import { updateCover as dispatchCv } from '../../actions/user';
-import Loading from './Loading';
-import Error from './Error';
+import { getToken } from '../../../apis/auth';
+import { updateCover } from '../../../apis/user';
+import { updateCover as dispatchCv } from '../../../actions/user';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const AuthCover = (props) => {

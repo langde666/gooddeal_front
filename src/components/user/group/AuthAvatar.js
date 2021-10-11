@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import * as actionCreators from '../../actions/user';
-import { getToken } from '../../apis/auth';
-import { updateAvatar } from '../../apis/user';
-import { updateAvatar as dispatchAvt } from '../../actions/user';
-import Loading from './Loading';
-import Error from './Error';
+import * as actionCreators from '../../../actions/user';
+import { getToken } from '../../../apis/auth';
+import { updateAvatar } from '../../../apis/user';
+import { updateAvatar as dispatchAvt } from '../../../actions/user';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const AuthAvatar = ({ isEditable = false }) => {

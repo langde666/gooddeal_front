@@ -72,8 +72,8 @@ export const updateProfile = (userId, token, user) => {
         .catch(error => console.log(error));
 }
 
-export const updateAccount = (userId, token, user) => {
-    return fetch(`${API}/user/account/${userId}`, {
+export const updatePassword = (userId, token, user) => {
+    return fetch(`${API}/user/password/${userId}`, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -85,4 +85,53 @@ export const updateAccount = (userId, token, user) => {
     })
         .then(res => res.json())
         .catch(error => console.log(error));
+}
+
+export const getUserLevel = (userId) => {
+    return fetch(`${API}/user/level/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const sendConfirmationEmail = (userId, token) => {
+    return fetch(`${API}/confirm/email/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const verifyEmail = (emailCode) => {
+    return fetch(`${API}/verify/email/${emailCode}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const getUser = (userId) => {
+    return fetch(`${API}/user/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
 }

@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux";
-import Input from "../../ui/Input";
+import Input from "./Input";
 
 const humanReadableDate = (date) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -14,9 +13,7 @@ const humanReadableDate = (date) => {
         date.getMinutes();
 }
 
-const AccountInfo = (props) => {
-    const { role, createdAt } = useSelector(state => state.user.user);
-
+const AccountInfoVisit = ({ role, createdAt }) => {
     return (
         <div className="profile-form row py-2 border border-primary rounded-3">
             <div className="col-6">
@@ -29,11 +26,19 @@ const AccountInfo = (props) => {
             </div>
 
             <div className="col-6 mt-2">
-                {role == 'user' ? (<span className='badge bg-primary'>
-                    <i className="fas fa-user"></i>
-                </span>) : (<span className='badge bg-info'>
-                    <i className="fas fa-user-tie"></i>
-                </span>)}
+                <div className="position-relative d-inline-block">
+                    {role == 'user' ? (
+                        <span className='badge bg-primary cus-tooltip'>
+                            <i className="fas fa-user"></i>
+                        </span>
+                    ) : (
+                        <span className='badge bg-info cus-tooltip'>
+                            <i className="fas fa-user-tie"></i>
+                        </span>
+                    )}
+                    <small className="cus-tooltip-msg">Role: {role}</small>
+                </div>
+
             </div>
 
             <div className="col-12">
@@ -48,4 +53,4 @@ const AccountInfo = (props) => {
     );
 }
 
-export default AccountInfo;
+export default AccountInfoVisit;

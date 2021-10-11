@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AuthAvatar from '../../ui/AuthAvatar';
+import AuthAvatar from '../../user/group/AuthAvatar';
 
 const UserSideBar = (props) => {
     const role = useSelector((state) => state.user.user.role);

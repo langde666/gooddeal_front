@@ -11,7 +11,7 @@ const CartItem = (props) => {
                 <i className="fas fa-shopping-basket"></i>
             </Link>
             {count > 0 && (
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cus-tooltip">
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info cus-tooltip">
                     {count && count > 0 && count < 10 ? count : '9+'}<span className="visually-hidden">products</span>
                 </span>
             )}
