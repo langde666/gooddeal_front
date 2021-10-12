@@ -198,7 +198,15 @@ const AuthProfile = (props) => {
                         hasCloseBtn={false}
                         title="Edit profile"
                     >
-                        <ProfileEditForm />
+                        <ProfileEditForm
+                            firstname={firstname}
+                            lastname={lastname}
+                            email={email}
+                            phone={phone}
+                            id_card={id_card}
+                            googleId={googleId}
+                            facebookId={facebookId}
+                        />
                     </Modal>
 
                     <small className="cus-tooltip-msg">Edit Profile</small>

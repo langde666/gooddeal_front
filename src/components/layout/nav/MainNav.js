@@ -5,8 +5,8 @@ import { getToken } from '../../../apis/auth';
 import Logo from '../../ui/Logo';
 import SearchBar from '../../ui/SearchBar';
 import SigninItem from '../../ui/SigninItem';
-import YourAccountItem from '../../ui/YourAccountItem';
-import CartItem from '../../ui/CartItem';
+import YourAccountItem from '../../user/auth/YourAccountItem';
+import CartItem from '../../user/auth/CartItem';
 
 const MainNav = (props) => {
     const role = useSelector((state) => state.user.user.role);

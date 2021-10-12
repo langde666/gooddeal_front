@@ -7,6 +7,7 @@ const useRegex = () => {
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
         passwordLess: /^[A-Za-z\d@$!%*?&]+$/,
         id_card: /(^\d{9}$|^\d{12}$)/,
+        address: /^[^,]+$/,
     };
 
     const regexTest = (name, value) => regexes[name].test(value);

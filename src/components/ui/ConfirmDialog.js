@@ -1,6 +1,7 @@
 const ConfirmDialog = ({
     title = 'Confirm the action',
     message = 'Are you sure about that?',
+    color = 'primary',
     onSubmit = () => { },
     onClose = () => { },
 }) => {
@@ -16,7 +17,7 @@ const ConfirmDialog = ({
                 <div className="cus-modal-dialog modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title text-primary">
+                            <h5 className={`modal-title text-${color}`}>
                                 {title}
                             </h5>
                             <button type="button" className="btn-close"

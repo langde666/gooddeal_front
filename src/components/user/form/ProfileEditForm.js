@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addUser } from '../../../actions/user';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/user';
@@ -10,8 +10,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const ProfileEditForm = (props) => {
-    let { firstname, lastname, email, phone, id_card, googleId, facebookId } = useSelector(state => state.user.user);
+const ProfileEditForm = ({ firstname, lastname, email, phone, id_card, googleId, facebookId }) => {
     const [profile, setProfile] = useState({});
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);

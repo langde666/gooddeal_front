@@ -135,3 +135,44 @@ export const getUser = (userId) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 }
+
+export const addAddress = (userId, token, address) => {
+    return fetch(`${API}/user/address/${userId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(address),
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
+
+export const removeAddresses = (userId, token, index) => {
+    return fetch(`${API}/user/address/${userId}?index=${index}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
+
+export const updateAddress = (userId, token, index, address) => {
+    return fetch(`${API}/user/address/${userId}?index=${index}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(address),
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}

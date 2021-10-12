@@ -100,6 +100,12 @@ const PasswordEditForm = (props) => {
                     }, 3000);
                 }
                 else {
+                    setAccount({
+                        currentPassword: '',
+                        newPassword: '',
+                        isValidCurrentPassword: true,
+                        isValidNewPassword: true,
+                    });
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {
@@ -127,7 +133,6 @@ const PasswordEditForm = (props) => {
             />}
 
             <form className="password-edit-form row mb-2" onSubmit={handleSubmit}>
-
                 <div className="col-12">
                     <Input
                         type="password"

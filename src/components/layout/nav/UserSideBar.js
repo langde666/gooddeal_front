@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AuthAvatar from '../../user/group/AuthAvatar';
+import AuthAvatar from '../../user/auth/AuthAvatar';
 
 const UserSideBar = (props) => {
     const role = useSelector((state) => state.user.user.role);
@@ -26,7 +26,7 @@ const UserSideBar = (props) => {
                             to="/user/addresses"
                             className={`nav-link cus-sidebar-item ripple link-dark ${path == 'addresses' ? 'active' : ''}`}
                         >
-                            <i className="fas fa-address-card me-3"></i>
+                            <i className="fas fa-map-marker-alt me-3"></i>
                             Your addresses
                         </Link>
                     </li>)}

@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 import UserManagerLayout from '../../components/layout/UserManagerLayout';
 
-const AddressesPage = (props) => {
+const UserGDCoinsPage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-addresses-page">
-            Addresses List...
+        <UserManagerLayout className="user-gd-coins-page">
+            Your GD Coins...
         </UserManagerLayout>
     );
 };
 
-export default AddressesPage;
+export default UserGDCoinsPage;

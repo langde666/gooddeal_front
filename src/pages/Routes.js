@@ -5,13 +5,13 @@ import HomePage from './core/HomePage';
 import ProductSearchPage from './core/ProductSearchPage';
 import StoreSearchPage from './core/StoreSearchPage';
 import UserSearchPage from './core/UserSearchPage';
-import ProfilePage from './user/ProfilePage';
-import AddressesPage from './user/AddressesPage';
-import PurchasePage from './user/PurchasePage';
-import FollowingPage from './user/FollowingPage';
-import GiftWalletPage from './user/GiftWalletPage';
-import GDCoinsPage from './user/GDCoinsPage';
-import StoresPage from './user/StoresPage';
+import UserProfilePage from './user/UserProfilePage';
+import UserAddressesPage from './user/UserAddressesPage';
+import UserPurchasePage from './user/UserPurchasePage';
+import UserFollowingPage from './user/UserFollowingPage';
+import UserGiftWalletPage from './user/UserGiftWalletPage';
+import UserGDCoinsPage from './user/UserGDCoinsPage';
+import UserStoresPage from './user/UserStoresPage';
 import VerifyEmailPage from './user/VerifyEmailPage';
 import UserVisitPage from './user/UserVisitPage';
 
@@ -32,13 +32,13 @@ const Routes = () => {
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
 
-                <PrivateRoute path="/user/profile" exact component={ProfilePage} />
-                <PrivateRoute path="/user/addresses" exact component={AddressesPage} />
-                <PrivateRoute path="/user/purchase" exact component={PurchasePage} />
-                <PrivateRoute path="/user/following" exact component={FollowingPage} />
-                <PrivateRoute path="/user/giftWallet" exact component={GiftWalletPage} />
-                <PrivateRoute path="/user/GDCoins" exact component={GDCoinsPage} />
-                <PrivateRoute path="/user/stores" exact component={StoresPage} />
+                <PrivateRoute path="/user/profile" exact component={UserProfilePage} />
+                <PrivateRoute path="/user/addresses" exact component={UserAddressesPage} />
+                <PrivateRoute path="/user/purchase" exact component={UserPurchasePage} />
+                <PrivateRoute path="/user/following" exact component={UserFollowingPage} />
+                <PrivateRoute path="/user/giftWallet" exact component={UserGiftWalletPage} />
+                <PrivateRoute path="/user/GDCoins" exact component={UserGDCoinsPage} />
+                <PrivateRoute path="/user/stores" exact component={UserStoresPage} />
 
                 <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
                 <Route path="/user/:userId" exact component={UserVisitPage} />

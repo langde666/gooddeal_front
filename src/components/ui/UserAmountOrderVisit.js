@@ -11,7 +11,7 @@ const shields = {
     "diamond": "#82aeb3",
 }
 
-const AmountOrderVisit = ({ userId, point, number_of_successful_orders, number_of_failed_orders }) => {
+const UserAmountOrderVisit = ({ userId, point, number_of_successful_orders, number_of_failed_orders }) => {
     const [userLv, setUserLv] = useState({});
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -53,8 +53,8 @@ const AmountOrderVisit = ({ userId, point, number_of_successful_orders, number_o
             </div>
 
             <div className="col-6 mt-2">
-                {isloading && <Loading size="small" />}
                 <div className="position-relative d-inline-block">
+                    {isloading && <Loading size="small" />}
                     <span className='badge cus-tooltip' style={{ backgroundColor: shields[userLv.name] }}>
                         <i className="fas fa-shield-alt me-2"></i>
                         {!userLv.name && error && <Error msg={error} />}
@@ -78,4 +78,4 @@ const AmountOrderVisit = ({ userId, point, number_of_successful_orders, number_o
     )
 }
 
-export default AmountOrderVisit;
+export default UserAmountOrderVisit;

@@ -6,9 +6,9 @@ import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
 import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
-import ProfileVisit from '../../components/ui/ProfileVisit';
-import AmountOrderVisit from '../../components/ui/AmountOrderVisit';
-import AccountInfoVisit from '../../components/ui/AccountInfoVisit';
+import UserProfileVisit from '../../components/ui/UserProfileVisit';
+import UserAmountOrderVisit from '../../components/ui/UserAmountOrderVisit';
+import UserAccountInfoVisit from '../../components/ui/UserAccountInfoVisit';
 
 const UserVisitPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const UserVisitPage = (props) => {
                         <div className="col-12 mt-4">
                             <div className="row">
                                 <div className="col mx-1">
-                                    <ProfileVisit
+                                    <UserProfileVisit
                                         firstname={user.firstname}
                                         lastname={user.lastname}
                                         email={user.email}
@@ -74,14 +74,14 @@ const UserVisitPage = (props) => {
                                 <div className="col mx-1">
                                     <div className="row">
                                         <div className="col-12">
-                                            <AmountOrderVisit
+                                            <UserAmountOrderVisit
                                                 userId={user._id}
                                                 point={user.point}
                                                 number_of_successful_orders={user.number_of_successful_orders} number_of_failed_orders={user.number_of_failed_orders}
                                             />
                                         </div>
                                         <div className="col-12 mt-2">
-                                            <AccountInfoVisit
+                                            <UserAccountInfoVisit
                                                 role={user.role}
                                                 createdAt={user.createdAt}
                                             />

@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import * as actionCreators from '../../actions/user';
-import { getToken, signout } from '../../apis/auth';
-import { getUserProfile } from '../../apis/user';
-import { addUser } from '../../actions/user';
-import Loading from './Loading';
-import Error from './Error';
-import ConfirmDialog from './ConfirmDialog';
+import * as actionCreators from '../../../actions/user';
+import { getToken, signout } from '../../../apis/auth';
+import { getUserProfile } from '../../../apis/user';
+import { addUser } from '../../../actions/user';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
+import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -69,6 +69,7 @@ const YourAccountItem = (props) => {
             <div className="your-account-wrap">
                 {isConfirming && (<ConfirmDialog
                     title="Sign out"
+                    color="danger"
                     onSubmit={onSignoutSubmit}
                     onClose={() => setIsConfirming(false)}
                 />)}

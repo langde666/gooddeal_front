@@ -13,7 +13,7 @@ const humanReadableDate = (date) => {
         date.getMinutes();
 }
 
-const AccountInfoVisit = ({ role, createdAt }) => {
+const UserAccountInfoVisit = ({ role, createdAt }) => {
     return (
         <div className="profile-form row py-2 border border-primary rounded-3">
             <div className="col-6">
@@ -53,4 +53,4 @@ const AccountInfoVisit = ({ role, createdAt }) => {
     );
 }
 
-export default AccountInfoVisit;
+export default UserAccountInfoVisit;
