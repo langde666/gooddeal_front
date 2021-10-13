@@ -21,7 +21,7 @@ const UserProfilePage = (props) => {
                         </div>
                         <div className="d-flex justify-content-end mt-4 me-2">
                             <Link
-                                className="btn btn-primary ripple btn-sm"
+                                className="btn btn-outline-primary ripple btn-sm"
                                 to={`/user/${user._id}`} target="_blank"
                             >
                                 Visit Your Page <i className="fas fa-external-link-alt ms-1"></i>

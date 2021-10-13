@@ -1,5 +1,5 @@
-const Success = ({ msg = 'Success!' }) => (
-    <p className="text-success" role="alert">
+const Success = ({ msg = 'Success!', color = 'success' }) => (
+    <p className={`text-${color}`} role="alert">
         {msg}
     </p>
 );

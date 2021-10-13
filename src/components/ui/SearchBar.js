@@ -4,9 +4,11 @@ import DropDownMenu from './DropDownMenu';
 
 const SearchBar = (props) => {
     let location = useLocation();
-    const currentQuery =
-        new URLSearchParams(location.search).get('keyword') || '';
-    const currentOption = location.pathname.split('/')[1] || 'products';
+    const currentQuery = new URLSearchParams(location.search).get('keyword') || '';
+    let currentOption = location.pathname.split('/')[1];
+    if (currentOption != 'products' && currentOption != 'stores' && currentOption != 'users') {
+        currentOption = 'products';
+    }
 
     const [query, setQuery] = useState(currentQuery);
     const [option, setOption] = useState(currentOption);
@@ -19,11 +21,7 @@ const SearchBar = (props) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        if (option != 'products' && option != 'stores' && option != 'users')
-            return;
-        if (query != '') {
-            history.push(`/${option}/search?keyword=${query}`);
-        }
+        history.push(`/${option}/search?keyword=${query}`);
     };
 
     return (
@@ -63,7 +61,7 @@ const SearchBar = (props) => {
 
             <button
                 className="btn btn-outline-light cus-outline text-white ripple"
-                type="button"
+                type="submit"
                 onClick={handleFormSubmit}
             >
                 <i className="fas fa-search"></i>

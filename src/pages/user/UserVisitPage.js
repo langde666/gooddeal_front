@@ -42,13 +42,13 @@ const UserVisitPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="user-visit-page position-relative p-3 shadow mb-5 bg-body rounded"
+            <div className="user-visit-page position-relative p-3 shadow rounded"
                 style={{ maxWidth: '990px', margin: '0 auto' }}>
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
                 {user && (
                     <div className="row">
-                        <div className="col-12 cus-row-profile">
+                        <div className="col-12 position-relative pb-1">
                             <Cover cover={user.cover} />
                             <div className="avatar-absolute">
                                 <Avatar
@@ -56,6 +56,21 @@ const UserVisitPage = (props) => {
                                     firstname={user.firstname}
                                     lastname={user.lastname}
                                 />
+                            </div>
+                            <div className="d-flex justify-content-end mt-4 me-2">
+                                <div className="position-relative d-inline-block">
+                                    <div className="temp cus-tooltip">
+                                        <button
+                                            disabled
+                                            className="btn btn-outline-pink ripple btn-sm"
+                                        >
+                                            <i className="far fa-heart me-2"></i>Follow
+                                            {/* <i className="fas fa-heart me-2"></i>Following */}
+                                        </button>
+                                    </div>
+
+                                    <small className="cus-tooltip-msg">This function is not available yet</small>
+                                </div>
                             </div>
                         </div>
 

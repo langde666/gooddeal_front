@@ -29,11 +29,11 @@ const UserAccountInfoVisit = ({ role, createdAt }) => {
                 <div className="position-relative d-inline-block">
                     {role == 'user' ? (
                         <span className='badge bg-primary cus-tooltip'>
-                            <i className="fas fa-user"></i>
+                            <i className="fas fa-user me-2"></i>{role}
                         </span>
                     ) : (
                         <span className='badge bg-info cus-tooltip'>
-                            <i className="fas fa-user-tie"></i>
+                            <i className="fas fa-user-tie me-2"></i>{role}
                         </span>
                     )}
                     <small className="cus-tooltip-msg">Role: {role}</small>

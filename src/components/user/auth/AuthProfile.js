@@ -187,7 +187,7 @@ const AuthProfile = (props) => {
 
             <div className="col-12 d-flex justify-content-end">
                 <div className="position-relative d-inline-block">
-                    <button type="button" className="btn btn-primary ripple cus-tooltip px-4"
+                    <button type="button" className="btn btn-primary ripple cus-tooltip"
                         data-bs-toggle="modal"
                         data-bs-target="#profile-edit-form">
                         <i className="fas fa-pen"></i>
@@ -213,7 +213,7 @@ const AuthProfile = (props) => {
                 </div>
 
                 {!googleId && !facebookId && <div className="position-relative d-inline-block ms-2">
-                    <button type="button" className="btn btn-primary ripple cus-tooltip px-4"
+                    <button type="button" className="btn btn-primary ripple cus-tooltip"
                         data-bs-toggle="modal"
                         data-bs-target="#password-edit-form">
                         <i className="fas fa-key"></i>

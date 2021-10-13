@@ -11,7 +11,8 @@ import Success from './Success';
 import ConfirmDialog from './ConfirmDialog';
 
 const AddressesTable = ({ listAddresses }) => {
-    const [index, setIndex] = useState(null);
+    const [editAddress, setEditAddress] = useState({});
+    const [deleteAddress, setDeleteAddress] = useState({});
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -19,8 +20,18 @@ const AddressesTable = ({ listAddresses }) => {
 
     const dispatch = useDispatch();
 
-    const handleRemoveAddress = (index) => {
-        setIndex(index);
+    const handleEditAddress = (address, index) => {
+        setEditAddress({
+            index: index,
+            address: address,
+        })
+    }
+
+    const handleRemoveAddress = (address, index) => {
+        setDeleteAddress({
+            index: index,
+            address: address,
+        });
         setIsConfirming(true);
     }
 
@@ -29,7 +40,7 @@ const AddressesTable = ({ listAddresses }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeAddresses(_id, accessToken, index)
+        removeAddresses(_id, accessToken, deleteAddress.index)
             .then(data => {
                 if (data.error) {
                     setError(data.error);
@@ -64,44 +75,36 @@ const AddressesTable = ({ listAddresses }) => {
             {isConfirming && (
                 <ConfirmDialog
                     title='Remove this address'
-                    message={listAddresses[index]}
+                    message={deleteAddress.address}
                     color='danger'
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
-            <table className="addresses-table table table-striped">
+            <table className="addresses-table table align-middle table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col-6">Address</th>
-                        <th scope="col"></th>
+                        <th scope="col" className="ps-3 pe-2" >#</th>
+                        <th scope="col-6" className="px-3">Address</th>
+                        <th scope="col" className="ps-3 pe-0"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {listAddresses && listAddresses.map((address, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{address}</td>
-                            <td>
+                            <th scope="row" className="ps-3 pe-2" >{index + 1}</th>
+                            <td className="px-3">{address}</td>
+                            <td className="ps-3 pe-0">
                                 <div className="position-relative d-inline-block me-2">
                                     <button
                                         type="button"
                                         className="btn btn-primary ripple cus-tooltip"
                                         data-bs-toggle="modal"
-                                        data-bs-target={`#edit-address-form-${index}`}
+                                        data-bs-target="#edit-address-form"
+                                        onClick={() => handleEditAddress(address, index)}
                                     >
                                         <i className="fas fa-pen"></i>
                                     </button>
-
-                                    <Modal
-                                        id={`edit-address-form-${index}`}
-                                        hasCloseBtn={false}
-                                        title="Edit address"
-                                    >
-                                        <EditAddressForm oldAddress={address} index={index} />
-                                    </Modal>
-
                                     <small className="cus-tooltip-msg">Edit Address</small>
                                 </div>
 
@@ -109,7 +112,7 @@ const AddressesTable = ({ listAddresses }) => {
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger ripple cus-tooltip"
-                                        onClick={() => handleRemoveAddress(index)}
+                                        onClick={() => handleRemoveAddress(address, index)}
                                     >
                                         <i className="fas fa-trash-alt"></i>
                                     </button>
@@ -120,6 +123,17 @@ const AddressesTable = ({ listAddresses }) => {
                     ))}
                 </tbody>
             </table>
+
+            <Modal
+                id="edit-address-form"
+                hasCloseBtn={false}
+                title="Edit address"
+            >
+                <EditAddressForm
+                    oldAddress={editAddress.address}
+                    index={editAddress.index}
+                />
+            </Modal>
         </div>
     );
 }

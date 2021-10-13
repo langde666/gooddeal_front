@@ -10,7 +10,7 @@ const UserManagerLayout = ({ children }) => {
                     <UserSideBar />
                 </div>
 
-                <div className="col-9 p-3 shadow mb-5 bg-body rounded">
+                <div className="col-9 p-3 shadow rounded">
                     {children}
                 </div>
             </div>

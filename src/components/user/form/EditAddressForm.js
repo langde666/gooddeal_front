@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../actions/user';
 import { getToken } from '../../../apis/auth';
@@ -11,18 +11,22 @@ import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const EditAddressForm = ({ oldAddress = '', index = null }) => {
-    const [address, setAddress] = useState({
-        street: oldAddress.split(', ')[0],
-        ward: oldAddress.split(', ')[1],
-        district_city: oldAddress.split(', ')[2],
-        city_province: oldAddress.split(', ')[3],
-        country: 'Việt Nam',
-        isValidStreet: true,
-        isValidWard: true,
-        isValidDistrict: true,
-        isValidProvince: true,
-        isValidCountry: true,
-    });
+    const [address, setAddress] = useState({});
+
+    useEffect(() => {
+        setAddress({
+            street: oldAddress.split(', ')[0],
+            ward: oldAddress.split(', ')[1],
+            district_city: oldAddress.split(', ')[2],
+            city_province: oldAddress.split(', ')[3],
+            country: 'Việt Nam',
+            isValidStreet: true,
+            isValidWard: true,
+            isValidDistrict: true,
+            isValidProvince: true,
+            isValidCountry: true,
+        });
+    }, [oldAddress, index])
 
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);

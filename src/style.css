@@ -171,7 +171,7 @@ small {
 .your-account-options::after {
     content: "";
     position: absolute;
-    top: -12%;
+    top: -14px;
     left: 50%;
     transform: translateX(-50%);
     border-width: 10px 10px;
@@ -605,6 +605,17 @@ small {
     color: #ed4956;
 }
 
+.btn-outline-pink {
+    color: #ed4956;
+    border-color: #ed4956;
+}
+
+.btn-outline-pink:hover {
+    color: #fff;
+    background-color: #ed4956;
+    border-color: #ed4956;
+}
+
 .nav-pills .nav-link.active-pink {
     color: #fff;
     background-color: #ed4956;
@@ -644,6 +655,25 @@ small {
     height: 0;
     margin: -1rem auto 0;
     /* overflow: hidden; */
+}
+
+.cus-card-img-top {
+    position: relative;
+    padding-bottom: 100%;
+    height: 0;
+}
+
+.cus-card-img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 }
 
 .cus-cover-img {

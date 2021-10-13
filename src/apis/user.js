@@ -176,3 +176,17 @@ export const updateAddress = (userId, token, index, address) => {
         .then(res => res.json())
         .catch(error => console.log(error));
 }
+
+export const getlistUsers = (filter) => {
+    const { search, sortBy, order, limit, page, role } = filter;
+
+    return fetch(`${API}/users?search=${search}&role=${role}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}

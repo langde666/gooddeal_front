@@ -17,7 +17,7 @@ const YourAccountItem = (props) => {
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
 
-    let { firstname, lastname, avatar } = useSelector(state => state.user.user);
+    let { firstname, lastname, avatar, role } = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const history = useHistory();
     const { _id, accessToken, refreshToken } = getToken();
@@ -97,10 +97,10 @@ const YourAccountItem = (props) => {
                             Your profile
                         </Link>
 
-                        <Link className="list-group-item your-account-options-item ripple" to="/user/purchase">
+                        {role == 'user' && <Link className="list-group-item your-account-options-item ripple" to="/user/purchase">
                             <i className="fas fa-shopping-bag"></i>
                             Purchases
-                        </Link>
+                        </Link>}
 
                         <li
                             className="list-group-item your-account-options-item ripple"
