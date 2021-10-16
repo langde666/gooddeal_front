@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import DropDownMenu from './DropDownMenu';
+import DropDownMenu from '../../ui/DropDownMenu';
 
 const SearchBar = (props) => {
     let location = useLocation();

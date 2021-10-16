@@ -5,8 +5,10 @@ const UserGiftWalletPage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-gift-wallet-page">
-            Your Gifts...
+        <UserManagerLayout>
+            <div className="user-gift-wallet-page">
+                Your Gifts...
+            </div>
         </UserManagerLayout>
     );
 };

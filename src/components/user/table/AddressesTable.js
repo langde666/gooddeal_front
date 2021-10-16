@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getToken } from '../../apis/auth';
-import { removeAddresses } from '../../apis/user';
-import { addUser } from '../../actions/user';
-import EditAddressForm from '../user/form/EditAddressForm';
-import Modal from './Modal';
-import Loading from './Loading';
-import Error from './Error';
-import Success from './Success';
-import ConfirmDialog from './ConfirmDialog';
+import { getToken } from '../../../apis/auth';
+import { removeAddresses } from '../../../apis/user';
+import { addUser } from '../../../actions/user';
+import EditAddressForm from '../form/EditAddressForm';
+import Modal from '../../ui/Modal';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
+import Success from '../../ui/Success';
+import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const AddressesTable = ({ listAddresses }) => {
     const [editAddress, setEditAddress] = useState({});

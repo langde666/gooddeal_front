@@ -1,4 +1,4 @@
-import Input from "./Input";
+import Paragraph from "../../ui/Paragraph";
 
 const humanReadableDate = (date) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -13,15 +13,13 @@ const humanReadableDate = (date) => {
         date.getMinutes();
 }
 
-const UserAccountInfoVisit = ({ role, createdAt }) => {
+const UserAccountGroup = ({ role, createdAt }) => {
     return (
         <div className="profile-form row py-2 border border-primary rounded-3">
             <div className="col-6">
-                <Input
-                    type="text"
+                <Paragraph
                     label="Role"
                     value={role}
-                    isDisabled={true}
                 />
             </div>
 
@@ -42,15 +40,13 @@ const UserAccountInfoVisit = ({ role, createdAt }) => {
             </div>
 
             <div className="col-12">
-                <Input
-                    type="text"
+                <Paragraph
                     label="Joined"
                     value={humanReadableDate(createdAt)}
-                    isDisabled={true}
                 />
             </div>
         </div>
     );
 }
 
-export default UserAccountInfoVisit;
+export default UserAccountGroup;

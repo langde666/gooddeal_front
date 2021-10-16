@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { useDispatch, useSelector, connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
-import * as actionCreators from '../../../actions/user';
+import { connect } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { updateAvatar } from '../../../apis/user';
-import { updateAvatar as dispatchAvt } from '../../../actions/user';
+import { addUser } from '../../../actions/user';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const AuthAvatar = ({ isEditable = false }) => {
+const AuthAvatar = ({ isEditable = false, bodername = false, user, actions }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    let { avatar, firstname, lastname } = useSelector(state => state.user.user);
-    const dispatch = useDispatch();
+    const { avatar, firstname, lastname } = user;
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
@@ -33,7 +30,7 @@ const AuthAvatar = ({ isEditable = false }) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(dispatchAvt(data.avatar));
+                    actions(data);
                 }
                 setIsLoading(false);
             })
@@ -65,17 +62,17 @@ const AuthAvatar = ({ isEditable = false }) => {
                 </div>
             </div>
 
-            <h1 className="mt-2 fs-4">{firstname && lastname && firstname + ' ' + lastname}</h1>
+            <h1 className={`mt-2 px-2 py-1 rounded d-inline-block fs-5 ${bodername ? 'bg-body shadow' : ''}`}> {firstname && lastname && firstname + ' ' + lastname}</h1>
         </div>
     )
 }
 
-function mapStateToProps(state) {
-    return { user: state.user }
+const mapStateToProps = (state) => {
+    return { user: state.user.user }
 }
 
-function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators(actionCreators, dispatch) }
+const mapDispatchToProps = (dispatch) => {
+    return { actions: (data) => dispatch(addUser(data.user)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthAvatar);

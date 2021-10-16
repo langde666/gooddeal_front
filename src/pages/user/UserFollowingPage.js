@@ -5,8 +5,10 @@ const UserFollowingPage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-following-page">
-            Your following...
+        <UserManagerLayout>
+            <div className="user-following-page">
+                Your following...
+            </div>
         </UserManagerLayout>
     );
 };

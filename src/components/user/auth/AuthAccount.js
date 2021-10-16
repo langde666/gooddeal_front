@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useSelector, useDispatch, connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
-import * as actionCreators from '../../../actions/user';
+import { connect } from 'react-redux';
 import { getToken, signout } from '../../../apis/auth';
 import { getUserProfile } from '../../../apis/user';
 import { addUser } from '../../../actions/user';
@@ -12,13 +10,12 @@ import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const YourAccountItem = (props) => {
+const AuthAccount = ({ user, actions }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
 
-    let { firstname, lastname, avatar, role } = useSelector(state => state.user.user);
-    const dispatch = useDispatch();
+    let { firstname, lastname, avatar, role } = user;
     const history = useHistory();
     const { _id, accessToken, refreshToken } = getToken();
 
@@ -26,13 +23,13 @@ const YourAccountItem = (props) => {
         setIsLoading(true);
         setError('');
 
-        getUserProfile(_id, accessToken, refreshToken)
+        getUserProfile(_id, accessToken)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    dispatch(addUser(data.user));
+                    actions(data);
                     setIsLoading(false);
                 }
             })
@@ -116,11 +113,11 @@ const YourAccountItem = (props) => {
 };
 
 function mapStateToProps(state) {
-    return { user: state.user }
+    return { user: state.user.user }
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators(actionCreators, dispatch) }
+    return { actions: (data) => dispatch(addUser(data.user)) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(YourAccountItem);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthAccount);

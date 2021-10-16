@@ -38,7 +38,7 @@ export const refreshToken = (refreshToken) => {
         .then((res) => res.json())
         .then((data) => {
             const { accessToken, refreshToken } = data;
-            if (typeof window !== 'undefined' && localStorage.getItem('jwt')) {
+            if (accessToken && refreshToken && typeof window !== 'undefined' && localStorage.getItem('jwt')) {
                 const auth = JSON.parse(localStorage.getItem('jwt'));
                 auth.accessToken = accessToken;
                 auth.refreshToken = refreshToken;

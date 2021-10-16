@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserLevel } from '../../apis/user';
+import { getUserLevel } from '../../../apis/user';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 const shields = {

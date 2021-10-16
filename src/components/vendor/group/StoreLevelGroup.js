@@ -1,33 +1,31 @@
 import { useState, useEffect } from 'react';
-import { getUserLevel } from '../../apis/user';
-import Input from "./Input";
-import Loading from './Loading';
-import Error from './Error';
+import { getStoreLevel } from '../../../apis/store';
+import Paragraph from "../../ui/Paragraph";
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
 
 const shields = {
-    "bronze": "#CD7F32",
-    "silver": "#C0C0C0",
-    "gold": "#FFD700",
-    "diamond": "#82aeb3",
+    "normal": "#C0C0C0",
+    "premium": "#FFD700",
 }
 
-const UserAmountOrderVisit = ({ userId, point, number_of_successful_orders, number_of_failed_orders }) => {
-    const [userLv, setUserLv] = useState({});
+const StoreLevelGroup = ({ storeId, point, number_of_successful_orders, number_of_failed_orders }) => {
+    const [storeLv, setStoreLv] = useState({});
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const getUserLv = () => {
+    const getStoreLv = () => {
         setError('');
         setIsLoading(true);
 
-        getUserLevel(userId)
+        getStoreLevel(storeId)
             .then(data => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 }
                 else {
-                    setUserLv(data.level);
+                    setStoreLv(data.level);
                     setIsLoading(false);
                 }
             })
@@ -38,44 +36,41 @@ const UserAmountOrderVisit = ({ userId, point, number_of_successful_orders, numb
     }
 
     useEffect(() => {
-        getUserLv();
-    }, [point, userId]);
+        getStoreLv();
+    }, [point, storeId]);
 
     return (
         <div className="profile-form row py-2 border border-primary rounded-3">
             <div className="col-6">
-                <Input
-                    type="text"
+                <Paragraph
                     label="Point"
                     value={point}
-                    isDisabled={true}
                 />
             </div>
 
             <div className="col-6 mt-2">
                 <div className="position-relative d-inline-block">
                     {isloading && <Loading size="small" />}
-                    <span className='badge cus-tooltip' style={{ backgroundColor: shields[userLv.name] }}>
+                    <span className='badge cus-tooltip' style={{ backgroundColor: shields[storeLv.name] }}>
                         <i className="fas fa-shield-alt me-2"></i>
-                        {!userLv.name && error && <Error msg={error} />}
-                        {userLv.name}
+                        {!storeLv.name && error && <Error msg={error} />}
+                        {storeLv.name}
                     </span>
                     <small className='cus-tooltip-msg'>
-                        Floor point: {userLv.minPoint} - Discount: {userLv.discount && userLv.discount.$numberDecimal * 100}%
+                        Floor point: {storeLv.minPoint} - Discount: {storeLv.discount
+                            && (storeLv.discount.$numberDecimal * 100).toFixed(2)}%
                     </small>
                 </div>
             </div>
 
             <div className="col-12">
-                <Input
-                    type="text"
+                <Paragraph
                     label="Sucessful / failed orders"
                     value={number_of_successful_orders + ' / ' + number_of_failed_orders}
-                    isDisabled={true}
                 />
             </div>
         </div>
     )
 }
 
-export default UserAmountOrderVisit;
+export default StoreLevelGroup;

@@ -5,8 +5,10 @@ const UserGDCoinsPage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-gd-coins-page">
-            Your GD Coins...
+        <UserManagerLayout>
+            <div className="user-gd-coins-page">
+                Your GD Coins...
+            </div>
         </UserManagerLayout>
     );
 };

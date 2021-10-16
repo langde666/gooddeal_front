@@ -11,9 +11,17 @@ import UserPurchasePage from './user/UserPurchasePage';
 import UserFollowingPage from './user/UserFollowingPage';
 import UserGiftWalletPage from './user/UserGiftWalletPage';
 import UserGDCoinsPage from './user/UserGDCoinsPage';
-import UserStoresPage from './user/UserStoresPage';
+import UserOrdersManagerPage from './user/UserOrdersManagerPage';
+import UserShopsManagerPage from './user/UserShopsManagerPage';
 import VerifyEmailPage from './user/VerifyEmailPage';
 import UserVisitPage from './user/UserVisitPage';
+import ShopProfilePage from './vendor/ShopProfilePage';
+import ShopDashboardPage from './vendor/ShopDashboardPage';
+import ShopProductsPage from './vendor/ShopProductsPage';
+import ShopOrdersPage from './vendor/ShopOrdersPage';
+import ShopStaffsPage from './vendor/ShopStaffsPage';
+import ShopGiftsPage from './vendor/ShopGiftsPage';
+import ShopGDCoinsPage from './vendor/ShopGDCoinsPage';
 
 const Routes = () => {
     return (
@@ -38,10 +46,19 @@ const Routes = () => {
                 <PrivateRoute path="/user/following" exact component={UserFollowingPage} />
                 <PrivateRoute path="/user/giftWallet" exact component={UserGiftWalletPage} />
                 <PrivateRoute path="/user/GDCoins" exact component={UserGDCoinsPage} />
-                <PrivateRoute path="/user/stores" exact component={UserStoresPage} />
+                <PrivateRoute path="/user/shopManager/orders" exact component={UserOrdersManagerPage} />
+                <PrivateRoute path="/user/shopManager/shops" exact component={UserShopsManagerPage} />
 
                 <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
                 <Route path="/user/:userId" exact component={UserVisitPage} />
+
+                <PrivateRoute path="/vendor/:storeId" exact component={ShopDashboardPage} />
+                <PrivateRoute path="/vendor/profile/:storeId" exact component={ShopProfilePage} />
+                <PrivateRoute path="/vendor/products/:storeId" exact component={ShopProductsPage} />
+                <PrivateRoute path="/vendor/orders/:storeId" exact component={ShopOrdersPage} />
+                <PrivateRoute path="/vendor/staffs/:storeId" exact component={ShopStaffsPage} />
+                <PrivateRoute path="/vendor/gifts/:storeId" exact component={ShopGiftsPage} />
+                <PrivateRoute path="/vendor/GDCoins/:storeId" exact component={ShopGDCoinsPage} />
 
             </Switch>
         </BrowserRouter>

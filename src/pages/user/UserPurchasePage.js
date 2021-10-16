@@ -5,8 +5,10 @@ const UserPurchasePage = (props) => {
     let user = useSelector((state) => state.user.user);
 
     return (
-        <UserManagerLayout className="user-purchase-page">
-            Purchase history
+        <UserManagerLayout>
+            <div className="user-purchase-page">
+                Purchase history
+            </div>
         </UserManagerLayout>
     );
 };

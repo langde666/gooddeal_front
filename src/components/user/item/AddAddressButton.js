@@ -1,7 +1,7 @@
-import Modal from './Modal';
-import AddAddressForm from '../user/form/AddAddressForm';
+import Modal from '../../ui/Modal';
+import AddAddressForm from '../form/AddAddressForm';
 
-const AddAddressItem = ({ count = 0 }) => {
+const AddAddressButton = ({ count = 0 }) => {
     return (
         <div className="add-address-item position-relative d-inline-block">
             <div className="cus-tooltip">
@@ -31,4 +31,4 @@ const AddAddressItem = ({ count = 0 }) => {
     )
 }
 
-export default AddAddressItem;
+export default AddAddressButton;

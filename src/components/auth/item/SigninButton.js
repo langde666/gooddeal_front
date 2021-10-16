@@ -1,9 +1,9 @@
-import Modal from './Modal';
-import SignupForm from '../auth/form/SignupForm';
-import SigninForm from '../auth/form/SigninForm';
-import useToggle from '../../hooks/useToggle';
+import Modal from '../../ui/Modal';
+import SignupForm from '../form/SignupForm';
+import SigninForm from '../form/SigninForm';
+import useToggle from '../../../hooks/useToggle';
 
-const SigninItem = ({ title = 'Sign in' }) => {
+const SigninButton = ({ title = 'Sign in' }) => {
     const [signinFlag, toggleSigninFlag] = useToggle(true);
 
     return (
@@ -35,4 +35,4 @@ const SigninItem = ({ title = 'Sign in' }) => {
     );
 };
 
-export default SigninItem;
+export default SigninButton;

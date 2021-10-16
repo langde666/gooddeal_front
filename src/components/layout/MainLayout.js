@@ -1,12 +1,12 @@
 import MainNav from './nav/MainNav';
 import './style.css';
 
-const MainLayout = ({ children = null }) => {
+const MainLayout = ({ children = null, container = "container", typeLogo = 'user', navFor = 'user' }) => {
     return (
         <div className="main-layout">
-            <MainNav />
+            <MainNav typeLogo={typeLogo} navFor={navFor} />
 
-            <main className="body container">
+            <main className={`body ${container}`}>
                 {children}
             </main>
 

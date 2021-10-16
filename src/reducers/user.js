@@ -13,28 +13,6 @@ const userReducer = (state = initialState, action) => {
             };
         }
 
-        case 'UPDATE_AVATAR': {
-            const avatar = action.payload;
-            const newUser = state.user;
-            newUser.avatar = avatar;
-
-            return {
-                ...state,
-                user: newUser,
-            }
-        }
-
-        case 'UPDATE_COVER': {
-            const cover = action.payload;
-            const newUser = state.user;
-            newUser.cover = cover;
-
-            return {
-                ...state,
-                user: newUser,
-            }
-        }
-
         default: {
             return state;
         }

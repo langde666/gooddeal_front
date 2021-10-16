@@ -2,18 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../../apis/auth';
-import Logo from '../../ui/Logo';
-import SearchBar from '../../ui/SearchBar';
-import SigninItem from '../../ui/SigninItem';
-import YourAccountItem from '../../user/auth/YourAccountItem';
-import CartItem from '../../user/auth/CartItem';
+import Logo from './Logo';
+import SearchBar from './SearchBar';
+import SigninItem from '../../auth/item/SigninButton';
+import AuthAccount from '../../user/auth/AuthAccount';
+import AuthStoreAccount from '../../vendor/auth/AuthStoreAccount';
+import AuthCart from '../../user/auth/AuthCart';
+import ShopManagerItem from '../../user/auth/ShopManagerItem';
 
-const MainNav = (props) => {
+const MainNav = ({ navFor = 'user' }) => {
     const role = useSelector((state) => state.user.user.role);
 
     return (
         <header className="cus-nav navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div className="container">
+            <div className="container px-0">
                 <Link
                     className="navbar-brand cus-navbar-brand me-4 ripple"
                     to="/"
@@ -21,9 +23,10 @@ const MainNav = (props) => {
                     <Logo />
                 </Link>
 
-                <SearchBar />
+                {navFor == 'user' && <SearchBar />}
+                {navFor != 'user' && <h1 className="logo text-white text-center m-0">{navFor} dashboard</h1>}
 
-                <ul className="nav cus-subnav ms-4">
+                <ul className="nav cus-subnav ms-4 d-flex justify-content-end">
                     {!getToken() && (
                         <li className="nav-item">
                             <SigninItem />
@@ -32,11 +35,17 @@ const MainNav = (props) => {
 
                     {getToken() && (
                         <li className="nav-item">
-                            <YourAccountItem />
+                            <AuthAccount />
                         </li>
                     )}
 
-                    {getToken() && (
+                    {navFor == 'vendor' && getToken() && (
+                        <li className="nav-item">
+                            <AuthStoreAccount />
+                        </li>
+                    )}
+
+                    {navFor == 'user' && getToken() && (
                         <li className="nav-item position-relative">
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"
@@ -47,24 +56,19 @@ const MainNav = (props) => {
                         </li>
                     )}
 
-                    {getToken() && role == 'user' && (
-                        <li className="nav-item position-relative">
-                            <Link
-                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/user/stores">
-                                <i className="fas fa-store"></i>
-                            </Link>
-                            <small className="cus-tooltip-msg">Shop Manager</small>
+                    {navFor == 'user' && getToken() && role == 'user' && (
+                        <li className="nav-item me-2">
+                            <ShopManagerItem />
                         </li>
                     )}
 
-                    {getToken() && role == 'user' && (
+                    {navFor == 'user' && getToken() && role == 'user' && (
                         <li className="nav-item">
-                            <CartItem />
+                            <AuthCart />
                         </li>
                     )}
 
-                    {getToken() && role == 'admin' && (
+                    {navFor == 'user' && getToken() && role == 'admin' && (
                         <li className="nav-item position-relative">
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"
@@ -72,6 +76,17 @@ const MainNav = (props) => {
                                 <i className="fas fa-user-tie"></i>
                             </Link>
                             <small className="cus-tooltip-msg">Dashboard</small>
+                        </li>
+                    )}
+
+                    {navFor != 'user' && getToken() && (
+                        <li className="nav-item position-relative">
+                            <Link
+                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                to="/">
+                                <i className="fas fa-home"></i>
+                            </Link>
+                            <small className="cus-tooltip-msg">Back to GoodDeal!</small>
                         </li>
                     )}
                 </ul>

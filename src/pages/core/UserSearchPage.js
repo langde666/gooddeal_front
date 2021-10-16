@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getlistUsers } from '../../apis/user';
 import MainLayout from '../../components/layout/MainLayout';
-import UserCard from '../../components/ui/UserCard';
+import UserCard from '../../components/user/item/UserCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';

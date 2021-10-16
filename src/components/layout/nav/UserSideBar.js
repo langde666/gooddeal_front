@@ -8,7 +8,9 @@ const UserSideBar = (props) => {
     return (
         <div className="user-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
             <ul className="nav nav-pills flex-column mb-auto">
-                <AuthAvatar />
+                <div className="d-flex justify-content-center">
+                    <AuthAvatar />
+                </div>
                 <hr />
 
                 <li className="nav-item">
@@ -76,11 +78,11 @@ const UserSideBar = (props) => {
                 {role == 'user' && (
                     <li className="nav-item">
                         <Link
-                            to="/user/stores"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'stores' ? 'active' : ''}`}
+                            to="/user/shopManager/orders"
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'shopManager' ? 'active' : ''}`}
                         >
                             <i className="fas fa-store me-3"></i>
-                            Your stores
+                            Shop manager
                         </Link>
                     </li>)}
 

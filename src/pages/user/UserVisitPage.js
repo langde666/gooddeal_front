@@ -6,9 +6,9 @@ import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
 import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
-import UserProfileVisit from '../../components/ui/UserProfileVisit';
-import UserAmountOrderVisit from '../../components/ui/UserAmountOrderVisit';
-import UserAccountInfoVisit from '../../components/ui/UserAccountInfoVisit';
+import UserProfileGroup from '../../components/user/group/UserProfileGroup';
+import UserLevelGroup from '../../components/user/group/UserLevelGroup';
+import UserAccountGroup from '../../components/user/group/UserAccountGroup';
 
 const UserVisitPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
@@ -42,61 +42,67 @@ const UserVisitPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="user-visit-page position-relative p-3 shadow rounded"
+            {error && <Error msg={error} />}
+            {!error && <div className="user-visit-page position-relative p-3 shadow rounded"
                 style={{ maxWidth: '990px', margin: '0 auto' }}>
                 {isloading && <Loading />}
-                {error && <Error msg={error} />}
                 {user && (
                     <div className="row">
-                        <div className="col-12 position-relative pb-1">
+                        <div className="col-12 position-relative">
                             <Cover cover={user.cover} />
-                            <div className="avatar-absolute">
+                            <div className="avatar-absolute avatar-absolute--store">
                                 <Avatar
                                     avatar={user.avatar}
                                     firstname={user.firstname}
                                     lastname={user.lastname}
+                                    bodername={true}
                                 />
                             </div>
-                            <div className="d-flex justify-content-end mt-4 me-2">
-                                <div className="position-relative d-inline-block">
-                                    <div className="temp cus-tooltip">
-                                        <button
-                                            disabled
-                                            className="btn btn-outline-pink ripple btn-sm"
-                                        >
-                                            <i className="far fa-heart me-2"></i>Follow
-                                            {/* <i className="fas fa-heart me-2"></i>Following */}
-                                        </button>
-                                    </div>
+                        </div>
 
-                                    <small className="cus-tooltip-msg">This function is not available yet</small>
+                        <div className="col-12 d-flex justify-content-end mt-2">
+                            <div className="position-relative d-inline-block">
+                                <div className="temp cus-tooltip">
+                                    <button
+                                        disabled
+                                        className="btn btn-outline-pink ripple btn-sm"
+                                    >
+                                        <i className="far fa-heart me-2"></i>Follow
+                                        {/* <i className="fas fa-heart me-2"></i>Following */}
+                                    </button>
                                 </div>
+
+                                <small className="cus-tooltip-msg">This function is not available yet</small>
                             </div>
                         </div>
 
                         <div className="col-12 mt-4">
                             <div className="row">
-                                <div className="col mx-1">
-                                    <UserProfileVisit
+                                <div className="col ms-2 me-1">
+                                    <UserProfileGroup
                                         firstname={user.firstname}
                                         lastname={user.lastname}
+                                        id_card={user.id_card}
                                         email={user.email}
                                         phone={user.phone}
-                                        id_card={user.id_card}
+                                        isEmailActive={user.isEmailActive}
+                                        isPhoneActive={user.isPhoneActive}
+                                        googleId={user.googleId}
+                                        facebookId={user.facebookId}
                                     />
                                 </div>
 
-                                <div className="col mx-1">
+                                <div className="col ms-1 me-2">
                                     <div className="row">
                                         <div className="col-12">
-                                            <UserAmountOrderVisit
+                                            <UserLevelGroup
                                                 userId={user._id}
                                                 point={user.point}
                                                 number_of_successful_orders={user.number_of_successful_orders} number_of_failed_orders={user.number_of_failed_orders}
                                             />
                                         </div>
                                         <div className="col-12 mt-2">
-                                            <UserAccountInfoVisit
+                                            <UserAccountGroup
                                                 role={user.role}
                                                 createdAt={user.createdAt}
                                             />
@@ -107,7 +113,7 @@ const UserVisitPage = (props) => {
                         </div>
                     </div>
                 )}
-            </div>
+            </div>}
         </MainLayout>
     );
 }
