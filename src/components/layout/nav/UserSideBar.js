@@ -78,7 +78,7 @@ const UserSideBar = (props) => {
                 {role == 'user' && (
                     <li className="nav-item">
                         <Link
-                            to="/user/shopManager/orders"
+                            to="/user/shopManager"
                             className={`nav-link cus-sidebar-item ripple link-dark ${path == 'shopManager' ? 'active' : ''}`}
                         >
                             <i className="fas fa-store me-3"></i>

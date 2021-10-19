@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 
-const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = '', label = '' }) => {
-    const [selectedItem, setSelectedItem] = useState('');
+const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = '', label = '', borderBtn = false }) => {
+    const selected = listItem.find((item) => item.value == value) || listItem[0];
+    const [selectedItem, setSelectedItem] = useState(selected);
     const [showDropDownFlag, toggleShowDropDownFlag] = useToggle(false);
 
     const handleSelect = (item) => {
         setValue(item.value);
-        setSelectedItem(item);
         toggleShowDropDownFlag();
     };
 
-    useEffect(() => {
+    useUpdateEffect(() => {
         const selected = listItem.find((item) => item.value == value) || listItem[0];
         setSelectedItem(selected);
     }, [value]);
@@ -39,14 +40,20 @@ const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = 
 
             <button
                 type="button"
-                className={`btn cus-dropdown-btn ${side == 'large' ? 'w-100 d-flex justify-content-between align-items-center' : ''} `}
+                className={`btn ${borderBtn ? 'cus-dropdown-btn--border' : 'cus-dropdown-btn'} ${side == 'large' ? 'w-100' : ''} `}
                 onClick={toggleShowDropDownFlag}
                 onBlur={() => toggleShowDropDownFlag(false)}
             >
-                {selectedItem && selectedItem.icon}
-                <span className={`${side == 'large' ? 'flex-grow-1 text-start ps-2' : ''} `}
-                >{selectedItem && selectedItem.label}</span>
-                <i className="fas fa-sort-down"></i>
+                <span
+                    className={`d-inline-flex justify-content-start align-items-center ${side == 'large' ? 'flex-grow-1 text-start ps-2' : ''}`}
+                >
+                    {selectedItem && selectedItem.icon}
+                    <span className="ms-2">
+                        {selectedItem && selectedItem.label}
+                    </span>
+                </span>
+
+                <i className="fas fa-sort-down ms-2"></i>
             </button>
         </div>
     );

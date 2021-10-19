@@ -11,7 +11,7 @@ const AuthCover = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    let { _id: store_id, cover } = useSelector(state => state.store.store);
+    let { _id: storeId, cover } = useSelector(state => state.store.store);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
@@ -22,7 +22,7 @@ const AuthCover = (props) => {
         formData.set('photo', e.target.files[0]);
         setError('');
         setIsLoading(true);
-        updateCover(_id, accessToken, formData, store_id)
+        updateCover(_id, accessToken, formData, storeId)
             .then(data => {
                 if (data.error) {
                     setError(data.error);

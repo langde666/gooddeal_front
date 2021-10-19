@@ -11,7 +11,15 @@ import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const EditAddressForm = ({ oldAddress = '', index = null }) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const [address, setAddress] = useState({});
+
+    const [regexTest] = useRegex();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setAddress({
@@ -26,14 +34,7 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
             isValidProvince: true,
             isValidCountry: true,
         });
-    }, [oldAddress, index])
-
-    const [isloading, setIsLoading] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-    const [regexTest] = useRegex();
-    const dispatch = useDispatch();
+    }, [oldAddress, index]);
 
     const handleChange = (e, name) => {
         switch (name) {

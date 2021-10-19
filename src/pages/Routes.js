@@ -11,8 +11,7 @@ import UserPurchasePage from './user/UserPurchasePage';
 import UserFollowingPage from './user/UserFollowingPage';
 import UserGiftWalletPage from './user/UserGiftWalletPage';
 import UserGDCoinsPage from './user/UserGDCoinsPage';
-import UserOrdersManagerPage from './user/UserOrdersManagerPage';
-import UserShopsManagerPage from './user/UserShopsManagerPage';
+import UserShopManagerPage from './user/UserShopManagerPage';
 import VerifyEmailPage from './user/VerifyEmailPage';
 import UserVisitPage from './user/UserVisitPage';
 import ShopProfilePage from './vendor/ShopProfilePage';
@@ -46,8 +45,7 @@ const Routes = () => {
                 <PrivateRoute path="/user/following" exact component={UserFollowingPage} />
                 <PrivateRoute path="/user/giftWallet" exact component={UserGiftWalletPage} />
                 <PrivateRoute path="/user/GDCoins" exact component={UserGDCoinsPage} />
-                <PrivateRoute path="/user/shopManager/orders" exact component={UserOrdersManagerPage} />
-                <PrivateRoute path="/user/shopManager/shops" exact component={UserShopsManagerPage} />
+                <PrivateRoute path="/user/shopManager" exact component={UserShopManagerPage} />
 
                 <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
                 <Route path="/user/:userId" exact component={UserVisitPage} />

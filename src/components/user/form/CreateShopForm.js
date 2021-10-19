@@ -67,7 +67,7 @@ const CreateShopForm = (props) => {
                 setShop({
                     ...shop,
                     bio: e.target.value,
-                    isValidName: true,
+                    isValidBio: true,
                 });
                 return;
             }
@@ -80,6 +80,7 @@ const CreateShopForm = (props) => {
             commissionId: value,
         });
     }
+
     const handleValidate = (name) => {
         switch (name) {
             case 'name': {
@@ -92,7 +93,7 @@ const CreateShopForm = (props) => {
             case 'bio': {
                 setShop({
                     ...shop,
-                    isValidName: regexTest('bio', shop.bio),
+                    isValidBio: regexTest('bio', shop.bio),
                 });
                 return;
             }
@@ -100,11 +101,12 @@ const CreateShopForm = (props) => {
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         if (!shop.name || !shop.bio) {
             setShop({
                 ...shop,
                 isValidName: regexTest('name', shop.name),
-                isValidName: regexTest('bio', shop.bio),
+                isValidBio: regexTest('bio', shop.bio),
             });
             return;
         }
@@ -132,7 +134,7 @@ const CreateShopForm = (props) => {
                     }, 3000);
                 }
                 else {
-                    history.push(`/vendor/${data.store._id}/profile`);
+                    history.push(`/vendor/profile/${data.storeId}`);
                 }
             })
             .catch(error => {
@@ -206,7 +208,7 @@ const CreateShopForm = (props) => {
                         label="Shop name"
                         value={shop.name}
                         isValid={shop.isValidName}
-                        feedback='Please provide a valid shope name.'
+                        feedback='Please provide a valid shop name.'
                         onChange={(e) => handleChange(e, 'name')}
                         onBlur={() => handleValidate('name')}
                     />
@@ -218,9 +220,9 @@ const CreateShopForm = (props) => {
                         label="Shop bio"
                         value={shop.bio}
                         isValid={shop.isValidBio}
-                        feedback='Please provide a valid shope bio.'
-                        onChange={(e) => handleChange(e, 'name')}
-                        onBlur={() => handleValidate('name')}
+                        feedback='Please provide a valid shop bio.'
+                        onChange={(e) => handleChange(e, 'bio')}
+                        onBlur={() => handleValidate('bio')}
                     />
                 </div>
 

@@ -56,55 +56,56 @@ const AuthStoreAccount = (props) => {
 
     return (
         <Fragment>
-            {redirect && <Redirect to='/' />}
-            {
-                isloading ? (
-                    <div className="cus-position-relative-loading">
-                        <Loading size="small" />
-                    </div>
-                ) : (
-                    <div className="your-shop-wrap">
-                        <div className="your-shop">
-                            <div
-                                className="your-shop-card btn btn-outline-light cus-outline ripple"
-                                onClick={() => {
-                                    history.push(`/vendor/${storeId}`);
-                                }}
-                            >
-                                <img
-                                    src={avatar ? `${IMG + avatar}` : ''}
-                                    className="your-shop-img"
-                                />
+            {redirect && (<Redirect to={{
+                pathname: '/',
+                state: { from: props.location },
+            }} />)}
 
-                                <span className="your-shop-name noselect">
-                                    {!error && name}
-                                    {error && <Error msg={error} />}
-                                </span>
-                            </div>
+            {isloading ? (
+                <div className="cus-position-relative-loading">
+                    <Loading size="small" />
+                </div>
+            ) : (
+                <div className="your-shop-wrap">
+                    <div className="your-shop">
+                        <div
+                            className="your-shop-card btn btn-outline-light cus-outline ripple"
+                            onClick={() => {
+                                history.push(`/vendor/${storeId}`);
+                            }}
+                        >
+                            <img
+                                src={avatar ? `${IMG + avatar}` : ''}
+                                className="your-shop-img"
+                            />
 
-                            <ul className="list-group your-shop-options">
-                                <Link className="list-group-item your-shop-options-item ripple"
-                                    to={`/vendor/profile/${storeId}`}>
-                                    <i className="fas fa-store me-1"></i>
-                                    Shop profile
-                                </Link>
-
-                                <Link className="list-group-item your-shop-options-item ripple"
-                                    to={`/vendor/orders/${storeId}`}>
-                                    <i className="fas fa-clipboard me-1"></i>
-                                    Orders
-                                </Link>
-
-                                <Link className="list-group-item your-shop-options-item ripple"
-                                    to="/user/shopManager/shops">
-                                    <i className="fas fa-arrow-circle-left me-1"></i>
-                                    Back
-                                </Link>
-                            </ul>
+                            <span className="your-shop-name noselect">
+                                {!error && name}
+                                {error && <Error msg={error} />}
+                            </span>
                         </div>
+
+                        <ul className="list-group your-shop-options">
+                            <Link className="list-group-item your-shop-options-item ripple"
+                                to={`/vendor/profile/${storeId}`}>
+                                <i className="fas fa-store me-1"></i>
+                                Shop profile
+                            </Link>
+
+                            <Link className="list-group-item your-shop-options-item ripple"
+                                to={`/vendor/orders/${storeId}`}>
+                                <i className="fas fa-clipboard me-1"></i>
+                                Orders
+                            </Link>
+
+                            <Link className="list-group-item your-shop-options-item ripple"
+                                to="/user/shopManager">
+                                <i className="fas fa-arrow-circle-left me-1"></i>
+                                Back
+                            </Link>
+                        </ul>
                     </div>
-                )
-            }
+                </div>)}
         </Fragment>
 
     );

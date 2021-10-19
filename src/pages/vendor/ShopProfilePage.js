@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import VendorManagerLayour from '../../components/layout/VendorManagerLayour';
 import AuthCover from "../../components/vendor/auth/AuthCover";
 import AuthAvatar from "../../components/vendor/auth/AuthAvatar";
-import StoreProfileGroup from "../../components/vendor/group/StoreProfileGroup";
-import StoreLevelGroup from "../../components/vendor/group/StoreLevelGroup";
-import StoreAccountGroup from "../../components/vendor/group/StoreAccountGroup";
+import AuthCarousel from "../../components/vendor/auth/AuthCarousel";
+import StoreProfileGroup from "../../components/store/group/StoreProfileGroup";
+import StoreLevelGroup from "../../components/store/group/StoreLevelGroup";
+import StoreAccountGroup from "../../components/store/group/StoreAccountGroup";
 
 const ShopProfilePage = (props) => {
     const store = useSelector(state => state.store.store);
@@ -21,7 +22,11 @@ const ShopProfilePage = (props) => {
                         </div>
                     </div>
 
-                    <div className="col-12 d-flex justify-content-end mt-2">
+                    <div className="col-12 mt-2">
+                        <AuthCarousel />
+                    </div>
+
+                    <div className="col-12 d-flex justify-content-end align-items-end mt-2">
                         <Link
                             className="btn btn-outline-primary ripple btn-sm"
                             to={`/store/${store._id}`} target="_blank"
@@ -38,6 +43,7 @@ const ShopProfilePage = (props) => {
                                     point={store.point}
                                     number_of_successful_orders={store.number_of_successful_orders}
                                     number_of_failed_orders={store.number_of_failed_orders}
+                                    number_of_followers={store.number_of_followers}
                                 />
                             </div>
 

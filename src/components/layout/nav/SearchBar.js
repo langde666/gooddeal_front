@@ -2,6 +2,24 @@ import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import DropDownMenu from '../../ui/DropDownMenu';
 
+const listOptions = [
+    {
+        value: 'products',
+        label: 'product',
+        icon: <i className="fas fa-box"></i>,
+    },
+    {
+        value: 'stores',
+        label: 'store',
+        icon: <i className="fas fa-store"></i>,
+    },
+    {
+        value: 'users',
+        label: 'user',
+        icon: <i className="fas fa-user-friends"></i>,
+    },
+];
+
 const SearchBar = (props) => {
     let location = useLocation();
     const currentQuery = new URLSearchParams(location.search).get('keyword') || '';
@@ -30,23 +48,7 @@ const SearchBar = (props) => {
             onSubmit={handleFormSubmit}
         >
             <DropDownMenu
-                listItem={[
-                    {
-                        value: 'products',
-                        label: 'product',
-                        icon: <i className="fas fa-box"></i>,
-                    },
-                    {
-                        value: 'stores',
-                        label: 'store',
-                        icon: <i className="fas fa-store"></i>,
-                    },
-                    {
-                        value: 'users',
-                        label: 'user',
-                        icon: <i className="fas fa-user-friends"></i>,
-                    },
-                ]}
+                listItem={listOptions}
                 value={option}
                 setValue={setOption}
             />

@@ -19,6 +19,7 @@ const AuthAvatar = ({ isEditable = false, bodername = false, user, actions }) =>
         const { _id, accessToken } = getToken();
         const formData = new FormData();
         formData.set('photo', e.target.files[0]);
+
         setError('');
         setIsLoading(true);
         updateAvatar(_id, accessToken, formData)

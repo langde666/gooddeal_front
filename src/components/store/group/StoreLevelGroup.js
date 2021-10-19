@@ -1,7 +1,7 @@
 import Paragraph from "../../ui/Paragraph";
-import UserLevel from "../item/UserLevel";
+import StoreLevel from '../item/StoreLevel';
 
-const UserLevelGroup = ({ userId, point, number_of_successful_orders, number_of_failed_orders, number_of_followers }) => (
+const StoreLevelGroup = ({ storeId, point, number_of_successful_orders, number_of_failed_orders, number_of_followers }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
@@ -11,7 +11,7 @@ const UserLevelGroup = ({ userId, point, number_of_successful_orders, number_of_
         </div>
 
         <div className="col-6 mt-2">
-            <UserLevel userId={userId} details={true} />
+            <StoreLevel storeId={storeId} details={true} />
         </div>
 
         <div className="col-6">
@@ -28,10 +28,10 @@ const UserLevelGroup = ({ userId, point, number_of_successful_orders, number_of_
         <div className="col-6">
             <Paragraph
                 label="Followers"
-                value={<span><i className="fas fa-heart me-1 link-pink"></i>{number_of_followers || '0'}</span>}
+                value={<span><i className="fas fa-heart me-1 link-pink"></i>{number_of_followers}</span>}
             />
         </div>
     </div>
 );
 
-export default UserLevelGroup;
+export default StoreLevelGroup;

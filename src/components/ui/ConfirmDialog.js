@@ -5,7 +5,6 @@ const ConfirmDialog = ({
     onSubmit = () => { },
     onClose = () => { },
 }) => {
-
     const onConfirm = () => {
         onSubmit();
         onClose();

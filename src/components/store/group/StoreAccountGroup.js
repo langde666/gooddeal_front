@@ -12,30 +12,30 @@ const humanReadableDate = (date) => {
         date.getHours() + ':' +
         date.getMinutes();
 }
+const commissionIcons = {
+    "small business": <i className="fas fa-cash-register me-2"></i>,
+    "business": <i className="fas fa-building me-2"></i>,
+};
 
-const UserAccountGroup = ({ role, createdAt }) => (
+const StoreAccountGroup = ({ commissionId, createdAt }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
-                label="Role"
-                value={role}
+                label="Business type"
+                value={commissionId && commissionId.name}
             />
         </div>
 
         <div className="col-6 mt-2">
             <div className="position-relative d-inline-block">
-                {role == 'user' ? (
-                    <span className='badge bg-primary cus-tooltip'>
-                        <i className="fas fa-user me-2"></i>{role}
-                    </span>
-                ) : (
-                    <span className='badge bg-info cus-tooltip'>
-                        <i className="fas fa-user-tie me-2"></i>{role}
-                    </span>
-                )}
-                <small className="cus-tooltip-msg">Role: {role}</small>
+                <span className='badge cus-tooltip bg-primary'>
+                    {commissionId && commissionId.name && commissionIcons[commissionId.name]}
+                    {commissionId && commissionId.name}
+                </span>
+                <small className='cus-tooltip-msg'>
+                    {commissionId && commissionId.name && commissionId.name.charAt(0).toUpperCase() + commissionId.name.slice(1)} - Commission: {commissionId && commissionId.cost && (commissionId.cost.$numberDecimal * 100).toFixed(2)}%
+                </small>
             </div>
-
         </div>
 
         <div className="col-12">
@@ -47,4 +47,4 @@ const UserAccountGroup = ({ role, createdAt }) => (
     </div>
 );
 
-export default UserAccountGroup;
+export default StoreAccountGroup;

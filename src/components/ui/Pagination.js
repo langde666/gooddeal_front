@@ -31,7 +31,6 @@ const pages = (pageCurrent, pageCount) => {
 
 const Pagination = ({ pagination = {}, onChangePage = () => { } }) => {
     const { pageCurrent, pageCount } = pagination;
-
     const { topPages, midPages, botPages, } = pages(pageCurrent, pageCount);
 
     const handleChangePage = (newPage) => {
@@ -126,7 +125,7 @@ const Pagination = ({ pagination = {}, onChangePage = () => { } }) => {
                 </ul>
             </nav>
         </div>
-    )
+    );
 }
 
 export default Pagination;

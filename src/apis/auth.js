@@ -16,7 +16,6 @@ export const getToken = () => {
     if (localStorage.getItem('jwt')) {
         return JSON.parse(localStorage.getItem('jwt'));
     }
-
     return false;
 };
 
@@ -26,7 +25,7 @@ export const removeToken = () => {
     }
 };
 
-export const refreshToken = (refreshToken) => {
+export const refreshTokenApi = (refreshToken, userId) => {
     return fetch(`${API}/refresh/token`, {
         method: 'POST',
         headers: {
@@ -36,14 +35,21 @@ export const refreshToken = (refreshToken) => {
         body: JSON.stringify({ refreshToken }),
     })
         .then((res) => res.json())
-        .then((data) => {
-            const { accessToken, refreshToken } = data;
-            if (accessToken && refreshToken && typeof window !== 'undefined' && localStorage.getItem('jwt')) {
-                const auth = JSON.parse(localStorage.getItem('jwt'));
-                auth.accessToken = accessToken;
-                auth.refreshToken = refreshToken;
-                localStorage.setItem('jwt', JSON.stringify(auth));
+        .then(data => {
+            if (data.error) {
+                signout(refreshToken, () => { });
             }
+            else {
+                console.log('setToken');
+                setToken({
+                    accessToken: data.accessToken,
+                    refreshToken: data.refreshToken,
+                    _id: userId
+                }, () => { });
+            }
+        })
+        .catch(error => {
+            signout(refreshToken, () => { });
         });
 };
 

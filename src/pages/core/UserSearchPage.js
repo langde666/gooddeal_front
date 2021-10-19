@@ -6,7 +6,7 @@ import UserCard from '../../components/user/item/UserCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
-import Success from '../../components/ui/Success';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const UserSearchPage = (props) => {
     const [error, setError] = useState('');
@@ -14,7 +14,14 @@ const UserSearchPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
 
     const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
-    const [filter, setFilter] = useState({});
+    const [filter, setFilter] = useState({
+        search: keyword,
+        sortBy: 'point',
+        role: 'customer',
+        order: 'desc',
+        limit: '8',
+        page: 1,
+    });
     const [pagination, setPagination] = useState({});
     const [listUsers, setListUsers] = useState([]);
 
@@ -47,19 +54,16 @@ const UserSearchPage = (props) => {
     }
 
     useEffect(() => {
+        init();
+    }, [filter]);
+
+    useUpdateEffect(() => {
         setFilter({
+            ...filter,
             search: keyword,
-            sortBy: 'point',
-            role: 'customer',
-            order: 'desc',
-            limit: '8',
             page: 1,
         });
     }, [keyword]);
-
-    useEffect(() => {
-        init();
-    }, [filter]);
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -74,19 +78,16 @@ const UserSearchPage = (props) => {
                 style={{ maxWidth: '990px', minHeight: '80vh' }}>
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
-                {success && <h2><Success color='primary' msg={`${pagination.size} Users found`} /></h2>}
-
+                {success && <h4 className='mb-3'>{`${pagination.size} Users found`}</h4>}
                 <div className="user-search-list row">
                     {listUsers && listUsers.map((user, index) => (
-                        <div className="col-3 mt-4" key={index}>
+                        <div className="col-3 mb-4" key={index}>
                             <UserCard user={user} />
                         </div>
                     ))}
                 </div>
 
-
                 {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
-
             </div>
         </MainLayout>
     );
