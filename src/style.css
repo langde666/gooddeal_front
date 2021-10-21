@@ -115,6 +115,40 @@ small {
 }
 
 /* your accout */
+.user-small-card {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    position: relative;
+    margin: 6px;
+    padding: 6px;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.user-small-img {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 4px;
+    border: 2px solid var(--white-color);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin-right: 16px;
+}
+
+.user-small-name {
+    font-size: 0.9rem;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-small-name--limit-name {
+    max-width: 80px;
+}
+
 .your-account,
 .your-shop {
     display: block;
@@ -960,4 +994,15 @@ textarea {
     font-size: 0.8rem;
     left: 12px;
     top: -16px;
+}
+
+.cus-add-staffs-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 0.5rem;
+}
+
+.cus-group {
+    height: 240px;
+    overflow-y: auto;
 }

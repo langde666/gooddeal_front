@@ -48,7 +48,7 @@ const ShopCard = ({ store, userId }) => (
                             <small className="cus-tooltip-msg">owner</small>
                         </div>
                     ) : (
-                        <div className="d-inline-block position-relative ms-1">
+                        <div className="d-inline-block position-relative">
                             <span className="badge bg-primary cus-tooltip">
                                 <i className="fas fa-user-friends"></i>
                             </span>

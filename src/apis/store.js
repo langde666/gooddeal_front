@@ -159,7 +159,21 @@ export const getStoreLevel = (storeId) => {
 }
 
 //staffs
-export const removeStaffes = (userId, token, staff, storeId) => {
+export const addStaffs = (userId, token, staffs, storeId) => {
+    return fetch(`${API}/store/staffs/${storeId}/${userId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ staffs }),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const removeStaff = (userId, token, staff, storeId) => {
     return fetch(`${API}/store/staff/remove/${storeId}/${userId}`, {
         method: 'DELETE',
         headers: {
@@ -168,6 +182,19 @@ export const removeStaffes = (userId, token, staff, storeId) => {
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ staff }),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const cancelStaff = (userId, token, storeId) => {
+    return fetch(`${API}/store/staff/cancel/${storeId}/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));

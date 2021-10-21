@@ -21,7 +21,7 @@ const SearchInput = ({ onChange = () => { } }) => {
 
     return (
         <input
-            className="form-control mb-3"
+            className="form-control"
             type="search"
             placeholder="Search"
             style={{ maxWidth: '300px' }}

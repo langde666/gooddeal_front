@@ -2,12 +2,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getToken } from '../../../apis/auth';
-import { removeStaffes } from '../../../apis/store';
+import { removeStaff } from '../../../apis/store';
 import { addStore } from '../../../actions/store';
 import UserLevel from '../../user/item/UserLevel';
 import Error from '../../ui/Error';
 import Loading from '../../ui/Loading';
-import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
@@ -27,7 +26,7 @@ const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
         const staff = user._id;
         setError('');
         setIsLoading(true);
-        removeStaffes(_id, accessToken, staff, storeId)
+        removeStaff(_id, accessToken, staff, storeId)
             .then(data => {
                 if (data.error) {
                     setIsLoading(false);

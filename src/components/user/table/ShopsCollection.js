@@ -74,7 +74,7 @@ const ShopsCollection = (props) => {
         <div className="shops-collection-wrap row position-relative">
             {isloading && <Loading />}
 
-            <div className="col">
+            <div className="col mb-2">
                 <SearchInput onChange={handleChangeKeyword} />
             </div>
 

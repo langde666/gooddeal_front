@@ -15,8 +15,8 @@ const ShopStaffsPage = (props) => {
                 <div className="user-shop-manager-page">
 
                     <div className="mt-4">
-                        {store.ownerId && userId == store.ownerId._id ? (
-                            <AddStaffsButton storeId={store._id} />
+                        {store.ownerId && userId === store.ownerId._id ? (
+                            <AddStaffsButton storeId={store._id} ownerId={store.ownerId} staffIds={store.staffIds} />
                         ) : (
                             <CancelStaffButton storeId={store._id} />
                         )}

@@ -19,7 +19,6 @@ const StaffsCollection = (props) => {
     });
 
     useEffect(() => {
-        console.log('render');
         if (!staffIds || staffIds.length <= 0) return;
 
         const search = filter.search.toLowerCase();
@@ -75,7 +74,7 @@ const StaffsCollection = (props) => {
 
     return (
         <div className="staffs-collection-wrap row position-relative">
-            <div className="col">
+            <div className="col mb-2">
                 <SearchInput onChange={handleChangeKeyword} />
             </div>
 
