@@ -36,3 +36,9 @@ header {
     width: 280px;
     max-width: 100%;
 }
+
+.sticky-topnav {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 4;
+}

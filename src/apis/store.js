@@ -29,6 +29,18 @@ export const updateProfile = (userId, token, store, storeId) => {
         .catch(error => console.log(error));
 }
 
+export const getStore = (storeId) => {
+    return fetch(`${API}/store/${storeId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
 // list store
 export const getlistStores = (filter) => {
     const { search, sortBy, order, limit, page, isActive } = filter;

@@ -13,7 +13,8 @@ import UserGiftWalletPage from './user/UserGiftWalletPage';
 import UserGDCoinsPage from './user/UserGDCoinsPage';
 import UserShopManagerPage from './user/UserShopManagerPage';
 import VerifyEmailPage from './user/VerifyEmailPage';
-import UserVisitPage from './user/UserVisitPage';
+import UserHomePage from './user/UserHomePage';
+import UserAboutPage from './user/UserAboutPage';
 import ShopProfilePage from './vendor/ShopProfilePage';
 import ShopDashboardPage from './vendor/ShopDashboardPage';
 import ShopProductsPage from './vendor/ShopProductsPage';
@@ -21,6 +22,9 @@ import ShopOrdersPage from './vendor/ShopOrdersPage';
 import ShopStaffsPage from './vendor/ShopStaffsPage';
 import ShopGiftsPage from './vendor/ShopGiftsPage';
 import ShopGDCoinsPage from './vendor/ShopGDCoinsPage';
+import StoreHomePage from './store/StoreHomePage';
+import StoreAboutPage from './store/StoreAboutPage';
+import StoreProductsPage from './store/StoreProductsPage';
 
 const Routes = () => {
     return (
@@ -48,7 +52,8 @@ const Routes = () => {
                 <PrivateRoute path="/user/shopManager" exact component={UserShopManagerPage} />
 
                 <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
-                <Route path="/user/:userId" exact component={UserVisitPage} />
+                <Route path="/user/:userId" exact component={UserHomePage} />
+                <Route path="/user/about/:userId" exact component={UserAboutPage} />
 
                 <PrivateRoute path="/vendor/:storeId" exact component={ShopDashboardPage} />
                 <PrivateRoute path="/vendor/profile/:storeId" exact component={ShopProfilePage} />
@@ -57,6 +62,10 @@ const Routes = () => {
                 <PrivateRoute path="/vendor/staffs/:storeId" exact component={ShopStaffsPage} />
                 <PrivateRoute path="/vendor/gifts/:storeId" exact component={ShopGiftsPage} />
                 <PrivateRoute path="/vendor/GDCoins/:storeId" exact component={ShopGDCoinsPage} />
+
+                <Route path="/store/:storeId" exact component={StoreHomePage} />
+                <Route path="/store/products/:storeId" exact component={StoreProductsPage} />
+                <Route path="/store/about/:storeId" exact component={StoreAboutPage} />
 
             </Switch>
         </BrowserRouter>

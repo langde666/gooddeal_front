@@ -23,13 +23,6 @@ const UserProfileGroup = ({
             />
         </div>
 
-        <div className="col-6">
-            <Paragraph
-                label="Id card"
-                value={id_card || '-'}
-            />
-        </div>
-
         {!isEditable ? (
             <div className="col-6">
                 <Paragraph
@@ -39,14 +32,14 @@ const UserProfileGroup = ({
             </div>
         ) : (
             <Fragment>
-                <div className="col-8">
+                <div className="col-6">
                     <Paragraph
                         label="Email"
                         value={email || '-'}
                     />
                 </div>
 
-                <div className="col-4 mt-2">
+                <div className="col-6 mt-2">
                     <EmailActiveItem
                         email={email}
                         isEmailActive={isEmailActive}
@@ -66,14 +59,14 @@ const UserProfileGroup = ({
             </div>
         ) : (
             <Fragment>
-                <div className="col-8">
+                <div className="col-6">
                     <Paragraph
                         label="Phone"
                         value={phone || '-'}
                     />
                 </div>
 
-                <div className="col-4 mt-2">
+                <div className="col-6 mt-2">
                     <PhoneActiveItem
                         phone={phone}
                         isPhoneActive={isPhoneActive}
@@ -81,6 +74,13 @@ const UserProfileGroup = ({
                 </div>
             </Fragment>
         )}
+
+        <div className="col-6">
+            <Paragraph
+                label="Id card"
+                value={id_card || '-'}
+            />
+        </div>
 
         {isEditable && (
             <div className="col-12 d-flex justify-content-end">

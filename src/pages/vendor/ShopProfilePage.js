@@ -66,7 +66,6 @@ const ShopProfilePage = (props) => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

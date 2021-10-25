@@ -43,6 +43,13 @@ const UserCard = ({ user }) => (
                     {user.firstname + ' ' + user.lastname}
                 </h6>
             </Link>
+
+            <Link
+                type="button"
+                className="btn btn-primary w-100 mt-2"
+                to={`/user/${user._id}`}>
+                View profile
+            </Link>
         </div>
     </div>
 );

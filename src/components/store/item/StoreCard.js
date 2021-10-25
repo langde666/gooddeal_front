@@ -42,6 +42,13 @@ const StoreCard = ({ store }) => {
                         {store.name}
                     </h6>
                 </Link>
+
+                <Link
+                    type="button"
+                    className="btn btn-primary w-100 mt-2"
+                    to={`/store/${store._id}`}>
+                    View store
+                </Link>
             </div>
         </div>
     )

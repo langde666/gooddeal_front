@@ -191,3 +191,43 @@ export const updateAddress = (userId, token, index, address) => {
         .then(res => res.json())
         .catch(error => console.log(error));
 }
+
+//follow stores
+export const checkFollowingStore = (userId, token, storeId) => {
+    return fetch(`${API}/check/following/stores/${storeId}/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const followStore = (userId, token, storeId) => {
+    return fetch(`${API}/follow/store/${storeId}/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const unfollowStore = (userId, token, storeId) => {
+    return fetch(`${API}/unfollow/store/${storeId}/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}

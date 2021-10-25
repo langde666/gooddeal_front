@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { sendConfirmationEmail } from '../../../apis/user';
 import Loading from '../../ui/Loading';
@@ -44,7 +44,7 @@ const EmailActiveItem = ({ email, isEmailActive, googleId, facebookId }) => {
     }
 
     return (
-        <Fragment>
+        <div className="d-inline-flex flex-column">
             {email && isEmailActive &&
                 (
                     <div className="position-relative d-inline-block">
@@ -54,7 +54,6 @@ const EmailActiveItem = ({ email, isEmailActive, googleId, facebookId }) => {
                         </span>
                         <small className="cus-tooltip-msg">Email Verified</small>
                     </div>
-
                 )}
 
             {(googleId || facebookId) &&
@@ -90,7 +89,7 @@ const EmailActiveItem = ({ email, isEmailActive, googleId, facebookId }) => {
                         {success && <span className="text-nowrap"><Success msg={success} /></span>}
                     </div>
                 )}
-        </Fragment>
+        </div>
     );
 }
 

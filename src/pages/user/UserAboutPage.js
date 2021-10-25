@@ -1,35 +1,59 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import UserManagerLayout from '../../components/layout/UserManagerLayout';
-import AuthCover from "../../components/user/auth/AuthCover";
-import AuthAvatar from "../../components/user/auth/AuthAvatar";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addUserVisit } from '../../actions/userVisit';
+import { getUser } from '../../apis/user';
+import UserLayout from '../../components/layout/UserLayout';
+import Loading from '../../components/ui/Loading';
+import Error from '../../components/ui/Error';
 import UserProfileGroup from '../../components/user/group/UserProfileGroup';
 import UserLevelGroup from '../../components/user/group/UserLevelGroup';
 import UserAccountGroup from '../../components/user/group/UserAccountGroup';
 
-const UserProfilePage = (props) => {
-    const user = useSelector(state => state.user.user);
+const UserAboutPage = (props) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [user, setUser] = useState({});
+    let userVisit = useSelector(state => state.userVisit.user);
+    const dispatch = useDispatch();
+    const { userId } = useParams();
+
+    const init = () => {
+        setIsLoading(true);
+
+        getUser(userId)
+            .then(data => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                }
+                else {
+                    dispatch(addUserVisit(data.user));
+                    setIsLoading(false);
+                }
+            })
+            .catch(error => {
+                setError('Server Error');
+                setIsLoading(false);
+            });
+    }
+
+    useEffect(() => {
+        if (!userVisit || userVisit._id != userId) {
+            init();
+        }
+        else {
+            setUser(userVisit);
+        }
+
+    }, [userId, userVisit]);
 
     return (
-        <UserManagerLayout>
-            <div className="user-profile-page">
-                <div className="position-relative">
-                    <AuthCover />
-                    <div className="avatar-absolute avatar-absolute--store">
-                        <AuthAvatar isEditable={true} bodername={true} />
-                    </div>
-                </div>
-
-                <div className="d-flex justify-content-end mt-2">
-                    <Link
-                        className="btn btn-outline-primary ripple btn-sm"
-                        to={`/user/${user._id}`} target="_blank"
-                    >
-                        Visit Your Page <i className="fas fa-external-link-alt ms-1"></i>
-                    </Link>
-                </div>
-
-                <div className="row mt-4">
+        <UserLayout user={user}>
+            {error && <Error msg={error} />}
+            {isloading && <Loading />}
+            {!error && !isloading &&
+                <div className="row">
                     <div className="col ms-2 me-1">
                         <UserLevelGroup
                             userId={user._id}
@@ -58,15 +82,14 @@ const UserProfilePage = (props) => {
                                     isPhoneActive={user.isPhoneActive}
                                     googleId={user.googleId}
                                     facebookId={user.facebookId}
-                                    isEditable={true}
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </UserManagerLayout>
+            }
+        </UserLayout>
     );
-};
+}
 
-export default UserProfilePage;
+export default UserAboutPage;

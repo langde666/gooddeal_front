@@ -18,7 +18,7 @@ const ShopCard = ({ store, userId }) => (
         </Link>
 
         <div className="card-body border-top border-secondary">
-            <small className="card-subtitle">
+            <small className="card-subtitle d-flex justify-content-between align-items-center">
                 <div className="d-flex flex-nowrap">
                     <div className="position-relative d-inline-block me-1">
                         <span className='badge cus-tooltip bg-primary'>
@@ -39,7 +39,8 @@ const ShopCard = ({ store, userId }) => (
                         <small className='cus-tooltip-msg'>followers</small>
                     </div>
                 </div>
-                <div className="d-flex flex-nowrap mt-1">
+
+                <div className="d-flex flex-nowrap">
                     {userId == store.ownerId._id ? (
                         <div className="d-inline-block position-relative">
                             <span className="badge bg-info cus-tooltip">
@@ -78,6 +79,20 @@ const ShopCard = ({ store, userId }) => (
                 <h6 className="card-title text-nowrap mt-2">
                     {store.name}
                 </h6>
+            </Link>
+
+            <Link
+                type="button"
+                className="btn btn-primary w-100 mt-2"
+                to={`/store/${store._id}`} target="_blank">
+                View store
+            </Link>
+
+            <Link
+                type="button"
+                className="btn btn-outline-primary w-100 mt-1"
+                to={`/vendor/${store._id}`} target="_blank">
+                Dashboard
             </Link>
         </div>
     </div>

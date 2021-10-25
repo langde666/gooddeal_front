@@ -4,7 +4,7 @@ import UserSideBar from './nav/UserSideBar';
 const UserManagerLayout = ({ children }) => (
     <MainLayout container="container">
         <div className="user-manager-page">
-            <div className="row flex-nowrap position">
+            <div className="row flex-nowrap">
                 <div className="col-3">
                     <UserSideBar />
                 </div>
