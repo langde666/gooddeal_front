@@ -11,7 +11,7 @@ const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, 
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const { avatar: userAvt, firstname, lastname } = useSelector(state => state.user.user);
-    const { _id: store_id, avatar, name } = store;
+    const { _id: storeId, avatar, name } = store;
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
@@ -21,7 +21,7 @@ const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, 
         formData.set('photo', e.target.files[0]);
         setError('');
         setIsLoading(true);
-        updateAvatar(_id, accessToken, formData, store_id)
+        updateAvatar(_id, accessToken, formData, storeId)
             .then(data => {
                 if (data.error) {
                     setError(data.error);

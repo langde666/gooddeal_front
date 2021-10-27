@@ -5,8 +5,7 @@ import AuthAvatar from '../../vendor/auth/AuthAvatar';
 const VendorSideBar = (props) => {
     const path = useLocation().pathname.split('/')[2];
     let { _id: userId } = useSelector(state => state.user.user);
-    let { _id, isActive, ownerId } = useSelector(state => state.store.store);
-
+    let { _id: storeId, isActive, ownerId } = useSelector(state => state.store.store);
     return (
         <div className="vendor-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
             <ul className="nav nav-pills flex-column mb-auto">
@@ -46,12 +45,13 @@ const VendorSideBar = (props) => {
                         )}
                     </div>
                 </div>
+
                 <hr />
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/${_id}`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == _id ? 'active' : ''}`}
+                        to={`/vendor/${storeId}`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${path == storeId ? 'active' : ''}`}
                     >
                         <i className="fas fa-chart-pie me-3"></i>
                         Dashboard
@@ -60,7 +60,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/profile/${_id}`}
+                        to={`/vendor/profile/${storeId}`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${path == 'profile' ? 'active' : ''}`}
                     >
                         <i className="fas fa-store me-3"></i>
@@ -70,7 +70,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/products/${_id}`}
+                        to={`/vendor/products/${storeId}`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${path == 'products' ? 'active' : ''}`}
                     >
                         <i className="fas fa-box me-3"></i>
@@ -80,7 +80,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/staffs/${_id}`}
+                        to={`/vendor/staffs/${storeId}`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${path == 'staffs' ? 'active' : ''}`}
                     >
                         <i className="fas fa-user-friends me-3"></i>
@@ -90,7 +90,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/orders/${_id}`}
+                        to={`/vendor/orders/${storeId}`}
                         className={`nav-link cus-sidebar-item ripple cus-sidebar-item--pink link-pink ${path == 'orders' ? 'active-pink' : ''}`}
                     >
                         <i className="fas fa-clipboard me-3"></i>
@@ -100,7 +100,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/gifts/${_id}`}
+                        to={`/vendor/gifts/${storeId}`}
                         className={`nav-link cus-sidebar-item ripple cus-sidebar-item--funny link-funny ${path == 'gifts' ? 'active-funny' : ''}`}
                     >
                         <i className="fas fa-gift me-3"></i>
@@ -110,7 +110,7 @@ const VendorSideBar = (props) => {
 
                 <li className="nav-item">
                     <Link
-                        to={`/vendor/GDCoins/${_id}`}
+                        to={`/vendor/GDCoins/${storeId}`}
                         className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${path == 'GDCoins' ? 'active-golden' : ''}`}
                     >
                         <i className="fas fa-coins me-3"></i>

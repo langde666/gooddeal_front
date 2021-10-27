@@ -6,7 +6,7 @@ const shields = {
     "premium": "#FFD700",
 }
 
-const StoreLevel = ({ storeId, details = false }) => {
+const StoreLevel = ({ storeId = '', details = false }) => {
     const [storeLv, setStoreLv] = useState({});
 
     const getStoreLv = () => {

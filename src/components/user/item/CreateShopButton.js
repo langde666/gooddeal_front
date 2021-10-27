@@ -5,7 +5,7 @@ const CreateShopButton = (props) => (
     <div className="create-shop-item position-relative d-inline-block">
         <button
             type="button"
-            className="btn btn-primary ripple"
+            className="btn btn-primary ripple text-nowrap"
             data-bs-toggle="modal"
             data-bs-target="#create-shop-form"
         >

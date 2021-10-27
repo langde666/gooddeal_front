@@ -11,7 +11,7 @@ const AuthCover = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    let { cover } = useSelector(state => state.user.user);
+    const { cover } = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {

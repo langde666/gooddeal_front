@@ -21,17 +21,17 @@ const listOptions = [
 ];
 
 const SearchBar = (props) => {
-    let location = useLocation();
-    const currentQuery = new URLSearchParams(location.search).get('keyword') || '';
-    let currentOption = location.pathname.split('/')[1];
-    if (currentOption != 'products' && currentOption != 'stores' && currentOption != 'users') {
-        currentOption = 'products';
-    }
+    const location = useLocation();
+    const history = useHistory();
 
-    const [query, setQuery] = useState(currentQuery);
-    const [option, setOption] = useState(currentOption);
-
-    let history = useHistory();
+    const [query, setQuery] = useState(() => new URLSearchParams(location.search).get('keyword') || '');
+    const [option, setOption] = useState(() => {
+        let currentOption = location.pathname.split('/')[1];
+        if (currentOption != 'products' && currentOption != 'stores' && currentOption != 'users') {
+            currentOption = 'products';
+        }
+        return currentOption;
+    });
 
     const handleChange = (e) => {
         setQuery(e.target.value);

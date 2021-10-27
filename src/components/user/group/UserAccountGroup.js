@@ -13,27 +13,27 @@ const humanReadableDate = (date) => {
         date.getMinutes();
 }
 
-const UserAccountGroup = ({ role, createdAt }) => (
+const UserAccountGroup = ({ user = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
                 label="Role"
-                value={role}
+                value={user.role}
             />
         </div>
 
         <div className="col-6 mt-2">
             <div className="position-relative d-inline-block">
-                {role == 'user' ? (
+                {user.role == 'user' ? (
                     <span className='badge bg-primary cus-tooltip'>
-                        <i className="fas fa-user me-2"></i>{role}
+                        <i className="fas fa-user me-2"></i>{user.role}
                     </span>
                 ) : (
                     <span className='badge bg-info cus-tooltip'>
-                        <i className="fas fa-user-tie me-2"></i>{role}
+                        <i className="fas fa-user-tie me-2"></i>{user.role}
                     </span>
                 )}
-                <small className="cus-tooltip-msg">Role: {role}</small>
+                <small className="cus-tooltip-msg">Role: {user.role}</small>
             </div>
 
         </div>
@@ -41,7 +41,7 @@ const UserAccountGroup = ({ role, createdAt }) => (
         <div className="col-12">
             <Paragraph
                 label="Joined"
-                value={humanReadableDate(createdAt)}
+                value={humanReadableDate(user.createdAt)}
             />
         </div>
     </div>

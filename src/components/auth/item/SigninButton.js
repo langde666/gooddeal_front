@@ -12,14 +12,14 @@ const SigninButton = ({ title = 'Sign in' }) => {
                 type="button"
                 className="sign-in-item btn btn-outline-light cus-outline cus-tooltip ripple"
                 data-bs-toggle="modal"
-                data-bs-target="#signup-form"
+                data-bs-target="#signin-signup-form"
                 onClick={() => toggleSigninFlag(true)}
             >
                 {title}
             </button>
 
             <Modal
-                id="signup-form"
+                id="signin-signup-form"
                 hasCloseBtn={false}
                 subTitle={!signinFlag ? 'Signing up is easy.' : 'Welcome back!'}
             >

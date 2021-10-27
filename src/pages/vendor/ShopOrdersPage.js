@@ -1,8 +1,6 @@
-import { useSelector } from 'react-redux';
 import VendorManagerLayour from '../../components/layout/VendorManagerLayour';
 
 const ShopOrdersPage = (props) => {
-    const store = useSelector(state => state.store.store);
 
     return (
         <VendorManagerLayour>

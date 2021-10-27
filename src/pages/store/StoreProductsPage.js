@@ -10,18 +10,15 @@ import Error from '../../components/ui/Error';
 const StoreProductsPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [store, setStore] = useState({});
-    let storeVisit = useSelector(state => state.storeVisit.store);
-    const dispatch = useDispatch();
-    const { storeId } = useParams();
 
-    let location = useLocation();
-    const search = location.search;
-    const keyword = new URLSearchParams(search).get('keyword') || '';
+    const { storeId } = useParams();
+    const store = useSelector(state => state.storeVisit.store);
+    const dispatch = useDispatch();
+    const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
 
     const init = () => {
         setIsLoading(true);
-
+        setError('');
         getStore(storeId)
             .then(data => {
                 if (data.error) {
@@ -40,14 +37,8 @@ const StoreProductsPage = (props) => {
     }
 
     useEffect(() => {
-        if (!storeVisit || storeVisit._id != storeId) {
-            init();
-        }
-        else {
-            setStore(storeVisit);
-        }
-
-    }, [storeId, storeVisit]);
+        if (!store || store._id != storeId) init();
+    }, [storeId]);
 
     return (
         <StoreLayout store={store}>

@@ -38,31 +38,17 @@ const ShopProfilePage = (props) => {
                     <div className="col-12 mt-4">
                         <div className="row">
                             <div className="col ms-2 me-1">
-                                <StoreLevelGroup
-                                    storeId={store._id}
-                                    point={store.point}
-                                    number_of_successful_orders={store.number_of_successful_orders}
-                                    number_of_failed_orders={store.number_of_failed_orders}
-                                    number_of_followers={store.number_of_followers}
-                                />
+                                <StoreLevelGroup store={store} />
                             </div>
 
                             <div className="col ms-1 me-2">
-                                <StoreAccountGroup
-                                    commissionId={store.commissionId}
-                                    createdAt={store.createdAt}
-                                />
+                                <StoreAccountGroup store={store} />
                             </div>
 
                             <div className="col-12 mt-2">
                                 <div className="row">
                                     <div className="col mx-2">
-                                        <StoreProfileGroup
-                                            storeId={store._id}
-                                            name={store.name}
-                                            bio={store.bio}
-                                            isEditable={true}
-                                        />
+                                        <StoreProfileGroup store={store} isEditable={true} />
                                     </div>
                                 </div>
                             </div>

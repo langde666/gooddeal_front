@@ -9,7 +9,7 @@ const commissionIcons = {
 
 const ShopCard = ({ store, userId }) => (
     <div className="card shadow mb-2 border-0">
-        <Link className="text-reset text-decoration-none" to={`/vendor/${store._id}`} target="_blank">
+        <Link className="text-reset text-decoration-none" to={`/vendor/${store._id}`}>
             <div className="card-img-top cus-card-img-top">
                 <img src={IMG + store.avatar}
                     className="cus-card-img"
@@ -75,7 +75,7 @@ const ShopCard = ({ store, userId }) => (
                 </div>
             </small>
 
-            <Link className="text-reset text-decoration-none link-hover" to={`/vendor/${store._id}`} target="_blank">
+            <Link className="text-reset text-decoration-none link-hover" to={`/vendor/${store._id}`}>
                 <h6 className="card-title text-nowrap mt-2">
                     {store.name}
                 </h6>
@@ -84,14 +84,14 @@ const ShopCard = ({ store, userId }) => (
             <Link
                 type="button"
                 className="btn btn-primary w-100 mt-2"
-                to={`/store/${store._id}`} target="_blank">
+                to={`/store/${store._id}`}>
                 View store
             </Link>
 
             <Link
                 type="button"
                 className="btn btn-outline-primary w-100 mt-1"
-                to={`/vendor/${store._id}`} target="_blank">
+                to={`/vendor/${store._id}`}>
                 Dashboard
             </Link>
         </div>

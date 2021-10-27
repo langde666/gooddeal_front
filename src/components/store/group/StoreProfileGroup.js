@@ -2,19 +2,19 @@ import Paragraph from "../../ui/Paragraph";
 import Modal from '../../ui/Modal';
 import ProfileEditForm from '../../vendor/form/ProfileEditForm';
 
-const StoreProfileGroup = ({ storeId, name, bio, isEditable = false }) => (
+const StoreProfileGroup = ({ store = {}, isEditable = false }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-12">
             <Paragraph
-                label="Shop name"
-                value={name}
+                label="Name"
+                value={store.name}
             />
         </div>
 
         <div className="col-12">
             <Paragraph
-                label="Shop bio"
-                value={bio}
+                label="Bio"
+                value={store.bio}
                 multiLine={true}
             />
         </div>
@@ -34,9 +34,9 @@ const StoreProfileGroup = ({ storeId, name, bio, isEditable = false }) => (
                         title="Edit Shop profile"
                     >
                         <ProfileEditForm
-                            storeId={storeId}
-                            name={name}
-                            bio={bio}
+                            storeId={store.storeId}
+                            name={store.name}
+                            bio={store.bio}
                         />
                     </Modal>
 

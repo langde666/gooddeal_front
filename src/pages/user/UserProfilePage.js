@@ -31,35 +31,17 @@ const UserProfilePage = (props) => {
 
                 <div className="row mt-4">
                     <div className="col ms-2 me-1">
-                        <UserLevelGroup
-                            userId={user._id}
-                            point={user.point}
-                            number_of_successful_orders={user.number_of_successful_orders} number_of_failed_orders={user.number_of_failed_orders}
-                        />
+                        <UserLevelGroup user={user} />
                     </div>
 
                     <div className="col ms-1 me-2">
-                        <UserAccountGroup
-                            role={user.role}
-                            createdAt={user.createdAt}
-                        />
+                        <UserAccountGroup user={user} />
                     </div>
 
                     <div className="col-12 mt-2">
                         <div className="row">
                             <div className="col mx-2">
-                                <UserProfileGroup
-                                    firstname={user.firstname}
-                                    lastname={user.lastname}
-                                    id_card={user.id_card}
-                                    email={user.email}
-                                    phone={user.phone}
-                                    isEmailActive={user.isEmailActive}
-                                    isPhoneActive={user.isPhoneActive}
-                                    googleId={user.googleId}
-                                    facebookId={user.facebookId}
-                                    isEditable={true}
-                                />
+                                <UserProfileGroup user={user} isEditable={true} />
                             </div>
                         </div>
                     </div>

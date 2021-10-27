@@ -4,7 +4,7 @@ const initialState = {
 
 const storeVisitReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_STORE': {
+        case 'ADD_STORE_VISIT': {
             const store = action.payload;
 
             return {

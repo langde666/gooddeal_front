@@ -1,5 +1,4 @@
 import MainNav from './nav/MainNav';
-import './style.css';
 
 const MainLayout = ({ children = null, container = "container", navFor = 'user' }) => (
     <div className="main-layout">

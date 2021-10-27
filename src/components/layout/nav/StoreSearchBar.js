@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-const StoreSearchBar = ({ storeId }) => {
+const StoreSearchBar = ({ storeId = '' }) => {
     const location = useLocation();
     const history = useHistory();
+
     const [query, setQuery] = useState(() => new URLSearchParams(location.search).get('keyword') || '');
 
     const handleChange = (e) => {

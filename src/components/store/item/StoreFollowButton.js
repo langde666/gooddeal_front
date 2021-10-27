@@ -6,7 +6,7 @@ import useToggle from '../../../hooks/useToggle';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 
-const StoreFollowButton = ({ storeId }) => {
+const StoreFollowButton = ({ storeId = '', className = '', hasIcon = true, onRun = () => { } }) => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [followingFlag, toggleFollowingFlag] = useToggle(false);
@@ -18,6 +18,12 @@ const StoreFollowButton = ({ storeId }) => {
                 if (data.success) {
                     toggleFollowingFlag(true);
                 }
+                else {
+                    toggleFollowingFlag(false);
+                }
+            })
+            .catch(error => {
+                toggleFollowingFlag(false);
             });
     }
 
@@ -41,6 +47,7 @@ const StoreFollowButton = ({ storeId }) => {
                     else {
                         toggleFollowingFlag(true);
                         setIsLoading(false);
+                        onRun();
                     }
                 })
                 .catch(error => {
@@ -66,6 +73,7 @@ const StoreFollowButton = ({ storeId }) => {
                     else {
                         toggleFollowingFlag(false);
                         setIsLoading(false);
+                        onRun();
                     }
                 })
                 .catch(error => {
@@ -81,18 +89,18 @@ const StoreFollowButton = ({ storeId }) => {
     return (
         <button
             type="button"
-            className={`btn ${followingFlag ? 'btn-pink' : 'btn-outline-pink'} ripple`}
+            className={`btn ${followingFlag ? 'btn-pink' : 'btn-outline-pink'} ripple ${className}`}
             onClick={handleFollowStore}
         >
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
             {followingFlag ? (
                 <span>
-                    <i className="fas fa-heart me-2"></i>Following
+                    {hasIcon && <i className="fas fa-heart me-2"></i>}Following
                 </span>
             ) : (
                 <span>
-                    <i className="far fa-heart me-2"></i>Follow
+                    {hasIcon && <i className="far fa-heart me-2"></i>}Follow
                 </span>
             )}
 

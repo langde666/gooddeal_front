@@ -23,7 +23,6 @@ const AuthCarousel = (props) => {
     const [listImages, setListImages] = useState(featured_images);
 
     useEffect(() => {
-        console.log('render');
         setListImages(featured_images);
     }, [featured_images]);
 

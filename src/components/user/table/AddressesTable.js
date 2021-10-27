@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { removeAddresses } from '../../../apis/user';
 import { addUser } from '../../../actions/user';
@@ -9,15 +9,18 @@ import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
+import AddAddressButton from '../item/AddAddressButton';
 
-const AddressesTable = ({ listAddresses }) => {
+const AddressesTable = (props) => {
     const [editAddress, setEditAddress] = useState({});
     const [deleteAddress, setDeleteAddress] = useState({});
+
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
 
+    const { addresses } = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
     const handleEditAddress = (address, index) => {
@@ -81,7 +84,17 @@ const AddressesTable = ({ listAddresses }) => {
                     onClose={() => setIsConfirming(false)}
                 />
             )}
-            <table className="addresses-table table align-middle table-hover table-bordered">
+
+            <h4 className="mb-3">Your addresses</h4>
+
+            <div className="d-flex justify-content-between align-items-end">
+                <div className="option-wrap">
+                    <AddAddressButton count={addresses && addresses.length || 0} />
+                </div>
+                <span className="me-2">{addresses && addresses.length || 0} results</span>
+            </div>
+
+            <table className="addresses-table table align-middle table-hover table-bordered mt-2">
                 <thead>
                     <tr>
                         <th scope="col" className="ps-3 pe-2" >#</th>
@@ -90,7 +103,7 @@ const AddressesTable = ({ listAddresses }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listAddresses && listAddresses.map((address, index) => (
+                    {addresses && addresses.map((address, index) => (
                         <tr key={index}>
                             <th scope="row" className="ps-3 pe-2" >{index + 1}</th>
                             <td className="px-3">{address}</td>

@@ -17,23 +17,25 @@ const commissionIcons = {
     "business": <i className="fas fa-building me-2"></i>,
 };
 
-const StoreAccountGroup = ({ commissionId, createdAt }) => (
+const StoreAccountGroup = ({ store = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
                 label="Business type"
-                value={commissionId && commissionId.name}
+                value={store.commissionId && store.commissionId.name}
             />
         </div>
 
         <div className="col-6 mt-2">
             <div className="position-relative d-inline-block">
                 <span className='badge cus-tooltip bg-primary'>
-                    {commissionId && commissionId.name && commissionIcons[commissionId.name]}
-                    {commissionId && commissionId.name}
+                    {store.commissionId && store.commissionId.name && commissionIcons[store.commissionId.name]}
+                    {store.commissionId && store.commissionId.name}
                 </span>
                 <small className='cus-tooltip-msg'>
-                    {commissionId && commissionId.name && commissionId.name.charAt(0).toUpperCase() + commissionId.name.slice(1)} - Commission: {commissionId && commissionId.cost && (commissionId.cost.$numberDecimal * 100).toFixed(2)}%
+                    {store.commissionId && store.commissionId.name && store.commissionId.name.charAt(0).toUpperCase() + store.commissionId.name.slice(1)}
+                    {' '}-{' '}Commission:{' '}
+                    {store.commissionId && store.commissionId.cost && (store.commissionId.cost.$numberDecimal * 100).toFixed(2)}%
                 </small>
             </div>
         </div>
@@ -41,7 +43,7 @@ const StoreAccountGroup = ({ commissionId, createdAt }) => (
         <div className="col-12">
             <Paragraph
                 label="Joined"
-                value={humanReadableDate(createdAt)}
+                value={humanReadableDate(store.createdAt)}
             />
         </div>
     </div>

@@ -25,6 +25,7 @@ import ShopGDCoinsPage from './vendor/ShopGDCoinsPage';
 import StoreHomePage from './store/StoreHomePage';
 import StoreAboutPage from './store/StoreAboutPage';
 import StoreProductsPage from './store/StoreProductsPage';
+import AdminDashboardPage from './admin/AdminDashboardPage';
 
 const Routes = () => {
     return (
@@ -66,6 +67,8 @@ const Routes = () => {
                 <Route path="/store/:storeId" exact component={StoreHomePage} />
                 <Route path="/store/products/:storeId" exact component={StoreProductsPage} />
                 <Route path="/store/about/:storeId" exact component={StoreAboutPage} />
+
+                <AdminRoute path="/admin/dashboard" exact component={AdminDashboardPage} />
 
             </Switch>
         </BrowserRouter>

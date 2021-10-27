@@ -10,12 +10,13 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const ProfileEditForm = ({ firstname, lastname, email, phone, id_card, googleId, facebookId }) => {
-    const [profile, setProfile] = useState({});
+const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = '', id_card = '', googleId = false, facebookId = false }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const [profile, setProfile] = useState({});
     const [regexTest] = useRegex();
     const dispatch = useDispatch();
 

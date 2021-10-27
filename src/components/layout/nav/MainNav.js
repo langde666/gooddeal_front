@@ -75,7 +75,7 @@ const MainNav = ({ navFor = 'user' }) => {
                         <li className="nav-item position-relative">
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/">
+                                to="/admin/dashboard">
                                 <i className="fas fa-user-tie"></i>
                             </Link>
                             <small className="cus-tooltip-msg">Dashboard</small>

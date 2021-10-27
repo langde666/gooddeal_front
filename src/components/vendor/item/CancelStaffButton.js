@@ -6,10 +6,11 @@ import Loading from "../../ui/Loading";
 import Error from "../../ui/Error";
 import ConfirmDialog from "../../ui/ConfirmDialog";
 
-const AddStaffsButton = ({ storeId }) => {
+const AddStaffsButton = ({ storeId = '' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
+
     const history = useHistory();
 
     const handlecancelStaff = () => {

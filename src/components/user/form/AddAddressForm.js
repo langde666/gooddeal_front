@@ -11,6 +11,11 @@ import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const AddAddressForm = (props) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const [address, setAddress] = useState({
         street: '',
         ward: '',
@@ -23,10 +28,7 @@ const AddAddressForm = (props) => {
         isValidProvince: true,
         isValidCountry: true,
     });
-    const [isloading, setIsLoading] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+
     const [regexTest] = useRegex();
     const dispatch = useDispatch();
 
@@ -275,7 +277,7 @@ const AddAddressForm = (props) => {
                 </div>
             </form>
         </div>
-    )
+    );
 };
 
 export default AddAddressForm;

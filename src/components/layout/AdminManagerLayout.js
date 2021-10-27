@@ -1,12 +1,12 @@
 import MainLayout from './MainLayout';
-import VendorSideBar from './nav/VendorSideBar';
+import AdminSideBar from './nav/AdminSideBar';
 
-const VendorManagerLayout = ({ children = null }) => (
-    <MainLayout container="container" navFor='vendor'>
-        <div className="vendor-manager-page">
+const AdminManagerLayout = ({ children = null }) => (
+    <MainLayout container="container" navFor='admin'>
+        <div className="admin-manager-page">
             <div className="row flex-nowrap position">
                 <div className="col-3">
-                    <VendorSideBar />
+                    <AdminSideBar />
                 </div>
 
                 <div className="col-9">
@@ -14,8 +14,7 @@ const VendorManagerLayout = ({ children = null }) => (
                 </div>
             </div>
         </div>
-
     </MainLayout>
 );
 
-export default VendorManagerLayout;
+export default AdminManagerLayout;

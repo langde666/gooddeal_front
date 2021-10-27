@@ -15,14 +15,13 @@ const AuthAccount = ({ user, actions }) => {
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
 
-    let { firstname, lastname, avatar, role } = user;
+    const { firstname, lastname, avatar, role } = user;
     const history = useHistory();
     const { _id, accessToken, refreshToken } = getToken();
 
     const init = () => {
         setIsLoading(true);
         setError('');
-
         getUserProfile(_id, accessToken)
             .then((data) => {
                 if (data.error) {
@@ -40,10 +39,7 @@ const AuthAccount = ({ user, actions }) => {
     };
 
     useEffect(() => {
-        if (!firstname && !lastname && !avatar) {
-            init();
-        }
-        return;
+        if (!firstname && !lastname && !avatar) init();
     }, []);
 
     const handleSignout = () => {

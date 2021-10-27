@@ -14,6 +14,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
     const [account, setAccount] = useState({
         firstname: '',
         lastname: '',
@@ -182,6 +183,7 @@ const SignupForm = ({ onSwap = () => { } }) => {
                 onSubmit={onSignupSubmit}
                 onClose={() => setIsConfirming(false)}
             />}
+
             <form className="sign-up-form mb-2 row" onSubmit={handleSubmit}>
                 <div className="col-6">
                     <Input

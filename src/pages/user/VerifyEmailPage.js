@@ -8,6 +8,7 @@ const VerifyEmailPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
     const { emailCode } = useParams();
 
     const init = () => {

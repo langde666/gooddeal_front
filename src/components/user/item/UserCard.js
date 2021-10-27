@@ -3,7 +3,7 @@ import UserLevel from '../../user/item/UserLevel';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const UserCard = ({ user }) => (
+const UserCard = ({ user, hasFollowBtn = false }) => (
     <div className="card shadow mb-2 border-0">
         <Link className="text-reset text-decoration-none" to={`/user/${user._id}`}>
             <div className="card-img-top cus-card-img-top">
@@ -50,6 +50,21 @@ const UserCard = ({ user }) => (
                 to={`/user/${user._id}`}>
                 View profile
             </Link>
+
+            {hasFollowBtn &&
+                <div className="position-relative">
+                    <div className="temp cus-tooltip">
+                        <button
+                            disabled
+                            type="button"
+                            className="btn btn-outline-pink ripple w-100 mt-1"
+                        >
+                            {/*Following */}
+                            Follow
+                        </button>
+                    </div>
+                    <small className="cus-tooltip-msg">This function is not available yet</small>
+                </div>}
         </div>
     </div>
 );

@@ -17,8 +17,9 @@ const AuthStoreAccount = (props) => {
     const [redirect, setRedirect] = useState(false);
 
     const { _id, accessToken } = getToken();
-    const { storeId } = useParams();
-    let { _id: store_id, name, avatar } = useSelector(state => state.store.store);
+    const { storeId: param } = useParams();
+    let { _id: storeId, name, avatar } = useSelector(state => state.store.store);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -26,7 +27,7 @@ const AuthStoreAccount = (props) => {
         setIsLoading(true);
         setError('');
 
-        getStoreProfile(_id, accessToken, storeId)
+        getStoreProfile(_id, accessToken, param)
             .then((data) => {
                 if (data.error) {
                     if (data.isManager === false) {
@@ -48,11 +49,8 @@ const AuthStoreAccount = (props) => {
     };
 
     useEffect(() => {
-        if (!store_id || store_id != storeId) {
-            init();
-        }
-        return;
-    }, []);
+        if (!storeId || storeId != param) init();
+    }, [param]);
 
     return (
         <Fragment>

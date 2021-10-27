@@ -11,10 +11,11 @@ import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
+const StaffCard = ({ user = {}, storeId = '', hasRemoveBtn = false }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
+
     const { _id, accessToken } = getToken();
     const dispatch = useDispatch();
 
@@ -61,14 +62,13 @@ const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
             />}
             <Link className="text-reset text-decoration-none"
                 to={`/user/${user._id}`}
-                target="_blank">
+            >
                 <div className="card-img-top cus-card-img-top">
                     <img src={IMG + user.avatar}
                         className="cus-card-img"
                         alt={user.firstname + ' ' + user.lastname} />
                 </div>
             </Link>
-
 
             <div className="card-body border-top border-secondary">
                 <small className="card-subtitle">
@@ -97,7 +97,7 @@ const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
 
                 <Link className="text-reset text-decoration-none link-hover"
                     to={`/user/${user._id}`}
-                    target="_blank">
+                >
                     <h6 className="card-title text-nowrap mt-2">
                         {user.firstname + ' ' + user.lastname}
                     </h6>
@@ -107,7 +107,7 @@ const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
                     type="button"
                     className="btn btn-primary w-100 mt-2"
                     to={`/user/${user._id}`}
-                    target="_blank">
+                >
                     View profile
                 </Link>
 
@@ -117,16 +117,6 @@ const StaffCard = ({ user, storeId, hasRemoveBtn = false }) => {
                         Remove staff
                     </button>
                 )}
-
-                {/* {hasRemoveBtn && (
-                    <div className="position-relative mt-1">
-                        <button type="button" className="btn btn-outline-danger w-100 cus-tooltip"
-                            onClick={handleRemoveStaff}>
-                            <i className="fas fa-ban"></i>
-                        </button>
-                        <small className="cus-tooltip-msg">Remove staff</small>
-                    </div>
-                )} */}
             </div>
         </div>
     );

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import AuthAvatar from '../../user/auth/AuthAvatar';
 
 const UserSideBar = (props) => {
-    const role = useSelector((state) => state.user.user.role);
+    const { role } = useSelector((state) => state.user.user);
     const path = useLocation().pathname.split('/')[2];
     return (
         <div className="user-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
@@ -11,6 +11,7 @@ const UserSideBar = (props) => {
                 <div className="d-flex justify-content-center">
                     <AuthAvatar />
                 </div>
+
                 <hr />
 
                 <li className="nav-item">
@@ -22,6 +23,7 @@ const UserSideBar = (props) => {
                         Your profile
                     </Link>
                 </li>
+
                 {role == 'user' && (
                     <li className="nav-item">
                         <Link
@@ -32,6 +34,7 @@ const UserSideBar = (props) => {
                             Your addresses
                         </Link>
                     </li>)}
+
                 {role == 'user' && (
                     <li className="nav-item">
                         <Link
@@ -89,7 +92,7 @@ const UserSideBar = (props) => {
                 {role == 'admin' && (
                     <li className="nav-item">
                         <Link
-                            to="/"
+                            to="/admin/dashboard"
                             className='nav-link cus-sidebar-item'
                         >
                             <i className="fas fa-user-tie me-3"></i>

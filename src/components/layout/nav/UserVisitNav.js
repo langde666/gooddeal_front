@@ -2,9 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const UserVisitNav = ({ avatar, name, userId }) => {
+const UserVisitNav = ({ avatar = '', name = '', userId = '' }) => {
     const path = useLocation().pathname.split('/')[2];
-
     return (
         <nav className="navbar sticky-topnav navbar-expand-lg navbar-light bg-body shadow rounded-bottom">
             <div className="container-fluid p-0">

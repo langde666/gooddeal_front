@@ -3,8 +3,7 @@ import useToggle from '../../hooks/useToggle';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = '', label = '', borderBtn = false }) => {
-    const selected = listItem.find((item) => item.value == value) || listItem[0];
-    const [selectedItem, setSelectedItem] = useState(selected);
+    const [selectedItem, setSelectedItem] = useState(() => listItem.find((item) => item.value == value) || listItem[0]);
     const [showDropDownFlag, toggleShowDropDownFlag] = useToggle(false);
 
     const handleSelect = (item) => {
@@ -13,7 +12,7 @@ const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = 
     };
 
     useUpdateEffect(() => {
-        const selected = listItem.find((item) => item.value == value) || listItem[0];
+        const selected = listItem.find((item) => item.value == value);
         setSelectedItem(selected);
     }, [value]);
 

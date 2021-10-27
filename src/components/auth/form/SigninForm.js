@@ -10,6 +10,7 @@ import SocialForm from './SocialForm';
 const SigninForm = ({ onSwap = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
     const [account, setAccount] = useState({
         username: '',
         password: '',
@@ -18,7 +19,7 @@ const SigninForm = ({ onSwap = () => { } }) => {
     });
 
     const [regexTest] = useRegex();
-    let history = useHistory();
+    const history = useHistory();
 
     //handle funcs
     const handleChange = (e, name) => {

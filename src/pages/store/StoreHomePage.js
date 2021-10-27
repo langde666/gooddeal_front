@@ -10,14 +10,14 @@ import Error from '../../components/ui/Error';
 const StoreHomePage = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [store, setStore] = useState({});
-    let storeVisit = useSelector(state => state.storeVisit.store);
-    const dispatch = useDispatch();
+
     const { storeId } = useParams();
+    const store = useSelector(state => state.storeVisit.store);
+    const dispatch = useDispatch();
 
     const init = () => {
         setIsLoading(true);
-
+        setError('');
         getStore(storeId)
             .then(data => {
                 if (data.error) {
@@ -36,14 +36,8 @@ const StoreHomePage = (props) => {
     }
 
     useEffect(() => {
-        if (!storeVisit || storeVisit._id != storeId) {
-            init();
-        }
-        else {
-            setStore(storeVisit);
-        }
-
-    }, [storeId, storeVisit]);
+        if (!store || store._id != storeId) init();
+    }, [storeId]);
 
     return (
         <StoreLayout store={store}>

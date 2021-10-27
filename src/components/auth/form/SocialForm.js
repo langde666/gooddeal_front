@@ -9,7 +9,8 @@ import Error from '../../ui/Error';
 const SocialForm = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    let history = useHistory();
+
+    const history = useHistory();
 
     const onSuccess = (res) => {
         if (!res.profileObj && !res.accessToken) {
@@ -65,6 +66,7 @@ const SocialForm = (props) => {
                     <Error msg={error} />
                 </div>
             )}
+
             <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 onSuccess={onSuccess}

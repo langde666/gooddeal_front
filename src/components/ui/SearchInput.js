@@ -24,7 +24,7 @@ const SearchInput = ({ onChange = () => { } }) => {
             className="form-control"
             type="search"
             placeholder="Search"
-            style={{ maxWidth: '300px' }}
+            style={{ maxWidth: '206px' }}
             value={keyword}
             onChange={handleChangeKeyword} />
     )

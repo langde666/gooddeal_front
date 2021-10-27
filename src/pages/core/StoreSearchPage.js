@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getToken } from '../../apis/auth';
 import { getlistStores } from '../../apis/store';
 import MainLayout from '../../components/layout/MainLayout';
 import StoreCard from '../../components/store/item/StoreCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
-import Success from '../../components/ui/Success';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const StoreSearchPage = (props) => {
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [isloading, setIsLoading] = useState(false);
 
     const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
+    const [listStores, setListStores] = useState([]);
+    const [pagination, setPagination] = useState({
+        size: 0,
+    });
     const [filter, setFilter] = useState({
         search: keyword,
         sortBy: 'point',
@@ -23,12 +26,9 @@ const StoreSearchPage = (props) => {
         limit: '8',
         page: 1,
     });
-    const [pagination, setPagination] = useState({});
-    const [listStores, setListStores] = useState([]);
 
     const init = () => {
         setError('');
-        setSuccess('');
         setIsLoading(true);
 
         getlistStores(filter)
@@ -44,7 +44,6 @@ const StoreSearchPage = (props) => {
                         pageCount: data.filter.pageCount,
                     });
                     setListStores(data.stores);
-                    setSuccess(true);
                     setIsLoading(false);
                 }
             })
@@ -75,16 +74,19 @@ const StoreSearchPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="store-search-page position-relative p-3 mx-auto"
+            <div className="store-search-page position-relative mx-auto"
                 style={{ maxWidth: '990px', minHeight: '80vh' }}>
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
-                {success && <h2><Success color='primary' msg={`${pagination.size} Stores found`} /></h2>}
 
-                <div className="store-search-list row">
+                <div className="d-flex justify-content-end">
+                    <span className="me-3">{pagination.size || 0} results</span>
+                </div>
+
+                <div className="store-search-list row mt-3">
                     {listStores && listStores.map((store, index) => (
-                        <div className="col-3 mt-4" key={index}>
-                            <StoreCard store={store} />
+                        <div className="col-3 mb-4" key={index}>
+                            <StoreCard store={store} hasFollowBtn={getToken()} />
                         </div>
                     ))}
                 </div>

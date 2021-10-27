@@ -7,7 +7,7 @@ const AddAddressButton = ({ count = 0 }) => (
             <button
                 type="button"
                 disabled={count >= 6 ? true : false}
-                className="btn btn-primary ripple"
+                className="btn btn-primary ripple text-nowrap"
                 data-bs-toggle="modal"
                 data-bs-target="#add-address-form"
             >

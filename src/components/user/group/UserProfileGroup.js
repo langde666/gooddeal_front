@@ -5,21 +5,19 @@ import EmailActiveItem from '../item/EmailActiveItem';
 import PhoneActiveItem from '../item/PhoneActiveItem';
 import ProfileEditForm from '../form/ProfileEditForm';
 
-const UserProfileGroup = ({
-    firstname, lastname, id_card, email, phone, isEmailActive, isPhoneActive, googleId, facebookId, isEditable = false
-}) => (
+const UserProfileGroup = ({ user = {}, isEditable = false }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
                 label="First name"
-                value={firstname}
+                value={user.firstname}
             />
         </div>
 
         <div className="col-6">
             <Paragraph
                 label="Last name"
-                value={lastname}
+                value={user.lastname}
             />
         </div>
 
@@ -27,7 +25,7 @@ const UserProfileGroup = ({
             <div className="col-6">
                 <Paragraph
                     label="Email"
-                    value={email || '-'}
+                    value={user.email || '-'}
                 />
             </div>
         ) : (
@@ -35,16 +33,16 @@ const UserProfileGroup = ({
                 <div className="col-6">
                     <Paragraph
                         label="Email"
-                        value={email || '-'}
+                        value={user.email || '-'}
                     />
                 </div>
 
                 <div className="col-6 mt-2">
                     <EmailActiveItem
-                        email={email}
-                        isEmailActive={isEmailActive}
-                        googleId={googleId}
-                        facebookId={facebookId}
+                        email={user.email}
+                        isEmailActive={user.isEmailActive}
+                        googleId={user.googleId}
+                        facebookId={user.facebookId}
                     />
                 </div>
             </Fragment>
@@ -54,7 +52,7 @@ const UserProfileGroup = ({
             <div className="col-6">
                 <Paragraph
                     label="Phone"
-                    value={phone || '-'}
+                    value={user.phone || '-'}
                 />
             </div>
         ) : (
@@ -62,14 +60,14 @@ const UserProfileGroup = ({
                 <div className="col-6">
                     <Paragraph
                         label="Phone"
-                        value={phone || '-'}
+                        value={user.phone || '-'}
                     />
                 </div>
 
                 <div className="col-6 mt-2">
                     <PhoneActiveItem
-                        phone={phone}
-                        isPhoneActive={isPhoneActive}
+                        phone={user.phone}
+                        isPhoneActive={user.isPhoneActive}
                     />
                 </div>
             </Fragment>
@@ -78,7 +76,7 @@ const UserProfileGroup = ({
         <div className="col-6">
             <Paragraph
                 label="Id card"
-                value={id_card || '-'}
+                value={user.id_card || '-'}
             />
         </div>
 
@@ -97,13 +95,13 @@ const UserProfileGroup = ({
                         title="Edit profile"
                     >
                         <ProfileEditForm
-                            firstname={firstname}
-                            lastname={lastname}
-                            email={email}
-                            phone={phone}
-                            id_card={id_card}
-                            googleId={googleId}
-                            facebookId={facebookId}
+                            firstname={user.firstname}
+                            lastname={user.lastname}
+                            email={user.email}
+                            phone={user.phone}
+                            id_card={user.id_card}
+                            googleId={user.googleId}
+                            facebookId={user.facebookId}
                         />
                     </Modal>
 

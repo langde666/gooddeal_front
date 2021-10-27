@@ -3,7 +3,7 @@ import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
 import StoreVisitNav from '../../components/layout/nav/StoreVisitNav';
 
-const StoreLayout = ({ store, children }) => (
+const StoreLayout = ({ store = {}, children = null }) => (
     <MainLayout container="container">
         <div className="store-page row" style={{ maxWidth: '990px', margin: '0 auto' }}>
             <div className="col-12 position-relative shadow">
@@ -23,7 +23,7 @@ const StoreLayout = ({ store, children }) => (
                 storeId={store._id}
             />
 
-            <div className="store-page mt-4 p-3 shadow rounded">
+            <div className="store-page-main mt-4">
                 {children}
             </div>
         </div>

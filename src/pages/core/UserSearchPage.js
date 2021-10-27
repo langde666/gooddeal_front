@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { getToken } from '../../apis/auth';
 import { getlistUsers } from '../../apis/user';
 import MainLayout from '../../components/layout/MainLayout';
 import UserCard from '../../components/user/item/UserCard';
@@ -10,10 +11,13 @@ import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const UserSearchPage = (props) => {
     const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
     const [isloading, setIsLoading] = useState(false);
 
     const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
+    const [listUsers, setListUsers] = useState([]);
+    const [pagination, setPagination] = useState({
+        size: 0,
+    });
     const [filter, setFilter] = useState({
         search: keyword,
         sortBy: 'point',
@@ -22,12 +26,9 @@ const UserSearchPage = (props) => {
         limit: '8',
         page: 1,
     });
-    const [pagination, setPagination] = useState({});
-    const [listUsers, setListUsers] = useState([]);
 
     const init = () => {
         setError('');
-        setSuccess('');
         setIsLoading(true);
 
         getlistUsers(filter)
@@ -43,7 +44,6 @@ const UserSearchPage = (props) => {
                         pageCount: data.filter.pageCount,
                     });
                     setListUsers(data.users);
-                    setSuccess(true);
                     setIsLoading(false);
                 }
             })
@@ -74,15 +74,19 @@ const UserSearchPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="user-search-page position-relative p-3 mx-auto"
+            <div className="user-search-page position-relative mx-auto"
                 style={{ maxWidth: '990px', minHeight: '80vh' }}>
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
-                {success && <h4 className='mb-3'>{`${pagination.size} Users found`}</h4>}
-                <div className="user-search-list row">
+
+                <div className="d-flex justify-content-end">
+                    <span className="me-3">{pagination.size || 0} results</span>
+                </div>
+
+                <div className="user-search-list row mt-3">
                     {listUsers && listUsers.map((user, index) => (
                         <div className="col-3 mb-4" key={index}>
-                            <UserCard user={user} />
+                            <UserCard user={user} hasFollowBtn={getToken()} />
                         </div>
                     ))}
                 </div>

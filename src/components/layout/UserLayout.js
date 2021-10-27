@@ -3,7 +3,7 @@ import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
 import UserVisitNav from '../../components/layout/nav/UserVisitNav';
 
-const UserLayout = ({ user, children }) => (
+const UserLayout = ({ user = {}, children = null }) => (
     <MainLayout container="container">
         <div className="user-page row" style={{ maxWidth: '990px', margin: '0 auto' }}>
             <div className="col-12 position-relative shadow">
@@ -23,7 +23,7 @@ const UserLayout = ({ user, children }) => (
                 userId={user._id}
             />
 
-            <div className="user-page mt-4 p-3 shadow rounded">
+            <div className="user-page-main mt-4">
                 {children}
             </div>
         </div>

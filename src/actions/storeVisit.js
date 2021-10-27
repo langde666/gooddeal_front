@@ -1,6 +1,6 @@
 export const addStoreVisit = (store) => {
     return {
-        type: 'ADD_STORE',
+        type: 'ADD_STORE_VISIT',
         payload: store,
     };
 };

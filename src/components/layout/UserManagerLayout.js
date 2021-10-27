@@ -1,7 +1,7 @@
 import MainLayout from './MainLayout';
 import UserSideBar from './nav/UserSideBar';
 
-const UserManagerLayout = ({ children }) => (
+const UserManagerLayout = ({ children = null }) => (
     <MainLayout container="container">
         <div className="user-manager-page">
             <div className="row flex-nowrap">
@@ -9,7 +9,7 @@ const UserManagerLayout = ({ children }) => (
                     <UserSideBar />
                 </div>
 
-                <div className="col-9 p-3 shadow rounded">
+                <div className="col-9">
                     {children}
                 </div>
             </div>

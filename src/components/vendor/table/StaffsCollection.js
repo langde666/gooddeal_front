@@ -3,16 +3,20 @@ import { useSelector } from 'react-redux';
 import Pagination from '../../ui/Pagination';
 import SearchInput from '../../ui/SearchInput';
 import StaffCard from '../item/StaffCard';
+import AddStaffsButton from '../item/AddStaffsButton';
+import CancelStaffButton from '../item/CancelStaffButton';
 
 const StaffsCollection = (props) => {
-    let { _id: storeId, staffIds, ownerId } = useSelector(state => state.store.store);
-    let { _id: userId } = useSelector(state => state.user.user);
+    const { _id: userId } = useSelector(state => state.user.user);
+    const { staffIds, ownerId, _id: storeId } = useSelector(state => state.store.store);
 
     const [listStaffs, setListStaffs] = useState([]);
-    const [pagination, setPagination] = useState({});
+    const [pagination, setPagination] = useState({
+        size: 0,
+    });
     const [filter, setFilter] = useState({
         search: '',
-        limit: 8,
+        limit: '4',
         sortBy: 'name',
         order: 'asc',
         page: 1,
@@ -73,17 +77,30 @@ const StaffsCollection = (props) => {
     }
 
     return (
-        <div className="staffs-collection-wrap row position-relative">
-            <div className="col mb-2">
-                <SearchInput onChange={handleChangeKeyword} />
+        <div className="staffs-collection-wrap position-relative">
+            <h4 className="mb-3">Shop staffs</h4>
+
+            <div className="d-flex justify-content-between align-items-end">
+                <div className="option-wrap d-flex align-items-center">
+                    <SearchInput onChange={handleChangeKeyword} />
+                    <div className="ms-2">
+                        {ownerId && userId === ownerId._id ? (
+                            <AddStaffsButton storeId={storeId} ownerId={ownerId} staffIds={staffIds} />
+                        ) : (
+                            <CancelStaffButton storeId={storeId} />
+                        )}
+                    </div>
+                </div>
+                <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            {listStaffs && <h4 className='mb-3'>{`Shop staffs: ${pagination.size || '0'}`}</h4>}
-            {listStaffs && listStaffs.length > 0 && listStaffs.map((staff, index) => (
-                <div className="col-3 mb-4" key={index}>
-                    <StaffCard user={staff} storeId={storeId} hasRemoveBtn={ownerId && ownerId._id == userId} />
-                </div>
-            ))}
+            <div className="staffs-collection-wrap row mt-3">
+                {listStaffs && listStaffs.length > 0 && listStaffs.map((staff, index) => (
+                    <div className="col-3 mb-4" key={index}>
+                        <StaffCard user={staff} storeId={storeId} hasRemoveBtn={ownerId && ownerId._id == userId} />
+                    </div>
+                ))}
+            </div>
 
             {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
         </div>

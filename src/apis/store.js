@@ -69,6 +69,20 @@ export const listStoresByUser = (userId, token, filter) => {
         .catch(error => console.log(error));
 }
 
+export const listFollowingStores = (userId, token, filter) => {
+    const { search, sortBy, order, limit, page } = filter;
+    return fetch(`${API}/following/stores/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then(res => res.json())
+        .catch(error => console.log(error));
+}
+
 //create store
 export const createStore = (userId, token, store) => {
     return fetch(`${API}/store/create/${userId}`, {

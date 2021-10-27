@@ -4,7 +4,7 @@ const initialState = {
 
 const userVisitReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_USER': {
+        case 'ADD_USER_VISIT': {
             const user = action.payload;
 
             return {
