@@ -4,6 +4,7 @@ import VendorManagerLayour from '../../components/layout/VendorManagerLayour';
 import AuthCover from "../../components/vendor/auth/AuthCover";
 import AuthAvatar from "../../components/vendor/auth/AuthAvatar";
 import AuthCarousel from "../../components/vendor/auth/AuthCarousel";
+import AuthStoreLevelGroup from "../../components/vendor/auth/AuthStoreLevelGroup";
 import StoreProfileGroup from "../../components/store/group/StoreProfileGroup";
 import StoreLevelGroup from "../../components/store/group/StoreLevelGroup";
 import StoreAccountGroup from "../../components/store/group/StoreAccountGroup";
@@ -20,6 +21,9 @@ const ShopProfilePage = (props) => {
                         <div className="avatar-absolute avatar-absolute--store">
                             <AuthAvatar withVendor={false} isEditable={true} bodername={true} />
                         </div>
+                        <div className="level-group-absolute">
+                            <AuthStoreLevelGroup />
+                        </div>
                     </div>
 
                     <div className="col-12 mt-2">
@@ -35,24 +39,12 @@ const ShopProfilePage = (props) => {
                         </Link>
                     </div>
 
-                    <div className="col-12 mt-4">
-                        <div className="row">
-                            <div className="col ms-2 me-1">
-                                <StoreLevelGroup store={store} />
-                            </div>
+                    <div className="col-12 mt-4 px-4">
+                        <StoreProfileGroup store={store} isEditable={true} />
+                    </div>
 
-                            <div className="col ms-1 me-2">
-                                <StoreAccountGroup store={store} />
-                            </div>
-
-                            <div className="col-12 mt-2">
-                                <div className="row">
-                                    <div className="col mx-2">
-                                        <StoreProfileGroup store={store} isEditable={true} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="col-12 mt-1 px-4">
+                        <StoreAccountGroup store={store} />
                     </div>
                 </div>
             </div>

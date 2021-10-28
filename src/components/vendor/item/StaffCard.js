@@ -72,7 +72,7 @@ const StaffCard = ({ user = {}, storeId = '', hasRemoveBtn = false }) => {
 
             <div className="card-body border-top border-secondary">
                 <small className="card-subtitle">
-                    <div className="position-relative d-inline-block">
+                    <div className="position-relative d-inline-block me-1">
                         {user.role == 'user' ? (
                             <span className='badge bg-primary cus-tooltip'>
                                 <i className="fas fa-user"></i>
@@ -101,14 +101,6 @@ const StaffCard = ({ user = {}, storeId = '', hasRemoveBtn = false }) => {
                     <h6 className="card-title text-nowrap mt-2">
                         {user.firstname + ' ' + user.lastname}
                     </h6>
-                </Link>
-
-                <Link
-                    type="button"
-                    className="btn btn-primary w-100 mt-2"
-                    to={`/user/${user._id}`}
-                >
-                    View profile
                 </Link>
 
                 {hasRemoveBtn && (

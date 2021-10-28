@@ -11,7 +11,7 @@ import ConfirmDialog from '../../ui/ConfirmDialog';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const AuthAccount = ({ user, actions }) => {
-    const [isloading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
 
@@ -54,7 +54,7 @@ const AuthAccount = ({ user, actions }) => {
     }
 
     return (
-        isloading ? (
+        isLoading ? (
             <div className="cus-position-relative-loading">
                 <Loading size="small" />
             </div>

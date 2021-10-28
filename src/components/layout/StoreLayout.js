@@ -1,6 +1,7 @@
 import MainLayout from './MainLayout';
 import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
+import AuthStoreLevelGroup from '../../components/store/auth/AuthStoreLevelGroup';
 import StoreVisitNav from '../../components/layout/nav/StoreVisitNav';
 
 const StoreLayout = ({ store = {}, children = null }) => (
@@ -15,13 +16,12 @@ const StoreLayout = ({ store = {}, children = null }) => (
                         bodername={true}
                     />
                 </div>
+                <div className="level-group-absolute">
+                    <AuthStoreLevelGroup />
+                </div>
             </div>
 
-            <StoreVisitNav
-                avatar={store && store.avatar}
-                name={store && store.name}
-                storeId={store._id}
-            />
+            <StoreVisitNav storeId={store._id} />
 
             <div className="store-page-main mt-4">
                 {children}

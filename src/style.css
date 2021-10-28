@@ -981,6 +981,14 @@ header {
     transform: translateX(-50%);
 }
 
+.level-group-absolute {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 6%;
+    width: 40%;
+}
+
 .avatar-absolute.avatar-absolute--store {
     top: 50%;
     transform: translateY(-50%);

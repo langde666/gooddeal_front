@@ -1,17 +1,24 @@
 import Paragraph from "../../ui/Paragraph";
 import StoreLevel from '../item/StoreLevel';
+import StarRating from '../../ui/StarRating';
 
 const StoreLevelGroup = ({ store = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
         <div className="col-6">
             <Paragraph
                 label="Point"
-                value={(<span><i className="fas fa-star link-golden me-1"></i>{store.point}</span>)}
+                value={(<span className="d-flex justify-content-right align-items-center">
+                    <span className="me-2">{store.point}</span>
+                    <StoreLevel storeId={store._id} details={true} />
+                </span>)}
             />
         </div>
 
-        <div className="col-6 mt-2">
-            <StoreLevel storeId={store._id} details={true} />
+        <div className="col-6">
+            <Paragraph
+                label="Rating"
+                value={(<StarRating stars={store.rating || 3} />)}
+            />
         </div>
 
         <div className="col-6">

@@ -11,7 +11,7 @@ const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, 
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const { avatar: userAvt, firstname, lastname } = useSelector(state => state.user.user);
-    const { _id: storeId, avatar, name } = store;
+    const { _id: storeId, avatar, name, rating } = store;
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
@@ -70,9 +70,9 @@ const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, 
                 </div>
             </div>
 
-            <h1 className={`mt-2 px-2 py-1 d-inline-block rounded fs-5 ${bodername ? 'bg-light shadow' : ''}`}>{name}</h1>
+            <h1 className={`mt-2 px-2 py-1 d-inline-flex align-items-center rounded fs-5 ${bodername ? 'bg-light shadow' : ''}`}>{name}</h1>
         </div>
-    )
+    );
 }
 
 const mapStateToProps = (state) => {

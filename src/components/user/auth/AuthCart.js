@@ -17,8 +17,7 @@ const AuthCart = ({ user, actions }) => {
             </span>}
             <small className="cus-tooltip-msg">Cart</small>
         </div>
-
-    )
+    );
 }
 
 function mapStateToProps(state) {

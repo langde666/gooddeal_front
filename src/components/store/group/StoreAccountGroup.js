@@ -19,25 +19,21 @@ const commissionIcons = {
 
 const StoreAccountGroup = ({ store = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
-        <div className="col-6">
+        <div className="col-12">
             <Paragraph
-                label="Business type"
-                value={store.commissionId && store.commissionId.name}
+                label="Type"
+                value={<span className="position-relative d-inline-block">
+                    <span className='badge cus-tooltip bg-primary'>
+                        {store.commissionId && store.commissionId.name && commissionIcons[store.commissionId.name]}
+                        {store.commissionId && store.commissionId.name}
+                    </span>
+                    <small className='cus-tooltip-msg'>
+                        {store.commissionId && store.commissionId.name && store.commissionId.name.charAt(0).toUpperCase() + store.commissionId.name.slice(1)}
+                        {' '}-{' '}Commission:{' '}
+                        {store.commissionId && store.commissionId.cost && (store.commissionId.cost.$numberDecimal * 100).toFixed(2)}%
+                    </small>
+                </span>}
             />
-        </div>
-
-        <div className="col-6 mt-2">
-            <div className="position-relative d-inline-block">
-                <span className='badge cus-tooltip bg-primary'>
-                    {store.commissionId && store.commissionId.name && commissionIcons[store.commissionId.name]}
-                    {store.commissionId && store.commissionId.name}
-                </span>
-                <small className='cus-tooltip-msg'>
-                    {store.commissionId && store.commissionId.name && store.commissionId.name.charAt(0).toUpperCase() + store.commissionId.name.slice(1)}
-                    {' '}-{' '}Commission:{' '}
-                    {store.commissionId && store.commissionId.cost && (store.commissionId.cost.$numberDecimal * 100).toFixed(2)}%
-                </small>
-            </div>
         </div>
 
         <div className="col-12">

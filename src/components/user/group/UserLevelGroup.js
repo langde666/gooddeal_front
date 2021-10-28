@@ -3,15 +3,14 @@ import UserLevel from "../item/UserLevel";
 
 const UserLevelGroup = ({ user = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
-        <div className="col-6">
+        <div className="col-12">
             <Paragraph
                 label="Point"
-                value={(<span><i className="fas fa-star link-golden me-1"></i>{user.point}</span>)}
+                value={(<span className="d-flex justify-content-right align-items-center">
+                    <span className="me-2">{user.point}</span>
+                    <UserLevel userId={user._id} details={true} />
+                </span>)}
             />
-        </div>
-
-        <div className="col-6 mt-2">
-            <UserLevel userId={user._id} details={true} />
         </div>
 
         <div className="col-6">

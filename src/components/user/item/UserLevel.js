@@ -32,7 +32,7 @@ const UserLevel = ({ userId, details = false }) => {
 
     return (
         <div className="position-relative d-inline-block">
-            <span className='badge cus-tooltip ms-1' style={{ backgroundColor: shields[userLv.name] }}>
+            <span className='badge cus-tooltip' style={{ backgroundColor: shields[userLv.name] }}>
                 <i className={`fas fa-shield-alt ${details ? 'me-2' : ''}`}></i>
                 {details && userLv.name}
             </span>

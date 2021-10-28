@@ -15,27 +15,22 @@ const humanReadableDate = (date) => {
 
 const UserAccountGroup = ({ user = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
-        <div className="col-6">
+        <div className="col-12">
             <Paragraph
                 label="Role"
-                value={user.role}
+                value={<div className="position-relative d-inline-block">
+                    {user.role == 'user' ? (
+                        <span className='badge bg-primary cus-tooltip'>
+                            <i className="fas fa-user me-2"></i>{user.role}
+                        </span>
+                    ) : (
+                        <span className='badge bg-info cus-tooltip'>
+                            <i className="fas fa-user-tie me-2"></i>{user.role}
+                        </span>
+                    )}
+                    <small className="cus-tooltip-msg">Role: {user.role}</small>
+                </div>}
             />
-        </div>
-
-        <div className="col-6 mt-2">
-            <div className="position-relative d-inline-block">
-                {user.role == 'user' ? (
-                    <span className='badge bg-primary cus-tooltip'>
-                        <i className="fas fa-user me-2"></i>{user.role}
-                    </span>
-                ) : (
-                    <span className='badge bg-info cus-tooltip'>
-                        <i className="fas fa-user-tie me-2"></i>{user.role}
-                    </span>
-                )}
-                <small className="cus-tooltip-msg">Role: {user.role}</small>
-            </div>
-
         </div>
 
         <div className="col-12">
