@@ -34,7 +34,7 @@ const StoreProfileGroup = ({ store = {}, isEditable = false }) => (
                         title="Edit Shop profile"
                     >
                         <ProfileEditForm
-                            storeId={store.storeId}
+                            storeId={store._id}
                             name={store.name}
                             bio={store.bio}
                         />

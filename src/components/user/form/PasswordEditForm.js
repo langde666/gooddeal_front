@@ -9,57 +9,34 @@ import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
 const PasswordEditForm = (props) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const [account, setAccount] = useState({
         currentPassword: '',
         newPassword: '',
         isValidCurrentPassword: true,
         isValidNewPassword: true,
     });
-    const [isloading, setIsLoading] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+
     const [regexTest] = useRegex();
 
-    const handleChange = (e, name) => {
-        switch (name) {
-            case 'currentPassword': {
-                setAccount({
-                    ...account,
-                    currentPassword: e.target.value,
-                    isValidCurrentPassword: true,
-                });
-                return;
-            }
-            case 'newPassword': {
-                setAccount({
-                    ...account,
-                    newPassword: e.target.value,
-                    isValidNewPassword: true,
-                });
-                return;
-            }
-        }
-    }
+    const handleChange = (name, isValidName, value) => {
+        setAccount({
+            ...account,
+            [name]: value,
+            [isValidName]: true,
+        });
+    };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'currentPassword': {
-                setAccount({
-                    ...account,
-                    isValidCurrentPassword: regexTest('passwordLess', account.currentPassword),
-                });
-                return;
-            }
-            case 'newPassword': {
-                setAccount({
-                    ...account,
-                    isValidNewPassword: regexTest('password', account.newPassword),
-                });
-                return;
-            }
-        }
-    }
+    const handleValidate = (isValidName, flag) => {
+        setAccount({
+            ...account,
+            [isValidName]: flag,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -67,20 +44,16 @@ const PasswordEditForm = (props) => {
         if (!account.currentPassword || !account.newPassword) {
             setAccount({
                 ...account,
-                isValidCurrentPassword: regexTest('passwordLess', account.currentPassword),
+                isValidCurrentPassword: regexTest('password', account.currentPassword),
                 isValidNewPassword: regexTest('password', account.newPassword),
             });
             return;
         }
 
         if (!account.isValidCurrentPassword ||
-            !account.isValidCurrentPassword) {
-            return;
-        }
-        else {
-            setIsConfirming(true);
-        }
+            !account.isValidCurrentPassword) return
 
+        setIsConfirming(true);
     }
 
     const onSubmit = () => {
@@ -140,8 +113,9 @@ const PasswordEditForm = (props) => {
                         value={account.currentPassword}
                         isValid={account.isValidCurrentPassword}
                         feedback="Please provide a valid password."
-                        onChange={(e) => handleChange(e, 'currentPassword')}
-                        onBlur={() => handleValidate('currentPassword')}
+                        validator="password"
+                        onChange={(value) => handleChange('currentPassword', 'isValidCurrentPassword', value)}
+                        onValidate={(flag) => handleValidate('isValidCurrentPassword', flag)}
                     />
                 </div>
 
@@ -152,8 +126,9 @@ const PasswordEditForm = (props) => {
                         value={account.newPassword}
                         isValid={account.isValidNewPassword}
                         feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."
-                        onChange={(e) => handleChange(e, 'newPassword')}
-                        onBlur={() => handleValidate('newPassword')}
+                        validator="password"
+                        onChange={(value) => handleChange('newPassword', 'isValidNewPassword', value)}
+                        onValidate={(flag) => handleValidate('isValidNewPassword', flag)}
                     />
                 </div>
 

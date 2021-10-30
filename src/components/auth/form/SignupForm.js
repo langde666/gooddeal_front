@@ -29,83 +29,28 @@ const SignupForm = ({ onSwap = () => { } }) => {
     const [regexTest] = useRegex();
 
     //handle funcs
-    const handleChange = (e, name) => {
+    const handleChange = (name, isValidName, value) => {
         setError('');
         setSuccess('');
-        const value = e.target.value;
-        switch (name) {
-            case 'firstname': {
-                setAccount({
-                    ...account,
-                    firstname: value,
-                    isValidFirstname: true,
-                });
-                return;
-            }
-            case 'lastname': {
-                setAccount({
-                    ...account,
-                    lastname: value,
-                    isValidLastname: true,
-                });
-                return;
-            }
-            case 'username': {
-                setAccount({
-                    ...account,
-                    username: value,
-                    isValidUsername: true,
-                });
-                return;
-            }
-            case 'password': {
-                setAccount({
-                    ...account,
-                    password: value,
-                    isValidPassword: true,
-                });
-                return;
-            }
-        }
+        setAccount({
+            ...account,
+            [name]: value,
+            [isValidName]: true,
+        });
     };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'firstname': {
-                setAccount({
-                    ...account,
-                    isValidFirstname: regexTest('name', account.firstname),
-                });
-                return;
-            }
-            case 'lastname': {
-                setAccount({
-                    ...account,
-                    isValidLastname: regexTest('name', account.lastname),
-                });
-                return;
-            }
-            case 'username': {
-                setAccount({
-                    ...account,
-                    isValidUsername:
-                        regexTest('email', account.username) ||
-                        regexTest('phone', account.username),
-                });
-                return;
-            }
-            case 'password': {
-                setAccount({
-                    ...account,
-                    isValidPassword: regexTest('password', account.password),
-                });
-                return;
-            }
-        }
+    const handleValidate = (isValidName, flag) => {
+        setError('');
+        setSuccess('');
+        setAccount({
+            ...account,
+            [isValidName]: flag,
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const { firstname, lastname, username, password } = account;
         if (!firstname || !lastname || !username || !password) {
             setAccount({
@@ -126,7 +71,6 @@ const SignupForm = ({ onSwap = () => { } }) => {
             !account.isValidPassword
         )
             return;
-
         setIsConfirming(true);
     };
 
@@ -139,7 +83,6 @@ const SignupForm = ({ onSwap = () => { } }) => {
         setIsLoading(true);
         setError('');
         setSuccess('');
-
         signup(user)
             .then((data) => {
                 if (data.error) {
@@ -153,7 +96,6 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         username: '',
                         password: '',
                     });
-
                     setSuccess(data.success);
                     setIsLoading(false);
                 }
@@ -192,8 +134,9 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         value={account.firstname}
                         isValid={account.isValidFirstname}
                         feedback="Please provide a valid firstname."
-                        onChange={(e) => handleChange(e, 'firstname')}
-                        onBlur={() => handleValidate('firstname')}
+                        validator="name"
+                        onChange={(value) => handleChange('firstname', 'isValidFirstname', value)}
+                        onValidate={(flag) => handleValidate('isValidFirstname', flag)}
                     />
                 </div>
 
@@ -204,8 +147,9 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         value={account.lastname}
                         isValid={account.isValidLastname}
                         feedback="Please provide a valid lastname."
-                        onChange={(e) => handleChange(e, 'lastname')}
-                        onBlur={() => handleValidate('lastname')}
+                        validator="name"
+                        onChange={(value) => handleChange('lastname', 'isValidLastname', value)}
+                        onValidate={(flag) => handleValidate('isValidLastname', flag)}
                     />
                 </div>
 
@@ -216,8 +160,9 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         value={account.username}
                         isValid={account.isValidUsername}
                         feedback="Please provide a valid email address or phone number."
-                        onChange={(e) => handleChange(e, 'username')}
-                        onBlur={() => handleValidate('username')}
+                        validator="email|phone"
+                        onChange={(value) => handleChange('username', 'isValidUsername', value)}
+                        onValidate={(flag) => handleValidate('isValidUsername', flag)}
                     />
                 </div>
 
@@ -229,8 +174,9 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         value={account.password}
                         isValid={account.isValidPassword}
                         feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."
-                        onChange={(e) => handleChange(e, 'password')}
-                        onBlur={() => handleValidate('password')}
+                        validator="password"
+                        onChange={(value) => handleChange('password', 'isValidPassword', value)}
+                        onValidate={(flag) => handleValidate('isValidPassword', flag)}
                     />
                 </div>
 

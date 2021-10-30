@@ -22,51 +22,21 @@ const SigninForm = ({ onSwap = () => { } }) => {
     const history = useHistory();
 
     //handle funcs
-    const handleChange = (e, name) => {
+    const handleChange = (name, isValidName, value) => {
         setError('');
-        const value = e.target.value;
-        switch (name) {
-            case 'username': {
-                setAccount({
-                    ...account,
-                    username: value,
-                    isValidUsername: true,
-                });
-                return;
-            }
-            case 'password': {
-                setAccount({
-                    ...account,
-                    password: value,
-                    isValidPassword: true,
-                });
-                return;
-            }
-        }
+        setAccount({
+            ...account,
+            [name]: value,
+            [isValidName]: true,
+        });
     };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'username': {
-                setAccount({
-                    ...account,
-                    isValidUsername:
-                        regexTest('email', account.username) ||
-                        regexTest('phone', account.username),
-                });
-                return;
-            }
-            case 'password': {
-                setAccount({
-                    ...account,
-                    isValidPassword: regexTest(
-                        'passwordLess',
-                        account.password,
-                    ),
-                });
-                return;
-            }
-        }
+    const handleValidate = (isValidName, flag) => {
+        setError('');
+        setAccount({
+            ...account,
+            [isValidName]: flag,
+        });
     };
 
     const handleFormSubmit = (e) => {
@@ -79,7 +49,7 @@ const SigninForm = ({ onSwap = () => { } }) => {
                 isValidUsername:
                     regexTest('email', username) ||
                     regexTest('phone', username),
-                isValidPassword: regexTest('passwordLess', password),
+                isValidPassword: regexTest('password', password),
             });
             return;
         }
@@ -100,7 +70,6 @@ const SigninForm = ({ onSwap = () => { } }) => {
                     setIsLoading(false);
                 } else {
                     const { accessToken, refreshToken, _id } = data;
-                    console.log(data);
                     setToken({ accessToken, refreshToken, _id }, () => {
                         history.go(0);
                     });
@@ -124,8 +93,9 @@ const SigninForm = ({ onSwap = () => { } }) => {
                         value={account.username}
                         isValid={account.isValidUsername}
                         feedback="Please provide a valid email address or phone number."
-                        onChange={(e) => handleChange(e, 'username')}
-                        onBlur={() => handleValidate('username')}
+                        validator="email|phone"
+                        onChange={(value) => handleChange('username', 'isValidUsername', value)}
+                        onValidate={(flag) => handleValidate('isValidUsername', flag)}
                     />
                 </div>
 
@@ -133,11 +103,12 @@ const SigninForm = ({ onSwap = () => { } }) => {
                     <Input
                         type="password"
                         label="Password"
+                        validator="password"
                         value={account.password}
                         isValid={account.isValidPassword}
                         feedback="Please provide a valid password."
-                        onChange={(e) => handleChange(e, 'password')}
-                        onBlur={() => handleValidate('password')}
+                        onChange={(value) => handleChange('password', 'isValidPassword', value)}
+                        onValidate={(flag) => handleValidate('isValidPassword', flag)}
                     />
                 </div>
 

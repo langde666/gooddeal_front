@@ -89,10 +89,9 @@ export const createStore = (userId, token, store) => {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(store),
+        body: store,
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));

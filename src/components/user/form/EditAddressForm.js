@@ -36,90 +36,20 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
         });
     }, [oldAddress, index]);
 
-    const handleChange = (e, name) => {
-        switch (name) {
-            case 'street': {
-                setAddress({
-                    ...address,
-                    [name]: e.target.value,
-                    isValidStreet: true,
-                });
-                return;
-            }
-            case 'ward': {
-                setAddress({
-                    ...address,
-                    [name]: e.target.value,
-                    isValidWard: true,
-                });
-                return;
-            }
-            case 'district_city': {
-                setAddress({
-                    ...address,
-                    [name]: e.target.value,
-                    isValidDistrict: true,
-                });
-                return;
-            }
-            case 'city_province': {
-                setAddress({
-                    ...address,
-                    [name]: e.target.value,
-                    isValidProvince: true,
-                });
-                return;
-            }
-            case 'country': {
-                setAddress({
-                    ...address,
-                    [name]: e.target.value,
-                    isValidCountry: true,
-                });
-                return;
-            }
-        }
-    }
+    const handleChange = (name, isValidName, value) => {
+        setAddress({
+            ...address,
+            [name]: value,
+            [isValidName]: true,
+        });
+    };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'street': {
-                setAddress({
-                    ...address,
-                    isValidStreet: regexTest('address', address[name]),
-                });
-                return;
-            }
-            case 'ward': {
-                setAddress({
-                    ...address,
-                    isValidWard: regexTest('address', address[name]),
-                });
-                return;
-            }
-            case 'district_city': {
-                setAddress({
-                    ...address,
-                    isValidDistrict: regexTest('address', address[name]),
-                });
-                return;
-            }
-            case 'city_province': {
-                setAddress({
-                    ...address,
-                    isValidProvince: regexTest('address', address[name]),
-                });
-                return;
-            }
-            case 'country': {
-                setAddress({
-                    ...address,
-                    isValidCountry: regexTest('address', address[name]),
-                });
-                return;
-            }
-        }
-    }
+    const handleValidate = (isValidName, flag) => {
+        setAddress({
+            ...address,
+            [isValidName]: flag,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -138,9 +68,7 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
         }
 
         const { isValidStreet, isValidWard, isValidDistrict, isValidProvince, isValidCountry } = address;
-        if (!isValidStreet || !isValidWard || !isValidDistrict || !isValidProvince || !isValidCountry) {
-            return;
-        }
+        if (!isValidStreet || !isValidWard || !isValidDistrict || !isValidProvince || !isValidCountry) return;
 
         setIsConfirming(true);
     }
@@ -200,8 +128,9 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                         value={address.street}
                         isValid={address.isValidStreet}
                         feedback='Please provide a valid street address ("," is not allowed).'
-                        onChange={(e) => handleChange(e, 'street')}
-                        onBlur={() => handleValidate('street')}
+                        validator="address"
+                        onChange={(value) => handleChange('street', 'isValidStreet', value)}
+                        onValidate={(flag) => handleValidate('isValidStreet', flag)}
                     />
                 </div>
 
@@ -212,8 +141,9 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                         value={address.ward}
                         isValid={address.isValidWard}
                         feedback='Please provide a valid ward ("," is not allowed).'
-                        onChange={(e) => handleChange(e, 'ward')}
-                        onBlur={() => handleValidate('ward')}
+                        validator="address"
+                        onChange={(value) => handleChange('ward', 'isValidWard', value)}
+                        onValidate={(flag) => handleValidate('isValidWard', flag)}
                     />
                 </div>
 
@@ -224,8 +154,9 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                         value={address.district_city}
                         isValid={address.isValidDistrict}
                         feedback='Please provide a valid city / district ("," is not allowed).'
-                        onChange={(e) => handleChange(e, 'district_city')}
-                        onBlur={() => handleValidate('district_city')}
+                        validator="address"
+                        onChange={(value) => handleChange('district_city', 'isValidDistrict', value)}
+                        onValidate={(flag) => handleValidate('isValidDistrict', flag)}
                     />
                 </div>
 
@@ -236,8 +167,9 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                         value={address.city_province}
                         isValid={address.isValidProvince}
                         feedback='Please provide a valid province / city ("," is not allowed).'
-                        onChange={(e) => handleChange(e, 'city_province')}
-                        onBlur={() => handleValidate('city_province')}
+                        validator="address"
+                        onChange={(value) => handleChange('city_province', 'isValidProvince', value)}
+                        onValidate={(flag) => handleValidate('isValidProvince', flag)}
                     />
                 </div>
 
@@ -248,8 +180,9 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                         value={address.country}
                         isValid={address.isValidCountry}
                         feedback='Please provide a valid country ("," is not allowed).'
-                        onChange={(e) => handleChange(e, 'country')}
-                        onBlur={() => handleValidate('country')}
+                        validator="address"
+                        onChange={(value) => handleChange('country', 'isValidCountry', value)}
+                        onValidate={(flag) => handleValidate('isValidCountry', flag)}
                     />
                 </div>
 

@@ -51,11 +51,11 @@ const AuthCover = (props) => {
                 <img src={`${IMG + cover}`}
                     className='cus-cover-img' alt="cover" />
                 {cover && (
-                    <label htmlFor='uploadAuthCover' className="cus-cover-icon">
-                        <i className="fas fa-camera"></i>
+                    <label className="cus-cover-icon">
+                        <i className="fas fa-camera me-2"></i>
                         <span>Edit Cover Photo</span>
                         {error && <Error msg={error} />}
-                        <input id='uploadAuthCover' className="visually-hidden" type="file"
+                        <input className="visually-hidden" type="file"
                             accept="image/png, image/jpeg, image/jpg, image/gif"
                             onChange={handleChange}
                         />

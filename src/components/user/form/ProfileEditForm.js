@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../../../actions/user';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/user';
-import useRegex from '../../../hooks/useRegex';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
@@ -17,7 +16,6 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
     const [success, setSuccess] = useState('');
 
     const [profile, setProfile] = useState({});
-    const [regexTest] = useRegex();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -35,92 +33,47 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
         })
     }, [firstname, lastname, email, phone, id_card])
 
-    const handleChange = (e, name) => {
-        switch (name) {
-            case 'firstname': {
-                setProfile({
-                    ...profile,
-                    firstname: e.target.value,
-                    isValidFirstname: true,
-                });
-                return;
-            }
-            case 'lastname': {
-                setProfile({
-                    ...profile,
-                    lastname: e.target.value,
-                    isValidLastname: true,
-                });
-                return;
-            }
-            case 'email': {
-                if (googleId || facebookId) return;
-                setProfile({
-                    ...profile,
-                    email: e.target.value,
-                    isValidEmail: true,
-                });
-                return;
-            }
-            case 'phone': {
-                setProfile({
-                    ...profile,
-                    phone: e.target.value,
-                    isValidPhone: true,
-                });
-                return;
-            }
-            case 'id_card': {
-                setProfile({
-                    ...profile,
-                    id_card: e.target.value,
-                    isValidIdCard: true,
-                });
-                return;
-            }
-        }
-    }
+    const handleChange = (name, isValidName, value) => {
+        setProfile({
+            ...profile,
+            [name]: value,
+            [isValidName]: true,
+        });
+    };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'firstname': {
+    const handleValidate = (isValidName, flag) => {
+        switch (isValidName) {
+            case 'isValidEmail': {
                 setProfile({
                     ...profile,
-                    isValidFirstname: regexTest('name', profile.firstname),
+                    [isValidName]: flag || (!email && profile.email == ''),
                 });
                 return;
             }
-            case 'lastname': {
+            case 'isValidPhone': {
                 setProfile({
                     ...profile,
-                    isValidLastname: regexTest('name', profile.lastname),
+                    [isValidName]: flag || (!phone && profile.phone == ''),
                 });
                 return;
             }
-            case 'email': {
-                if (googleId || facebookId) return;
+            case 'isValidIdCard': {
                 setProfile({
                     ...profile,
-                    isValidEmail: regexTest('email', profile.email) || (!email && profile.email == ''),
+                    [isValidName]: flag || (!id_card && profile.id_card == ''),
                 });
                 return;
             }
-            case 'phone': {
+
+            default: {
                 setProfile({
                     ...profile,
-                    isValidPhone: regexTest('phone', profile.phone) || (!phone && profile.phone == ''),
-                });
-                return;
-            }
-            case 'id_card': {
-                setProfile({
-                    ...profile,
-                    isValidIdCard: regexTest('id_card', profile.id_card) || (!id_card && profile.id_card == ''),
+                    [isValidName]: flag,
                 });
                 return;
             }
         }
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -129,13 +82,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
             !profile.isValidLastname ||
             !profile.isValidEmail ||
             !profile.isValidPhone ||
-            !profile.isValidIdCard) {
-            return;
-        }
-        else {
-            setIsConfirming(true);
-        }
+            !profile.isValidIdCard) return;
 
+        setIsConfirming(true);
     }
 
     const onSubmit = () => {
@@ -194,8 +143,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                         value={profile.firstname}
                         isValid={profile.isValidFirstname}
                         feedback="Please provide a valid firstname."
-                        onChange={(e) => handleChange(e, 'firstname')}
-                        onBlur={() => handleValidate('firstname')}
+                        validator="name"
+                        onChange={(value) => handleChange('firstname', 'isValidFirstname', value)}
+                        onValidate={(flag) => handleValidate('isValidFirstname', flag)}
                     />
                 </div>
 
@@ -206,8 +156,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                         value={profile.lastname}
                         isValid={profile.isValidLastname}
                         feedback="Please provide a valid lastname."
-                        onChange={(e) => handleChange(e, 'lastname')}
-                        onBlur={() => handleValidate('lastname')}
+                        validator="name"
+                        onChange={(value) => handleChange('lastname', 'isValidLastname', value)}
+                        onValidate={(flag) => handleValidate('isValidLastname', flag)}
                     />
                 </div>
 
@@ -218,8 +169,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                         value={profile.email}
                         isValid={profile.isValidEmail}
                         feedback="Please provide a valid email address."
-                        onChange={(e) => handleChange(e, 'email')}
-                        onBlur={() => handleValidate('email')}
+                        validator="email"
+                        onChange={(value) => handleChange('email', 'isValidEmail', value)}
+                        onValidate={(flag) => handleValidate('isValidEmail', flag)}
                     />
                 </div>}
 
@@ -230,8 +182,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                         value={profile.phone}
                         isValid={profile.isValidPhone}
                         feedback="Please provide a valid phone number."
-                        onChange={(e) => handleChange(e, 'phone')}
-                        onBlur={() => handleValidate('phone')}
+                        validator="phone"
+                        onChange={(value) => handleChange('phone', 'isValidPhone', value)}
+                        onValidate={(flag) => handleValidate('isValidPhone', flag)}
                     />
                 </div>
 
@@ -242,8 +195,9 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                         value={profile.id_card}
                         isValid={profile.isValidIdCard}
                         feedback="Please provide a valid id card."
-                        onChange={(e) => handleChange(e, 'id_card')}
-                        onBlur={() => handleValidate('id_card')}
+                        validator="id_card"
+                        onChange={(value) => handleChange('id_card', 'isValidIdCard', value)}
+                        onValidate={(flag) => handleValidate('isValidIdCard', flag)}
                     />
                 </div>
 

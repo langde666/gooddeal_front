@@ -51,10 +51,10 @@ const AuthAvatar = ({ isEditable = false, bodername = false, user, actions }) =>
                     {isloading && <Loading />}
                     <img src={`${IMG + avatar}`} className="cus-avatar-img" alt="avatar" />
                     {avatar && isEditable && (
-                        <label htmlFor='uploadAuthAvatar' className="cus-avatar-icon">
+                        <label className="cus-avatar-icon">
                             <i className="fas fa-camera"></i>
                             {error && <span><Error msg={error} /></span>}
-                            <input id='uploadAuthAvatar' className="visually-hidden" type="file"
+                            <input className="visually-hidden" type="file"
                                 accept="image/png, image/jpeg, image/jpg, image/gif"
                                 onChange={handleChange}
                             />

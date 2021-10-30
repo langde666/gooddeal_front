@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { addStore } from '../../../actions/store';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/store';
-import useRegex from '../../../hooks/useRegex';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import Loading from '../../ui/Loading';
@@ -19,7 +18,6 @@ const ProfileEditForm = ({ name, bio, storeId }) => {
 
     const [profile, setProfile] = useState({});
 
-    const [regexTest] = useRegex();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,56 +29,25 @@ const ProfileEditForm = ({ name, bio, storeId }) => {
         })
     }, [name, bio, storeId])
 
-    const handleChange = (e, name) => {
-        switch (name) {
-            case 'name': {
-                setProfile({
-                    ...profile,
-                    name: e.target.value,
-                    isValidName: true,
-                });
-                return;
-            }
-            case 'bio': {
-                setProfile({
-                    ...profile,
-                    bio: e.target.value,
-                    isValidBio: true,
-                });
-                return;
-            }
-        }
-    }
+    const handleChange = (name, isValidName, value) => {
+        setProfile({
+            ...profile,
+            [name]: value,
+            [isValidName]: true,
+        });
+    };
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'name': {
-                setProfile({
-                    ...profile,
-                    isValidName: regexTest('name', profile.name),
-                });
-                return;
-            }
-            case 'bio': {
-                setProfile({
-                    ...profile,
-                    isValidBio: regexTest('bio', profile.bio),
-                });
-                return;
-            }
-        }
-    }
+    const handleValidate = (isValidName, flag) => {
+        setProfile({
+            ...profile,
+            [isValidName]: flag,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (!profile.isValidName || !profile.isValidBio) {
-            return;
-        }
-        else {
-            setIsConfirming(true);
-        }
-
+        if (!profile.isValidName || !profile.isValidBio) return;
+        setIsConfirming(true);
     }
 
     const onSubmit = () => {
@@ -135,8 +102,9 @@ const ProfileEditForm = ({ name, bio, storeId }) => {
                         value={profile.name}
                         isValid={profile.isValidName}
                         feedback="Please provide a valid shop name."
-                        onChange={(e) => handleChange(e, 'name')}
-                        onBlur={() => handleValidate('name')}
+                        validator="name"
+                        onChange={(value) => handleChange('name', 'isValidName', value)}
+                        onValidate={(flag) => handleValidate('isValidName', flag)}
                     />
                 </div>
 
@@ -147,8 +115,9 @@ const ProfileEditForm = ({ name, bio, storeId }) => {
                         value={profile.bio}
                         isValid={profile.isValidBio}
                         feedback="Please provide a valid shop bio."
-                        onChange={(e) => handleChange(e, 'bio')}
-                        onBlur={() => handleValidate('bio')}
+                        validator="bio"
+                        onChange={(value) => handleChange('bio', 'isValidBio', value)}
+                        onValidate={(flag) => handleValidate('isValidBio', flag)}
                     />
                 </div>
 

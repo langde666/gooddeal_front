@@ -5,6 +5,7 @@ import { createStore } from '../../../apis/store';
 import { listActiveCommissions as getlistCommissions } from '../../../apis/commission';
 import useRegex from '../../../hooks/useRegex';
 import Input from '../../ui/Input';
+import InputFile from '../../ui/InputFile';
 import TextArea from '../../ui/TextArea';
 import DropDownMenu from '../../ui/DropDownMenu';
 import Loading from '../../ui/Loading';
@@ -18,18 +19,24 @@ const commissionIcons = [
 ];
 
 const CreateShopForm = (props) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
+    const [error1, setError1] = useState('');
+    const [error, setError] = useState('');
+
     const [listActiveCommissions, setListActiveCommissions] = useState([]);
     const [shop, setShop] = useState({
         name: '',
         bio: '',
         commissionId: '',
+        avatar: '',
+        cover: '',
         isValidName: true,
         isValidBio: true,
+        isValidAvatar: true,
+        isValidCover: true,
     });
-    const [isloading, setIsLoading] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
-    const [error1, setError1] = useState('');
-    const [error, setError] = useState('');
+
     const [regexTest] = useRegex();
     const history = useHistory();
 
@@ -53,26 +60,20 @@ const CreateShopForm = (props) => {
         init();
     }, []);
 
-    const handleChange = (e, name) => {
-        switch (name) {
-            case 'name': {
-                setShop({
-                    ...shop,
-                    name: e.target.value,
-                    isValidName: true,
-                });
-                return;
-            }
-            case 'bio': {
-                setShop({
-                    ...shop,
-                    bio: e.target.value,
-                    isValidBio: true,
-                });
-                return;
-            }
-        }
-    }
+    const handleChange = (name, isValidName, value) => {
+        setShop({
+            ...shop,
+            [name]: value,
+            [isValidName]: true,
+        });
+    };
+
+    const handleValidate = (isValidName, flag) => {
+        setShop({
+            ...shop,
+            [isValidName]: flag,
+        });
+    };
 
     const handleSelect = (value) => {
         setShop({
@@ -81,50 +82,37 @@ const CreateShopForm = (props) => {
         });
     }
 
-    const handleValidate = (name) => {
-        switch (name) {
-            case 'name': {
-                setShop({
-                    ...shop,
-                    isValidName: regexTest('name', shop.name),
-                });
-                return;
-            }
-            case 'bio': {
-                setShop({
-                    ...shop,
-                    isValidBio: regexTest('bio', shop.bio),
-                });
-                return;
-            }
-        }
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!shop.name || !shop.bio) {
+        if (!shop.name || !shop.bio || !shop.avatar || !shop.cover) {
             setShop({
                 ...shop,
                 isValidName: regexTest('name', shop.name),
                 isValidBio: regexTest('bio', shop.bio),
+                isValidAvatar: !!shop.avatar,
+                isValidCover: !!shop.cover,
             });
             return;
         }
 
-        if (!shop.isValidName || !shop.isValidBio) {
-            return;
-        }
+        if (!shop.isValidName || !shop.isValidBio || !shop.avatar || !shop.cover) return;
 
         setIsConfirming(true);
     }
 
     const onSubmit = () => {
-        const store = { name: shop.name, bio: shop.bio, commissionId: shop.commissionId };
         const { _id, accessToken } = getToken();
+
+        const formData = new FormData();
+        formData.set('name', shop.name);
+        formData.set('bio', shop.bio);
+        formData.set('commissionId', shop.commissionId);
+        formData.set('avatar', shop.avatar);
+        formData.set('cover', shop.cover);
 
         setError('');
         setIsLoading(true);
-        createStore(_id, accessToken, store)
+        createStore(_id, accessToken, formData)
             .then(data => {
                 if (data.error) {
                     setError(data.error);
@@ -134,7 +122,7 @@ const CreateShopForm = (props) => {
                     }, 3000);
                 }
                 else {
-                    history.push(`/vendor/profile/${data.storeId}`);
+                    history.push(`/vendor/${data.storeId}`);
                 }
             })
             .catch(error => {
@@ -152,7 +140,7 @@ const CreateShopForm = (props) => {
             {isConfirming && <ConfirmDialog
                 title='Create shop'
                 message={
-                    <small className="">
+                    <small>
                         By Creating your shop, you agree to GoodDeal's{' '}
                         <Link to="/legal/termsOfUse" target="_blank">
                             Terms of Use
@@ -162,8 +150,7 @@ const CreateShopForm = (props) => {
                         . How you'll get paid? Set up billing?{' '}
                         <Link to="/legal/sellOnGoodDeal" target="_blank">
                             Sell on GoodDeal
-                        </Link>
-                        .
+                        </Link>.
                     </small>
                 }
                 onSubmit={onSubmit}
@@ -171,6 +158,58 @@ const CreateShopForm = (props) => {
             />}
 
             <form className="create-shop-form row mb-2" onSubmit={handleSubmit}>
+                <div className="col-12">
+                    <InputFile
+                        label="Shop avatar"
+                        size="avatar"
+                        value={shop.avatar}
+                        isValid={shop.isValidAvatar}
+                        feedback='Please provide a valid shop avatar.'
+                        accept="image/jpg, image/jpeg, image/png, image/gif"
+                        onChange={(value) => handleChange('avatar', 'isValidAvatar', value)}
+                        onValidate={(flag) => handleValidate('isValidAvatar', flag)}
+                    />
+                </div>
+
+                <div className="col-12">
+                    <InputFile
+                        label="Shop cover"
+                        size="cover"
+                        value={shop.cover}
+                        isValid={shop.isValidCover}
+                        feedback='Please provide a valid shop cover.'
+                        accept="image/jpg, image/jpeg, image/png, image/gif"
+                        onChange={(value) => handleChange('cover', 'isValidCover', value)}
+                        onValidate={(flag) => handleValidate('isValidCover', flag)}
+                    />
+                </div>
+
+                <div className="col-12">
+                    <Input
+                        type="text"
+                        label="Shop name"
+                        value={shop.name}
+                        isValid={shop.isValidName}
+                        feedback='Please provide a valid shop name.'
+                        validator="name"
+                        onChange={(value) => handleChange('name', 'isValidName', value)}
+                        onValidate={(flag) => handleValidate('isValidName', flag)}
+                    />
+                </div>
+
+                <div className="col-12">
+                    <TextArea
+                        type="text"
+                        label="Shop bio"
+                        value={shop.bio}
+                        isValid={shop.isValidBio}
+                        feedback='Please provide a valid shop bio.'
+                        validator="bio"
+                        onChange={(value) => handleChange('bio', 'isValidBio', value)}
+                        onValidate={(flag) => handleValidate('isValidBio', flag)}
+                    />
+                </div>
+
                 <div className="col-12 mt-2">
                     {error1 && <Error msg={error1} />}
                     {!error1 &&
@@ -190,42 +229,6 @@ const CreateShopForm = (props) => {
                         />}
                 </div>
 
-                <div className="col-12 mt-4">
-                    <small className="text-center d-block mx-2">
-                        <span className="text-muted">
-                            How you'll get paid? Set up billing?{' '}
-                        </span>
-                        <Link to="/legal/sellOnGoodDeal" target="_blank">
-                            Sell on GoodDeal
-                        </Link>
-                        .
-                    </small>
-                </div>
-
-                <div className="col-12">
-                    <Input
-                        type="text"
-                        label="Shop name"
-                        value={shop.name}
-                        isValid={shop.isValidName}
-                        feedback='Please provide a valid shop name.'
-                        onChange={(e) => handleChange(e, 'name')}
-                        onBlur={() => handleValidate('name')}
-                    />
-                </div>
-
-                <div className="col-12">
-                    <TextArea
-                        type="text"
-                        label="Shop bio"
-                        value={shop.bio}
-                        isValid={shop.isValidBio}
-                        feedback='Please provide a valid shop bio.'
-                        onChange={(e) => handleChange(e, 'bio')}
-                        onBlur={() => handleValidate('bio')}
-                    />
-                </div>
-
                 {error && (
                     <div className="col-12">
                         <Error msg={error} />
@@ -243,7 +246,13 @@ const CreateShopForm = (props) => {
                         <span className="text-muted">
                             {' '}and{' '}
                         </span>
-                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.
+                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.{' '}
+                        <span className="text-muted">
+                            How you'll get paid? Set up billing?{' '}
+                        </span>
+                        <Link to="/legal/sellOnGoodDeal" target="_blank">
+                            Sell on GoodDeal
+                        </Link>.
                     </small>
                 </div>
 
@@ -253,7 +262,7 @@ const CreateShopForm = (props) => {
                 </div>
             </form>
         </div>
-    )
+    );
 }
 
 export default CreateShopForm;

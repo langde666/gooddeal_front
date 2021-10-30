@@ -4,6 +4,7 @@ import Modal from '../../ui/Modal';
 import EmailActiveItem from '../item/EmailActiveItem';
 import PhoneActiveItem from '../item/PhoneActiveItem';
 import ProfileEditForm from '../form/ProfileEditForm';
+import PasswordEditForm from '../form/PasswordEditForm';
 
 const UserProfileGroup = ({ user = {}, isEditable = false }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">
@@ -107,6 +108,26 @@ const UserProfileGroup = ({ user = {}, isEditable = false }) => (
 
                     <small className="cus-tooltip-msg">Edit Profile</small>
                 </div>
+
+                {!user.googleId && !user.facebookId && (
+                    <div className="position-relative d-inline-block ms-1">
+                        <button type="button" className="btn btn-primary ripple cus-tooltip"
+                            data-bs-toggle="modal"
+                            data-bs-target="#password-edit-form">
+                            <i className="fas fa-key"></i>
+                        </button>
+
+                        <Modal
+                            id="password-edit-form"
+                            hasCloseBtn={false}
+                            title="Edit Password"
+                        >
+                            <PasswordEditForm />
+                        </Modal>
+
+                        <small className="cus-tooltip-msg">Edit Password</small>
+                    </div>
+                )}
             </div>
         )}
     </div>
