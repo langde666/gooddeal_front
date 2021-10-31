@@ -1,6 +1,6 @@
 const API = process.env.REACT_APP_API_URL;
 
-//localStorage
+//localStorage token
 export const setToken = (data, next) => {
     if (typeof window !== 'undefined') {
         localStorage.setItem('jwt', JSON.stringify(data));
@@ -106,3 +106,29 @@ export const authsocial = (user) => {
         .then((res) => res.json())
         .catch((error) => console.error(error));
 };
+
+//confirm email
+export const sendConfirmationEmail = (userId, token) => {
+    return fetch(`${API}/confirm/email/${userId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+export const verifyEmail = (emailCode) => {
+    return fetch(`${API}/verify/email/${emailCode}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}

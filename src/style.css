@@ -309,6 +309,10 @@ header {
     flex: 1;
 }
 
+.cus-paragraph-group {
+    min-height: unset;
+}
+
 .cus-input-group.cus-input-group--file {
     margin-top: 36px;
     margin-bottom: 6px;
@@ -890,8 +894,6 @@ header {
     object-fit: cover;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 }
 
 .cus-cover-img {
@@ -903,8 +905,6 @@ header {
     object-fit: cover;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: inset 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
 }
 
 .cus-cover-img.cus-cover-img--input-file {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../apis/auth';
-import { listFollowingStores } from '../../../apis/store';
+import { listFollowingStores } from '../../../apis/follow';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import StoreCard from '../../store/item/StoreCard';

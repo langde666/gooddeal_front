@@ -1,31 +1,38 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import PrivateRoute from '../components/auth/route/PrivateRoute';
-import AdminRoute from '../components/auth/route/AdminRoute';
+import PrivateRoute from '../components/route/PrivateRoute';
+import AdminRoute from '../components/route/AdminRoute';
+//core
 import HomePage from './core/HomePage';
 import ProductSearchPage from './core/ProductSearchPage';
 import StoreSearchPage from './core/StoreSearchPage';
 import UserSearchPage from './core/UserSearchPage';
-import UserProfilePage from './user/UserProfilePage';
-import UserAddressesPage from './user/UserAddressesPage';
-import UserPurchasePage from './user/UserPurchasePage';
-import UserFollowingPage from './user/UserFollowingPage';
-import UserGiftWalletPage from './user/UserGiftWalletPage';
-import UserGDCoinsPage from './user/UserGDCoinsPage';
-import UserShopManagerPage from './user/UserShopManagerPage';
-import VerifyEmailPage from './user/VerifyEmailPage';
+//admin
+import AdminDashboardPage from './admin/DashboardPage';
+//account
+import AccountProfilePage from './account/ProfilePage';
+import AccountAddressesPage from './account/AddressesPage';
+import AccountPurchasePage from './account/PurchasePage';
+import AccountFollowingPage from './account/FollowingPage';
+import AccountGiftWalletPage from './account/GiftWalletPage';
+import AccountGDCoinsPage from './account/GDCoinsPage';
+import AccountShopManagerPage from './account/ShopManagerPage';
+import AccountVerifyEmailPage from './account/VerifyEmailPage';
+//vendor
+import VendorProfilePage from './vendor/ProfilePage';
+import VendorDashboardPage from './vendor/DashboardPage';
+import VendorProductsPage from './vendor/ProductsPage';
+import VendorOrdersPage from './vendor/OrdersPage';
+import VendorStaffsPage from './vendor/StaffsPage';
+import VendorGiftsPage from './vendor/GiftsPage';
+import VendorGDCoinsPage from './vendor/GDCoinsPage';
+//user
 import UserHomePage from './user/UserHomePage';
 import UserAboutPage from './user/UserAboutPage';
-import ShopProfilePage from './vendor/ShopProfilePage';
-import ShopDashboardPage from './vendor/ShopDashboardPage';
-import ShopProductsPage from './vendor/ShopProductsPage';
-import ShopOrdersPage from './vendor/ShopOrdersPage';
-import ShopStaffsPage from './vendor/ShopStaffsPage';
-import ShopGiftsPage from './vendor/ShopGiftsPage';
-import ShopGDCoinsPage from './vendor/ShopGDCoinsPage';
-import StoreHomePage from './store/StoreHomePage';
-import StoreAboutPage from './store/StoreAboutPage';
-import StoreProductsPage from './store/StoreProductsPage';
-import AdminDashboardPage from './admin/AdminDashboardPage';
+//store
+import StoreHomePage from './store/HomePage';
+import StoreAboutPage from './store/AboutPage';
+import StoreCollectionPage from './store/CollectionPage';
+//product
 
 const Routes = () => {
     return (
@@ -44,31 +51,31 @@ const Routes = () => {
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
 
-                <PrivateRoute path="/user/profile" exact component={UserProfilePage} />
-                <PrivateRoute path="/user/addresses" exact component={UserAddressesPage} />
-                <PrivateRoute path="/user/purchase" exact component={UserPurchasePage} />
-                <PrivateRoute path="/user/following" exact component={UserFollowingPage} />
-                <PrivateRoute path="/user/giftWallet" exact component={UserGiftWalletPage} />
-                <PrivateRoute path="/user/GDCoins" exact component={UserGDCoinsPage} />
-                <PrivateRoute path="/user/shopManager" exact component={UserShopManagerPage} />
+                <AdminRoute path="/admin/dashboard" exact component={AdminDashboardPage} />
 
-                <Route path="/verify/email/:emailCode" exact component={VerifyEmailPage} />
+                <PrivateRoute path="/account/profile" exact component={AccountProfilePage} />
+                <PrivateRoute path="/account/addresses" exact component={AccountAddressesPage} />
+                <PrivateRoute path="/account/purchase" exact component={AccountPurchasePage} />
+                <PrivateRoute path="/account/following" exact component={AccountFollowingPage} />
+                <PrivateRoute path="/account/giftWallet" exact component={AccountGiftWalletPage} />
+                <PrivateRoute path="/account/GDCoins" exact component={AccountGDCoinsPage} />
+                <PrivateRoute path="/account/shopManager" exact component={AccountShopManagerPage} />
+                <Route path="/verify/email/:emailCode" exact component={AccountVerifyEmailPage} />
+
+                <PrivateRoute path="/vendor/:storeId" exact component={VendorDashboardPage} />
+                <PrivateRoute path="/vendor/profile/:storeId" exact component={VendorProfilePage} />
+                <PrivateRoute path="/vendor/products/:storeId" exact component={VendorProductsPage} />
+                <PrivateRoute path="/vendor/orders/:storeId" exact component={VendorOrdersPage} />
+                <PrivateRoute path="/vendor/staffs/:storeId" exact component={VendorStaffsPage} />
+                <PrivateRoute path="/vendor/gifts/:storeId" exact component={VendorGiftsPage} />
+                <PrivateRoute path="/vendor/GDCoins/:storeId" exact component={VendorGDCoinsPage} />
+
                 <Route path="/user/:userId" exact component={UserHomePage} />
                 <Route path="/user/about/:userId" exact component={UserAboutPage} />
 
-                <PrivateRoute path="/vendor/:storeId" exact component={ShopDashboardPage} />
-                <PrivateRoute path="/vendor/profile/:storeId" exact component={ShopProfilePage} />
-                <PrivateRoute path="/vendor/products/:storeId" exact component={ShopProductsPage} />
-                <PrivateRoute path="/vendor/orders/:storeId" exact component={ShopOrdersPage} />
-                <PrivateRoute path="/vendor/staffs/:storeId" exact component={ShopStaffsPage} />
-                <PrivateRoute path="/vendor/gifts/:storeId" exact component={ShopGiftsPage} />
-                <PrivateRoute path="/vendor/GDCoins/:storeId" exact component={ShopGDCoinsPage} />
-
                 <Route path="/store/:storeId" exact component={StoreHomePage} />
-                <Route path="/store/products/:storeId" exact component={StoreProductsPage} />
+                <Route path="/store/collection/:storeId" exact component={StoreCollectionPage} />
                 <Route path="/store/about/:storeId" exact component={StoreAboutPage} />
-
-                <AdminRoute path="/admin/dashboard" exact component={AdminDashboardPage} />
 
             </Switch>
         </BrowserRouter>

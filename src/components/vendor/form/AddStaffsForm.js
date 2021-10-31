@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { getlistUsers } from '../../../apis/user';
 import { addStaffs } from '../../../apis/store';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import UserSmallCard from '../../user/item/UserSmallCard';
 import SearchInput from '../../ui/SearchInput';
 import Loading from '../../ui/Loading';
@@ -131,7 +131,7 @@ const AddStaffsForm = ({ storeId, ownerId, staffIds }) => {
                 }
                 else {
                     setListRight([]);
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {

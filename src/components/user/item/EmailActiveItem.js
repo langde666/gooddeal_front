@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
-import { sendConfirmationEmail } from '../../../apis/user';
+import { sendConfirmationEmail } from '../../../apis/auth';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/user';
 import Input from '../../ui/Input';
@@ -109,7 +109,7 @@ const ProfileEditForm = ({ firstname = '', lastname = '', email = '', phone = ''
                 }
                 else {
                     setSuccess(data.success);
-                    dispatch(addUser(data.user));
+                    dispatch(addAccount(data.user));
                     setIsLoading(false);
                     setTimeout(() => {
                         setSuccess('');

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUserVisit } from '../../actions/userVisit';
+import { addUser } from '../../actions/user';
 import { getUser } from '../../apis/user';
 import UserLayout from '../../components/layout/UserLayout';
 import Loading from '../../components/ui/Loading';
@@ -11,7 +11,7 @@ const UserHomePage = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const user = useSelector(state => state.userVisit.user);
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
     const { userId } = useParams();
 
@@ -25,7 +25,7 @@ const UserHomePage = (props) => {
                     setIsLoading(false);
                 }
                 else {
-                    dispatch(addUserVisit(data.user));
+                    dispatch(addUser(data.user));
                     setIsLoading(false);
                 }
             })
@@ -43,7 +43,9 @@ const UserHomePage = (props) => {
         <UserLayout user={user}>
             {error && <Error msg={error} />}
             {isloading && <Loading />}
-            {user && user.firstname + ' ' + user.lastname + ' home page...'}
+            <div className="user-home-page">
+                {user && user.firstname + ' ' + user.lastname + ' home page...'}
+            </div>
         </UserLayout>
     );
 }

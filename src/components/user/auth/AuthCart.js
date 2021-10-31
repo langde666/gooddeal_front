@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 
 const AuthCart = ({ user, actions }) => {
     const { cart } = user;
@@ -21,11 +21,11 @@ const AuthCart = ({ user, actions }) => {
 }
 
 function mapStateToProps(state) {
-    return { user: state.user.user }
+    return { user: state.account.user }
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (data) => dispatch(addUser(data.user)) }
+    return { actions: (data) => dispatch(addAccount(data.user)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthCart);

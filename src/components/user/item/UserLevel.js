@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUserLevel } from '../../../apis/user';
+import { getUserLevel } from '../../../apis/level';
 
 const shields = {
     "bronze": "#CD7F32",

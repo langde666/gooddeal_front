@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../apis/auth';
 import { listStoresByUser } from '../../../apis/store';
-import Loading from '../../ui/Loading';
-import Error from '../../ui/Error';
 import ShopCard from '../item/ShopCard';
+import CreateShopButton from '../item/CreateShopButton';
 import Pagination from '../../ui/Pagination';
 import SearchInput from '../../ui/SearchInput';
-import CreateShopButton from '../item/CreateShopButton';
+import Loading from '../../ui/Loading';
+import Error from '../../ui/Error';
 
 const ShopsCollection = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [run, setRun] = useState(false);
 
     const [listShops, setListShops] = useState([]);
     const [pagination, setPagination] = useState({
@@ -18,7 +19,8 @@ const ShopsCollection = (props) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'point',
+        sortBy: 'rating',
+        sortMoreBy: 'point',
         order: 'desc',
         limit: '4',
         page: 1,
@@ -53,7 +55,7 @@ const ShopsCollection = (props) => {
 
     useEffect(() => {
         init();
-    }, [filter]);
+    }, [filter, run]);
 
     const handleChangeKeyword = (keyword) => {
         setFilter({
@@ -90,7 +92,7 @@ const ShopsCollection = (props) => {
             <div className="shops-collection row mt-3">
                 {listShops && listShops.map((store, index) => (
                     <div className="col-3 mb-4" key={index}>
-                        <ShopCard store={store} userId={_id} />
+                        <ShopCard store={store} userId={_id} onRun={() => setRun(!run)} />
                     </div>
                 ))}
             </div>

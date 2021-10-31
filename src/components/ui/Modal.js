@@ -1,4 +1,4 @@
-import Logo from '../layout/nav/Logo';
+import Logo from '../layout/menu/Logo';
 
 const Modal = ({
     id,

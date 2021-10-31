@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUserVisit } from '../../actions/userVisit';
+import { addUser } from '../../actions/user';
 import { getUser } from '../../apis/user';
 import UserLayout from '../../components/layout/UserLayout';
 import Loading from '../../components/ui/Loading';
@@ -15,7 +15,7 @@ const UserAboutPage = (props) => {
     const [error, setError] = useState('');
 
     const { userId } = useParams();
-    const user = useSelector(state => state.userVisit.user);
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch();
 
     const init = () => {
@@ -28,7 +28,7 @@ const UserAboutPage = (props) => {
                     setIsLoading(false);
                 }
                 else {
-                    dispatch(addUserVisit(data.user));
+                    dispatch(addUser(data.user));
                     setIsLoading(false);
                 }
             })
@@ -48,7 +48,7 @@ const UserAboutPage = (props) => {
             {isloading && <Loading />}
 
             {!error && !isloading &&
-                <div className="row">
+                <div className="user-about-page row">
                     <div className="col ms-2 me-1">
                         <UserLevelGroup user={user} />
                     </div>

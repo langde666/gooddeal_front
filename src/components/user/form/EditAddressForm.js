@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 import { getToken } from '../../../apis/auth';
 import { updateAddress } from '../../../apis/user';
 import useRegex from '../../../hooks/useRegex';
@@ -93,7 +93,7 @@ const EditAddressForm = ({ oldAddress = '', index = null }) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addUser(data.user));
+                    dispatch(addAccount(data.user));
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {

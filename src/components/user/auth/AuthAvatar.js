@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { updateAvatar } from '../../../apis/user';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
@@ -69,11 +69,11 @@ const AuthAvatar = ({ isEditable = false, bodername = false, user, actions }) =>
 }
 
 const mapStateToProps = (state) => {
-    return { user: state.user.user }
+    return { user: state.account.user }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { actions: (data) => dispatch(addUser(data.user)) }
+    return { actions: (data) => dispatch(addAccount(data.user)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthAvatar);

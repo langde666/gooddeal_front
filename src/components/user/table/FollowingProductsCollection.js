@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../apis/auth';
-// import { listFollowingProducts } from '../../../apis/products';
+// import { listFollowingProducts } from '../../../apis/follow';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 // import ProductCard from '../../product/item/ProductCard';

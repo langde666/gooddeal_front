@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addStore } from '../../../actions/store';
-import { getStoreLevel } from '../../../apis/store';
+import { addVendor } from '../../../actions/vendor';
+import { getStoreLevel } from '../../../apis/level';
 import Paragraph from "../../ui/Paragraph";
 import StarRating from '../../ui/StarRating';
 
@@ -11,7 +11,7 @@ const shields = {
 }
 
 const AuthStoreLevelGroup = (props) => {
-    const store = useSelector(state => state.store.store);
+    const store = useSelector(state => state.vendor.store);
     const [level, setLevel] = useState(() => store.level);
     const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const AuthStoreLevelGroup = (props) => {
                 }
                 else {
                     store.level = data.level;
-                    dispatch(addStore(store));
+                    dispatch(addVendor(store));
                     setLevel(data.level);
                 }
             })
@@ -60,7 +60,7 @@ const AuthStoreLevelGroup = (props) => {
             <div className="col-6">
                 <Paragraph
                     label="Rating"
-                    value={(<StarRating stars={store.rating || 3} />)}
+                    value={(<StarRating stars={store.rating == 0 && store.number_of_reviews == 0 ? 3 : store.rating} />)}
                 />
             </div>
 

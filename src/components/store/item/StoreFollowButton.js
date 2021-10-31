@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../apis/auth';
-import { checkFollowingStore } from '../../../apis/user';
-import { followStore, unfollowStore } from '../../../apis/user';
+import { followStore, unfollowStore, checkFollowingStore } from '../../../apis/follow';
 import useToggle from '../../../hooks/useToggle';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';

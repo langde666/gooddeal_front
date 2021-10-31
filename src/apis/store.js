@@ -43,8 +43,8 @@ export const getStore = (storeId) => {
 
 // list store
 export const getlistStores = (filter) => {
-    const { search, sortBy, order, limit, page, isActive } = filter;
-    return fetch(`${API}/stores?search=${search}&isActive=${isActive}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
+    const { search, sortBy, sortMoreBy, order, limit, page, isActive } = filter;
+    return fetch(`${API}/stores?search=${search}&isActive=${isActive}&sortBy=${sortBy}&sortMoreBy=${sortMoreBy}&order=${order}&limit=${limit}&page=${page}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -58,20 +58,6 @@ export const getlistStores = (filter) => {
 export const listStoresByUser = (userId, token, filter) => {
     const { search, sortBy, order, limit, page } = filter;
     return fetch(`${API}/stores/by/user/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
-
-export const listFollowingStores = (userId, token, filter) => {
-    const { search, sortBy, order, limit, page } = filter;
-    return fetch(`${API}/following/stores/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -170,19 +156,6 @@ export const removeFeaturedImage = (userId, token, index, storeId) => {
         .catch(error => console.log(error));
 }
 
-// level
-export const getStoreLevel = (storeId) => {
-    return fetch(`${API}/store/level/${storeId}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    })
-        .then((res) => res.json())
-        .catch((error) => console.log(error));
-}
-
 //staffs
 export const addStaffs = (userId, token, staffs, storeId) => {
     return fetch(`${API}/store/staffs/${storeId}/${userId}`, {
@@ -220,6 +193,21 @@ export const cancelStaff = (userId, token, storeId) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
+//openStore
+export const openStore = (userId, token, value, storeId) => {
+    return fetch(`${API}/store/open/${storeId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(value),
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));

@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
+import accountReducer from './account';
+import vendorReducer from './vendor';
 import userReducer from './user';
-import userVisitReducer from './userVisit';
 import storeReducer from './store';
-import storeVisitReducer from './storeVisit';
+import productReducer from './product';
 
 const rootReducer = combineReducers({
+    account: accountReducer,
+    vendor: vendorReducer,
     user: userReducer,
-    userVisit: userVisitReducer,
     store: storeReducer,
-    storeVisit: storeVisitReducer,
+    product: productReducer,
 });
 
 export default rootReducer;

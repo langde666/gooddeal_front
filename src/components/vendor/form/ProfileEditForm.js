@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/store';
 import Input from '../../ui/Input';
@@ -68,7 +68,7 @@ const ProfileEditForm = ({ name, bio, storeId }) => {
                 }
                 else {
                     setSuccess(data.success);
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                     setIsLoading(false);
                     setTimeout(() => {
                         setSuccess('');

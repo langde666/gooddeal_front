@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { removeStaff } from '../../../apis/store';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import UserLevel from '../../user/item/UserLevel';
 import Error from '../../ui/Error';
 import Loading from '../../ui/Loading';
@@ -37,7 +37,7 @@ const StaffCard = ({ user = {}, storeId = '', hasRemoveBtn = false }) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                     setIsLoading(false);
                 }
             })

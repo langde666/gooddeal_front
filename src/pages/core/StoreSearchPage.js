@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
 import { getlistStores } from '../../apis/store';
+import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
 import StoreCard from '../../components/store/item/StoreCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
-import useUpdateEffect from '../../hooks/useUpdateEffect';
 
 const StoreSearchPage = (props) => {
     const [error, setError] = useState('');
@@ -20,8 +20,9 @@ const StoreSearchPage = (props) => {
     });
     const [filter, setFilter] = useState({
         search: keyword,
-        sortBy: 'point',
-        isActive: '',
+        sortBy: 'rating',
+        sortMoreBy: 'point',
+        isActive: 'true',
         order: 'desc',
         limit: '8',
         page: 1,

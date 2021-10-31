@@ -1,4 +1,4 @@
-import MainNav from './nav/MainNav';
+import MainNav from './menu/MainNav';
 
 const MainLayout = ({ children = null, container = "container", navFor = 'user' }) => (
     <div className="main-layout">

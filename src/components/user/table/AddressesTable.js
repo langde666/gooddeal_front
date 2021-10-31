@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { removeAddresses } from '../../../apis/user';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 import EditAddressForm from '../form/EditAddressForm';
+import AddAddressButton from '../item/AddAddressButton';
 import Modal from '../../ui/Modal';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
-import AddAddressButton from '../item/AddAddressButton';
 
 const AddressesTable = (props) => {
     const [editAddress, setEditAddress] = useState({});
@@ -20,7 +20,7 @@ const AddressesTable = (props) => {
     const [success, setSuccess] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
 
-    const { addresses } = useSelector(state => state.user.user);
+    const { addresses } = useSelector(state => state.account.user);
     const dispatch = useDispatch();
 
     const handleEditAddress = (address, index) => {
@@ -53,7 +53,7 @@ const AddressesTable = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addUser(data.user));
+                    dispatch(addAccount(data.user));
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {

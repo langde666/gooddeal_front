@@ -2,8 +2,10 @@ import MainLayout from '../../components/layout/MainLayout';
 
 const HomePage = () => {
     return (
-        <MainLayout className="home-page">
-
+        <MainLayout>
+            <div className="home-page">
+                Home...
+            </div>
         </MainLayout>
     );
 };

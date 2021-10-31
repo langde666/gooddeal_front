@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { updateFeaturedImage, addFeaturedImage, removeFeaturedImage } from '../../../apis/store';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
@@ -16,7 +16,7 @@ const AuthCarousel = (props) => {
     const [isConfirming, setIsConfirming] = useState(false);
     const [index, setIndex] = useState('');
 
-    let { _id: storeId, featured_images } = useSelector(state => state.store.store);
+    let { _id: storeId, featured_images } = useSelector(state => state.vendor.store);
     const { _id, accessToken } = getToken();
     const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ const AuthCarousel = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                     setSuccess(data.success);
                     setTimeout(() => {
                         setSuccess('');
@@ -77,7 +77,7 @@ const AuthCarousel = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                     setSuccess(data.success);
                     setTimeout(() => {
                         setSuccess('');
@@ -112,7 +112,7 @@ const AuthCarousel = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
 
                     setSuccess(data.success);
                     setTimeout(() => {

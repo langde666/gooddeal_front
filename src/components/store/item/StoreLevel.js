@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getStoreLevel } from '../../../apis/store';
+import { getStoreLevel } from '../../../apis/level';
 
 const shields = {
     "normal": "#C0C0C0",

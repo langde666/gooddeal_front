@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import StoreLevel from '../../store/item/StoreLevel';
 import StarRating from '../../ui/StarRating';
+import OpenShopButton from '../../vendor/item/OpenShopButton';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 const commissionIcons = {
@@ -8,7 +9,7 @@ const commissionIcons = {
     "business": <i className="fas fa-building"></i>,
 };
 
-const ShopCard = ({ store, userId }) => (
+const ShopCard = ({ store, userId, onRun = () => { } }) => (
     <div className="card shadow mb-2 border-0">
         <Link className="text-reset text-decoration-none" to={`/store/${store._id}`}>
             <div className="card-img-top cus-card-img-top">
@@ -61,7 +62,7 @@ const ShopCard = ({ store, userId }) => (
 
                         {store.isActive ? (
                             <div className="d-inline-block position-relative">
-                                <span className="badge bg-primary ms-1 cus-tooltip">
+                                <span className="badge bg-info ms-1 cus-tooltip">
                                     <i className="fas fa-check-circle"></i>
                                 </span>
                                 <small className="cus-tooltip-msg">Licensed shop</small>
@@ -77,7 +78,7 @@ const ShopCard = ({ store, userId }) => (
                     </div>
                 </div>
 
-                <StarRating stars={store.rating || 3} />
+                <StarRating stars={store.rating == 0 && store.number_of_reviews == 0 ? 3 : store.rating} />
             </small>
 
             <Link className="text-reset text-decoration-none link-hover" to={`/store/${store._id}`}>
@@ -92,6 +93,8 @@ const ShopCard = ({ store, userId }) => (
                 to={`/vendor/${store._id}`}>
                 Dashboard
             </Link>
+
+            <OpenShopButton storeId={store._id} isOpen={store.isOpen} className='w-100 mt-1' hasIcon={false} onRun={onRun} />
         </div>
     </div>
 );

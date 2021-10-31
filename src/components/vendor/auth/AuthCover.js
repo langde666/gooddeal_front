@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { updateCover } from '../../../apis/store';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
@@ -11,7 +11,7 @@ const AuthCover = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    let { _id: storeId, cover } = useSelector(state => state.store.store);
+    let { _id: storeId, cover } = useSelector(state => state.vendor.store);
     const dispatch = useDispatch();
 
     const handleChange = (e) => {
@@ -31,7 +31,7 @@ const AuthCover = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addStore(data.store));
+                    dispatch(addVendor(data.store));
                 }
                 setIsLoading(false);
             })

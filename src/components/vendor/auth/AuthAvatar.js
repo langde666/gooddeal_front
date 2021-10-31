@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { getToken } from '../../../apis/auth';
 import { updateAvatar } from '../../../apis/store';
-import { addStore } from '../../../actions/store';
+import { addVendor } from '../../../actions/vendor';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, store, actions }) => {
+const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, store, actions, hasVendor = false, hasisOpen = false }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const { avatar: userAvt, firstname, lastname } = useSelector(state => state.user.user);
-    const { _id: storeId, avatar, name, rating } = store;
+    const { avatar: userAvt, firstname, lastname } = useSelector(state => state.account.user);
+    const { _id: storeId, avatar, name, ownerId, isActive, isOpen } = store;
+    const { _id: userId } = getToken();
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
@@ -70,17 +71,69 @@ const AuthAvatar = ({ isEditable = false, withVendor = true, bodername = false, 
                 </div>
             </div>
 
-            <h1 className={`mt-2 px-2 py-1 d-inline-flex align-items-center rounded fs-5 ${bodername ? 'bg-light shadow' : ''}`}>{name}</h1>
+            <h1 className={`mt-2 px-2 py-1 d-inline-flex justify-content-center align-items-center rounded fs-5 ${bodername ? 'bg-body shadow' : ''}`}>
+                {name}
+                {hasVendor && <small className="ms-2">
+                    {ownerId && userId == ownerId._id ? (
+                        <div className="d-inline-block position-relative">
+                            <span className="badge bg-info cus-tooltip">
+                                <i className="fas fa-user-shield"></i>
+                            </span>
+                            <small className="cus-tooltip-msg">owner</small>
+                        </div>
+                    ) : (
+                        <div className="d-inline-block position-relative">
+                            <span className="badge bg-primary cus-tooltip">
+                                <i className="fas fa-user-friends"></i>
+                            </span>
+                            <small className="cus-tooltip-msg">staff</small>
+                        </div>
+                    )}
+
+                    {isActive ? (
+                        <div className="d-inline-block position-relative ms-1">
+                            <span className="badge bg-info cus-tooltip">
+                                <i className="fas fa-check-circle"></i>
+                            </span>
+                            <small className="cus-tooltip-msg">Licensed shop</small>
+                        </div>
+                    ) : (
+                        <div className="d-inline-block position-relative">
+                            <span className="badge bg-danger cus-tooltip">
+                                <i className="fas fa-times-circle"></i>
+                            </span>
+                            <small className="cus-tooltip-msg">Unlicensed, keep perfecting your shop to get licensed by GoodDeal!</small>
+                        </div>
+                    )}
+                </small>}
+                {hasisOpen &&
+                    <small className="ms-2">
+                        <div className="d-inline-block position-relative">
+                            <span className={`badge ${isOpen ? 'bg-info' : 'bg-danger'} cus-tooltip`}>
+                                {isOpen ? (
+                                    <span><i className="fas fa-door-open me-1"></i>open</span>
+                                ) : (
+                                    <span><i className="fas fa-door-closed me-1"></i>closed</span>
+                                )}
+                            </span>
+                            <small className="cus-tooltip-msg">
+                                {isOpen ?
+                                    'This store is open, can order in this time.' :
+                                    'This store is closed, can\'t order in this time'}
+                            </small>
+                        </div>
+                    </small>}
+            </h1>
         </div>
     );
 }
 
 const mapStateToProps = (state) => {
-    return { store: state.store.store }
+    return { store: state.vendor.store }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { actions: (data) => dispatch(addStore(data.store)) }
+    return { actions: (data) => dispatch(addVendor(data.store)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthAvatar);

@@ -9,12 +9,14 @@ const ProductSearchPage = (props) => {
     const price = new URLSearchParams(search).get('price') || 'all';
 
     return (
-        <MainLayout className="product-search-page">
-            <h1>Product search</h1>
-            <ul className="list-group">
-                <li className="list-group-item">Keyword: {keyword}</li>
-                <li className="list-group-item">Price: {price}</li>
-            </ul>
+        <MainLayout>
+            <div className="product-search-page">
+                <h1>Product search</h1>
+                <ul className="list-group">
+                    <li className="list-group-item">Keyword: {keyword}</li>
+                    <li className="list-group-item">Price: {price}</li>
+                </ul>
+            </div>
         </MainLayout>
     );
 };

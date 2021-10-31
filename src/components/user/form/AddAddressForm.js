@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUser } from '../../../actions/user';
+import { addAccount } from '../../../actions/account';
 import { getToken } from '../../../apis/auth';
 import { addAddress } from '../../../apis/user';
 import useRegex from '../../../hooks/useRegex';
@@ -87,7 +87,7 @@ const AddAddressForm = (props) => {
                     }, 3000);
                 }
                 else {
-                    dispatch(addUser(data.user));
+                    dispatch(addAccount(data.user));
                     setAddress({
                         street: '',
                         ward: '',
