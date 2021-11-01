@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
-import { addStore, updateIsFollowing, updateLevel } from '../../actions/store';
+import { connect } from 'react-redux';
+import { addStore, } from '../../actions/store';
 import { getToken } from '../../apis/auth';
 import { getStore } from '../../apis/store';
 import { getStoreLevel } from '../../apis/level';
@@ -17,34 +17,31 @@ const StoreInit = ({ store, actions }) => {
 
     const { _id, accessToken } = getToken();
     const { storeId } = useParams();
-    const dispatch = useDispatch();
 
     const init = () => {
         setIsLoading(true);
         setError('');
         getStore(storeId)
-            .then(data => {
+            .then(async data => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 }
                 else {
-                    actions(data.store);
+                    const newStore = data.store;
+
+                    try {
+                        const data = await checkFollowingStore(_id, accessToken, storeId);
+                        newStore.isFollowing = data.success ? true : false;
+                    } catch { }
+
+                    try {
+                        const data = await getStoreLevel(storeId);
+                        newStore.level = data.error ? {} : data.level;
+                    } catch { }
+
+                    actions(newStore);
                     setIsLoading(false);
-
-                    checkFollowingStore(_id, accessToken, storeId)
-                        .then(data => {
-                            if (data.success) dispatch(updateIsFollowing(true));
-                            else dispatch(updateIsFollowing(false));
-                        })
-                        .catch(error => dispatch(updateIsFollowing(false)));
-
-                    getStoreLevel(storeId)
-                        .then(data => {
-                            if (data.error) return;
-                            else dispatch(updateLevel(data.level));
-                        })
-                        .catch((error) => { return; });
                 }
             })
             .catch(error => {

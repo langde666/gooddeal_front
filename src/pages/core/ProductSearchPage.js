@@ -1,15 +1,14 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import MainLayout from '../../components/layout/MainLayout';
 
 const ProductSearchPage = (props) => {
-    let location = useLocation();
+    const location = useLocation();
     const search = location.search;
     const keyword = new URLSearchParams(search).get('keyword') || '';
     const price = new URLSearchParams(search).get('price') || 'all';
 
     return (
-        <MainLayout>
+        <MainLayout container="container" navFor='user'>
             <div className="product-search-page">
                 <h1>Product search</h1>
                 <ul className="list-group">

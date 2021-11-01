@@ -1,6 +1,6 @@
 import MainNav from './menu/MainNav';
 
-const MainLayout = ({ children = null, container = "container", navFor = 'user' }) => (
+const MainLayout = ({ container = "container", navFor = 'user', children = null }) => (
     <div className="main-layout">
         <MainNav navFor={navFor} />
 

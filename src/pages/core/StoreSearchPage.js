@@ -4,7 +4,7 @@ import { getToken } from '../../apis/auth';
 import { getlistStores } from '../../apis/store';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
-import StoreCard from '../../components/store/item/StoreCard';
+import StoreCard from '../../components/card/StoreCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
@@ -12,6 +12,7 @@ import Error from '../../components/ui/Error';
 const StoreSearchPage = (props) => {
     const [error, setError] = useState('');
     const [isloading, setIsLoading] = useState(false);
+    const [run, setRun] = useState(false);
 
     const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
     const [listStores, setListStores] = useState([]);
@@ -24,14 +25,13 @@ const StoreSearchPage = (props) => {
         sortMoreBy: 'point',
         isActive: 'true',
         order: 'desc',
-        limit: '8',
+        limit: '4',
         page: 1,
     });
 
     const init = () => {
         setError('');
         setIsLoading(true);
-
         getlistStores(filter)
             .then(data => {
                 if (data.error) {
@@ -56,7 +56,7 @@ const StoreSearchPage = (props) => {
 
     useEffect(() => {
         init();
-    }, [filter]);
+    }, [filter, run]);
 
     useUpdateEffect(() => {
         setFilter({
@@ -74,7 +74,7 @@ const StoreSearchPage = (props) => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout container="container" navFor='user'>
             <div className="store-search-page position-relative mx-auto"
                 style={{ maxWidth: '990px', minHeight: '80vh' }}>
                 {isloading && <Loading />}
@@ -87,12 +87,18 @@ const StoreSearchPage = (props) => {
                 <div className="store-search-list row mt-3">
                     {listStores && listStores.map((store, index) => (
                         <div className="col-3 mb-4" key={index}>
-                            <StoreCard store={store} hasFollowBtn={getToken()} />
+                            <StoreCard
+                                store={store}
+                                hasFollowBtn={getToken()}
+                                onRun={() => setRun(!run)} />
                         </div>
                     ))}
                 </div>
 
-                {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
+                {pagination.size != 0 &&
+                    <Pagination
+                        pagination={pagination}
+                        onChangePage={handleChangePage} />}
             </div>
         </MainLayout>
     );

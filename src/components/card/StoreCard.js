@@ -1,41 +1,42 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getToken } from '../../../apis/auth';
-import { checkFollowingStore } from '../../../apis/follow';
-import { getStoreLevel } from '../../../apis/level';
-import StoreCommissionLabel from '../../label/StoreCommissionLabel';
-import StoreLevelLabel from '../../label/StoreLevelLabel';
-import StoreFollowLabel from '../../label/StoreFollowLabel';
-import StoreStatusLabel from '../../label/StoreStatusLabel';
-import StarRating from '../../label/StarRating';
-import FollowStoreButton from '../../button/FollowStoreButton';
+import { getToken } from '../../apis/auth';
+import { checkFollowingStore } from '../../apis/follow';
+import { getStoreLevel } from '../../apis/level';
+import StoreCommissionLabel from '../label/StoreCommissionLabel';
+import StoreLevelLabel from '../label/StoreLevelLabel';
+import StoreFollowLabel from '../label/StoreFollowLabel';
+import StoreStatusLabel from '../label/StoreStatusLabel';
+import StarRating from '../label/StarRating';
+import FollowStoreButton from '../button/FollowStoreButton';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
     const [storeValue, setStoreValue] = useState({});
-    const { _id, accessToken } = getToken();
 
     const init = async () => {
+        let newStore = store;
         try {
+            const { _id, accessToken } = getToken();
             const data = await checkFollowingStore(_id, accessToken, store._id);
-            store.isFollowing = data.success ? true : false;
+            newStore.isFollowing = data.success ? true : false;
         } catch { }
 
         try {
             const data = await getStoreLevel(store._id)
-            store.level = data.level;
+            newStore.level = data.level;
         } catch { }
 
-        setStoreValue(store);
+        setStoreValue(newStore);
     }
 
     useEffect(() => {
         init();
-    }, [store._id]);
+    }, [store]);
 
     return (
-        <div className="card shadow mb-2 border-0">
+        <div className="card shadow border-0">
             <Link className="text-reset text-decoration-none" to={`/store/${storeValue._id}`}>
                 <div className="card-img-top cus-card-img-top">
                     <img src={IMG + storeValue.avatar}
@@ -76,7 +77,11 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
                 </Link>
 
                 {hasFollowBtn && (
-                    <FollowStoreButton storeId={store._id} isFollowing={store.isFollowing} className='w-100 mt-1' />
+                    <FollowStoreButton
+                        storeId={store._id}
+                        isFollowing={store.isFollowing}
+                        className='w-100 mt-1'
+                        onRun={onRun} />
                 )}
             </div>
         </div>

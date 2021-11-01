@@ -73,7 +73,7 @@ const UserSearchPage = (props) => {
     }
 
     return (
-        <MainLayout>
+        <MainLayout container="container" navFor='user'>
             <div className="user-search-page position-relative mx-auto"
                 style={{ maxWidth: '990px', minHeight: '80vh' }}>
                 {isloading && <Loading />}

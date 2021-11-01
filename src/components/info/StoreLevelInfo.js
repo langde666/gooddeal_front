@@ -1,9 +1,9 @@
 import StoreLevelLabel from '../label/StoreLevelLabel';
-import Paragraph from "../Paragraph";
-import StarRating from '../StarRating';
+import Paragraph from "../ui/Paragraph";
+import StarRating from '../ui/StarRating';
 
 const StoreLevelInfo = ({ store = {} }) => (
-    <div className="profile-form row py-2 bg-body rounded-3">
+    <div className="profile-form row bg-body rounded-3">
         <div className="col-6">
             <Paragraph
                 label="Point"
@@ -11,7 +11,7 @@ const StoreLevelInfo = ({ store = {} }) => (
                     <span className="d-flex justify-content-right align-items-center">
                         {store.point}
                         <small className="ms-2">
-                            <StoreLevelLabel level={store.level} details={true} />
+                            <StoreLevelLabel level={store.level} />
                         </small>
                     </span>
                 )}

@@ -8,7 +8,9 @@ const Avatar = ({ avatar = '', name = '', bodername = false }) => (
             </div>
         </div>
 
-        <h1 className={`mt-2 px-2 py-1 rounded d-inline-block fs-5 ${bodername ? 'bg-body shadow' : ''}`}>{name}</h1>
+        <h1 className={`mt-2 p-1 rounded-3 d-inline-block fs-5 ${bodername ? 'bg-body shadow' : ''}`}>
+            {name}
+        </h1>
     </div>
 );
 

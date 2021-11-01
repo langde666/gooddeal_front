@@ -89,17 +89,6 @@ const AccountSideBar = (props) => {
                             Shop manager
                         </Link>
                     </li>)}
-
-                {role == 'admin' && (
-                    <li className="nav-item">
-                        <Link
-                            to="/admin/dashboard"
-                            className='nav-link cus-sidebar-item'
-                        >
-                            <i className="fas fa-user-tie me-3"></i>
-                            Admin dashboard
-                        </Link>
-                    </li>)}
             </ul>
         </div>
     );

@@ -32,6 +32,8 @@ import UserAboutPage from './user/UserAboutPage';
 import StoreHomePage from './store/HomePage';
 import StoreAboutPage from './store/AboutPage';
 import StoreCollectionPage from './store/CollectionPage';
+import StoreGiftPage from './store/GiftPage';
+import StoreReviewAndRatingPage from './store/ReviewAndRatingPage';
 //product
 
 const Routes = () => {
@@ -75,6 +77,8 @@ const Routes = () => {
 
                 <Route path="/store/:storeId" exact component={StoreHomePage} />
                 <Route path="/store/collection/:storeId" exact component={StoreCollectionPage} />
+                <Route path="/store/gift/:storeId" exact component={StoreAboutPage} />
+                <Route path="/store/review&rating/:storeId" exact component={StoreReviewAndRatingPage} />
                 <Route path="/store/about/:storeId" exact component={StoreAboutPage} />
 
             </Switch>

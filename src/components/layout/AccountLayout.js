@@ -1,12 +1,12 @@
 import MainLayout from './MainLayout';
 import AccountSideBar from './menu/AccountSideBar';
 
-const AccountLayout = ({ children = null }) => (
+const AccountLayout = ({ user = {}, children = null }) => (
     <MainLayout container="container">
         <div className="account-manager-layout">
             <div className="row flex-nowrap">
                 <div className="col-3">
-                    <AccountSideBar />
+                    <AccountSideBar user={user} />
                 </div>
 
                 <div className="col-9">

@@ -2,7 +2,7 @@ import MainLayout from '../../components/layout/MainLayout';
 
 const HomePage = () => {
     return (
-        <MainLayout>
+        <MainLayout container="container" navFor='user'>
             <div className="home-page">
                 Home...
             </div>
