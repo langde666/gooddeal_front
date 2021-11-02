@@ -6,8 +6,7 @@ const shields = {
 const StoreLevelLabel = ({ level = {}, detail = true }) => (
     <span className="position-relative d-inline-block">
         <span className='badge cus-tooltip' style={{ backgroundColor: shields[level.name] }}>
-            <i className={`fas fa-shield-alt ${detail ? 'me-2' : ''}`}></i>
-            {detail && level.name}
+            <i className='fas fa-shield-alt'></i>{detail && <span className='ms-2'>{level.name}</span>}
         </span>
         {!detail ? (
             <small className='cus-tooltip-msg'>{level.name}</small>

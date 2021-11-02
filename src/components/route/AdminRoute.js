@@ -3,12 +3,11 @@ import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 
 const AdminRoute = ({ component: Page, ...rest }) => {
-    const role = useSelector(state => state.user.user.role);
-
+    const { role } = useSelector(state => state.account.user);
     return <Route
         {...rest}
         render={(props) =>
-            getToken() && role == 'admin' ? (
+            getToken() && role === 'admin' ? (
                 <Page {...props} />
             ) : (
                 <Redirect

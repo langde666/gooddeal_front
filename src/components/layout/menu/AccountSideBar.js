@@ -1,16 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import AuthAvatar from '../../user/auth/AuthAvatar';
+import Avatar from '../../image/Avatar';
 
-const AccountSideBar = (props) => {
-    const { role } = useSelector((state) => state.account.user);
+const AccountSideBar = ({ user = {} }) => {
     const path = useLocation().pathname.split('/')[2];
-
     return (
         <div className="account-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
             <ul className="nav nav-pills flex-column mb-auto">
                 <div className="d-flex justify-content-center">
-                    <AuthAvatar />
+                    <Avatar avatar={user.avatar} name={user.firstname + ' ' + user.lastname}
+                        alt={user.firstname + ' ' + user.lastname} />
                 </div>
 
                 <hr />
@@ -25,7 +23,18 @@ const AccountSideBar = (props) => {
                     </Link>
                 </li>
 
-                {role == 'user' && (
+                {user.role == 'user' && (
+                    <li className="nav-item">
+                        <Link
+                            to="/account/purchase"
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'purchase' ? 'active' : ''}`}
+                        >
+                            <i className="fas fa-shopping-bag me-3"></i>
+                            Purchase history
+                        </Link>
+                    </li>)}
+
+                {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/addresses"
@@ -36,14 +45,14 @@ const AccountSideBar = (props) => {
                         </Link>
                     </li>)}
 
-                {role == 'user' && (
+                {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
-                            to="/account/purchase"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'purchase' ? 'active' : ''}`}
+                            to="/account/shopManager"
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'shopManager' ? 'active' : ''}`}
                         >
-                            <i className="fas fa-shopping-bag me-3"></i>
-                            Purchase history
+                            <i className="fas fa-store me-3"></i>
+                            Shop manager
                         </Link>
                     </li>)}
 
@@ -57,7 +66,8 @@ const AccountSideBar = (props) => {
                     </Link>
                 </li>
 
-                {role == 'user' && (
+
+                {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/giftWallet"
@@ -68,7 +78,7 @@ const AccountSideBar = (props) => {
                         </Link>
                     </li>)}
 
-                {role == 'user' && (
+                {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/GDCoins"
@@ -76,17 +86,6 @@ const AccountSideBar = (props) => {
                         >
                             <i className="fas fa-coins me-3"></i>
                             GD coins
-                        </Link>
-                    </li>)}
-
-                {role == 'user' && (
-                    <li className="nav-item">
-                        <Link
-                            to="/account/shopManager"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'shopManager' ? 'active' : ''}`}
-                        >
-                            <i className="fas fa-store me-3"></i>
-                            Shop manager
                         </Link>
                     </li>)}
             </ul>

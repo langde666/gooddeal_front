@@ -15,6 +15,18 @@ export const listFollowingStores = (userId, token, filter) => {
         .catch(error => console.log(error));
 }
 
+export const getNumberOfFollowers = (storeId) => {
+    return fetch(`${API}/store/number/of/followers/${storeId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
 export const checkFollowingStore = (userId, token, storeId) => {
     return fetch(`${API}/check/following/stores/${storeId}/${userId}`, {
         method: 'GET',

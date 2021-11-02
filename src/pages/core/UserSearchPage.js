@@ -4,7 +4,7 @@ import { getToken } from '../../apis/auth';
 import { getlistUsers } from '../../apis/user';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
-import UserCard from '../../components/user/item/UserCard';
+import UserCard from '../../components/card/UserCard';
 import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';

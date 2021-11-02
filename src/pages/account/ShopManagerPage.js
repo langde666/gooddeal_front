@@ -1,11 +1,13 @@
+import { useSelector } from 'react-redux';
 import AccountLayout from '../../components/layout/AccountLayout';
-import ShopsCollection from '../../components/user/table/ShopsCollection';
+import StoreManagerTable from '../../components/table/StoreManagerTable'
 
 const ShopManagerPage = (props) => {
+    const user = useSelector(state => state.account.user);
     return (
-        <AccountLayout>
+        <AccountLayout user={user}>
             <div className="account-shop-manager-page">
-                <ShopsCollection hasHeading={true} />
+                <StoreManagerTable />
             </div>
         </AccountLayout>
     );

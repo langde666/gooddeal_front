@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getToken } from '../../apis/auth';
 import { getlistStores } from '../../apis/store';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
@@ -12,7 +11,6 @@ import Error from '../../components/ui/Error';
 const StoreSearchPage = (props) => {
     const [error, setError] = useState('');
     const [isloading, setIsLoading] = useState(false);
-    const [run, setRun] = useState(false);
 
     const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
     const [listStores, setListStores] = useState([]);
@@ -56,7 +54,7 @@ const StoreSearchPage = (props) => {
 
     useEffect(() => {
         init();
-    }, [filter, run]);
+    }, [filter]);
 
     useUpdateEffect(() => {
         setFilter({
@@ -87,10 +85,7 @@ const StoreSearchPage = (props) => {
                 <div className="store-search-list row mt-3">
                     {listStores && listStores.map((store, index) => (
                         <div className="col-3 mb-4" key={index}>
-                            <StoreCard
-                                store={store}
-                                hasFollowBtn={getToken()}
-                                onRun={() => setRun(!run)} />
+                            <StoreCard store={store} />
                         </div>
                     ))}
                 </div>

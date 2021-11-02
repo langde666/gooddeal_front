@@ -171,15 +171,13 @@ header {
     border-radius: 4px;
 }
 
-.user-small-img {
+.small-card-img {
     width: 32px;
     height: 32px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: 4px;
     border: 2px solid var(--white-color);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    margin-right: 16px;
+    box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.15);
 }
 
 .user-small-name {
@@ -231,6 +229,14 @@ header {
     white-space: nowrap;
     color: var(--white-color);
 }
+/* 
+.your-shop-name.your-shop-name--primary {
+    color: var(--primary-color);
+}
+
+.your-shop-card:hover .your-shop-name.your-shop-name--primary {
+    color: var(--white-color);
+} */
 
 .your-account-options,
 .your-shop-options {
@@ -1065,7 +1071,12 @@ header {
     top: 50%;
     transform: translateY(-50%);
     right: 6%;
-    width: 32%;
+    width: 35%;
+}
+
+.level-group-absolute.level-group-absolute--small {
+    width: 24%;
+    right: 10%;
 }
 
 .avatar-absolute.avatar-absolute--store {
@@ -1164,4 +1175,16 @@ textarea {
 
 .navbar-light .navbar-nav .nav-link {
     color: inherit;
+}
+
+/* table */
+.bio-td {
+    width: 360px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* after 3 line show ... */
+    -webkit-box-orient: vertical;
+    padding-bottom: 0 !important;
 }

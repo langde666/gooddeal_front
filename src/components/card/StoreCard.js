@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { checkFollowingStore } from '../../apis/follow';
+import { getNumberOfFollowers, checkFollowingStore } from '../../apis/follow';
 import { getStoreLevel } from '../../apis/level';
 import StoreCommissionLabel from '../label/StoreCommissionLabel';
 import StoreLevelLabel from '../label/StoreLevelLabel';
@@ -12,11 +12,22 @@ import FollowStoreButton from '../button/FollowStoreButton';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
+const StoreCard = ({ store = {}, onRun }) => {
     const [storeValue, setStoreValue] = useState({});
 
     const init = async () => {
         let newStore = store;
+
+        try {
+            const data = await getStoreLevel(store._id);
+            newStore.level = data.level;
+        } catch { }
+
+        try {
+            const data = await getNumberOfFollowers(store._id);
+            newStore.numberOfFollowers = data.count;
+        } catch { }
+
         try {
             const { _id, accessToken } = getToken();
             const data = await checkFollowingStore(_id, accessToken, store._id);
@@ -24,8 +35,8 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
         } catch { }
 
         try {
-            const data = await getStoreLevel(store._id)
-            newStore.level = data.level;
+            //call api get numberOfReviews
+            newStore.numberOfReviews = 0;
         } catch { }
 
         setStoreValue(newStore);
@@ -34,6 +45,18 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
     useEffect(() => {
         init();
     }, [store]);
+
+    const onHandleRun = (flag) => {
+        if (onRun) onRun();
+        else {
+            const currentNumberOfFollowers = storeValue.numberOfFollowers;
+            const numberOfFollowers = flag ? currentNumberOfFollowers + 1 : currentNumberOfFollowers - 1;
+            setStoreValue({
+                ...storeValue,
+                numberOfFollowers,
+            });
+        }
+    }
 
     return (
         <div className="card shadow border-0">
@@ -48,7 +71,7 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
             <div className="card-body border-top border-secondary">
                 <small className="card-subtitle">
                     <div className="d-flex justify-content-between align-items-center">
-                        <div className="level-wrap">
+                        <div className="d-flex align-items-center">
                             <span className="me-1">
                                 <StoreCommissionLabel commission={storeValue.commissionId} detail={false} />
                             </span>
@@ -58,7 +81,7 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
                             </span>
 
                             <span className="">
-                                <StoreFollowLabel number_of_followers={storeValue.number_of_followers} />
+                                <StoreFollowLabel numberOfFollowers={storeValue.numberOfFollowers} />
                             </span>
                         </div>
 
@@ -67,21 +90,21 @@ const StoreCard = ({ store, hasFollowBtn = false, onRun = () => { } }) => {
                         </span>
                     </div>
 
-                    <StarRating stars={store.rating == 0 && store.number_of_reviews == 0 ? 3 : store.rating} />
+                    <StarRating stars={store.rating == 0 && store.numberOfReviews == 0 ? 3 : store.rating} />
                 </small>
 
-                <Link className="text-reset text-decoration-none link-hover" to={`/store/${store._id}`}>
-                    <h6 className="card-title text-nowrap mt-1">
+                <Link className="text-reset text-decoration-none link-hover d-block mt-1" to={`/store/${store._id}`}>
+                    <h6 className="card-title text-nowrap">
                         {store.name}
                     </h6>
                 </Link>
 
-                {hasFollowBtn && (
+                {getToken() && (
                     <FollowStoreButton
                         storeId={store._id}
                         isFollowing={store.isFollowing}
                         className='w-100 mt-1'
-                        onRun={onRun} />
+                        onRun={(flag) => onHandleRun(flag)} />
                 )}
             </div>
         </div>

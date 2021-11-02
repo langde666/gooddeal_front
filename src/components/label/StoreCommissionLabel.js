@@ -7,7 +7,7 @@ const StoreCommissionLabel = ({ commission = {}, detail = true }) => (
     <span className="position-relative d-inline-block">
         <span className='badge bg-primary cus-tooltip'>
             {commissionIcons[commission.name]}
-            {detail && <span className={`${detail ? 'ms-2' : ''}`}>{commission.name}</span>}
+            {detail && <span className='ms-2'>{commission.name}</span>}
         </span>
 
         {!detail ? (

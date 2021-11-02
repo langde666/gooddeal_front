@@ -1,14 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
-import AuthAvatar from '../../user/auth/AuthAvatar';
+import Avatar from '../../image/Avatar';
 
-const AdminSideBar = (props) => {
+const AdminSideBar = ({ user = {} }) => {
     const path = useLocation().pathname.split('/')[2];
-
     return (
         <div className="user-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
             <ul className="nav nav-pills flex-column mb-auto">
                 <div className="d-flex justify-content-center">
-                    <AuthAvatar />
+                    <Avatar avatar={user.avatar} name={user.firstname + ' ' + user.lastname}
+                        alt={user.firstname + ' ' + user.lastname} />
                 </div>
                 <hr />
 

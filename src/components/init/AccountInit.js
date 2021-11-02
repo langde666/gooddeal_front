@@ -3,6 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
+import { getUserLevel } from '../../apis/level';
 import { addAccount } from '../../actions/account';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
@@ -23,12 +24,25 @@ const AccountInit = ({ user, actions }) => {
         setIsLoading(true);
         setError('');
         getUserProfile(_id, accessToken)
-            .then((data) => {
+            .then(async data => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    actions(data);
+                    const newUser = data.user;
+
+                    try {
+                        const data = await getUserLevel(_id);
+                        newUser.level = data.error ? {} : data.level;
+                    } catch { }
+
+                    try {
+                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
+                        newUser.numberOfSucessfulOrders = 0;
+                        newUser.numberOfFailedOrders = 0
+                    } catch { }
+
+                    actions(newUser);
                     setIsLoading(false);
                 }
             })
@@ -67,11 +81,10 @@ const AccountInit = ({ user, actions }) => {
                     onClose={() => setIsConfirming(false)}
                 />)}
                 <div className="your-account">
-                    <div
+                    <Link
+                        type="button"
                         className="your-account-card btn btn-outline-light cus-outline ripple"
-                        onClick={() => {
-                            history.push('/account/profile');
-                        }}
+                        to='/account/profile'
                     >
                         <img
                             src={avatar ? `${IMG + avatar}` : ''}
@@ -82,7 +95,7 @@ const AccountInit = ({ user, actions }) => {
                             {firstname && lastname && firstname + ' ' + lastname}
                             {error && <Error msg={error} />}
                         </span>
-                    </div>
+                    </Link>
 
                     <ul className="list-group your-account-options">
                         <Link className="list-group-item your-account-options-item ripple" to="/account/profile">
@@ -113,7 +126,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (data) => dispatch(addAccount(data.user)) }
+    return { actions: (user) => dispatch(addAccount(user)) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountInit);

@@ -1,22 +1,32 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AccountLayout from '../../components/layout/AccountLayout';
-import AuthCover from "../../components/user/auth/AuthCover";
-import AuthAvatar from "../../components/user/auth/AuthAvatar";
-import UserProfileGroup from '../../components/user/group/UserProfileGroup';
-import UserLevelGroup from '../../components/user/group/UserLevelGroup';
-import UserAccountGroup from '../../components/user/group/UserAccountGroup';
+import UserLevelInfo from '../../components/info/UserLevelInfo';
+import UserProfileInfo from '../../components/info/UserProfileInfo';
+import UserJoinedInfo from '../../components/info/UserJoinedInfo';
+import Cover from '../../components/image/Cover';
+import Avatar from '../../components/image/Avatar';
 
 const ProfilePage = (props) => {
     const user = useSelector(state => state.account.user);
-
     return (
-        <AccountLayout>
+        <AccountLayout user={user}>
             <div className="account-profile-page">
                 <div className="position-relative">
-                    <AuthCover />
+                    <Cover
+                        cover={user.cover}
+                        alt={user.firstname + ' ' + user.lastname}
+                        isEditable='user' />
                     <div className="avatar-absolute avatar-absolute--store">
-                        <AuthAvatar isEditable={true} bodername={true} />
+                        <Avatar
+                            avatar={user.avatar}
+                            name={user.firstname + ' ' + user.lastname}
+                            alt={user.firstname + ' ' + user.lastname}
+                            bodername={true}
+                            isEditable='user' />
+                    </div>
+                    <div className="level-group-absolute level-group-absolute--small">
+                        <UserLevelInfo user={user} />
                     </div>
                 </div>
 
@@ -29,21 +39,12 @@ const ProfilePage = (props) => {
                     </Link>
                 </div>
 
-                <div className="row mt-4">
-                    <div className="col ms-2 me-1">
-                        <UserLevelGroup user={user} />
+                <div className="mt-4 mx-2">
+                    <div className="">
+                        <UserProfileInfo user={user} isEditable={true} />
                     </div>
-
-                    <div className="col ms-1 me-2">
-                        <UserAccountGroup user={user} />
-                    </div>
-
-                    <div className="col-12 mt-2">
-                        <div className="row">
-                            <div className="col mx-2">
-                                <UserProfileGroup user={user} isEditable={true} />
-                            </div>
-                        </div>
+                    <div className="mt-1">
+                        <UserJoinedInfo user={user} />
                     </div>
                 </div>
             </div>

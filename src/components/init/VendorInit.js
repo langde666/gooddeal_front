@@ -97,7 +97,7 @@ const VendorInit = (props) => {
                             </Link>
 
                             <Link className="list-group-item your-shop-options-item ripple"
-                                to="/user/shopManager">
+                                to="/account/shopManager">
                                 <i className="fas fa-arrow-circle-left me-1"></i>
                                 Back
                             </Link>

@@ -1,22 +1,19 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { updateIsFollowing } from "../../actions/store";
 import { getToken } from "../../apis/auth";
 import { followStore, unfollowStore } from '../../apis/follow';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
-const FollowStoreButton = ({ storeId = '', isFollowing = false, className = '', onRun = () => { } }) => {
+const FollowStoreButton = ({ storeId = '', isFollowing = false, className = '', onRun }) => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [followingFlag, setFollowingFlag] = useState(isFollowing);
 
     const { _id, accessToken } = getToken();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         setFollowingFlag(isFollowing);
-    }, [isFollowing]);
+    }, [isFollowing, storeId]);
 
     const handleFollowStore = () => {
         setError('');
@@ -32,10 +29,9 @@ const FollowStoreButton = ({ storeId = '', isFollowing = false, className = '', 
                         }, 3000);
                     }
                     else {
-                        dispatch(updateIsFollowing(true));
-                        onRun();
                         setFollowingFlag(true);
                         setIsLoading(false);
+                        if (onRun) onRun(true);
                     }
                 })
                 .catch(error => {
@@ -57,10 +53,9 @@ const FollowStoreButton = ({ storeId = '', isFollowing = false, className = '', 
                         }, 3000);
                     }
                     else {
-                        dispatch(updateIsFollowing(false));
-                        onRun();
                         setFollowingFlag(false);
                         setIsLoading(false);
+                        if (onRun) onRun(false);
                     }
                 })
                 .catch(error => {

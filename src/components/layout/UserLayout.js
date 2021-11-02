@@ -2,6 +2,7 @@ import MainLayout from './MainLayout';
 import UserNav from './menu/UserNav';
 import Cover from '../../components/ui/Cover';
 import Avatar from '../../components/ui/Avatar';
+import UserLevelInfo from '../../components/info/UserLevelInfo';
 
 const UserLayout = ({ user = {}, children = null }) => (
     <MainLayout container="container">
@@ -15,13 +16,12 @@ const UserLayout = ({ user = {}, children = null }) => (
                         bodername={true}
                     />
                 </div>
+                <div className="level-group-absolute level-group-absolute--small">
+                    <UserLevelInfo user={user} />
+                </div>
             </div>
 
-            <UserNav
-                avatar={user && user.avatar}
-                name={user && user.firstname + ' ' + user.lastname}
-                userId={user._id}
-            />
+            <UserNav user={user} />
 
             <div className="user-page-main mt-4">
                 {children}

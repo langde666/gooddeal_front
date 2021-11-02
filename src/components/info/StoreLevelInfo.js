@@ -3,7 +3,7 @@ import Paragraph from "../ui/Paragraph";
 import StarRating from '../ui/StarRating';
 
 const StoreLevelInfo = ({ store = {} }) => (
-    <div className="profile-form row bg-body rounded-3">
+    <div className="profile-form row bg-body shadow rounded-3">
         <div className="col-6">
             <Paragraph
                 label="Point"
@@ -21,7 +21,7 @@ const StoreLevelInfo = ({ store = {} }) => (
         <div className="col-6">
             <Paragraph
                 label="Rating"
-                value={(<StarRating stars={store.rating == 0 && store.number_of_reviews == 0 ? 3 : store.rating} />)}
+                value={(<StarRating stars={store.rating == 0 && store.numberOfReviews == 0 ? 3 : store.rating} />)}
             />
         </div>
 
@@ -29,9 +29,9 @@ const StoreLevelInfo = ({ store = {} }) => (
             <Paragraph
                 label="Sucessful / failed orders"
                 value={(<span>
-                    <i className="far fa-check-circle me-1 text-info"></i>{store.number_of_successful_orders}
+                    <i className="far fa-check-circle me-1 text-info"></i>{store.numberOfSucessfulOrders}
                     {' '}/{' '}
-                    <i className="far fa-times-circle me-1 text-danger"></i>{store.number_of_failed_orders}
+                    <i className="far fa-times-circle me-1 text-danger"></i>{store.numberOfFailedOrders}
                 </span>)}
             />
         </div>
@@ -39,7 +39,7 @@ const StoreLevelInfo = ({ store = {} }) => (
         <div className="col-6">
             <Paragraph
                 label="Followers"
-                value={<span><i className="fas fa-heart me-1 link-pink"></i>{store.number_of_followers}</span>}
+                value={<span><i className="fas fa-heart me-1 link-pink"></i>{store.numberOfFollowers}</span>}
             />
         </div>
     </div>

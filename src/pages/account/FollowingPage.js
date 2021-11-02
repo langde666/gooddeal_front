@@ -1,10 +1,12 @@
+import { useSelector } from 'react-redux';
 import AccountLayout from '../../components/layout/AccountLayout';
-import FollowingProductsCollection from '../../components/user/table/FollowingProductsCollection';
-import FollowingStoresCollection from '../../components/user/table/FollowingStoresCollection';
+import FollowingProductsCollection from '../../components/collection/FollowingProductsCollection';
+import FollowingStoresCollection from '../../components/collection/FollowingStoreCollection';
 
 const FollowingPage = (props) => {
+    const user = useSelector(state => state.account.user);
     return (
-        <AccountLayout>
+        <AccountLayout user={user}>
             <div className="account-following-page">
                 <FollowingProductsCollection />
                 <hr />

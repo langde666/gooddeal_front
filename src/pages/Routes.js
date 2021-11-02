@@ -17,6 +17,7 @@ import AccountGiftWalletPage from './account/GiftWalletPage';
 import AccountGDCoinsPage from './account/GDCoinsPage';
 import AccountShopManagerPage from './account/ShopManagerPage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
+import AccountCartPage from './account/CartPage';
 //vendor
 import VendorProfilePage from './vendor/ProfilePage';
 import VendorDashboardPage from './vendor/DashboardPage';
@@ -62,6 +63,7 @@ const Routes = () => {
                 <PrivateRoute path="/account/giftWallet" exact component={AccountGiftWalletPage} />
                 <PrivateRoute path="/account/GDCoins" exact component={AccountGDCoinsPage} />
                 <PrivateRoute path="/account/shopManager" exact component={AccountShopManagerPage} />
+                <PrivateRoute path="/cart" exact component={AccountCartPage} />
                 <Route path="/verify/email/:emailCode" exact component={AccountVerifyEmailPage} />
 
                 <PrivateRoute path="/vendor/:storeId" exact component={VendorDashboardPage} />

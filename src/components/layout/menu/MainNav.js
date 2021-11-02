@@ -7,10 +7,10 @@ import SearchBar from './SearchBar';
 import SigninItem from '../../item/SigninItem';
 import AccountInit from '../../init/AccountInit';
 import VendorInit from '../../init/VendorInit';
-import AuthCart from '../../user/auth/AuthCart';
 
 const MainNav = ({ navFor = 'user' }) => {
-    const { role } = useSelector(state => state.account.user);
+    const { role, cart } = useSelector(state => state.account.user);
+    const count = cart && cart.length > 0 ? cart.reduce((count, product) => (count + product && product.count), 0) : 0;
 
     return (
         <header className="main-nav cus-nav navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
@@ -49,7 +49,8 @@ const MainNav = ({ navFor = 'user' }) => {
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"
                                 to="/account/following">
-                                <i className="fas fa-heart" style={{ color: '#ed4956' }}></i>
+                                <i className="fas fa-heart"></i>
+                                {/* <i className="fas fa-heart" style={{ color: '#ed4956' }}></i> */}
                             </Link>
                             <small className="cus-tooltip-msg">Following</small>
                         </li>
@@ -68,7 +69,17 @@ const MainNav = ({ navFor = 'user' }) => {
 
                     {navFor == 'user' && getToken() && role == 'user' && (
                         <li className="nav-item">
-                            <AuthCart />
+                            <div className="cart-item-wrap position-relative">
+                                <Link
+                                    className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                    to="/cart">
+                                    <i className="fas fa-shopping-basket"></i>
+                                </Link>
+                                {<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info cus-tooltip">
+                                    {count < 10 ? count : '9+'}<span className="visually-hidden">products</span>
+                                </span>}
+                                <small className="cus-tooltip-msg">Cart</small>
+                            </div>
                         </li>
                     )}
 

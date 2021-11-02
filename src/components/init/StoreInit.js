@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addStore, } from '../../actions/store';
+import { addStore } from '../../actions/store';
 import { getToken } from '../../apis/auth';
 import { getStore } from '../../apis/store';
 import { getStoreLevel } from '../../apis/level';
-import { checkFollowingStore } from '../../apis/follow';
+import { getNumberOfFollowers, checkFollowingStore } from '../../apis/follow';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
@@ -31,13 +31,29 @@ const StoreInit = ({ store, actions }) => {
                     const newStore = data.store;
 
                     try {
+                        const data = await getStoreLevel(storeId);
+                        newStore.level = data.error ? {} : data.level;
+                    } catch { }
+
+                    try {
+                        const data = await getNumberOfFollowers(storeId);
+                        newStore.numberOfFollowers = data.count;
+                    } catch { }
+
+                    try {
                         const data = await checkFollowingStore(_id, accessToken, storeId);
                         newStore.isFollowing = data.success ? true : false;
                     } catch { }
 
                     try {
-                        const data = await getStoreLevel(storeId);
-                        newStore.level = data.error ? {} : data.level;
+                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
+                        newStore.numberOfSucessfulOrders = 0;
+                        newStore.numberOfFailedOrders = 0
+                    } catch { }
+
+                    try {
+                        //call api get numberOfReviews
+                        newStore.numberOfReviews = 0;
                     } catch { }
 
                     actions(newStore);
@@ -60,16 +76,17 @@ const StoreInit = ({ store, actions }) => {
                 <Loading size="small" />
             </div>
         ) : (
-            <Link className="navbar-brand your-shop-card btn btn-outline-light cus-outline ripple m-0" to={`/store/${storeId}`}>
+            <div type="button" className="your-shop-card btn btn-outline-light cus-outline ripple">
                 <img
                     src={`${IMG + store.avatar}`}
                     className="your-shop-img"
                 />
-                <span className="your-shop-name noselect">
+                <span className="your-shop-name tetx noselect">
                     {store.name}
                     {error && <Error msg={error} />}
                 </span>
-            </Link>)
+            </div>
+        )
     );
 };
 

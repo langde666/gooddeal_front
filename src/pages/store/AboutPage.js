@@ -1,19 +1,19 @@
 import { useSelector } from 'react-redux';
 import StoreLayout from '../../components/layout/StoreLayout';
-import StoreProfileGroup from '../../components/store/group/StoreProfileGroup';
-import StoreAccountGroup from '../../components/store/group/StoreAccountGroup';
+import StoreProfileInfo from '../../components/info/StoreProfileInfo';
+import StoreJoinedInfo from '../../components/info/StoreJoinedInfo';
 
 const AboutPage = (props) => {
     const store = useSelector(state => state.store.store);
     return (
         <StoreLayout store={store}>
-            <div className="store-about-page row">
-                <div className="col-12 px-3">
-                    <StoreProfileGroup store={store} />
+            <div className="store-about-page">
+                <div className="">
+                    <StoreProfileInfo store={store} />
                 </div>
 
-                <div className="col-12 mt-1 px-3">
-                    <StoreAccountGroup store={store} />
+                <div className="mt-1">
+                    <StoreJoinedInfo store={store} />
                 </div>
             </div>
         </StoreLayout>

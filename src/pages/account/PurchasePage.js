@@ -1,10 +1,12 @@
+import { useSelector } from 'react-redux';
 import AccountLayout from '../../components/layout/AccountLayout';
 
 const PurchasePage = (props) => {
+    const user = useSelector(state => state.account.user);
     return (
-        <AccountLayout>
+        <AccountLayout user={user}>
             <div className="account-purchase-page">
-                Purchase history
+                Purchase history...
             </div>
         </AccountLayout>
     );
