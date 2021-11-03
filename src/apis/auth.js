@@ -35,21 +35,23 @@ export const refreshTokenApi = (refreshToken, userId) => {
         body: JSON.stringify({ refreshToken }),
     })
         .then((res) => res.json())
-        .then(data => {
+        .then((data) => {
             if (data.error) {
-                signout(refreshToken, () => { });
-            }
-            else {
+                signout(refreshToken, () => {});
+            } else {
                 console.log('setToken');
-                setToken({
-                    accessToken: data.accessToken,
-                    refreshToken: data.refreshToken,
-                    _id: userId
-                }, () => { });
+                setToken(
+                    {
+                        accessToken: data.accessToken,
+                        refreshToken: data.refreshToken,
+                        _id: userId,
+                    },
+                    () => {},
+                );
             }
         })
-        .catch(error => {
-            signout(refreshToken, () => { });
+        .catch((error) => {
+            signout(refreshToken, () => {});
         });
 };
 
@@ -119,7 +121,7 @@ export const sendConfirmationEmail = (userId, token) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const verifyEmail = (emailCode) => {
     return fetch(`${API}/verify/email/${emailCode}`, {
@@ -131,4 +133,4 @@ export const verifyEmail = (emailCode) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};

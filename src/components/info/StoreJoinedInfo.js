@@ -1,18 +1,46 @@
-import Paragraph from "../ui/Paragraph";
+import Paragraph from '../ui/Paragraph';
 import StoreCommissionLabel from '../label/StoreCommissionLabel';
 
 const humanReadableDate = (date) => {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+    const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ];
 
     date = new Date(date);
-    return date.getFullYear() + ' ' +
-        months[date.getMonth()] + ' ' +
-        date.getDate() + ', ' +
-        days[date.getDay()] + ' ' +
-        date.getHours() + ':' +
-        date.getMinutes();
-}
+    return (
+        date.getFullYear() +
+        ' ' +
+        months[date.getMonth()] +
+        ' ' +
+        date.getDate() +
+        ', ' +
+        days[date.getDay()] +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes()
+    );
+};
 
 const StoreJoinedInfo = ({ store = {} }) => (
     <div className="profile-form row py-2 border border-primary rounded-3">

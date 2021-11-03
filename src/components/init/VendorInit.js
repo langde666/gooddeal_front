@@ -1,44 +1,62 @@
 import { useState, useEffect, Fragment } from 'react';
-import { Link, useParams, Redirect, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch, connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
-import * as actionCreators from '../../actions/store';
+import { Link, useParams, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { addVendor } from '../../actions/vendor';
 import { getToken } from '../../apis/auth';
 import { getStoreProfile } from '../../apis/store';
-import { addVendor } from '../../actions/vendor';
+import { getStoreLevel } from '../../apis/level';
+import { getNumberOfFollowers } from '../../apis/follow';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const VendorInit = (props) => {
+const VendorInit = ({ store, actions }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [redirect, setRedirect] = useState(false);
 
     const { _id, accessToken } = getToken();
-    const { storeId: param } = useParams();
-    let { _id: storeId, name, avatar } = useSelector(state => state.vendor.store);
-
-    const dispatch = useDispatch();
-    const history = useHistory();
+    const { storeId } = useParams();
 
     const init = () => {
         setIsLoading(true);
         setError('');
 
-        getStoreProfile(_id, accessToken, param)
-            .then((data) => {
+        getStoreProfile(_id, accessToken, storeId)
+            .then(async (data) => {
                 if (data.error) {
                     if (data.isManager === false) {
                         setRedirect(true);
-                    }
-                    else {
+                    } else {
                         setError(data.error);
                         setIsLoading(false);
                     }
                 } else {
-                    dispatch(addVendor(data.store));
+                    const newStore = data.store;
+
+                    try {
+                        const data = await getStoreLevel(storeId);
+                        newStore.level = data.error ? {} : data.level;
+                    } catch {}
+
+                    try {
+                        const data = await getNumberOfFollowers(storeId);
+                        newStore.numberOfFollowers = data.count;
+                    } catch {}
+
+                    try {
+                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
+                        newStore.numberOfSucessfulOrders = 0;
+                        newStore.numberOfFailedOrders = 0;
+                    } catch {}
+
+                    try {
+                        //call api get numberOfReviews
+                        newStore.numberOfReviews = 0;
+                    } catch {}
+
+                    actions(newStore);
                     setIsLoading(false);
                 }
             })
@@ -49,15 +67,18 @@ const VendorInit = (props) => {
     };
 
     useEffect(() => {
-        if (!storeId || storeId != param) init();
-    }, [param]);
+        if (!store || store._id != storeId) init();
+    }, [storeId]);
 
     return (
         <Fragment>
-            {redirect && (<Redirect to={{
-                pathname: '/',
-                state: { from: props.location },
-            }} />)}
+            {redirect && (
+                <Redirect
+                    to={{
+                        pathname: '/',
+                    }}
+                />
+            )}
 
             {isloading ? (
                 <div className="cus-position-relative-loading">
@@ -66,55 +87,59 @@ const VendorInit = (props) => {
             ) : (
                 <div className="your-shop-wrap">
                     <div className="your-shop">
-                        <div
+                        <Link
                             className="your-shop-card btn btn-outline-light cus-outline ripple"
-                            onClick={() => {
-                                history.push(`/vendor/${storeId}`);
-                            }}
+                            to={`/vendor/${storeId}`}
                         >
                             <img
-                                src={avatar ? `${IMG + avatar}` : ''}
+                                src={`${IMG + store.avatar}`}
                                 className="your-shop-img"
                             />
 
                             <span className="your-shop-name noselect">
-                                {!error && name}
+                                {!error && store.name}
                                 {error && <Error msg={error} />}
                             </span>
-                        </div>
+                        </Link>
 
                         <ul className="list-group your-shop-options">
-                            <Link className="list-group-item your-shop-options-item ripple"
-                                to={`/vendor/profile/${storeId}`}>
+                            <Link
+                                className="list-group-item your-shop-options-item ripple"
+                                to={`/vendor/profile/${storeId}`}
+                            >
                                 <i className="fas fa-store me-1"></i>
                                 Shop profile
                             </Link>
 
-                            <Link className="list-group-item your-shop-options-item ripple"
-                                to={`/vendor/orders/${storeId}`}>
+                            <Link
+                                className="list-group-item your-shop-options-item ripple"
+                                to={`/vendor/orders/${storeId}`}
+                            >
                                 <i className="fas fa-clipboard me-1"></i>
                                 Orders
                             </Link>
 
-                            <Link className="list-group-item your-shop-options-item ripple"
-                                to="/account/shopManager">
+                            <Link
+                                className="list-group-item your-shop-options-item ripple"
+                                to="/account/shopManager"
+                            >
                                 <i className="fas fa-arrow-circle-left me-1"></i>
                                 Back
                             </Link>
                         </ul>
                     </div>
-                </div>)}
+                </div>
+            )}
         </Fragment>
-
     );
 };
 
 function mapStateToProps(state) {
-    return { store: state.store }
+    return { store: state.vendor.store };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators(actionCreators, dispatch) }
+    return { actions: (store) => dispatch(addVendor(store)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VendorInit);

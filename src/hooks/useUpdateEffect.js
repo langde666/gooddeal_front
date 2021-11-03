@@ -11,6 +11,6 @@ const useUpdateEffect = (callback, dependencies) => {
 
         return callback();
     }, dependencies);
-}
+};
 
 export default useUpdateEffect;

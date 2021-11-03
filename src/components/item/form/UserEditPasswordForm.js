@@ -44,35 +44,40 @@ const UserEditPasswordForm = (props) => {
         if (!account.currentPassword || !account.newPassword) {
             setAccount({
                 ...account,
-                isValidCurrentPassword: regexTest('password', account.currentPassword),
+                isValidCurrentPassword: regexTest(
+                    'password',
+                    account.currentPassword,
+                ),
                 isValidNewPassword: regexTest('password', account.newPassword),
             });
             return;
         }
 
-        if (!account.isValidCurrentPassword ||
-            !account.isValidCurrentPassword) return
+        if (!account.isValidCurrentPassword || !account.isValidCurrentPassword)
+            return;
 
         setIsConfirming(true);
-    }
+    };
 
     const onSubmit = () => {
-        const user = { currentPassword: account.currentPassword, newPassword: account.newPassword }
+        const user = {
+            currentPassword: account.currentPassword,
+            newPassword: account.newPassword,
+        };
         const { _id, accessToken } = getToken();
 
         setError('');
         setSuccess('');
         setIsLoading(true);
         updatePassword(_id, accessToken, user)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                }
-                else {
+                } else {
                     setAccount({
                         currentPassword: '',
                         newPassword: '',
@@ -86,26 +91,31 @@ const UserEditPasswordForm = (props) => {
                     }, 3000);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
             });
-    }
+    };
 
     return (
         <div className="password-edit-form-wrap position-relative">
             {isloading && <Loading />}
 
-            {isConfirming && <ConfirmDialog
-                title='Change password'
-                onSubmit={onSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Change password"
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
-            <form className="password-edit-form row mb-2" onSubmit={handleSubmit}>
+            <form
+                className="password-edit-form row mb-2"
+                onSubmit={handleSubmit}
+            >
                 <div className="col-12">
                     <Input
                         type="password"
@@ -114,8 +124,16 @@ const UserEditPasswordForm = (props) => {
                         isValid={account.isValidCurrentPassword}
                         feedback="Please provide a valid password."
                         validator="password"
-                        onChange={(value) => handleChange('currentPassword', 'isValidCurrentPassword', value)}
-                        onValidate={(flag) => handleValidate('isValidCurrentPassword', flag)}
+                        onChange={(value) =>
+                            handleChange(
+                                'currentPassword',
+                                'isValidCurrentPassword',
+                                value,
+                            )
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidCurrentPassword', flag)
+                        }
                     />
                 </div>
 
@@ -127,8 +145,16 @@ const UserEditPasswordForm = (props) => {
                         isValid={account.isValidNewPassword}
                         feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."
                         validator="password"
-                        onChange={(value) => handleChange('newPassword', 'isValidNewPassword', value)}
-                        onValidate={(flag) => handleValidate('isValidNewPassword', flag)}
+                        onChange={(value) =>
+                            handleChange(
+                                'newPassword',
+                                'isValidNewPassword',
+                                value,
+                            )
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidNewPassword', flag)
+                        }
                     />
                 </div>
 
@@ -145,12 +171,17 @@ const UserEditPasswordForm = (props) => {
                 )}
 
                 <div className="col-12 d-grid mt-4">
-                    <button type="submit" className="btn btn-primary ripple"
-                        onClick={handleSubmit}>Save</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary ripple"
+                        onClick={handleSubmit}
+                    >
+                        Save
+                    </button>
                 </div>
             </form>
         </div>
     );
-}
+};
 
 export default UserEditPasswordForm;

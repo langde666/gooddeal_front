@@ -12,7 +12,7 @@ export const getStoreProfile = (userId, token, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const updateProfile = (userId, token, store, storeId) => {
     return fetch(`${API}/store/${storeId}/${userId}`, {
@@ -25,9 +25,9 @@ export const updateProfile = (userId, token, store, storeId) => {
         },
         body: JSON.stringify(store),
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const getStore = (storeId) => {
     return fetch(`${API}/store/${storeId}`, {
@@ -39,35 +39,41 @@ export const getStore = (storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 // list store
 export const getlistStores = (filter) => {
     const { search, sortBy, sortMoreBy, order, limit, page, isActive } = filter;
-    return fetch(`${API}/stores?search=${search}&isActive=${isActive}&sortBy=${sortBy}&sortMoreBy=${sortMoreBy}&order=${order}&limit=${limit}&page=${page}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+    return fetch(
+        `${API}/stores?search=${search}&isActive=${isActive}&sortBy=${sortBy}&sortMoreBy=${sortMoreBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
         },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const listStoresByUser = (userId, token, filter) => {
     const { search, sortBy, order, limit, page } = filter;
-    return fetch(`${API}/stores/by/user/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+    return fetch(
+        `${API}/stores/by/user/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
         },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //create store
 export const createStore = (userId, token, store) => {
@@ -81,7 +87,7 @@ export const createStore = (userId, token, store) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 // avatar
 export const updateAvatar = (userId, token, photo, storeId) => {
@@ -94,10 +100,9 @@ export const updateAvatar = (userId, token, photo, storeId) => {
         },
         body: photo,
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
-
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //cover
 export const updateCover = (userId, token, photo, storeId) => {
@@ -110,9 +115,9 @@ export const updateCover = (userId, token, photo, storeId) => {
         },
         body: photo,
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //featured images
 export const addFeaturedImage = (userId, token, photo, storeId) => {
@@ -125,36 +130,42 @@ export const addFeaturedImage = (userId, token, photo, storeId) => {
         },
         body: photo,
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const updateFeaturedImage = (userId, token, photo, index, storeId) => {
-    return fetch(`${API}/store/featured/image/${storeId}/${userId}?index=${index}`, {
-        method: 'PUT',
-        mode: 'cors',
-        headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
+    return fetch(
+        `${API}/store/featured/image/${storeId}/${userId}?index=${index}`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: photo,
         },
-        body: photo,
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const removeFeaturedImage = (userId, token, index, storeId) => {
-    return fetch(`${API}/store/featured/image/${storeId}/${userId}?index=${index}`, {
-        method: 'DELETE',
-        mode: 'cors',
-        headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
+    return fetch(
+        `${API}/store/featured/image/${storeId}/${userId}?index=${index}`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
         },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //staffs
 export const addStaffs = (userId, token, staffs, storeId) => {
@@ -169,7 +180,7 @@ export const addStaffs = (userId, token, staffs, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const removeStaff = (userId, token, staff, storeId) => {
     return fetch(`${API}/store/staff/remove/${storeId}/${userId}`, {
@@ -183,7 +194,7 @@ export const removeStaff = (userId, token, staff, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const cancelStaff = (userId, token, storeId) => {
     return fetch(`${API}/store/staff/cancel/${storeId}/${userId}`, {
@@ -196,7 +207,7 @@ export const cancelStaff = (userId, token, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 //openStore
 export const openStore = (userId, token, value, storeId) => {
@@ -211,4 +222,4 @@ export const openStore = (userId, token, value, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};

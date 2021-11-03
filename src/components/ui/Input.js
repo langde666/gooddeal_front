@@ -3,8 +3,8 @@ import useToggle from '../../hooks/useToggle';
 import useRegex from '../../hooks/useRegex';
 
 const Input = ({
-    onChange = () => { },
-    onValidate = () => { },
+    onChange = () => {},
+    onValidate = () => {},
     type = 'text',
     value = '',
     label = 'Enter something',
@@ -22,43 +22,63 @@ const Input = ({
         if (type == 'file') {
             onChange(e.target.files[0]);
             setTempValue(e.target.value);
-        }
-        else {
+        } else {
             onChange(e.target.value);
         }
-    }
+    };
 
     const onHandleBlur = (e) => {
         if (type == 'file') {
             return;
-        }
-        else {
+        } else {
             const validatorArray = validator.split('|');
-            const test = validatorArray.map(v => testRegex(v, e.target.value)).reduce((prev, curr) => prev || curr);
+            const test = validatorArray
+                .map((v) => testRegex(v, e.target.value))
+                .reduce((prev, curr) => prev || curr);
             onValidate(test);
         }
-    }
+    };
 
     return (
         <div className="cus-input-group">
             <input
-                type={type == 'password' ? (showPasswordFlag ? 'password' : 'text') : type}
+                type={
+                    type == 'password'
+                        ? showPasswordFlag
+                            ? 'password'
+                            : 'text'
+                        : type
+                }
                 required
                 disabled={isDisabled}
                 accept={accept}
-                className={`cus-input-group-input form-control ${isValid ? '' : 'is-invalid'}
-                    ${type == 'password' ? 'cus-input-group-input--password' : ''} 
+                className={`cus-input-group-input form-control ${
+                    isValid ? '' : 'is-invalid'
+                }
+                    ${
+                        type == 'password'
+                            ? 'cus-input-group-input--password'
+                            : ''
+                    } 
                     ${type == 'file' ? 'cus-input-group-input--file' : ''}`}
                 onChange={onHandleChange}
                 onBlur={onHandleBlur}
                 value={type == 'file' ? tempValue : value}
             />
-            <label className={`cus-input-group-label ${type == 'file' ? 'cus-input-group-label--file' : ''}`}>{label}</label>
+            <label
+                className={`cus-input-group-label ${
+                    type == 'file' ? 'cus-input-group-label--file' : ''
+                }`}
+            >
+                {label}
+            </label>
             <span className="cus-input-group-bar"></span>
             <small className="invalid-feedback">{feedback}</small>
             {type == 'password' && (
                 <i
-                    className={`show-hide-password-icon fas ${showPasswordFlag ? 'fa-eye' : ' fa-eye-slash'}`}
+                    className={`show-hide-password-icon fas ${
+                        showPasswordFlag ? 'fa-eye' : ' fa-eye-slash'
+                    }`}
                     onClick={togglePasswordFlag}
                 ></i>
             )}

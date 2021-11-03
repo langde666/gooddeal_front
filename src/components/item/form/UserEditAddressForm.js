@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addAccount } from '../../../actions/account';
 import { getToken } from '../../../apis/auth';
 import { updateAddress } from '../../../apis/user';
+import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
 import useRegex from '../../../hooks/useRegex';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
@@ -19,7 +18,7 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
     const [address, setAddress] = useState({});
 
     const [regexTest] = useRegex();
-    const dispatch = useDispatch();
+    const [updateDispatch] = useUpdateDispatch();
 
     useEffect(() => {
         setAddress({
@@ -67,15 +66,36 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
             return;
         }
 
-        const { isValidStreet, isValidWard, isValidDistrict, isValidProvince, isValidCountry } = address;
-        if (!isValidStreet || !isValidWard || !isValidDistrict || !isValidProvince || !isValidCountry) return;
+        const {
+            isValidStreet,
+            isValidWard,
+            isValidDistrict,
+            isValidProvince,
+            isValidCountry,
+        } = address;
+        if (
+            !isValidStreet ||
+            !isValidWard ||
+            !isValidDistrict ||
+            !isValidProvince ||
+            !isValidCountry
+        )
+            return;
 
         setIsConfirming(true);
-    }
+    };
 
     const onSubmit = () => {
-        const addressString = address.street + ', ' + address.ward + ', ' + address.district_city
-            + ', ' + address.city_province + ', ' + address.country;
+        const addressString =
+            address.street +
+            ', ' +
+            address.ward +
+            ', ' +
+            address.district_city +
+            ', ' +
+            address.city_province +
+            ', ' +
+            address.country;
         const { _id, accessToken } = getToken();
 
         console.log(addressString);
@@ -84,16 +104,15 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
         setSuccess('');
         setIsLoading(true);
         updateAddress(_id, accessToken, index, { address: addressString })
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                }
-                else {
-                    dispatch(addAccount(data.user));
+                } else {
+                    updateDispatch('account', data.user);
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {
@@ -108,17 +127,19 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                     setError('');
                 }, 3000);
             });
-    }
+    };
 
     return (
         <div className="add-address-form-wrap position-relative">
             {isloading && <Loading />}
 
-            {isConfirming && <ConfirmDialog
-                title='Edit this address'
-                onSubmit={onSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Edit this address"
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <form className="add-address-form row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
@@ -129,8 +150,12 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                         isValid={address.isValidStreet}
                         feedback='Please provide a valid street address ("," is not allowed).'
                         validator="address"
-                        onChange={(value) => handleChange('street', 'isValidStreet', value)}
-                        onValidate={(flag) => handleValidate('isValidStreet', flag)}
+                        onChange={(value) =>
+                            handleChange('street', 'isValidStreet', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidStreet', flag)
+                        }
                     />
                 </div>
 
@@ -142,8 +167,12 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                         isValid={address.isValidWard}
                         feedback='Please provide a valid ward ("," is not allowed).'
                         validator="address"
-                        onChange={(value) => handleChange('ward', 'isValidWard', value)}
-                        onValidate={(flag) => handleValidate('isValidWard', flag)}
+                        onChange={(value) =>
+                            handleChange('ward', 'isValidWard', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidWard', flag)
+                        }
                     />
                 </div>
 
@@ -155,8 +184,16 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                         isValid={address.isValidDistrict}
                         feedback='Please provide a valid city / district ("," is not allowed).'
                         validator="address"
-                        onChange={(value) => handleChange('district_city', 'isValidDistrict', value)}
-                        onValidate={(flag) => handleValidate('isValidDistrict', flag)}
+                        onChange={(value) =>
+                            handleChange(
+                                'district_city',
+                                'isValidDistrict',
+                                value,
+                            )
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidDistrict', flag)
+                        }
                     />
                 </div>
 
@@ -168,8 +205,16 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                         isValid={address.isValidProvince}
                         feedback='Please provide a valid province / city ("," is not allowed).'
                         validator="address"
-                        onChange={(value) => handleChange('city_province', 'isValidProvince', value)}
-                        onValidate={(flag) => handleValidate('isValidProvince', flag)}
+                        onChange={(value) =>
+                            handleChange(
+                                'city_province',
+                                'isValidProvince',
+                                value,
+                            )
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidProvince', flag)
+                        }
                     />
                 </div>
 
@@ -181,8 +226,12 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                         isValid={address.isValidCountry}
                         feedback='Please provide a valid country ("," is not allowed).'
                         validator="address"
-                        onChange={(value) => handleChange('country', 'isValidCountry', value)}
-                        onValidate={(flag) => handleValidate('isValidCountry', flag)}
+                        onChange={(value) =>
+                            handleChange('country', 'isValidCountry', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidCountry', flag)
+                        }
                     />
                 </div>
 
@@ -199,12 +248,17 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                 )}
 
                 <div className="col-12 d-grid mt-4">
-                    <button type="submit" className="btn btn-primary ripple"
-                        onClick={handleSubmit}>Save</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary ripple"
+                        onClick={handleSubmit}
+                    >
+                        Save
+                    </button>
                 </div>
             </form>
         </div>
-    )
+    );
 };
 
 export default UserEditAddressForm;

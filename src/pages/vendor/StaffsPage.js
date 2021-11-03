@@ -1,28 +1,22 @@
 import { useSelector } from 'react-redux';
 import VendorLayout from '../../components/layout/VendorLayout';
-import StaffsCollection from '../../components/vendor/table/StaffsCollection';
-import StaffCard from '../../components/vendor/item/StaffCard';
+import StoreOwnerTable from '../../components/table/StoreOwnerTable';
+import StoreStaffsTable from '../../components/table/StoreStaffsTable';
 
 const StaffsPage = (props) => {
-    const { ownerId } = useSelector(state => state.vendor.store);
+    const user = useSelector((state) => state.account.user);
+    const store = useSelector((state) => state.vendor.store);
     return (
-        <VendorLayout>
+        <VendorLayout user={user} store={store}>
             <div className="vendor-staffs-manager-page">
-                <StaffsCollection />
-                <hr />
-                <div className="vendor-owner-info">
-                    <h4 className="mb-3">Shop owner</h4>
-                    {ownerId &&
-                        <div className="row">
-                            <div className="col-3 mb-4">
-                                <StaffCard user={ownerId} />
-                            </div>
-                        </div>}
+                <div className="mb-5">
+                    <StoreOwnerTable />
                 </div>
+
+                <StoreStaffsTable />
             </div>
         </VendorLayout>
     );
-
-}
+};
 
 export default StaffsPage;

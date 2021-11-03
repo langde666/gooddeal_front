@@ -19,7 +19,7 @@ const FollowingProductsCollection = (props) => {
         search: '',
         sortBy: 'point',
         order: 'desc',
-        limit: '4',
+        limit: 4,
         page: 1,
     });
 
@@ -48,7 +48,7 @@ const FollowingProductsCollection = (props) => {
         //         setIsLoading(false);
         //         setError('Server Error');
         //     });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -59,7 +59,7 @@ const FollowingProductsCollection = (props) => {
             ...filter,
             page: newPage,
         });
-    }
+    };
 
     return (
         <div className="following-products-collection-wrap position-relative">
@@ -79,9 +79,14 @@ const FollowingProductsCollection = (props) => {
                 ))}
             </div> */}
 
-            {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
+            {pagination.size != 0 && (
+                <Pagination
+                    pagination={pagination}
+                    onChangePage={handleChangePage}
+                />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default FollowingProductsCollection;

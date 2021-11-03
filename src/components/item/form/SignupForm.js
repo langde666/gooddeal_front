@@ -9,7 +9,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const SignupForm = ({ onSwap = () => { } }) => {
+const SignupForm = ({ onSwap = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -104,27 +104,32 @@ const SignupForm = ({ onSwap = () => { } }) => {
                 setError('Server error!');
                 setIsLoading(false);
             });
-    }
+    };
 
     return (
         <div className="sign-up-form-wrap position-relative">
             {isloading && <Loading />}
-            {isConfirming && <ConfirmDialog
-                title='Sign up'
-                message={
-                    <small className="">
-                        By Signing up or Continue with Google or Facebook,
-                        you agree to GoodDeal's{' '}
-                        <Link to="/legal/termsOfUse" target="_blank">
-                            Terms of Use
-                        </Link>
-                        {' '}and{' '}
-                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.
-                    </small>
-                }
-                onSubmit={onSignupSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Sign up"
+                    message={
+                        <small className="">
+                            By Signing up or Continue with Google or Facebook,
+                            you agree to GoodDeal's{' '}
+                            <Link to="/legal/termsOfUse" target="_blank">
+                                Terms of Use
+                            </Link>{' '}
+                            and{' '}
+                            <Link to="/legal/privacy" target="_blank">
+                                Privacy Policy
+                            </Link>
+                            .
+                        </small>
+                    }
+                    onSubmit={onSignupSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <form className="sign-up-form mb-2 row" onSubmit={handleSubmit}>
                 <div className="col-6">
@@ -135,8 +140,12 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         isValid={account.isValidFirstname}
                         feedback="Please provide a valid firstname."
                         validator="name"
-                        onChange={(value) => handleChange('firstname', 'isValidFirstname', value)}
-                        onValidate={(flag) => handleValidate('isValidFirstname', flag)}
+                        onChange={(value) =>
+                            handleChange('firstname', 'isValidFirstname', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidFirstname', flag)
+                        }
                     />
                 </div>
 
@@ -148,8 +157,12 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         isValid={account.isValidLastname}
                         feedback="Please provide a valid lastname."
                         validator="name"
-                        onChange={(value) => handleChange('lastname', 'isValidLastname', value)}
-                        onValidate={(flag) => handleValidate('isValidLastname', flag)}
+                        onChange={(value) =>
+                            handleChange('lastname', 'isValidLastname', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidLastname', flag)
+                        }
                     />
                 </div>
 
@@ -161,8 +174,12 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         isValid={account.isValidUsername}
                         feedback="Please provide a valid email address or phone number."
                         validator="email|phone"
-                        onChange={(value) => handleChange('username', 'isValidUsername', value)}
-                        onValidate={(flag) => handleValidate('isValidUsername', flag)}
+                        onChange={(value) =>
+                            handleChange('username', 'isValidUsername', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidUsername', flag)
+                        }
                     />
                 </div>
 
@@ -175,8 +192,12 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         isValid={account.isValidPassword}
                         feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."
                         validator="password"
-                        onChange={(value) => handleChange('password', 'isValidPassword', value)}
-                        onValidate={(flag) => handleValidate('isValidPassword', flag)}
+                        onChange={(value) =>
+                            handleChange('password', 'isValidPassword', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidPassword', flag)
+                        }
                     />
                 </div>
 
@@ -233,10 +254,11 @@ const SignupForm = ({ onSwap = () => { } }) => {
                         <Link to="/legal/termsOfUse" target="_blank">
                             Terms of Use
                         </Link>
-                        <span className="text-muted">
-                            {' '}and{' '}
-                        </span>
-                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.
+                        <span className="text-muted"> and </span>
+                        <Link to="/legal/privacy" target="_blank">
+                            Privacy Policy
+                        </Link>
+                        .
                     </small>
                 </div>
             </form>

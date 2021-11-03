@@ -1,12 +1,14 @@
 import MainNav from './menu/MainNav';
 
-const MainLayout = ({ container = "container", navFor = 'user', children = null }) => (
+const MainLayout = ({
+    container = 'container',
+    navFor = 'user',
+    children = null,
+}) => (
     <div className="main-layout">
         <MainNav navFor={navFor} />
 
-        <main className={`body ${container}`}>
-            {children}
-        </main>
+        <main className={`body ${container}`}>{children}</main>
 
         {/* <footer className="bg-primary mt-4" style={{ height: '50vh', display: 'block' }}>
                 footer

@@ -24,10 +24,16 @@ const SearchBar = (props) => {
     const location = useLocation();
     const history = useHistory();
 
-    const [query, setQuery] = useState(() => new URLSearchParams(location.search).get('keyword') || '');
+    const [query, setQuery] = useState(
+        () => new URLSearchParams(location.search).get('keyword') || '',
+    );
     const [option, setOption] = useState(() => {
         let currentOption = location.pathname.split('/')[1];
-        if (currentOption != 'products' && currentOption != 'stores' && currentOption != 'users') {
+        if (
+            currentOption != 'products' &&
+            currentOption != 'stores' &&
+            currentOption != 'users'
+        ) {
             currentOption = 'products';
         }
         return currentOption;

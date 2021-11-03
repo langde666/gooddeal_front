@@ -21,50 +21,63 @@ const StoreCard = ({ store = {}, onRun }) => {
         try {
             const data = await getStoreLevel(store._id);
             newStore.level = data.level;
-        } catch { }
+        } catch {}
 
         try {
             const data = await getNumberOfFollowers(store._id);
             newStore.numberOfFollowers = data.count;
-        } catch { }
+        } catch {}
 
         try {
             const { _id, accessToken } = getToken();
             const data = await checkFollowingStore(_id, accessToken, store._id);
             newStore.isFollowing = data.success ? true : false;
-        } catch { }
+        } catch {}
 
         try {
             //call api get numberOfReviews
             newStore.numberOfReviews = 0;
-        } catch { }
+        } catch {}
 
         setStoreValue(newStore);
-    }
+    };
 
     useEffect(() => {
         init();
     }, [store]);
 
-    const onHandleRun = (flag) => {
-        if (onRun) onRun();
-        else {
+    const onHandleRun = async (newStore) => {
+        if (onRun) onRun(newStore);
+
+        let numberOfFollowers;
+        try {
+            const data = await getNumberOfFollowers(newStore._id);
+            numberOfFollowers = data.count;
+        } catch {
             const currentNumberOfFollowers = storeValue.numberOfFollowers;
-            const numberOfFollowers = flag ? currentNumberOfFollowers + 1 : currentNumberOfFollowers - 1;
-            setStoreValue({
-                ...storeValue,
-                numberOfFollowers,
-            });
+            numberOfFollowers = newStore.isFollowing
+                ? currentNumberOfFollowers + 1
+                : currentNumberOfFollowers - 1;
         }
-    }
+
+        setStoreValue({
+            ...storeValue,
+            numberOfFollowers,
+        });
+    };
 
     return (
         <div className="card shadow border-0">
-            <Link className="text-reset text-decoration-none" to={`/store/${storeValue._id}`}>
+            <Link
+                className="text-reset text-decoration-none"
+                to={`/store/${storeValue._id}`}
+            >
                 <div className="card-img-top cus-card-img-top">
-                    <img src={IMG + storeValue.avatar}
+                    <img
+                        src={IMG + storeValue.avatar}
                         className="cus-card-img"
-                        alt={storeValue.name} />
+                        alt={storeValue.name}
+                    />
                 </div>
             </Link>
 
@@ -73,42 +86,63 @@ const StoreCard = ({ store = {}, onRun }) => {
                     <div className="d-flex justify-content-between align-items-center">
                         <div className="d-flex align-items-center">
                             <span className="me-1">
-                                <StoreCommissionLabel commission={storeValue.commissionId} detail={false} />
+                                <StoreCommissionLabel
+                                    commission={storeValue.commissionId}
+                                    detail={false}
+                                />
                             </span>
 
                             <span className="me-1">
-                                <StoreLevelLabel level={storeValue.level} detail={false} />
+                                <StoreLevelLabel
+                                    level={storeValue.level}
+                                    detail={false}
+                                />
                             </span>
 
                             <span className="">
-                                <StoreFollowLabel numberOfFollowers={storeValue.numberOfFollowers} />
+                                <StoreFollowLabel
+                                    numberOfFollowers={
+                                        storeValue.numberOfFollowers
+                                    }
+                                />
                             </span>
                         </div>
 
                         <span className="">
-                            <StoreStatusLabel isOpen={storeValue.isOpen} detail={false} />
+                            <StoreStatusLabel
+                                isOpen={storeValue.isOpen}
+                                detail={false}
+                            />
                         </span>
                     </div>
 
-                    <StarRating stars={store.rating == 0 && store.numberOfReviews == 0 ? 3 : store.rating} />
+                    <StarRating
+                        stars={
+                            store.rating == 0 && store.numberOfReviews == 0
+                                ? 3
+                                : store.rating
+                        }
+                    />
                 </small>
 
-                <Link className="text-reset text-decoration-none link-hover d-block mt-1" to={`/store/${store._id}`}>
-                    <h6 className="card-title text-nowrap">
-                        {store.name}
-                    </h6>
+                <Link
+                    className="text-reset text-decoration-none link-hover d-block mt-1"
+                    to={`/store/${store._id}`}
+                >
+                    <h6 className="card-title text-nowrap">{store.name}</h6>
                 </Link>
 
                 {getToken() && (
                     <FollowStoreButton
                         storeId={store._id}
                         isFollowing={store.isFollowing}
-                        className='w-100 mt-1'
-                        onRun={(flag) => onHandleRun(flag)} />
+                        className="w-100 mt-1"
+                        onRun={(store) => onHandleRun(store)}
+                    />
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default StoreCard;

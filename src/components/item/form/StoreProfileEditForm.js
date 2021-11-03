@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addVendor } from '../../../actions/vendor';
 import { getToken } from '../../../apis/auth';
 import { updateProfile } from '../../../apis/store';
+import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
 import Input from '../../ui/Input';
 import TextArea from '../../ui/TextArea';
 import Loading from '../../ui/Loading';
@@ -18,7 +17,7 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
 
     const [profile, setProfile] = useState({});
 
-    const dispatch = useDispatch();
+    const [updateDispatch] = useUpdateDispatch();
 
     useEffect(() => {
         setProfile({
@@ -26,8 +25,8 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
             bio: bio,
             isValidName: true,
             isValidBio: true,
-        })
-    }, [name, bio, storeId])
+        });
+    }, [name, bio, storeId]);
 
     const handleChange = (name, isValidName, value) => {
         setProfile({
@@ -48,7 +47,7 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
         e.preventDefault();
         if (!profile.isValidName || !profile.isValidBio) return;
         setIsConfirming(true);
-    }
+    };
 
     const onSubmit = () => {
         let store = { name: profile.name, bio: profile.bio };
@@ -58,43 +57,47 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
         setSuccess('');
         setIsLoading(true);
         updateProfile(_id, accessToken, store, storeId)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                }
-                else {
+                } else {
                     setSuccess(data.success);
-                    dispatch(addVendor(data.store));
+                    updateDispatch('vendor', data.store);
                     setIsLoading(false);
                     setTimeout(() => {
                         setSuccess('');
                     }, 3000);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
             });
-    }
+    };
 
     return (
         <div className="shop-profile-edit-form-wrap position-relative">
             {isloading && <Loading />}
 
-            {isConfirming && <ConfirmDialog
-                title='Edit shop profile'
-                onSubmit={onSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Edit shop profile"
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
-            <form className="shop-profile-edit-form row mb-2" onSubmit={handleSubmit}>
+            <form
+                className="shop-profile-edit-form row mb-2"
+                onSubmit={handleSubmit}
+            >
                 <div className="col-12">
                     <Input
                         type="text"
@@ -103,8 +106,12 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
                         isValid={profile.isValidName}
                         feedback="Please provide a valid shop name."
                         validator="name"
-                        onChange={(value) => handleChange('name', 'isValidName', value)}
-                        onValidate={(flag) => handleValidate('isValidName', flag)}
+                        onChange={(value) =>
+                            handleChange('name', 'isValidName', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidName', flag)
+                        }
                     />
                 </div>
 
@@ -116,8 +123,12 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
                         isValid={profile.isValidBio}
                         feedback="Please provide a valid shop bio."
                         validator="bio"
-                        onChange={(value) => handleChange('bio', 'isValidBio', value)}
-                        onValidate={(flag) => handleValidate('isValidBio', flag)}
+                        onChange={(value) =>
+                            handleChange('bio', 'isValidBio', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidBio', flag)
+                        }
                     />
                 </div>
 
@@ -134,12 +145,17 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
                 )}
 
                 <div className="col-12 d-grid mt-4">
-                    <button type="submit" className="btn btn-primary ripple"
-                        onClick={handleSubmit}>Save</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary ripple"
+                        onClick={handleSubmit}
+                    >
+                        Save
+                    </button>
                 </div>
             </form>
         </div>
     );
-}
+};
 
 export default StoreEditProfileForm;

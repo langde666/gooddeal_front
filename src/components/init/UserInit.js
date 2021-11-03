@@ -19,66 +19,63 @@ const UserInit = ({ user, actions }) => {
         setIsLoading(true);
         setError('');
         getUser(userId)
-            .then(async data => {
+            .then(async (data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     const newUser = data.user;
 
                     try {
                         const data = await getUserLevel(userId);
                         newUser.level = data.error ? {} : data.level;
-                    } catch { }
+                    } catch {}
 
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newUser.numberOfSucessfulOrders = 0;
-                        newUser.numberOfFailedOrders = 0
-                    } catch { }
+                        newUser.numberOfFailedOrders = 0;
+                    } catch {}
 
                     actions(newUser);
                     setIsLoading(false);
                     console.log(newUser);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         if (!user || user._id != userId) init();
     }, [userId]);
 
-    return (
-        isLoading ? (
-            <div className="cus-position-relative-loading">
-                <Loading size="small" />
-            </div>
-        ) : (
-            <div type="button" className="your-shop-card btn btn-outline-light cus-outline ripple">
-                <img
-                    src={`${IMG + user.avatar}`}
-                    className="your-shop-img"
-                />
-                <span className="your-shop-name tetx noselect">
-                    {user.firstname + ' ' + user.lastname}
-                    {error && <Error msg={error} />}
-                </span>
-            </div>
-        )
+    return isLoading ? (
+        <div className="cus-position-relative-loading">
+            <Loading size="small" />
+        </div>
+    ) : (
+        <div
+            type="button"
+            className="your-shop-card btn btn-outline-light cus-outline ripple"
+        >
+            <img src={`${IMG + user.avatar}`} className="your-shop-img" />
+            <span className="your-shop-name tetx noselect">
+                {user.firstname + ' ' + user.lastname}
+                {error && <Error msg={error} />}
+            </span>
+        </div>
     );
-}
+};
 
 function mapStateToProps(state) {
-    return { user: state.user.user }
+    return { user: state.user.user };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (user) => dispatch(addUser(user)) }
+    return { actions: (user) => dispatch(addUser(user)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInit);

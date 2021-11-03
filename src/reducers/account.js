@@ -11,6 +11,14 @@ const accountReducer = (state = initialState, action) => {
                 user: user,
             };
         }
+        case 'UPDATE_AVATAR': {
+            const newUser = state.user;
+            newUser.avatar = action.payload;
+            return {
+                ...state,
+                user: newUser,
+            };
+        }
 
         default: {
             return state;

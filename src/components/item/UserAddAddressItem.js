@@ -14,14 +14,15 @@ const UserAddAddressItem = ({ count = 0 }) => (
                 <i className="fas fa-plus-circle me-2"></i>New address
             </button>
 
-            {count < 6 &&
-                (<Modal
+            {count < 6 && (
+                <Modal
                     id="add-address-form"
                     hasCloseBtn={false}
                     title="Add new address"
                 >
                     <UserAddAddressForm />
-                </Modal>)}
+                </Modal>
+            )}
         </div>
         {count >= 6 && (
             <small className="cus-tooltip-msg">The limit is 6 addresses</small>

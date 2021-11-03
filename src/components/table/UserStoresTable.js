@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { addStore } from '../../actions/store';
+import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import { listStoresByUser } from '../../apis/store';
+import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import StoreSmallCard from '../card/StoreSmallCard';
 import ManagerRoleLabel from '../label/ManagerRoleLabel';
 import StoreLicenseLabel from '../label/StoreLicenseLabel';
@@ -14,7 +14,7 @@ import SearchInput from '../ui/SearchInput';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
-const StoreManagerTable = (props) => {
+const UserStoresTable = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -27,23 +27,23 @@ const StoreManagerTable = (props) => {
         sortBy: 'rating',
         sortMoreBy: 'point',
         order: 'desc',
-        limit: '6',
+        limit: 6,
         page: 1,
     });
 
     const { _id, accessToken } = getToken();
-    // const dispatch = useDispatch();
+    const store = useSelector((state) => state.vendor.store);
+    const [updateDispatch] = useUpdateDispatch();
 
     const init = () => {
         setError('');
         setIsLoading(true);
         listStoresByUser(_id, accessToken, filter)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     setStores(data.stores);
                     setPagination({
                         size: data.size,
@@ -53,11 +53,11 @@ const StoreManagerTable = (props) => {
                     setIsLoading(false);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -69,21 +69,26 @@ const StoreManagerTable = (props) => {
             search: keyword,
             page: 1,
         });
-    }
+    };
 
     const handleChangePage = (newPage) => {
         setFilter({
             ...filter,
             page: newPage,
         });
-    }
+    };
+
+    const onHandleRun = (newStore) => {
+        if (store && store._id == newStore._id)
+            updateDispatch('vendor', newStore);
+    };
 
     return (
         <div className="store-manager-table-wrap position-relative">
+            <h4 className="mb-3">Your shops</h4>
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-
-            <h4 className="mb-3">Your shops</h4>
 
             <div className="d-flex justify-content-between align-items-end">
                 <div className="option-wrap d-flex align-items-center">
@@ -98,7 +103,9 @@ const StoreManagerTable = (props) => {
             <table className="store-manager-table table align-middle table-hover mt-2">
                 <thead>
                     <tr>
-                        <th scope="col" className="text-center">#</th>
+                        <th scope="col" className="text-center">
+                            #
+                        </th>
                         <th scope="col">Shop</th>
                         <th scope="col">Role</th>
                         <th scope="col">License</th>
@@ -108,20 +115,38 @@ const StoreManagerTable = (props) => {
                 <tbody>
                     {stores.map((store, index) => (
                         <tr key={index}>
-                            <th scope="row" className="text-center">{index + 1}</th>
-                            <td><StoreSmallCard store={store} /></td>
-                            <td><ManagerRoleLabel role={_id == store.ownerId._id ? 'owner' : 'staff'} /></td>
-                            <td><StoreLicenseLabel isActive={store.isActive} /></td>
+                            <th scope="row" className="text-center">
+                                {index + 1}
+                            </th>
+                            <td>
+                                <StoreSmallCard store={store} />
+                            </td>
+                            <td>
+                                <ManagerRoleLabel
+                                    role={
+                                        _id == store.ownerId._id
+                                            ? 'owner'
+                                            : 'staff'
+                                    }
+                                />
+                            </td>
+                            <td>
+                                <StoreLicenseLabel isActive={store.isActive} />
+                            </td>
                             <td className="text-center">
                                 <div className="position-relative d-inline-block me-2">
                                     <OpenCloseStoreButton
                                         storeId={store._id}
                                         isOpen={store.isOpen}
                                         detail={false}
-                                        className='cus-tooltip' />
+                                        className="cus-tooltip"
+                                        onRun={(store) => onHandleRun(store)}
+                                    />
 
                                     <small className="cus-tooltip-msg">
-                                        {store.isOpen ? 'Click to close shop' : 'Click to open shop'}
+                                        {store.isOpen
+                                            ? 'Click to close shop'
+                                            : 'Click to open shop'}
                                     </small>
                                 </div>
                                 <div className="position-relative d-inline-block">
@@ -132,7 +157,9 @@ const StoreManagerTable = (props) => {
                                     >
                                         <i className="fas fa-user-tie"></i>
                                     </Link>
-                                    <small className="cus-tooltip-msg">Go to dashboard</small>
+                                    <small className="cus-tooltip-msg">
+                                        Go to dashboard
+                                    </small>
                                 </div>
                             </td>
                         </tr>
@@ -140,9 +167,14 @@ const StoreManagerTable = (props) => {
                 </tbody>
             </table>
 
-            {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
+            {pagination.size != 0 && (
+                <Pagination
+                    pagination={pagination}
+                    onChangePage={handleChangePage}
+                />
+            )}
         </div>
     );
-}
+};
 
-export default StoreManagerTable;
+export default UserStoresTable;

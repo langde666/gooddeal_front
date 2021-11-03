@@ -22,80 +22,81 @@ const StoreInit = ({ store, actions }) => {
         setIsLoading(true);
         setError('');
         getStore(storeId)
-            .then(async data => {
+            .then(async (data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     const newStore = data.store;
 
                     try {
                         const data = await getStoreLevel(storeId);
                         newStore.level = data.error ? {} : data.level;
-                    } catch { }
+                    } catch {}
 
                     try {
                         const data = await getNumberOfFollowers(storeId);
                         newStore.numberOfFollowers = data.count;
-                    } catch { }
+                    } catch {}
 
                     try {
-                        const data = await checkFollowingStore(_id, accessToken, storeId);
+                        const data = await checkFollowingStore(
+                            _id,
+                            accessToken,
+                            storeId,
+                        );
                         newStore.isFollowing = data.success ? true : false;
-                    } catch { }
+                    } catch {}
 
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newStore.numberOfSucessfulOrders = 0;
-                        newStore.numberOfFailedOrders = 0
-                    } catch { }
+                        newStore.numberOfFailedOrders = 0;
+                    } catch {}
 
                     try {
                         //call api get numberOfReviews
                         newStore.numberOfReviews = 0;
-                    } catch { }
+                    } catch {}
 
                     actions(newStore);
                     setIsLoading(false);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         if (!store || store._id != storeId) init();
     }, [storeId]);
 
-    return (
-        isLoading ? (
-            <div className="cus-position-relative-loading">
-                <Loading size="small" />
-            </div>
-        ) : (
-            <div type="button" className="your-shop-card btn btn-outline-light cus-outline ripple">
-                <img
-                    src={`${IMG + store.avatar}`}
-                    className="your-shop-img"
-                />
-                <span className="your-shop-name tetx noselect">
-                    {store.name}
-                    {error && <Error msg={error} />}
-                </span>
-            </div>
-        )
+    return isLoading ? (
+        <div className="cus-position-relative-loading">
+            <Loading size="small" />
+        </div>
+    ) : (
+        <div
+            type="button"
+            className="your-shop-card btn btn-outline-light cus-outline ripple"
+        >
+            <img src={`${IMG + store.avatar}`} className="your-shop-img" />
+            <span className="your-shop-name tetx noselect">
+                {store.name}
+                {error && <Error msg={error} />}
+            </span>
+        </div>
     );
 };
 
 function mapStateToProps(state) {
-    return { store: state.store.store }
+    return { store: state.store.store };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (store) => dispatch(addStore(store)) }
+    return { actions: (store) => dispatch(addStore(store)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StoreInit);

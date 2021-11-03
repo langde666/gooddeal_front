@@ -42,7 +42,7 @@ const CreateShopForm = (props) => {
 
     const init = () => {
         getlistCommissions()
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError1(data.error);
                 } else {
@@ -53,8 +53,8 @@ const CreateShopForm = (props) => {
                     });
                 }
             })
-            .catch(error => setError1('Server Error'));
-    }
+            .catch((error) => setError1('Server Error'));
+    };
 
     useEffect(() => {
         init();
@@ -80,7 +80,7 @@ const CreateShopForm = (props) => {
             ...shop,
             commissionId: value,
         });
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -95,10 +95,16 @@ const CreateShopForm = (props) => {
             return;
         }
 
-        if (!shop.isValidName || !shop.isValidBio || !shop.avatar || !shop.cover) return;
+        if (
+            !shop.isValidName ||
+            !shop.isValidBio ||
+            !shop.avatar ||
+            !shop.cover
+        )
+            return;
 
         setIsConfirming(true);
-    }
+    };
 
     const onSubmit = () => {
         const { _id, accessToken } = getToken();
@@ -113,49 +119,53 @@ const CreateShopForm = (props) => {
         setError('');
         setIsLoading(true);
         createStore(_id, accessToken, formData)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                }
-                else {
+                } else {
                     history.push(`/vendor/${data.storeId}`);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
             });
-    }
+    };
 
     return (
         <div className="create-shop-form-wrap position-relative">
             {isloading && <Loading />}
-            {isConfirming && <ConfirmDialog
-                title='Create shop'
-                message={
-                    <small>
-                        By Creating your shop, you agree to GoodDeal's{' '}
-                        <Link to="/legal/termsOfUse" target="_blank">
-                            Terms of Use
-                        </Link>
-                        {' '}and{' '}
-                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>
-                        . How you'll get paid? Set up billing?{' '}
-                        <Link to="/legal/sellOnGoodDeal" target="_blank">
-                            Sell on GoodDeal
-                        </Link>.
-                    </small>
-                }
-                onSubmit={onSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Create shop"
+                    message={
+                        <small>
+                            By Creating your shop, you agree to GoodDeal's{' '}
+                            <Link to="/legal/termsOfUse" target="_blank">
+                                Terms of Use
+                            </Link>{' '}
+                            and{' '}
+                            <Link to="/legal/privacy" target="_blank">
+                                Privacy Policy
+                            </Link>
+                            . How you'll get paid? Set up billing?{' '}
+                            <Link to="/legal/sellOnGoodDeal" target="_blank">
+                                Sell on GoodDeal
+                            </Link>
+                            .
+                        </small>
+                    }
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <form className="create-shop-form row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
@@ -164,10 +174,14 @@ const CreateShopForm = (props) => {
                         size="avatar"
                         value={shop.avatar}
                         isValid={shop.isValidAvatar}
-                        feedback='Please provide a valid shop avatar.'
+                        feedback="Please provide a valid shop avatar."
                         accept="image/jpg, image/jpeg, image/png, image/gif"
-                        onChange={(value) => handleChange('avatar', 'isValidAvatar', value)}
-                        onValidate={(flag) => handleValidate('isValidAvatar', flag)}
+                        onChange={(value) =>
+                            handleChange('avatar', 'isValidAvatar', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidAvatar', flag)
+                        }
                     />
                 </div>
 
@@ -177,10 +191,14 @@ const CreateShopForm = (props) => {
                         size="cover"
                         value={shop.cover}
                         isValid={shop.isValidCover}
-                        feedback='Please provide a valid shop cover.'
+                        feedback="Please provide a valid shop cover."
                         accept="image/jpg, image/jpeg, image/png, image/gif"
-                        onChange={(value) => handleChange('cover', 'isValidCover', value)}
-                        onValidate={(flag) => handleValidate('isValidCover', flag)}
+                        onChange={(value) =>
+                            handleChange('cover', 'isValidCover', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidCover', flag)
+                        }
                     />
                 </div>
 
@@ -190,10 +208,14 @@ const CreateShopForm = (props) => {
                         label="Shop name"
                         value={shop.name}
                         isValid={shop.isValidName}
-                        feedback='Please provide a valid shop name.'
+                        feedback="Please provide a valid shop name."
                         validator="name"
-                        onChange={(value) => handleChange('name', 'isValidName', value)}
-                        onValidate={(flag) => handleValidate('isValidName', flag)}
+                        onChange={(value) =>
+                            handleChange('name', 'isValidName', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidName', flag)
+                        }
                     />
                 </div>
 
@@ -203,30 +225,44 @@ const CreateShopForm = (props) => {
                         label="Shop bio"
                         value={shop.bio}
                         isValid={shop.isValidBio}
-                        feedback='Please provide a valid shop bio.'
+                        feedback="Please provide a valid shop bio."
                         validator="bio"
-                        onChange={(value) => handleChange('bio', 'isValidBio', value)}
-                        onValidate={(flag) => handleValidate('isValidBio', flag)}
+                        onChange={(value) =>
+                            handleChange('bio', 'isValidBio', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidBio', flag)
+                        }
                     />
                 </div>
 
                 <div className="col-12 mt-2">
                     {error1 && <Error msg={error1} />}
-                    {!error1 &&
+                    {!error1 && (
                         <DropDownMenu
-                            listItem={listActiveCommissions && listActiveCommissions.map((c, i) => {
-                                const newC = {
-                                    value: c._id,
-                                    label: c.name + ' (' + (c.cost.$numberDecimal * 100).toFixed(2) + '% / order)',
-                                    icon: commissionIcons[i]
-                                };
-                                return newC;
-                            })}
+                            listItem={
+                                listActiveCommissions &&
+                                listActiveCommissions.map((c, i) => {
+                                    const newC = {
+                                        value: c._id,
+                                        label:
+                                            c.name +
+                                            ' (' +
+                                            (
+                                                c.cost.$numberDecimal * 100
+                                            ).toFixed(2) +
+                                            '% / order)',
+                                        icon: commissionIcons[i],
+                                    };
+                                    return newC;
+                                })
+                            }
                             value={shop.commissionId}
                             setValue={handleSelect}
-                            side='large'
-                            label='Commission'
-                        />}
+                            side="large"
+                            label="Commission"
+                        />
+                    )}
                 </div>
 
                 {error && (
@@ -243,26 +279,33 @@ const CreateShopForm = (props) => {
                         <Link to="/legal/termsOfUse" target="_blank">
                             Terms of Use
                         </Link>
-                        <span className="text-muted">
-                            {' '}and{' '}
-                        </span>
-                        <Link to="/legal/privacy" target="_blank">Privacy Policy</Link>.{' '}
+                        <span className="text-muted"> and </span>
+                        <Link to="/legal/privacy" target="_blank">
+                            Privacy Policy
+                        </Link>
+                        .{' '}
                         <span className="text-muted">
                             How you'll get paid? Set up billing?{' '}
                         </span>
                         <Link to="/legal/sellOnGoodDeal" target="_blank">
                             Sell on GoodDeal
-                        </Link>.
+                        </Link>
+                        .
                     </small>
                 </div>
 
                 <div className="col-12 d-grid mt-4">
-                    <button type="submit" className="btn btn-primary ripple"
-                        onClick={handleSubmit}>Submit</button>
+                    <button
+                        type="submit"
+                        className="btn btn-primary ripple"
+                        onClick={handleSubmit}
+                    >
+                        Submit
+                    </button>
                 </div>
             </form>
         </div>
     );
-}
+};
 
 export default CreateShopForm;

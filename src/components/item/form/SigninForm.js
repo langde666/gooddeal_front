@@ -7,7 +7,7 @@ import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 
-const SigninForm = ({ onSwap = () => { } }) => {
+const SigninForm = ({ onSwap = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -94,8 +94,12 @@ const SigninForm = ({ onSwap = () => { } }) => {
                         isValid={account.isValidUsername}
                         feedback="Please provide a valid email address or phone number."
                         validator="email|phone"
-                        onChange={(value) => handleChange('username', 'isValidUsername', value)}
-                        onValidate={(flag) => handleValidate('isValidUsername', flag)}
+                        onChange={(value) =>
+                            handleChange('username', 'isValidUsername', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidUsername', flag)
+                        }
                     />
                 </div>
 
@@ -107,8 +111,12 @@ const SigninForm = ({ onSwap = () => { } }) => {
                         value={account.password}
                         isValid={account.isValidPassword}
                         feedback="Please provide a valid password."
-                        onChange={(value) => handleChange('password', 'isValidPassword', value)}
-                        onValidate={(flag) => handleValidate('isValidPassword', flag)}
+                        onChange={(value) =>
+                            handleChange('password', 'isValidPassword', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidPassword', flag)
+                        }
                     />
                 </div>
 

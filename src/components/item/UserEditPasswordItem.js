@@ -3,9 +3,12 @@ import UserEditPasswordForm from './form/UserEditPasswordForm';
 
 const UserEditPasswordItem = (props) => (
     <div className="position-relative d-inline-block">
-        <button type="button" className="btn btn-primary ripple cus-tooltip"
+        <button
+            type="button"
+            className="btn btn-primary ripple cus-tooltip"
             data-bs-toggle="modal"
-            data-bs-target="#password-edit-form">
+            data-bs-target="#password-edit-form"
+        >
             <i className="fas fa-key"></i>
         </button>
 

@@ -13,7 +13,8 @@ const UserSearchPage = (props) => {
     const [error, setError] = useState('');
     const [isloading, setIsLoading] = useState(false);
 
-    const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
+    const keyword =
+        new URLSearchParams(useLocation().search).get('keyword') || '';
     const [listUsers, setListUsers] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
@@ -23,7 +24,7 @@ const UserSearchPage = (props) => {
         sortBy: 'point',
         role: 'customer',
         order: 'desc',
-        limit: '8',
+        limit: 8,
         page: 1,
     });
 
@@ -32,12 +33,11 @@ const UserSearchPage = (props) => {
         setIsLoading(true);
 
         getlistUsers(filter)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
@@ -47,11 +47,11 @@ const UserSearchPage = (props) => {
                     setIsLoading(false);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -70,12 +70,14 @@ const UserSearchPage = (props) => {
             ...filter,
             page: newPage,
         });
-    }
+    };
 
     return (
-        <MainLayout container="container" navFor='user'>
-            <div className="user-search-page position-relative mx-auto"
-                style={{ maxWidth: '990px', minHeight: '80vh' }}>
+        <MainLayout container="container" navFor="user">
+            <div
+                className="user-search-page position-relative mx-auto"
+                style={{ maxWidth: '990px', minHeight: '80vh' }}
+            >
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -84,14 +86,23 @@ const UserSearchPage = (props) => {
                 </div>
 
                 <div className="user-search-list row mt-3">
-                    {listUsers && listUsers.map((user, index) => (
-                        <div className="col-3 mb-4" key={index}>
-                            <UserCard user={user} hasFollowBtn={getToken()} />
-                        </div>
-                    ))}
+                    {listUsers &&
+                        listUsers.map((user, index) => (
+                            <div className="col-3 mb-4" key={index}>
+                                <UserCard
+                                    user={user}
+                                    hasFollowBtn={getToken()}
+                                />
+                            </div>
+                        ))}
                 </div>
 
-                {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
+                {pagination.size != 0 && (
+                    <Pagination
+                        pagination={pagination}
+                        onChangePage={handleChangePage}
+                    />
+                )}
             </div>
         </MainLayout>
     );

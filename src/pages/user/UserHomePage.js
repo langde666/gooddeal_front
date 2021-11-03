@@ -1,9 +1,8 @@
-
 import { useSelector } from 'react-redux';
 import UserLayout from '../../components/layout/UserLayout';
 
 const UserHomePage = (props) => {
-    const user = useSelector(state => state.user.user);
+    const user = useSelector((state) => state.user.user);
     return (
         <UserLayout user={user}>
             <div className="user-home-page">
@@ -11,6 +10,6 @@ const UserHomePage = (props) => {
             </div>
         </UserLayout>
     );
-}
+};
 
 export default UserHomePage;

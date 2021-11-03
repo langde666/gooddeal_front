@@ -1,58 +1,59 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getToken } from '../../../apis/auth';
-import { cancelStaff } from '../../../apis/store';
-import Loading from "../../ui/Loading";
-import Error from "../../ui/Error";
-import ConfirmDialog from "../../ui/ConfirmDialog";
+import { getToken } from '../../apis/auth';
+import { cancelStaff } from '../../apis/store';
+import Loading from '../ui/Loading';
+import Error from '../ui/Error';
+import ConfirmDialog from '../ui/ConfirmDialog';
 
-const AddStaffsButton = ({ storeId = '' }) => {
+const CancelStaffsButton = ({ storeId = '' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
 
+    const { _id, accessToken } = getToken();
     const history = useHistory();
 
     const handlecancelStaff = () => {
         setIsConfirming(true);
-    }
+    };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
         cancelStaff(_id, accessToken, storeId)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                }
-                else {
+                } else {
                     history.go(0);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
             });
-    }
+    };
 
     return (
-        <div className="cancel-staff-item position-relative">
+        <div className="cancel-staff-button-wrap position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-            {isConfirming && <ConfirmDialog
-                title='Out this shop'
-                color='danger'
-                onSubmit={onSubmit}
-                onClose={() => setIsConfirming(false)}
-            />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Out this shop"
+                    color="danger"
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <button
                 type="button"
@@ -63,5 +64,5 @@ const AddStaffsButton = ({ storeId = '' }) => {
             </button>
         </div>
     );
-}
-export default AddStaffsButton;
+};
+export default CancelStaffsButton;

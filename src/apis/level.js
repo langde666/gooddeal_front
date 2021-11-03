@@ -11,7 +11,7 @@ export const getUserLevel = (userId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 // store level
 export const getStoreLevel = (storeId) => {
@@ -24,4 +24,4 @@ export const getStoreLevel = (storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};

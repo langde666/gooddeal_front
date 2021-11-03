@@ -8,6 +8,6 @@ export const listActiveCommissions = () => {
             'Content-Type': 'application/json',
         },
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

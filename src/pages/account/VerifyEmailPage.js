@@ -19,17 +19,16 @@ const VerifyEmailPage = (props) => {
                 if (data.error) {
                     setError('Verify email failed');
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     setSuccess(data.success);
-                    setIsLoading(false)
+                    setIsLoading(false);
                 }
             })
             .catch((error) => {
                 setError('Server error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -39,13 +38,14 @@ const VerifyEmailPage = (props) => {
         <div className="d-flex m-5 w-100 h-100 position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-            {success &&
+            {success && (
                 <Redirect
                     to={{
                         pathname: '/account/profile',
                         state: { from: props.location },
                     }}
-                />}
+                />
+            )}
         </div>
     );
 };

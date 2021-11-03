@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import StoreLayout from '../../components/layout/StoreLayout';
 
 const GiftPage = (props) => {
-    const store = useSelector(state => state.store.store);
+    const store = useSelector((state) => state.store.store);
     return (
         <StoreLayout store={store}>
             <div className="store-gift-page">
@@ -10,6 +10,6 @@ const GiftPage = (props) => {
             </div>
         </StoreLayout>
     );
-}
+};
 
 export default GiftPage;

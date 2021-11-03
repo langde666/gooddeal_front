@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const SearchInput = ({ onChange = () => { } }) => {
+const SearchInput = ({ onChange = () => {} }) => {
     const [keyword, setKeyword] = useState('');
     const typingTimeoutRef = useRef(null);
 
@@ -17,7 +17,7 @@ const SearchInput = ({ onChange = () => { } }) => {
         typingTimeoutRef.current = setTimeout(() => {
             onChange(value);
         }, 600);
-    }
+    };
 
     return (
         <input
@@ -26,8 +26,9 @@ const SearchInput = ({ onChange = () => { } }) => {
             placeholder="Search"
             style={{ maxWidth: '206px' }}
             value={keyword}
-            onChange={handleChangeKeyword} />
-    )
-}
+            onChange={handleChangeKeyword}
+        />
+    );
+};
 
 export default SearchInput;

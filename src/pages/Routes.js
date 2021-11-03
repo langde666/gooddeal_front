@@ -22,6 +22,7 @@ import AccountCartPage from './account/CartPage';
 import VendorProfilePage from './vendor/ProfilePage';
 import VendorDashboardPage from './vendor/DashboardPage';
 import VendorProductsPage from './vendor/ProductsPage';
+import VendorCollectionsPage from './vendor/CollectionsPage';
 import VendorOrdersPage from './vendor/OrdersPage';
 import VendorStaffsPage from './vendor/StaffsPage';
 import VendorGiftsPage from './vendor/GiftsPage';
@@ -54,35 +55,123 @@ const Routes = () => {
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
 
-                <AdminRoute path="/admin/dashboard" exact component={AdminDashboardPage} />
+                <AdminRoute
+                    path="/admin/dashboard"
+                    exact
+                    component={AdminDashboardPage}
+                />
 
-                <PrivateRoute path="/account/profile" exact component={AccountProfilePage} />
-                <PrivateRoute path="/account/addresses" exact component={AccountAddressesPage} />
-                <PrivateRoute path="/account/purchase" exact component={AccountPurchasePage} />
-                <PrivateRoute path="/account/following" exact component={AccountFollowingPage} />
-                <PrivateRoute path="/account/giftWallet" exact component={AccountGiftWalletPage} />
-                <PrivateRoute path="/account/GDCoins" exact component={AccountGDCoinsPage} />
-                <PrivateRoute path="/account/shopManager" exact component={AccountShopManagerPage} />
+                <PrivateRoute
+                    path="/account/profile"
+                    exact
+                    component={AccountProfilePage}
+                />
+                <PrivateRoute
+                    path="/account/addresses"
+                    exact
+                    component={AccountAddressesPage}
+                />
+                <PrivateRoute
+                    path="/account/purchase"
+                    exact
+                    component={AccountPurchasePage}
+                />
+                <PrivateRoute
+                    path="/account/following"
+                    exact
+                    component={AccountFollowingPage}
+                />
+                <PrivateRoute
+                    path="/account/giftWallet"
+                    exact
+                    component={AccountGiftWalletPage}
+                />
+                <PrivateRoute
+                    path="/account/GDCoins"
+                    exact
+                    component={AccountGDCoinsPage}
+                />
+                <PrivateRoute
+                    path="/account/shopManager"
+                    exact
+                    component={AccountShopManagerPage}
+                />
                 <PrivateRoute path="/cart" exact component={AccountCartPage} />
-                <Route path="/verify/email/:emailCode" exact component={AccountVerifyEmailPage} />
+                <Route
+                    path="/verify/email/:emailCode"
+                    exact
+                    component={AccountVerifyEmailPage}
+                />
 
-                <PrivateRoute path="/vendor/:storeId" exact component={VendorDashboardPage} />
-                <PrivateRoute path="/vendor/profile/:storeId" exact component={VendorProfilePage} />
-                <PrivateRoute path="/vendor/products/:storeId" exact component={VendorProductsPage} />
-                <PrivateRoute path="/vendor/orders/:storeId" exact component={VendorOrdersPage} />
-                <PrivateRoute path="/vendor/staffs/:storeId" exact component={VendorStaffsPage} />
-                <PrivateRoute path="/vendor/gifts/:storeId" exact component={VendorGiftsPage} />
-                <PrivateRoute path="/vendor/GDCoins/:storeId" exact component={VendorGDCoinsPage} />
+                <PrivateRoute
+                    path="/vendor/:storeId"
+                    exact
+                    component={VendorDashboardPage}
+                />
+                <PrivateRoute
+                    path="/vendor/profile/:storeId"
+                    exact
+                    component={VendorProfilePage}
+                />
+                <PrivateRoute
+                    path="/vendor/collections/:storeId"
+                    exact
+                    component={VendorCollectionsPage}
+                />
+                <PrivateRoute
+                    path="/vendor/products/:storeId"
+                    exact
+                    component={VendorProductsPage}
+                />
+                <PrivateRoute
+                    path="/vendor/orders/:storeId"
+                    exact
+                    component={VendorOrdersPage}
+                />
+                <PrivateRoute
+                    path="/vendor/staffs/:storeId"
+                    exact
+                    component={VendorStaffsPage}
+                />
+                <PrivateRoute
+                    path="/vendor/gifts/:storeId"
+                    exact
+                    component={VendorGiftsPage}
+                />
+                <PrivateRoute
+                    path="/vendor/GDCoins/:storeId"
+                    exact
+                    component={VendorGDCoinsPage}
+                />
 
                 <Route path="/user/:userId" exact component={UserHomePage} />
-                <Route path="/user/about/:userId" exact component={UserAboutPage} />
+                <Route
+                    path="/user/about/:userId"
+                    exact
+                    component={UserAboutPage}
+                />
 
                 <Route path="/store/:storeId" exact component={StoreHomePage} />
-                <Route path="/store/collection/:storeId" exact component={StoreCollectionPage} />
-                <Route path="/store/gift/:storeId" exact component={StoreAboutPage} />
-                <Route path="/store/review&rating/:storeId" exact component={StoreReviewAndRatingPage} />
-                <Route path="/store/about/:storeId" exact component={StoreAboutPage} />
-
+                <Route
+                    path="/store/collection/:storeId"
+                    exact
+                    component={StoreCollectionPage}
+                />
+                <Route
+                    path="/store/gift/:storeId"
+                    exact
+                    component={StoreGiftPage}
+                />
+                <Route
+                    path="/store/review&rating/:storeId"
+                    exact
+                    component={StoreReviewAndRatingPage}
+                />
+                <Route
+                    path="/store/about/:storeId"
+                    exact
+                    component={StoreAboutPage}
+                />
             </Switch>
         </BrowserRouter>
     );

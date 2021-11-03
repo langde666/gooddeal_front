@@ -3,8 +3,9 @@ import { useLocation } from 'react-router-dom';
 import StoreLayout from '../../components/layout/StoreLayout';
 
 const CollectionPage = (props) => {
-    const store = useSelector(state => state.store.store);
-    const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
+    const store = useSelector((state) => state.store.store);
+    const keyword =
+        new URLSearchParams(useLocation().search).get('keyword') || '';
 
     return (
         <StoreLayout store={store}>
@@ -14,6 +15,6 @@ const CollectionPage = (props) => {
             </div>
         </StoreLayout>
     );
-}
+};
 
 export default CollectionPage;

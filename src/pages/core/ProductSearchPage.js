@@ -8,7 +8,7 @@ const ProductSearchPage = (props) => {
     const price = new URLSearchParams(search).get('price') || 'all';
 
     return (
-        <MainLayout container="container" navFor='user'>
+        <MainLayout container="container" navFor="user">
             <div className="product-search-page">
                 <h1>Product search</h1>
                 <ul className="list-group">

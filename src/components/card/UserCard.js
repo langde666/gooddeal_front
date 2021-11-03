@@ -14,10 +14,10 @@ const UserCard = ({ user = {} }) => {
         try {
             const data = await getUserLevel(user._id);
             newUser.level = data.level;
-        } catch { }
+        } catch {}
         setUserValue(newUser);
         console.log(newUser.level);
-    }
+    };
 
     useEffect(() => {
         init();
@@ -25,11 +25,16 @@ const UserCard = ({ user = {} }) => {
 
     return (
         <div className="card shadow border-0">
-            <Link className="text-reset text-decoration-none" to={`/user/${userValue._id}`}>
+            <Link
+                className="text-reset text-decoration-none"
+                to={`/user/${userValue._id}`}
+            >
                 <div className="card-img-top cus-card-img-top">
-                    <img src={IMG + userValue.avatar}
+                    <img
+                        src={IMG + userValue.avatar}
                         className="cus-card-img"
-                        alt={userValue.firstname + ' ' + userValue.lastname} />
+                        alt={userValue.firstname + ' ' + userValue.lastname}
+                    />
                 </div>
             </Link>
 
@@ -37,16 +42,25 @@ const UserCard = ({ user = {} }) => {
                 <small className="card-subtitle">
                     <div className="d-flex align-items-center">
                         <span className="me-1">
-                            <UserRoleLabel role={userValue.role} detail={false} />
+                            <UserRoleLabel
+                                role={userValue.role}
+                                detail={false}
+                            />
                         </span>
 
                         <span className="">
-                            <UserLevelLabel level={userValue.level} detail={false} />
+                            <UserLevelLabel
+                                level={userValue.level}
+                                detail={false}
+                            />
                         </span>
                     </div>
                 </small>
 
-                <Link className="text-reset text-decoration-none link-hover d-block mt-2" to={`/user/${userValue._id}`}>
+                <Link
+                    className="text-reset text-decoration-none link-hover d-block mt-2"
+                    to={`/user/${userValue._id}`}
+                >
                     <h6 className="card-title text-nowrap">
                         {userValue.firstname + ' ' + userValue.lastname}
                     </h6>
@@ -54,6 +68,6 @@ const UserCard = ({ user = {} }) => {
             </div>
         </div>
     );
-}
+};
 
 export default UserCard;

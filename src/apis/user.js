@@ -13,21 +13,25 @@ export const getUser = (userId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
+//list user
 export const getlistUsers = (filter) => {
     const { search, sortBy, order, limit, page, role } = filter;
 
-    return fetch(`${API}/users?search=${search}&role=${role}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+    return fetch(
+        `${API}/users?search=${search}&role=${role}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
         },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 // profile
 export const getUserProfile = async (userId, token) => {
@@ -61,9 +65,9 @@ export const updateProfile = (userId, token, user) => {
         },
         body: JSON.stringify(user),
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //avatar
 export const updateAvatar = (userId, token, photo) => {
@@ -76,9 +80,9 @@ export const updateAvatar = (userId, token, photo) => {
         },
         body: photo,
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //cover
 export const updateCover = (userId, token, photo) => {
@@ -91,9 +95,9 @@ export const updateCover = (userId, token, photo) => {
         },
         body: photo,
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //password
 export const updatePassword = (userId, token, user) => {
@@ -107,9 +111,9 @@ export const updatePassword = (userId, token, user) => {
         },
         body: JSON.stringify(user),
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 //address
 export const addAddress = (userId, token, address) => {
@@ -122,9 +126,9 @@ export const addAddress = (userId, token, address) => {
         },
         body: JSON.stringify(address),
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const removeAddresses = (userId, token, index) => {
     return fetch(`${API}/user/address/${userId}?index=${index}`, {
@@ -135,9 +139,9 @@ export const removeAddresses = (userId, token, index) => {
             Authorization: `Bearer ${token}`,
         },
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const updateAddress = (userId, token, index, address) => {
     return fetch(`${API}/user/address/${userId}?index=${index}`, {
@@ -149,6 +153,6 @@ export const updateAddress = (userId, token, index, address) => {
         },
         body: JSON.stringify(address),
     })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

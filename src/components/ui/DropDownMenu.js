@@ -2,8 +2,17 @@ import { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 
-const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = '', label = '', borderBtn = false }) => {
-    const [selectedItem, setSelectedItem] = useState(() => listItem.find((item) => item.value == value) || listItem[0]);
+const DropDownMenu = ({
+    listItem = [],
+    value = '',
+    setValue = () => {},
+    side = '',
+    label = '',
+    borderBtn = false,
+}) => {
+    const [selectedItem, setSelectedItem] = useState(
+        () => listItem.find((item) => item.value == value) || listItem[0],
+    );
     const [showDropDownFlag, toggleShowDropDownFlag] = useToggle(false);
 
     const handleSelect = (item) => {
@@ -17,12 +26,16 @@ const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = 
     }, [value]);
 
     return (
-        <div className={`cus-dropdown ${side == 'large' ? 'w-100' : ''} ${label ? 'cus-dropdown--has-label' : ''}`}>
-            {label && (
-                <label className="cus-dropdown-label">{label}</label>
-            )}
+        <div
+            className={`cus-dropdown ${side == 'large' ? 'w-100' : ''} ${
+                label ? 'cus-dropdown--has-label' : ''
+            }`}
+        >
+            {label && <label className="cus-dropdown-label">{label}</label>}
             <ul
-                className={`list-group cus-dropdown-menu ${showDropDownFlag ? 'show' : ''}`}
+                className={`list-group cus-dropdown-menu ${
+                    showDropDownFlag ? 'show' : ''
+                }`}
             >
                 {listItem &&
                     listItem.map((item, index) => (
@@ -39,12 +52,16 @@ const DropDownMenu = ({ listItem = [], value = '', setValue = () => { }, side = 
 
             <button
                 type="button"
-                className={`btn ${borderBtn ? 'cus-dropdown-btn--border' : 'cus-dropdown-btn'} ${side == 'large' ? 'w-100' : ''} `}
+                className={`btn ${
+                    borderBtn ? 'cus-dropdown-btn--border' : 'cus-dropdown-btn'
+                } ${side == 'large' ? 'w-100' : ''} `}
                 onClick={toggleShowDropDownFlag}
                 onBlur={() => toggleShowDropDownFlag(false)}
             >
                 <span
-                    className={`d-inline-flex justify-content-start align-items-center ${side == 'large' ? 'flex-grow-1 text-start ps-2' : ''}`}
+                    className={`d-inline-flex justify-content-start align-items-center ${
+                        side == 'large' ? 'flex-grow-1 text-start ps-2' : ''
+                    }`}
                 >
                     {selectedItem && selectedItem.icon}
                     <span className="ms-2">

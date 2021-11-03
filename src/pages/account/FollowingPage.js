@@ -4,7 +4,7 @@ import FollowingProductsCollection from '../../components/collection/FollowingPr
 import FollowingStoresCollection from '../../components/collection/FollowingStoreCollection';
 
 const FollowingPage = (props) => {
-    const user = useSelector(state => state.account.user);
+    const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
             <div className="account-following-page">

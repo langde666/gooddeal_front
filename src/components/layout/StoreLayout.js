@@ -1,26 +1,30 @@
 import MainLayout from './MainLayout';
 import StoreNav from './menu/StoreNav';
-import Cover from '../ui/Cover';
-import Avatar from '../ui/Avatar';
+import Cover from '../image/Cover';
+import Avatar from '../image/Avatar';
 import StoreStatusLabel from '../label/StoreStatusLabel';
 import StoreLevelInfo from '../info/StoreLevelInfo';
 
 const StoreLayout = ({ store = {}, children = null }) => (
-    <MainLayout container="container" navFor='user'>
-        <div className="store-layout row" style={{ maxWidth: '990px', margin: '0 auto' }}>
+    <MainLayout container="container" navFor="user">
+        <div
+            className="store-layout row"
+            style={{ maxWidth: '990px', margin: '0 auto' }}
+        >
             <div className="col-12 position-relative shadow">
-                <Cover cover={store.cover} />
+                <Cover cover={store.cover} alt={store.name} />
                 <div className="avatar-absolute avatar-absolute--store">
                     <Avatar
                         avatar={store.avatar}
-                        name={(
+                        name={
                             <span className="d-inline-flex justify-content-center align-items-center">
                                 {store.name}
                                 <small className="ms-2">
                                     <StoreStatusLabel isOpen={store.isOpen} />
                                 </small>
                             </span>
-                        )}
+                        }
+                        alt={store.name}
                         bodername={true}
                     />
                 </div>
@@ -31,9 +35,7 @@ const StoreLayout = ({ store = {}, children = null }) => (
 
             <StoreNav store={store} />
 
-            <div className="store-page-main mt-4">
-                {children}
-            </div>
+            <div className="store-page-main mt-4">{children}</div>
         </div>
     </MainLayout>
 );

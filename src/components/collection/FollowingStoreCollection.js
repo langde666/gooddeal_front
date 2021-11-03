@@ -19,7 +19,7 @@ const FollowingStoresCollection = (props) => {
         search: '',
         sortBy: 'point',
         order: 'desc',
-        limit: '4',
+        limit: 4,
         page: 1,
     });
 
@@ -29,12 +29,11 @@ const FollowingStoresCollection = (props) => {
         setError('');
         setIsLoading(true);
         listFollowingStores(_id, accessToken, filter)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setIsLoading(false);
                     setError(data.error);
-                }
-                else {
+                } else {
                     setIsLoading(false);
                     setListStores(data.stores);
                     setPagination({
@@ -44,11 +43,11 @@ const FollowingStoresCollection = (props) => {
                     });
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setIsLoading(false);
                 setError('Server Error');
             });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -59,7 +58,7 @@ const FollowingStoresCollection = (props) => {
             ...filter,
             page: newPage,
         });
-    }
+    };
 
     return (
         <div className="following-stores-collection-wrap position-relative">
@@ -72,16 +71,25 @@ const FollowingStoresCollection = (props) => {
             </div>
 
             <div className="following-stores-collection row mt-3">
-                {listStores && listStores.map((store, index) => (
-                    <div className="col-3 mb-4" key={index}>
-                        <StoreCard store={store} onRun={() => setRun(!run)} />
-                    </div>
-                ))}
+                {listStores &&
+                    listStores.map((store, index) => (
+                        <div className="col-3 mb-4" key={index}>
+                            <StoreCard
+                                store={store}
+                                onRun={() => setRun(!run)}
+                            />
+                        </div>
+                    ))}
             </div>
 
-            {pagination.size != 0 && <Pagination pagination={pagination} onChangePage={handleChangePage} />}
+            {pagination.size != 0 && (
+                <Pagination
+                    pagination={pagination}
+                    onChangePage={handleChangePage}
+                />
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default FollowingStoresCollection;

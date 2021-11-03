@@ -24,7 +24,7 @@ const AccountInit = ({ user, actions }) => {
         setIsLoading(true);
         setError('');
         getUserProfile(_id, accessToken)
-            .then(async data => {
+            .then(async (data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
@@ -34,13 +34,13 @@ const AccountInit = ({ user, actions }) => {
                     try {
                         const data = await getUserLevel(_id);
                         newUser.level = data.error ? {} : data.level;
-                    } catch { }
+                    } catch {}
 
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newUser.numberOfSucessfulOrders = 0;
-                        newUser.numberOfFailedOrders = 0
-                    } catch { }
+                        newUser.numberOfFailedOrders = 0;
+                    } catch {}
 
                     actions(newUser);
                     setIsLoading(false);
@@ -65,68 +65,77 @@ const AccountInit = ({ user, actions }) => {
         signout(refreshToken, () => {
             history.go(0);
         });
-    }
+    };
 
-    return (
-        isLoading ? (
-            <div className="cus-position-relative-loading">
-                <Loading size="small" />
-            </div>
-        ) : (
-            <div className="your-account-wrap">
-                {isConfirming && (<ConfirmDialog
+    return isLoading ? (
+        <div className="cus-position-relative-loading">
+            <Loading size="small" />
+        </div>
+    ) : (
+        <div className="your-account-wrap">
+            {isConfirming && (
+                <ConfirmDialog
                     title="Sign out"
                     color="danger"
                     onSubmit={onSignoutSubmit}
                     onClose={() => setIsConfirming(false)}
-                />)}
-                <div className="your-account">
-                    <Link
-                        type="button"
-                        className="your-account-card btn btn-outline-light cus-outline ripple"
-                        to='/account/profile'
-                    >
-                        <img
-                            src={avatar ? `${IMG + avatar}` : ''}
-                            className="your-account-img"
-                        />
+                />
+            )}
+            <div className="your-account">
+                <Link
+                    type="button"
+                    className="your-account-card btn btn-outline-light cus-outline ripple"
+                    to="/account/profile"
+                >
+                    <img
+                        src={avatar ? `${IMG + avatar}` : ''}
+                        className="your-account-img"
+                    />
 
-                        <span className="your-account-name noselect">
-                            {firstname && lastname && firstname + ' ' + lastname}
-                            {error && <Error msg={error} />}
-                        </span>
+                    <span className="your-account-name noselect">
+                        {firstname && lastname && firstname + ' ' + lastname}
+                        {error && <Error msg={error} />}
+                    </span>
+                </Link>
+
+                <ul className="list-group your-account-options">
+                    <Link
+                        className="list-group-item your-account-options-item ripple"
+                        to="/account/profile"
+                    >
+                        <i className="fas fa-user-circle"></i>
+                        Your profile
                     </Link>
 
-                    <ul className="list-group your-account-options">
-                        <Link className="list-group-item your-account-options-item ripple" to="/account/profile">
-                            <i className="fas fa-user-circle"></i>
-                            Your profile
-                        </Link>
-
-                        {role == 'user' && <Link className="list-group-item your-account-options-item ripple" to="/account/purchase">
+                    {role == 'user' && (
+                        <Link
+                            className="list-group-item your-account-options-item ripple"
+                            to="/account/purchase"
+                        >
                             <i className="fas fa-shopping-bag"></i>
                             Purchases
-                        </Link>}
+                        </Link>
+                    )}
 
-                        <li
-                            className="list-group-item your-account-options-item ripple"
-                            onClick={handleSignout}
-                        >
-                            <i className="fas fa-sign-out-alt"></i>
-                            Sign out
-                        </li>
-                    </ul>
-                </div>
+                    <li
+                        className="list-group-item your-account-options-item ripple"
+                        onClick={handleSignout}
+                    >
+                        <i className="fas fa-sign-out-alt"></i>
+                        Sign out
+                    </li>
+                </ul>
             </div>
-        ));
+        </div>
+    );
 };
 
 function mapStateToProps(state) {
-    return { user: state.account.user }
+    return { user: state.account.user };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (user) => dispatch(addAccount(user)) }
+    return { actions: (user) => dispatch(addAccount(user)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountInit);

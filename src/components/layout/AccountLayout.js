@@ -9,12 +9,9 @@ const AccountLayout = ({ user = {}, children = null }) => (
                     <AccountSideBar user={user} />
                 </div>
 
-                <div className="col-9">
-                    {children}
-                </div>
+                <div className="col-9">{children}</div>
             </div>
         </div>
-
     </MainLayout>
 );
 

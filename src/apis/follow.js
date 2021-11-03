@@ -3,17 +3,20 @@ const API = process.env.REACT_APP_API_URL;
 //user follow store
 export const listFollowingStores = (userId, token, filter) => {
     const { search, sortBy, order, limit, page } = filter;
-    return fetch(`${API}/following/stores/${userId}?&limit=${limit}&page=${page}`, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
+    return fetch(
+        `${API}/following/stores/${userId}?&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
         },
-    })
-        .then(res => res.json())
-        .catch(error => console.log(error));
-}
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
 
 export const getNumberOfFollowers = (storeId) => {
     return fetch(`${API}/store/number/of/followers/${storeId}`, {
@@ -25,7 +28,7 @@ export const getNumberOfFollowers = (storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const checkFollowingStore = (userId, token, storeId) => {
     return fetch(`${API}/check/following/stores/${storeId}/${userId}`, {
@@ -38,7 +41,7 @@ export const checkFollowingStore = (userId, token, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const followStore = (userId, token, storeId) => {
     return fetch(`${API}/follow/store/${storeId}/${userId}`, {
@@ -51,7 +54,7 @@ export const followStore = (userId, token, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 export const unfollowStore = (userId, token, storeId) => {
     return fetch(`${API}/unfollow/store/${storeId}/${userId}`, {
@@ -64,6 +67,6 @@ export const unfollowStore = (userId, token, storeId) => {
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 //user follow product

@@ -5,7 +5,9 @@ const StoreSearchBar = ({ storeId = '' }) => {
     const location = useLocation();
     const history = useHistory();
 
-    const [query, setQuery] = useState(() => new URLSearchParams(location.search).get('keyword') || '');
+    const [query, setQuery] = useState(
+        () => new URLSearchParams(location.search).get('keyword') || '',
+    );
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -17,8 +19,17 @@ const StoreSearchBar = ({ storeId = '' }) => {
     };
 
     return (
-        <form className="store-search-bar m-0 input-group" onSubmit={handleFormSubmit}>
-            <input className="form-control" type="search" placeholder="Search" aria-label="Search" onChange={handleChange} />
+        <form
+            className="store-search-bar m-0 input-group"
+            onSubmit={handleFormSubmit}
+        >
+            <input
+                className="form-control"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={handleChange}
+            />
             <button
                 className="btn btn-outline-light border border-primary cus-outline text-white ripple"
                 type="submit"
@@ -27,7 +38,7 @@ const StoreSearchBar = ({ storeId = '' }) => {
                 <i className="fas fa-search"></i>
             </button>
         </form>
-    )
-}
+    );
+};
 
 export default StoreSearchBar;

@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AccountLayout from '../../components/layout/AccountLayout';
 import UserLevelInfo from '../../components/info/UserLevelInfo';
 import UserProfileInfo from '../../components/info/UserProfileInfo';
@@ -8,7 +8,7 @@ import Cover from '../../components/image/Cover';
 import Avatar from '../../components/image/Avatar';
 
 const ProfilePage = (props) => {
-    const user = useSelector(state => state.account.user);
+    const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
             <div className="account-profile-page">
@@ -16,14 +16,16 @@ const ProfilePage = (props) => {
                     <Cover
                         cover={user.cover}
                         alt={user.firstname + ' ' + user.lastname}
-                        isEditable='user' />
+                        isEditable="user"
+                    />
                     <div className="avatar-absolute avatar-absolute--store">
                         <Avatar
                             avatar={user.avatar}
                             name={user.firstname + ' ' + user.lastname}
                             alt={user.firstname + ' ' + user.lastname}
                             bodername={true}
-                            isEditable='user' />
+                            isEditable="user"
+                        />
                     </div>
                     <div className="level-group-absolute level-group-absolute--small">
                         <UserLevelInfo user={user} />
@@ -33,9 +35,11 @@ const ProfilePage = (props) => {
                 <div className="d-flex justify-content-end mt-2">
                     <Link
                         className="btn btn-outline-primary ripple btn-sm"
-                        to={`/user/${user._id}`} target="_blank"
+                        to={`/user/${user._id}`}
+                        target="_blank"
                     >
-                        Visit Your Page <i className="fas fa-external-link-alt ms-1"></i>
+                        Visit Your Page{' '}
+                        <i className="fas fa-external-link-alt ms-1"></i>
                     </Link>
                 </div>
 

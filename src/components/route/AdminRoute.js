@@ -3,22 +3,24 @@ import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 
 const AdminRoute = ({ component: Page, ...rest }) => {
-    const { role } = useSelector(state => state.account.user);
-    return <Route
-        {...rest}
-        render={(props) =>
-            getToken() && role === 'admin' ? (
-                <Page {...props} />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: '/',
-                        state: { from: props.location },
-                    }}
-                />
-            )
-        }
-    />
-}
+    const { role } = useSelector((state) => state.account.user);
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                getToken() && role === 'admin' ? (
+                    <Page {...props} />
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: '/',
+                            state: { from: props.location },
+                        }}
+                    />
+                )
+            }
+        />
+    );
+};
 
 export default AdminRoute;

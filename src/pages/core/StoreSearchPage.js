@@ -12,7 +12,8 @@ const StoreSearchPage = (props) => {
     const [error, setError] = useState('');
     const [isloading, setIsLoading] = useState(false);
 
-    const keyword = new URLSearchParams(useLocation().search).get('keyword') || '';
+    const keyword =
+        new URLSearchParams(useLocation().search).get('keyword') || '';
     const [listStores, setListStores] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
@@ -23,7 +24,7 @@ const StoreSearchPage = (props) => {
         sortMoreBy: 'point',
         isActive: 'true',
         order: 'desc',
-        limit: '4',
+        limit: 8,
         page: 1,
     });
 
@@ -31,12 +32,11 @@ const StoreSearchPage = (props) => {
         setError('');
         setIsLoading(true);
         getlistStores(filter)
-            .then(data => {
+            .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
-                }
-                else {
+                } else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
@@ -46,11 +46,11 @@ const StoreSearchPage = (props) => {
                     setIsLoading(false);
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 setError('Server Error');
                 setIsLoading(false);
             });
-    }
+    };
 
     useEffect(() => {
         init();
@@ -69,12 +69,14 @@ const StoreSearchPage = (props) => {
             ...filter,
             page: newPage,
         });
-    }
+    };
 
     return (
-        <MainLayout container="container" navFor='user'>
-            <div className="store-search-page position-relative mx-auto"
-                style={{ maxWidth: '990px', minHeight: '80vh' }}>
+        <MainLayout container="container" navFor="user">
+            <div
+                className="store-search-page position-relative mx-auto"
+                style={{ maxWidth: '990px', minHeight: '80vh' }}
+            >
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -83,17 +85,20 @@ const StoreSearchPage = (props) => {
                 </div>
 
                 <div className="store-search-list row mt-3">
-                    {listStores && listStores.map((store, index) => (
-                        <div className="col-3 mb-4" key={index}>
-                            <StoreCard store={store} />
-                        </div>
-                    ))}
+                    {listStores &&
+                        listStores.map((store, index) => (
+                            <div className="col-3 mb-4" key={index}>
+                                <StoreCard store={store} />
+                            </div>
+                        ))}
                 </div>
 
-                {pagination.size != 0 &&
+                {pagination.size != 0 && (
                     <Pagination
                         pagination={pagination}
-                        onChangePage={handleChangePage} />}
+                        onChangePage={handleChangePage}
+                    />
+                )}
             </div>
         </MainLayout>
     );
