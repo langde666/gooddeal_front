@@ -1,37 +1,39 @@
 import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
-import { updatePassword } from '../../../apis/user';
-import { regexTest } from '../../../helper/test';
+import { createCommission } from '../../../apis/commission';
+import { regexTest, numberTest } from '../../../helper/test';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const UserEditPasswordForm = (props) => {
+const AdminCreateCommissionForm = ({ onRun = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [account, setAccount] = useState({
-        currentPassword: '',
-        newPassword: '',
-        isValidCurrentPassword: true,
-        isValidNewPassword: true,
+    const [commission, setCommission] = useState({
+        name: '',
+        description: '',
+        cost: 0,
+        isValidName: true,
+        isValidDescription: true,
+        isValidCost: true,
     });
 
     const handleChange = (name, isValidName, value) => {
-        setAccount({
-            ...account,
+        setCommission({
+            ...commission,
             [name]: value,
             [isValidName]: true,
         });
     };
 
     const handleValidate = (isValidName, flag) => {
-        setAccount({
-            ...account,
+        setCommission({
+            ...commission,
             [isValidName]: flag,
         });
     };
@@ -39,35 +41,39 @@ const UserEditPasswordForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!account.currentPassword || !account.newPassword) {
-            setAccount({
-                ...account,
-                isValidCurrentPassword: regexTest(
-                    'password',
-                    account.currentPassword,
-                ),
-                isValidNewPassword: regexTest('password', account.newPassword),
+        const { name, description, cost } = commission;
+        if (!name || !description || cost === '') {
+            setCommission({
+                ...commission,
+                isValidName: regexTest('name', name),
+                isValidDescription: regexTest('bio', description),
+                isValidCost: numberTest('zeroTo100', cost),
             });
             return;
         }
 
-        if (!account.isValidCurrentPassword || !account.isValidCurrentPassword)
+        const {
+            isValidName,
+            isValidDescription,
+            isValidCost,
+        } = commission;
+        if (
+            !isValidName ||
+            !isValidDescription ||
+            !isValidCost
+        )
             return;
 
         setIsConfirming(true);
     };
 
     const onSubmit = () => {
-        const user = {
-            currentPassword: account.currentPassword,
-            newPassword: account.newPassword,
-        };
         const { _id, accessToken } = getToken();
 
         setError('');
         setSuccess('');
         setIsLoading(true);
-        updatePassword(_id, accessToken, user)
+        createCommission(_id, accessToken, commission)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -76,21 +82,17 @@ const UserEditPasswordForm = (props) => {
                         setError('');
                     }, 3000);
                 } else {
-                    setAccount({
-                        currentPassword: '',
-                        newPassword: '',
-                        isValidCurrentPassword: true,
-                        isValidNewPassword: true,
-                    });
                     setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {
                         setSuccess('');
                     }, 3000);
+
+                    if (onRun) onRun();
                 }
             })
             .catch((error) => {
-                setError('Server error');
+                setError('Sever error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
@@ -99,59 +101,65 @@ const UserEditPasswordForm = (props) => {
     };
 
     return (
-        <div className="password-edit-form-wrap position-relative">
+        <div className="create-store-commission-form-wrap position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Change password"
+                    title="Create this commission"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="password-edit-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="create-store-commission-form row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
-                        type="password"
-                        label="Current password"
-                        value={account.currentPassword}
-                        isValid={account.isValidCurrentPassword}
-                        feedback="Please provide a valid password."
-                        validator="password"
+                        type="text"
+                        label="Commission name"
+                        value={commission.name}
+                        isValid={commission.isValidName}
+                        feedback='Please provide a valid commission name.'
+                        validator="level"
                         onChange={(value) =>
-                            handleChange(
-                                'currentPassword',
-                                'isValidCurrentPassword',
-                                value,
-                            )
+                            handleChange('name', 'isValidName', value)
                         }
                         onValidate={(flag) =>
-                            handleValidate('isValidCurrentPassword', flag)
+                            handleValidate('isValidName', flag)
                         }
                     />
                 </div>
 
                 <div className="col-12">
                     <Input
-                        type="password"
-                        label="New password"
-                        value={account.newPassword}
-                        isValid={account.isValidNewPassword}
-                        feedback="Password must contain at least 6 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character such as @, $, !, %, *, ?, &."
-                        validator="password"
+                        type="text"
+                        label="Description"
+                        value={commission.description}
+                        isValid={commission.isValidDescription}
+                        feedback='Please provide a valid commission description.'
+                        validator="bio"
                         onChange={(value) =>
-                            handleChange(
-                                'newPassword',
-                                'isValidNewPassword',
-                                value,
-                            )
+                            handleChange('description', 'isValidDescription', value)
                         }
                         onValidate={(flag) =>
-                            handleValidate('isValidNewPassword', flag)
+                            handleValidate('isValidDescription', flag)
+                        }
+                    />
+                </div>
+
+                <div className="col-12">
+                    <Input
+                        type="number"
+                        label="Cost (%)"
+                        value={commission.cost}
+                        isValid={commission.isValidCost}
+                        feedback='Please provide a valid cost (>=0).'
+                        validator="zeroTo100"
+                        onChange={(value) =>
+                            handleChange('cost', 'isValidCost', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidCost', flag)
                         }
                     />
                 </div>
@@ -174,7 +182,7 @@ const UserEditPasswordForm = (props) => {
                         className="btn btn-primary ripple"
                         onClick={handleSubmit}
                     >
-                        Save
+                        Submit
                     </button>
                 </div>
             </form>
@@ -182,4 +190,4 @@ const UserEditPasswordForm = (props) => {
     );
 };
 
-export default UserEditPasswordForm;
+export default AdminCreateCommissionForm;

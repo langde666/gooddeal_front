@@ -1,50 +1,50 @@
 import { useSelector } from 'react-redux';
 import useToggle from '../../hooks/useToggle';
-import AccountLayout from '../../components/layout/AccountLayout';
-import FollowingProductsCollection from '../../components/collection/FollowingProductsCollection';
-import FollowingStoresCollection from '../../components/collection/FollowingStoreCollection';
+import AdminLayout from '../../components/layout/AdminLayout';
+import AdminUserLevelsTable from '../../components/table/AdminUserLevelsTable';
+import AdminStoreLevelTable from '../../components/table/AdminStoreLevelTable';
 
-const FollowingPage = (props) => {
+const LevelPage = (props) => {
     const user = useSelector((state) => state.account.user);
     const [flag, toggleFlag] = useToggle(true);
 
     return (
-        <AccountLayout user={user}>
-            <div className="account-following-page">
+        <AdminLayout user={user}>
+            <div className="admin-level-manager-page">
                 <div className="d-flex align-items-center my-2">
                     <div className="position-relative d-inline-block me-2">
                         <button
                             type="button"
-                            className={`btn ${flag ? 'btn-pink' : 'btn-outline-pink'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
-                            <i className="fas fa-box"></i>
+                            <i className="fas fa-user-friends"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Your following products</small>
+                        <small className="cus-tooltip-msg">User levels</small>
                     </div>
 
                     <div className="position-relative d-inline-block">
                         <button
                             type="button"
-                            className={`btn ${!flag ? 'btn-pink' : 'btn-outline-pink'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${!flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
                             <i className="fas fa-store"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Your following stores</small>
+                        <small className="cus-tooltip-msg">Store levels</small>
                     </div>
                 </div>
 
                 {flag ?
-                    <FollowingProductsCollection />
+                    <AdminUserLevelsTable />
                     :
-                    <FollowingStoresCollection />
+                    <AdminStoreLevelTable />
                 }
             </div>
-        </AccountLayout>
+        </AdminLayout>
     );
 };
 
-export default FollowingPage;
+export default LevelPage;

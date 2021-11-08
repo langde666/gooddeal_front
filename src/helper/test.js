@@ -1,4 +1,4 @@
-const useRegex = () => {
+export const regexTest = (name, value) => {
     const regexes = {
         anything: /.+/,
         name: /^[A-Za-záàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÉÈẺẼẸÊẾỀỂỄỆÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÍÌỈĨỊÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ\d\s_'-]+$/,
@@ -9,11 +9,19 @@ const useRegex = () => {
         id_card: /(^\d{9}$|^\d{12}$)/,
         address: /^[^,]+$/,
         bio: /.+/,
+        level: /^(?=.*[a-zA-Z])[A-Za-z\d\s_'-]*$/,
     };
 
-    const regexTest = (name, value) => regexes[name].test(value);
+    return regexes[name].test(value);
+}
 
-    return [regexTest];
-};
+export const numberTest = (name, value) => {
+    const numberValidator = {
+        positive: value !== '' && value > 0,
+        negative: value !== '' && value < 0,
+        zero: value !== '' && value == 0,
+        zeroTo100: value !== '' && value >= 0 && value <= 100,
+    }
 
-export default useRegex;
+    return numberValidator[name];
+}

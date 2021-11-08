@@ -2,7 +2,7 @@ import Modal from '../ui/Modal';
 import UserCreateShopForm from './form/UserCreateShopForm';
 
 const UserCreateShopItem = (props) => (
-    <div className="add-address-item d-inline-block">
+    <div className="create-shop-item d-inline-block">
         <button
             type="button"
             className="btn btn-primary ripple text-nowrap"

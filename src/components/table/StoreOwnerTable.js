@@ -7,7 +7,7 @@ const StoreOwnerTable = (props) => {
         <div className="store-owner-table-wrap position-relative">
             <h4 className="mb-2">Shop owner</h4>
 
-            <table className="store-staffs-table table align-middle table-hover mt-2">
+            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm">
                 <thead>
                     <tr>
                         <th scope="col" className="text-center">

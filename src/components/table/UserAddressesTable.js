@@ -11,7 +11,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const UserAddressesTable = (props) => {
+const UserAddressesTable = ({ heading = true }) => {
     const [editAddress, setEditAddress] = useState({});
     const [deleteAddress, setDeleteAddress] = useState({});
 
@@ -82,7 +82,7 @@ const UserAddressesTable = (props) => {
                 />
             )}
 
-            <h4 className="mb-3">Your addresses</h4>
+            {heading && <h4 className="mb-3">Your addresses</h4>}
 
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -98,10 +98,10 @@ const UserAddressesTable = (props) => {
                 </span>
             </div>
 
-            <table className="addresses-table table align-middle table-hover mt-2">
+            <table className="addresses-table table align-middle table-hover mt-2 text-center">
                 <thead>
                     <tr>
-                        <th scope="col" className="text-center">
+                        <th scope="col">
                             #
                         </th>
                         <th scope="col">Address</th>
@@ -112,11 +112,11 @@ const UserAddressesTable = (props) => {
                     {addresses &&
                         addresses.map((address, index) => (
                             <tr key={index}>
-                                <th scope="row" className="text-center">
+                                <th scope="row">
                                     {index + 1}
                                 </th>
-                                <td>{address}</td>
-                                <td className="text-center">
+                                <td className="text-start ps-4">{address}</td>
+                                <td>
                                     <div className="position-relative d-inline-block me-2">
                                         <button
                                             type="button"

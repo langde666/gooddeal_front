@@ -1,17 +1,15 @@
 import { useSelector } from 'react-redux';
 import useToggle from '../../hooks/useToggle';
-import VendorLayout from '../../components/layout/VendorLayout';
-import StoreOwnerTable from '../../components/table/StoreOwnerTable';
-import StoreStaffsTable from '../../components/table/StoreStaffsTable';
+import AdminLayout from '../../components/layout/AdminLayout';
+import AdminStoresTable from '../../components/table/AdminStoresTable';
 
-const StaffsPage = (props) => {
+const StorePage = (props) => {
     const user = useSelector((state) => state.account.user);
-    const store = useSelector((state) => state.vendor.store);
     const [flag, toggleFlag] = useToggle(true);
 
     return (
-        <VendorLayout user={user} store={store}>
-            <div className="vendor-staffs-manager-page">
+        <AdminLayout user={user}>
+            <div className="admin-stores-manager-page mt-2">
                 <div className="d-flex align-items-center my-2">
                     <div className="position-relative d-inline-block me-2">
                         <button
@@ -19,33 +17,29 @@ const StaffsPage = (props) => {
                             className={`btn ${flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
-                            <i className="fas fa-user-friends"></i>
+                            <i className="fas fa-check-circle"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Shop staffs</small>
+                        <small className="cus-tooltip-msg">Liscensed stores</small>
                     </div>
 
                     <div className="position-relative d-inline-block">
                         <button
                             type="button"
-                            className={`btn ${!flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${!flag ? 'btn-danger' : 'btn-outline-danger'} btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
-                            <i className="fas fa-user-shield"></i>
+                            <i className="fas fa-times-circle"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Shop owner</small>
+                        <small className="cus-tooltip-msg">Banned stores</small>
                     </div>
                 </div>
 
-                {flag ?
-                    <StoreStaffsTable />
-                    :
-                    <StoreOwnerTable />
-                }
+                <AdminStoresTable isActive={flag} />
             </div>
-        </VendorLayout>
+        </AdminLayout>
     );
 };
 
-export default StaffsPage;
+export default StorePage;

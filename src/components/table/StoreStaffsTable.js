@@ -12,20 +12,9 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
+import SortByButton from './sub/SortByButton';
 
-const compareByName = (a, b) => {
-    const nameA = (a.firstname + a.lastname).toUpperCase();
-    const nameB = (b.firstname + b.lastname).toUpperCase();
-    if (nameA < nameB) {
-        return -1;
-    }
-    if (nameA > nameB) {
-        return 1;
-    }
-    return 0;
-};
-
-const StoreStaffsTable = (props) => {
+const StoreStaffsTable = ({ heading = true }) => {
     const [removedStaff, setRemovedStaff] = useState({});
 
     const [isloading, setIsLoading] = useState(false);
@@ -70,7 +59,8 @@ const StoreStaffsTable = (props) => {
                     staff.firstname.toLowerCase().includes(search) ||
                     staff.lastname.toLowerCase().includes(search),
             )
-            .sort(compareByName);
+            .sort(compareFunc(filter.sortBy, filter.order));
+
 
         const limit = filter.limit;
         const size = filterList.length;
@@ -104,6 +94,14 @@ const StoreStaffsTable = (props) => {
             page: newPage,
         });
     };
+
+    const handleSetSortBy = (order, sortBy) => {
+        setFilter({
+            ...filter,
+            sortBy,
+            order,
+        });
+    }
 
     const handleRemoveStaff = (staff) => {
         setRemovedStaff(staff);
@@ -158,7 +156,7 @@ const StoreStaffsTable = (props) => {
                 />
             )}
 
-            <h4 className="mb-3">Shop staffs</h4>
+            {heading && <h4 className="mb-3">Shop staffs</h4>}
 
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -181,16 +179,49 @@ const StoreStaffsTable = (props) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="store-staffs-table table align-middle table-hover mt-2">
+            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm">
                 <thead>
                     <tr>
                         <th scope="col" className="text-center">
-                            #
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="#"
+                                sortBy='_id'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
                         </th>
-                        <th scope="col">Staff</th>
-                        <th scope="col">Id card</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Staff"
+                                sortBy='name'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Id card"
+                                sortBy='id_card'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Email"
+                                sortBy='email'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Phone"
+                                sortBy='phone'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
+                        </th>
                         {ownerId && userId == ownerId._id && (
                             <th scope="col"></th>
                         )}
@@ -242,3 +273,24 @@ const StoreStaffsTable = (props) => {
 };
 
 export default StoreStaffsTable;
+
+
+const compareFunc = (sortBy, order) => {
+    return (a, b) => {
+        let valueA = sortBy !== 'name' ? a[sortBy] : (a.firstname + a.lastname).toLowerCase();
+        let valueB = sortBy !== 'name' ? b[sortBy] : (b.firstname + b.lastname).toLowerCase();
+
+        if (typeof valueA === 'undefined') valueA = '';
+        if (typeof valueB === 'undefined') valueB = '';
+
+        if (order == 'asc')
+            if (valueA < valueB) return -1;
+            else if (valueA > valueB) return 1;
+            else return 0;
+        else
+            if (valueA < valueB) return 1;
+            else if (valueA > valueB) return -1;
+            else return 0;
+
+    }
+}

@@ -8,12 +8,16 @@ import StoreSearchPage from './core/StoreSearchPage';
 import UserSearchPage from './core/UserSearchPage';
 //admin
 import AdminDashboardPage from './admin/DashboardPage';
+import AdminLevelPage from './admin/LevelPage';
+import AdminCommissionPage from './admin/CommissionPage';
+import AdminUserPage from './admin/UserPage';
+import AdminStorePage from './admin/StorePage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
 import AccountPurchasePage from './account/PurchasePage';
 import AccountFollowingPage from './account/FollowingPage';
-import AccountGiftWalletPage from './account/GiftWalletPage';
+// import AccountGiftWalletPage from './account/GiftWalletPage';
 import AccountGDCoinsPage from './account/GDCoinsPage';
 import AccountShopManagerPage from './account/ShopManagerPage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
@@ -22,10 +26,9 @@ import AccountCartPage from './account/CartPage';
 import VendorProfilePage from './vendor/ProfilePage';
 import VendorDashboardPage from './vendor/DashboardPage';
 import VendorProductsPage from './vendor/ProductsPage';
-import VendorCollectionsPage from './vendor/CollectionsPage';
 import VendorOrdersPage from './vendor/OrdersPage';
 import VendorStaffsPage from './vendor/StaffsPage';
-import VendorGiftsPage from './vendor/GiftsPage';
+// import VendorGiftsPage from './vendor/GiftsPage';
 import VendorGDCoinsPage from './vendor/GDCoinsPage';
 //user
 import UserHomePage from './user/UserHomePage';
@@ -34,7 +37,7 @@ import UserAboutPage from './user/UserAboutPage';
 import StoreHomePage from './store/HomePage';
 import StoreAboutPage from './store/AboutPage';
 import StoreCollectionPage from './store/CollectionPage';
-import StoreGiftPage from './store/GiftPage';
+// import StoreGiftPage from './store/GiftPage';
 import StoreReviewAndRatingPage from './store/ReviewAndRatingPage';
 //product
 
@@ -60,6 +63,26 @@ const Routes = () => {
                     exact
                     component={AdminDashboardPage}
                 />
+                <AdminRoute
+                    path="/admin/level"
+                    exact
+                    component={AdminLevelPage}
+                />
+                <AdminRoute
+                    path="/admin/commission"
+                    exact
+                    component={AdminCommissionPage}
+                />
+                <AdminRoute
+                    path="/admin/user"
+                    exact
+                    component={AdminUserPage}
+                />
+                <AdminRoute
+                    path="/admin/store"
+                    exact
+                    component={AdminStorePage}
+                />
 
                 <PrivateRoute
                     path="/account/profile"
@@ -81,11 +104,11 @@ const Routes = () => {
                     exact
                     component={AccountFollowingPage}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                     path="/account/giftWallet"
                     exact
                     component={AccountGiftWalletPage}
-                />
+                /> */}
                 <PrivateRoute
                     path="/account/GDCoins"
                     exact
@@ -114,11 +137,6 @@ const Routes = () => {
                     component={VendorProfilePage}
                 />
                 <PrivateRoute
-                    path="/vendor/collections/:storeId"
-                    exact
-                    component={VendorCollectionsPage}
-                />
-                <PrivateRoute
                     path="/vendor/products/:storeId"
                     exact
                     component={VendorProductsPage}
@@ -133,11 +151,11 @@ const Routes = () => {
                     exact
                     component={VendorStaffsPage}
                 />
-                <PrivateRoute
+                {/* <PrivateRoute
                     path="/vendor/gifts/:storeId"
                     exact
                     component={VendorGiftsPage}
-                />
+                /> */}
                 <PrivateRoute
                     path="/vendor/GDCoins/:storeId"
                     exact
@@ -157,11 +175,11 @@ const Routes = () => {
                     exact
                     component={StoreCollectionPage}
                 />
-                <Route
+                {/* <Route
                     path="/store/gift/:storeId"
                     exact
                     component={StoreGiftPage}
-                />
+                /> */}
                 <Route
                     path="/store/review&rating/:storeId"
                     exact

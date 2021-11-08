@@ -19,7 +19,7 @@ const FollowingStoresCollection = (props) => {
         search: '',
         sortBy: 'point',
         order: 'desc',
-        limit: 4,
+        limit: 8,
         page: 1,
     });
 

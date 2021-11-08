@@ -75,6 +75,23 @@ export const listStoresByUser = (userId, token, filter) => {
         .catch((error) => console.log(error));
 };
 
+export const listStoresForAdmin = (userId, token, filter) => {
+    const { search, sortBy, sortMoreBy, order, isActive, limit, page } = filter;
+    return fetch(
+        `${API}/stores/for/admin/${userId}?search=${search}&sortBy=${sortBy}&sortMoreBy=${sortMoreBy}&isActive=${isActive}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+}
+
 //create store
 export const createStore = (userId, token, store) => {
     return fetch(`${API}/store/create/${userId}`, {
@@ -212,6 +229,21 @@ export const cancelStaff = (userId, token, storeId) => {
 //openStore
 export const openStore = (userId, token, value, storeId) => {
     return fetch(`${API}/store/open/${storeId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(value),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+//activeStore
+export const activeStore = (userId, token, value, storeId) => {
+    return fetch(`${API}/store/active/${storeId}/${userId}`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',

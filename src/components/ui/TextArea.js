@@ -1,8 +1,8 @@
-import useRegex from '../../hooks/useRegex';
+import { regexTest, numberTest } from '../../helper/test';
 
 const TextArea = ({
-    onChange = () => {},
-    onValidate = () => {},
+    onChange = () => { },
+    onValidate = () => { },
     value = '',
     label = 'Enter something',
     validator = 'anything',
@@ -10,8 +10,6 @@ const TextArea = ({
     isDisabled = false,
     feedback = 'Please provide a valid value',
 }) => {
-    const [testRegex] = useRegex();
-
     const onHandleChange = (e) => {
         onChange(e.target.value);
     };
@@ -19,7 +17,7 @@ const TextArea = ({
     const onHandleBlur = (e) => {
         const validatorArray = validator.split('|');
         const test = validatorArray
-            .map((v) => testRegex(v, e.target.value))
+            .map((v) => regexTest(v, e.target.value))
             .reduce((prev, curr) => prev || curr);
         onValidate(test);
     };
@@ -29,9 +27,8 @@ const TextArea = ({
             <textarea
                 required
                 disabled={isDisabled}
-                className={`cus-input-group-input form-control ${
-                    isValid ? '' : 'is-invalid'
-                }`}
+                className={`cus-input-group-input form-control ${isValid ? '' : 'is-invalid'
+                    }`}
                 onChange={onHandleChange}
                 onBlur={onHandleBlur}
                 rows="10"

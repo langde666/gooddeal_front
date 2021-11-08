@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { addAddress } from '../../../apis/user';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
-import useRegex from '../../../hooks/useRegex';
+import { regexTest } from '../../../helper/test';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
@@ -28,7 +28,6 @@ const UserAddAddressForm = (props) => {
         isValidCountry: true,
     });
 
-    const [regexTest] = useRegex();
     const [updateDispatch] = useUpdateDispatch();
 
     const handleChange = (name, isValidName, value) => {

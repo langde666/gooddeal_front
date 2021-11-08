@@ -19,9 +19,8 @@ const AccountSideBar = ({ user = {} }) => {
                 <li className="nav-item">
                     <Link
                         to="/account/profile"
-                        className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'profile' ? 'active' : ''
-                        }`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${path == 'profile' ? 'active' : ''
+                            }`}
                     >
                         <i className="fas fa-user-circle me-3"></i>
                         Your profile
@@ -32,9 +31,8 @@ const AccountSideBar = ({ user = {} }) => {
                     <li className="nav-item">
                         <Link
                             to="/account/purchase"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${
-                                path == 'purchase' ? 'active' : ''
-                            }`}
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'purchase' ? 'active' : ''
+                                }`}
                         >
                             <i className="fas fa-shopping-bag me-3"></i>
                             Purchase history
@@ -46,9 +44,8 @@ const AccountSideBar = ({ user = {} }) => {
                     <li className="nav-item">
                         <Link
                             to="/account/addresses"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${
-                                path == 'addresses' ? 'active' : ''
-                            }`}
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'addresses' ? 'active' : ''
+                                }`}
                         >
                             <i className="fas fa-map-marker-alt me-3"></i>
                             Your addresses
@@ -60,9 +57,8 @@ const AccountSideBar = ({ user = {} }) => {
                     <li className="nav-item">
                         <Link
                             to="/account/shopManager"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${
-                                path == 'shopManager' ? 'active' : ''
-                            }`}
+                            className={`nav-link cus-sidebar-item ripple link-dark ${path == 'shopManager' ? 'active' : ''
+                                }`}
                         >
                             <i className="fas fa-store me-3"></i>
                             Shop manager
@@ -73,16 +69,15 @@ const AccountSideBar = ({ user = {} }) => {
                 <li className="nav-item">
                     <Link
                         to="/account/following"
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--pink ripple link-pink ${
-                            path == 'following' ? 'active-pink' : ''
-                        }`}
+                        className={`nav-link cus-sidebar-item cus-sidebar-item--pink ripple link-pink ${path == 'following' ? 'active-pink' : ''
+                            }`}
                     >
                         <i className="fas fa-heart me-3"></i>
                         Following
                     </Link>
                 </li>
 
-                {user.role == 'user' && (
+                {/* {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/giftWallet"
@@ -94,15 +89,14 @@ const AccountSideBar = ({ user = {} }) => {
                             Gift wallet
                         </Link>
                     </li>
-                )}
+                )} */}
 
                 {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/GDCoins"
-                            className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${
-                                path == 'GDCoins' ? 'active-golden' : ''
-                            }`}
+                            className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${path == 'GDCoins' ? 'active-golden' : ''
+                                }`}
                         >
                             <i className="fas fa-coins me-3"></i>
                             GD coins

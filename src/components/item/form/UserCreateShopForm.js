@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { getToken } from '../../../apis/auth';
 import { createStore } from '../../../apis/store';
 import { listActiveCommissions as getlistCommissions } from '../../../apis/commission';
-import useRegex from '../../../hooks/useRegex';
+import { regexTest } from '../../../helper/test';
 import Input from '../../ui/Input';
 import InputFile from '../../ui/InputFile';
 import TextArea from '../../ui/TextArea';
@@ -37,7 +37,6 @@ const CreateShopForm = (props) => {
         isValidCover: true,
     });
 
-    const [regexTest] = useRegex();
     const history = useHistory();
 
     const init = () => {

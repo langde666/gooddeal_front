@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
-import { listStoresByUser } from '../../apis/store';
-import useUpdateDispatch from '../../hooks/useUpdateDispatch';
-import StoreSmallCard from '../card/StoreSmallCard';
-import ManagerRoleLabel from '../label/ManagerRoleLabel';
-import StoreLicenseLabel from '../label/StoreLicenseLabel';
-import StoreStatusLabel from '../label/StoreStatusLabel';
-import OpenCloseStoreButton from '../button/OpenCloseStoreButton';
-import UserCreateShopItem from '../item/UserCreateShopItem';
+import { listStoresForAdmin } from '../../apis/store';
+import { humanReadableDate } from '../../helper/humanReadable';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
+import SortByButton from './sub/SortByButton';
+import StoreSmallCard from '../card/StoreSmallCard';
+import StarRating from '../label/StarRating';
+import StoreStatusLabel from '../label/StoreStatusLabel';
+import ActiveInactiveStoreButton from '../button/ActiveInactiveStoreButton';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
-import SortByButton from './sub/SortByButton';
 
-const UserStoresTable = ({ heading = true }) => {
+const AdminStoresTable = ({ heading = true, isActive = true }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
+    const [run, setRun] = useState('')
 
     const [stores, setStores] = useState([]);
     const [pagination, setPagination] = useState({
@@ -27,21 +23,20 @@ const UserStoresTable = ({ heading = true }) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'rating',
+        sortBy: 'name',
         sortMoreBy: 'point',
-        order: 'desc',
+        isActive,
+        order: '',
         limit: 6,
         page: 1,
     });
 
     const { _id, accessToken } = getToken();
-    const store = useSelector((state) => state.vendor.store);
-    const [updateDispatch] = useUpdateDispatch();
 
     const init = () => {
         setError('');
         setIsLoading(true);
-        listStoresByUser(_id, accessToken, filter)
+        listStoresForAdmin(_id, accessToken, filter)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -66,6 +61,13 @@ const UserStoresTable = ({ heading = true }) => {
         init();
     }, [filter, run]);
 
+    useEffect(() => {
+        setFilter({
+            ...filter,
+            isActive,
+        });
+    }, [isActive]);
+
     const handleChangeKeyword = (keyword) => {
         setFilter({
             ...filter,
@@ -81,12 +83,6 @@ const UserStoresTable = ({ heading = true }) => {
         });
     };
 
-    const onHandleRun = (newStore) => {
-        setRun(!run);
-        if (store && store._id == newStore._id)
-            updateDispatch('vendor', newStore);
-    };
-
     const handleSetSortBy = (order, sortBy) => {
         setFilter({
             ...filter,
@@ -96,8 +92,10 @@ const UserStoresTable = ({ heading = true }) => {
     }
 
     return (
-        <div className="store-manager-table-wrap position-relative">
-            {heading && <h4 className="mb-3">Your shops</h4>}
+        <div className="admin-stores-manager-table-wrap position-relative">
+            {isloading && <Loading />}
+
+            {heading && <h4 className="mb-3">{isActive ? 'Liscensed stores' : 'Unlicensed stores'}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -105,28 +103,25 @@ const UserStoresTable = ({ heading = true }) => {
             <div className="d-flex justify-content-between align-items-end">
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
-                    <div className="ms-2">
-                        <UserCreateShopItem />
-                    </div>
                 </div>
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="store-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="admin-stores-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='rating'
+                                sortBy='point'
                                 onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Shop"
+                                title="Store"
                                 sortBy='name'
                                 onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
                             />
@@ -134,16 +129,8 @@ const UserStoresTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Role"
-                                sortBy='ownerId'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="License"
-                                sortBy='isActive'
+                                title="Rating"
+                                sortBy='rating'
                                 onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
                             />
                         </th>
@@ -152,6 +139,14 @@ const UserStoresTable = ({ heading = true }) => {
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy='isOpen'
+                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Joined"
+                                sortBy='createdAt'
                                 onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
                             />
                         </th>
@@ -166,51 +161,33 @@ const UserStoresTable = ({ heading = true }) => {
                                 {index + 1}
                             </th>
                             <td className="text-start ps-4">
-                                <StoreSmallCard store={store} />
+                                <small>
+                                    <StoreSmallCard store={store} />
+                                </small>
                             </td>
                             <td>
-                                <ManagerRoleLabel
-                                    role={
-                                        _id == store.ownerId._id
-                                            ? 'owner'
-                                            : 'staff'
-                                    }
-                                />
+                                <small>
+                                    <StarRating stars={store.rating} />
+                                </small>
                             </td>
                             <td>
-                                <StoreLicenseLabel isActive={store.isActive} />
+                                <small>
+                                    <StoreStatusLabel isOpen={store.isOpen} />
+                                </small>
                             </td>
                             <td>
-                                <StoreStatusLabel isOpen={store.isOpen} />
+                                {humanReadableDate(store.createdAt)}
                             </td>
                             <td>
                                 <div className="position-relative d-inline-block me-2">
                                     <div className="cus-tooltip d-inline-block text-start">
-                                        <OpenCloseStoreButton
+                                        <ActiveInactiveStoreButton
                                             storeId={store._id}
-                                            isOpen={store.isOpen}
-                                            detail={false}
-                                            onRun={(store) => onHandleRun(store)}
-                                        />
+                                            isActive={store.isActive}
+                                            onRun={() => setRun(!run)} />
                                     </div>
 
-                                    <small className="cus-tooltip-msg">
-                                        {store.isOpen
-                                            ? 'Click to close shop'
-                                            : 'Click to open shop'}
-                                    </small>
-                                </div>
-                                <div className="position-relative d-inline-block">
-                                    <Link
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        to={`/vendor/${store._id}`}
-                                    >
-                                        <i className="fas fa-user-tie"></i>
-                                    </Link>
-                                    <small className="cus-tooltip-msg">
-                                        Go to dashboard
-                                    </small>
+                                    <small className="cus-tooltip-msg">{isActive ? 'Ban this store' : 'Liscense this store'}</small>
                                 </div>
                             </td>
                         </tr>
@@ -228,4 +205,4 @@ const UserStoresTable = ({ heading = true }) => {
     );
 };
 
-export default UserStoresTable;
+export default AdminStoresTable;

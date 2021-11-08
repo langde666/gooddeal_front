@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { signin, setToken } from '../../../apis/auth';
-import useRegex from '../../../hooks/useRegex';
+import { regexTest } from '../../../helper/test';
 import SocialForm from './SocialForm';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 
-const SigninForm = ({ onSwap = () => {} }) => {
+const SigninForm = ({ onSwap = () => { } }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -18,10 +18,8 @@ const SigninForm = ({ onSwap = () => {} }) => {
         isValidPassword: true,
     });
 
-    const [regexTest] = useRegex();
     const history = useHistory();
 
-    //handle funcs
     const handleChange = (name, isValidName, value) => {
         setError('');
         setAccount({

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import useToggle from '../../hooks/useToggle';
-import useRegex from '../../hooks/useRegex';
+import { regexTest, numberTest } from '../../helper/test';
 
 const Input = ({
-    onChange = () => {},
-    onValidate = () => {},
+    onChange = () => { },
+    onValidate = () => { },
     type = 'text',
     value = '',
     label = 'Enter something',
@@ -16,7 +16,6 @@ const Input = ({
 }) => {
     const [tempValue, setTempValue] = useState('');
     const [showPasswordFlag, togglePasswordFlag] = useToggle(true);
-    const [testRegex] = useRegex();
 
     const onHandleChange = (e) => {
         if (type == 'file') {
@@ -30,10 +29,18 @@ const Input = ({
     const onHandleBlur = (e) => {
         if (type == 'file') {
             return;
-        } else {
+        }
+        else if (type == 'number') {
             const validatorArray = validator.split('|');
             const test = validatorArray
-                .map((v) => testRegex(v, e.target.value))
+                .map((v) => numberTest(v, e.target.value))
+                .reduce((prev, curr) => prev || curr);
+            onValidate(test);
+        }
+        else {
+            const validatorArray = validator.split('|');
+            const test = validatorArray
+                .map((v) => regexTest(v, e.target.value))
                 .reduce((prev, curr) => prev || curr);
             onValidate(test);
         }
@@ -52,13 +59,11 @@ const Input = ({
                 required
                 disabled={isDisabled}
                 accept={accept}
-                className={`cus-input-group-input form-control ${
-                    isValid ? '' : 'is-invalid'
-                }
-                    ${
-                        type == 'password'
-                            ? 'cus-input-group-input--password'
-                            : ''
+                className={`cus-input-group-input form-control ${isValid ? '' : 'is-invalid'
+                    }
+                    ${type == 'password'
+                        ? 'cus-input-group-input--password'
+                        : ''
                     } 
                     ${type == 'file' ? 'cus-input-group-input--file' : ''}`}
                 onChange={onHandleChange}
@@ -66,9 +71,8 @@ const Input = ({
                 value={type == 'file' ? tempValue : value}
             />
             <label
-                className={`cus-input-group-label ${
-                    type == 'file' ? 'cus-input-group-label--file' : ''
-                }`}
+                className={`cus-input-group-label ${type == 'file' ? 'cus-input-group-label--file' : ''
+                    }`}
             >
                 {label}
             </label>
@@ -76,9 +80,8 @@ const Input = ({
             <small className="invalid-feedback">{feedback}</small>
             {type == 'password' && (
                 <i
-                    className={`show-hide-password-icon fas ${
-                        showPasswordFlag ? 'fa-eye' : ' fa-eye-slash'
-                    }`}
+                    className={`show-hide-password-icon fas ${showPasswordFlag ? 'fa-eye' : ' fa-eye-slash'
+                        }`}
                     onClick={togglePasswordFlag}
                 ></i>
             )}

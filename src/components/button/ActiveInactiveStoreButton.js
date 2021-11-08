@@ -1,37 +1,36 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
-import { openStore } from '../../apis/store';
+import { activeStore } from '../../apis/store';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const OpenCloseStoreButton = ({
+const ActiveInactiveStoreButton = ({
     storeId = '',
-    isOpen = true,
-    detail = true,
+    isActive = true,
     className = '',
     onRun,
 }) => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
-    const [openFlag, setOpenFlag] = useState(isOpen);
+    const [activeFlag, setActiveFlag] = useState(isActive);
 
     const { _id, accessToken } = getToken();
 
     useEffect(() => {
-        setOpenFlag(isOpen);
-    }, [isOpen, storeId]);
+        setActiveFlag(isActive);
+    }, [isActive, storeId]);
 
-    const handleOpenStore = () => {
+    const handleActiveStore = () => {
         setIsConfirming(true);
     };
 
     const onSubmit = () => {
         setError('');
         setIsLoading(true);
-        const value = { isOpen: !openFlag };
-        openStore(_id, accessToken, value, storeId)
+        const value = { isActive: !activeFlag };
+        activeStore(_id, accessToken, value, storeId)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -41,8 +40,8 @@ const OpenCloseStoreButton = ({
                     }, 3000);
                 } else {
                     setIsLoading(false);
-                    setOpenFlag(!openFlag);
-                    if (onRun) onRun(data.store);
+                    setActiveFlag(!activeFlag);
+                    if (onRun) onRun();
                 }
             })
             .catch((error) => {
@@ -55,38 +54,32 @@ const OpenCloseStoreButton = ({
     };
 
     return (
-        <div className="open-close-store-button-wrap position-relative">
+        <div className="active-inactive-store-button-wrap position-relative">
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title={openFlag ? "Close this shop" : "Open this shop"}
-                    color={openFlag ? "danger" : "primary"}
+                    title={!activeFlag ? "Liscense this shop" : "Ban this shop"}
+                    color={!activeFlag ? "primary" : "danger"}
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             <button
                 type="button"
-                className={`btn ${openFlag ? 'btn-outline-primary' : 'btn-outline-danger'
+                className={`btn ${!activeFlag ? 'btn-outline-primary' : 'btn-outline-danger'
                     } ripple ${className}`}
-                onClick={handleOpenStore}
+                onClick={handleActiveStore}
             >
 
-                {openFlag ? (
-                    <span>
-                        <i className="fas fa-door-open"></i>
-                        {detail && <span className="ms-2">open</span>}
-                    </span>
+                {!activeFlag ? (
+                    <i className="far fa-check-circle"></i>
                 ) : (
-                    <span>
-                        <i className="fas fa-door-closed"></i>
-                        {detail && <span className="ms-2">closed</span>}
-                    </span>
+                    <i className="fas fa-ban"></i>
                 )}
             </button>
         </div>
     );
 };
 
-export default OpenCloseStoreButton;
+export default ActiveInactiveStoreButton;

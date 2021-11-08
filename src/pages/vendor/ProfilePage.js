@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import VendorLayout from '../../components/layout/VendorLayout';
 import Cover from '../../components/image/Cover';
 import Avatar from '../../components/image/Avatar';
 import Carousel from '../../components/image/Carousel';
+import OpenCloseStoreButton from '../../components/button/OpenCloseStoreButton';
 import StoreAddFeaturedImageItem from '../../components/item/StoreAddFeaturedImageItem';
 import StoreStatusLabel from '../../components/label/StoreStatusLabel';
 import StoreLevelInfo from '../../components/info/StoreLevelInfo';
@@ -13,6 +15,11 @@ import StoreProfileInfo from '../../components/info/StoreProfileInfo';
 const ProfilePage = (props) => {
     const user = useSelector((state) => state.account.user);
     const store = useSelector((state) => state.vendor.store);
+    const [updateDispatch] = useUpdateDispatch();
+
+    const onHandleRun = (newStore) => {
+        updateDispatch('vendor', newStore);
+    };
     return (
         <VendorLayout user={user} store={store}>
             <div className="vendor-profile-page">
@@ -58,25 +65,43 @@ const ProfilePage = (props) => {
                     />
                 </div>
 
-                <div className="d-flex justify-content-end mt-2">
-                    <div className="me-1">
-                        <StoreAddFeaturedImageItem
-                            count={
-                                store.featured_images &&
-                                store.featured_images.length
-                            }
-                            storeId={store._id}
-                        />
+                <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div className="position-relative">
+                        <div className="cus-tooltip">
+                            <OpenCloseStoreButton
+                                storeId={store._id}
+                                isOpen={store.isOpen}
+                                className="btn-sm px-4"
+                                onRun={(store) => onHandleRun(store)}
+                            />
+                        </div>
+                        <small className="cus-tooltip-msg">
+                            {store.isOpen
+                                ? 'Click to close shop'
+                                : 'Click to open shop'}
+                        </small>
                     </div>
 
-                    <Link
-                        className="btn btn-outline-primary ripple btn-sm"
-                        to={`/store/${store._id}`}
-                        target="_blank"
-                    >
-                        Visit Your Shop{' '}
-                        <i className="fas fa-external-link-alt ms-1"></i>
-                    </Link>
+                    <div className="d-flex justify-content-end">
+                        <div className="me-1">
+                            <StoreAddFeaturedImageItem
+                                count={
+                                    store.featured_images &&
+                                    store.featured_images.length
+                                }
+                                storeId={store._id}
+                            />
+                        </div>
+
+                        <Link
+                            className="btn btn-outline-primary ripple btn-sm"
+                            to={`/store/${store._id}`}
+                            target="_blank"
+                        >
+                            Visit Your Shop{' '}
+                            <i className="fas fa-external-link-alt ms-1"></i>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="mt-4 px-2">
