@@ -16,7 +16,9 @@ const StaffsPage = (props) => {
                     <div className="position-relative d-inline-block me-2">
                         <button
                             type="button"
-                            className={`btn ${flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                flag ? 'btn-primary' : 'btn-outline-primary'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
                             <i className="fas fa-user-friends"></i>
@@ -28,7 +30,9 @@ const StaffsPage = (props) => {
                     <div className="position-relative d-inline-block">
                         <button
                             type="button"
-                            className={`btn ${!flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                !flag ? 'btn-primary' : 'btn-outline-primary'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
                             <i className="fas fa-user-shield"></i>
@@ -38,11 +42,7 @@ const StaffsPage = (props) => {
                     </div>
                 </div>
 
-                {flag ?
-                    <StoreStaffsTable />
-                    :
-                    <StoreOwnerTable />
-                }
+                {flag ? <StoreStaffsTable /> : <StoreOwnerTable />}
             </div>
         </VendorLayout>
     );

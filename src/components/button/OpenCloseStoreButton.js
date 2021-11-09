@@ -60,19 +60,19 @@ const OpenCloseStoreButton = ({
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title={openFlag ? "Close this shop" : "Open this shop"}
-                    color={openFlag ? "danger" : "primary"}
+                    title={openFlag ? 'Close this shop' : 'Open this shop'}
+                    color={openFlag ? 'danger' : 'primary'}
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             <button
                 type="button"
-                className={`btn ${openFlag ? 'btn-outline-primary' : 'btn-outline-danger'
-                    } ripple ${className}`}
+                className={`btn ${
+                    openFlag ? 'btn-outline-primary' : 'btn-outline-danger'
+                } ripple ${className}`}
                 onClick={handleOpenStore}
             >
-
                 {openFlag ? (
                     <span>
                         <i className="fas fa-door-open"></i>

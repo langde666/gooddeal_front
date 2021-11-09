@@ -2,8 +2,8 @@ const ConfirmDialog = ({
     title = 'Confirm the action',
     message = 'Are you sure about that?',
     color = 'primary',
-    onSubmit = () => {},
-    onClose = () => {},
+    onSubmit = () => { },
+    onClose = () => { },
 }) => {
     const onConfirm = () => {
         onSubmit();
@@ -11,15 +11,22 @@ const ConfirmDialog = ({
     };
 
     return (
-        <div className="cus-dialog-wrap">
+        <div className="confirm-dialog-wrap">
             <div
-                className="cus-dialog cus-modal modal fade show"
+                className="modal fade show"
                 tabIndex="-1"
                 aria-modal="true"
                 role="dialog"
-                style={{ display: 'block', paddingLeft: '0px' }}
+                style={{
+                    display: 'block',
+                    paddingLeft: '0px',
+                    animation: 'show 0.6s ease',
+                }}
             >
-                <div className="cus-modal-dialog modal-dialog">
+                <div
+                    className="modal-dialog"
+                    style={{ zIndex: '5', }}
+                >
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className={`modal-title text-${color}`}>
@@ -31,8 +38,8 @@ const ConfirmDialog = ({
                                 onClick={onClose}
                             ></button>
                         </div>
-                        <div className="modal-body">{message}</div>
-                        <div className="modal-footer">
+                        <div className="modal-body pt-0">{message}</div>
+                        <div className="modal-footer border-top-0">
                             <button
                                 type="button"
                                 className="btn btn-outline-danger ripple"
@@ -52,7 +59,20 @@ const ConfirmDialog = ({
                 </div>
             </div>
 
-            <div className="cus-modal-backdrop fade"></div>
+            <div
+                className="fade"
+                style={{
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                    zIndex: '4',
+                    width: '100vw',
+                    height: '100vh',
+                    animation: 'fade 0.6s ease',
+                    backgroundColor: '#000',
+                    opacity: '0.5',
+                }}
+            ></div>
         </div>
     );
 };

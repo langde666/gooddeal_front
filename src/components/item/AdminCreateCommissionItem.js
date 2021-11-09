@@ -1,7 +1,7 @@
 import Modal from '../ui/Modal';
 import AdminCreateCommissionForm from './form/AdminCreateCommissionForm';
 
-const AdminCreateCommissionItem = ({ onRun = () => { } }) => (
+const AdminCreateCommissionItem = ({ onRun = () => {} }) => (
     <div className="admin-create-commission-item d-inline-block">
         <button
             type="button"

@@ -1,7 +1,8 @@
 const API = process.env.REACT_APP_API_URL;
 
-export const listActiveCommissions = () => {
-    return fetch(`${API}/active/commissions`, {
+export const listActiveCategories = (filter) => {
+    const { search, sortBy, order, limit, page, categoryId } = filter;
+    return fetch(`${API}/active/categories?search=${search}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -12,10 +13,10 @@ export const listActiveCommissions = () => {
         .catch((error) => console.log(error));
 };
 
-export const listCommissions = (userId, token, filter) => {
-    const { search, sortBy, order, limit, page } = filter;
+export const listCategories = (userId, token, filter) => {
+    const { search, sortBy, order, limit, page, categoryId } = filter;
     return fetch(
-        `${API}/commissions/${userId}?search=${search}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/categories/${userId}?search=${search}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {
@@ -29,23 +30,22 @@ export const listCommissions = (userId, token, filter) => {
         .catch((error) => console.log(error));
 };
 
-export const createCommission = (userId, token, commission) => {
-    return fetch(`${API}/commission/create/${userId}`, {
+export const createCategory = (userId, token, category) => {
+    return fetch(`${API}/category/create/${userId}`, {
         method: 'POST',
         mode: 'cors',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(commission),
+        body: category,
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
 
-export const updateCommission = (userId, token, commissionId, commission) => {
-    return fetch(`${API}/commission/${commissionId}/${userId}`, {
+export const updateCategory = (userId, token, categoryId, category) => {
+    return fetch(`${API}/category/${categoryId}/${userId}`, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -53,14 +53,14 @@ export const updateCommission = (userId, token, commissionId, commission) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(commission),
+        body: JSON.stringify(category),
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
 
-export const removeCommission = (userId, token, commissionId) => {
-    return fetch(`${API}/commission/${commissionId}/${userId}`, {
+export const removeCategory = (userId, token, categoryId) => {
+    return fetch(`${API}/category/${categoryId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',
         headers: {
@@ -73,8 +73,8 @@ export const removeCommission = (userId, token, commissionId) => {
         .catch((error) => console.log(error));
 };
 
-export const restoreCommission = (userId, token, commissionId) => {
-    return fetch(`${API}/commission/restore/${commissionId}/${userId}`, {
+export const restoreCategory = (userId, token, categoryId) => {
+    return fetch(`${API}/category/restore/${categoryId}/${userId}`, {
         method: 'GET',
         mode: 'cors',
         headers: {

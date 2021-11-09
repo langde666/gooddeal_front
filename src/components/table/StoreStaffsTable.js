@@ -61,7 +61,6 @@ const StoreStaffsTable = ({ heading = true }) => {
             )
             .sort(compareFunc(filter.sortBy, filter.order));
 
-
         const limit = filter.limit;
         const size = filterList.length;
         const pageCurrent = filter.page;
@@ -101,7 +100,7 @@ const StoreStaffsTable = ({ heading = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     const handleRemoveStaff = (staff) => {
         setRemovedStaff(staff);
@@ -186,40 +185,50 @@ const StoreStaffsTable = ({ heading = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='_id'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="_id"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Staff"
-                                sortBy='name'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="name"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Id card"
-                                sortBy='id_card'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="id_card"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Email"
-                                sortBy='email'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="email"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Phone"
-                                sortBy='phone'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="phone"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         {ownerId && userId == ownerId._id && (
@@ -274,11 +283,16 @@ const StoreStaffsTable = ({ heading = true }) => {
 
 export default StoreStaffsTable;
 
-
 const compareFunc = (sortBy, order) => {
     return (a, b) => {
-        let valueA = sortBy !== 'name' ? a[sortBy] : (a.firstname + a.lastname).toLowerCase();
-        let valueB = sortBy !== 'name' ? b[sortBy] : (b.firstname + b.lastname).toLowerCase();
+        let valueA =
+            sortBy !== 'name'
+                ? a[sortBy]
+                : (a.firstname + a.lastname).toLowerCase();
+        let valueB =
+            sortBy !== 'name'
+                ? b[sortBy]
+                : (b.firstname + b.lastname).toLowerCase();
 
         if (typeof valueA === 'undefined') valueA = '';
         if (typeof valueB === 'undefined') valueB = '';
@@ -287,10 +301,8 @@ const compareFunc = (sortBy, order) => {
             if (valueA < valueB) return -1;
             else if (valueA > valueB) return 1;
             else return 0;
-        else
-            if (valueA < valueB) return 1;
-            else if (valueA > valueB) return -1;
-            else return 0;
-
-    }
-}
+        else if (valueA < valueB) return 1;
+        else if (valueA > valueB) return -1;
+        else return 0;
+    };
+};

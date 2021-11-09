@@ -34,13 +34,13 @@ const AccountInit = ({ user, actions }) => {
                     try {
                         const data = await getUserLevel(_id);
                         newUser.level = data.error ? {} : data.level;
-                    } catch { }
+                    } catch {}
 
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newUser.numberOfSucessfulOrders = 0;
                         newUser.numberOfFailedOrders = 0;
-                    } catch { }
+                    } catch {}
 
                     actions(newUser);
                     setIsLoading(false);

@@ -15,7 +15,7 @@ import Error from '../ui/Error';
 const AdminStoresTable = ({ heading = true, isActive = true }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState('')
+    const [run, setRun] = useState('');
 
     const [stores, setStores] = useState([]);
     const [pagination, setPagination] = useState({
@@ -89,13 +89,17 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     return (
         <div className="admin-stores-manager-table-wrap position-relative">
             {isloading && <Loading />}
 
-            {heading && <h4 className="mb-3">{isActive ? 'Liscensed stores' : 'Unlicensed stores'}</h4>}
+            {heading && (
+                <h4 className="mb-3">
+                    {isActive ? 'Liscensed stores' : 'Unlicensed stores'}
+                </h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -114,40 +118,50 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='point'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="point"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Store"
-                                sortBy='name'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="name"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Rating"
-                                sortBy='rating'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="rating"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Status"
-                                sortBy='isOpen'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="isOpen"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Joined"
-                                sortBy='createdAt'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="createdAt"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
 
@@ -157,9 +171,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                 <tbody>
                     {stores.map((store, index) => (
                         <tr key={index}>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
+                            <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
                                 <small>
                                     <StoreSmallCard store={store} />
@@ -175,19 +187,22 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                                     <StoreStatusLabel isOpen={store.isOpen} />
                                 </small>
                             </td>
-                            <td>
-                                {humanReadableDate(store.createdAt)}
-                            </td>
+                            <td>{humanReadableDate(store.createdAt)}</td>
                             <td>
                                 <div className="position-relative d-inline-block me-2">
                                     <div className="cus-tooltip d-inline-block text-start">
                                         <ActiveInactiveStoreButton
                                             storeId={store._id}
                                             isActive={store.isActive}
-                                            onRun={() => setRun(!run)} />
+                                            onRun={() => setRun(!run)}
+                                        />
                                     </div>
 
-                                    <small className="cus-tooltip-msg">{isActive ? 'Ban this store' : 'Liscense this store'}</small>
+                                    <small className="cus-tooltip-msg">
+                                        {isActive
+                                            ? 'Ban this store'
+                                            : 'Liscense this store'}
+                                    </small>
                                 </div>
                             </td>
                         </tr>

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
-import { listUserLevels, removeUserLevel, restoreUserLevel } from '../../apis/level';
+import {
+    listUserLevels,
+    removeUserLevel,
+    restoreUserLevel,
+} from '../../apis/level';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
@@ -32,7 +36,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: '_id',
+        sortBy: 'name',
         order: 'asc',
         limit: 6,
         page: 1,
@@ -89,21 +93,21 @@ const AdminUserLevelsTable = ({ heading = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     const handleEditLevel = (level) => {
         setEditedLevel(level);
-    }
+    };
 
     const handleRemoveLevel = (level) => {
         setRemovedLevel(level);
         setIsConfirming(true);
-    }
+    };
 
     const handleRestoreLevel = (level) => {
         setRestoredLevel(level);
         setIsConfirming1(true);
-    }
+    };
 
     const onSubmitRemove = () => {
         setError('');
@@ -116,7 +120,6 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-
                 } else {
                     setSuccess(data.success);
                     setTimeout(() => {
@@ -133,7 +136,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                 }, 3000);
                 setIsLoading(false);
             });
-    }
+    };
 
     const onSubmitRestore = () => {
         setError('');
@@ -146,7 +149,6 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-
                 } else {
                     setSuccess(data.success);
                     setTimeout(() => {
@@ -163,7 +165,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                 }, 3000);
                 setIsLoading(false);
             });
-    }
+    };
 
     return (
         <div className="admin-user-levels-manager-table-wrap position-relative">
@@ -171,7 +173,12 @@ const AdminUserLevelsTable = ({ heading = true }) => {
             {isConfirming && (
                 <ConfirmDialog
                     title="Remove this level"
-                    message={<span>Are you sure you want to remove <UserLevelLabel level={removedLevel} /></span>}
+                    message={
+                        <span>
+                            Are you sure you want to remove{' '}
+                            <UserLevelLabel level={removedLevel} />
+                        </span>
+                    }
                     color="danger"
                     onSubmit={onSubmitRemove}
                     onClose={() => setIsConfirming(false)}
@@ -180,7 +187,12 @@ const AdminUserLevelsTable = ({ heading = true }) => {
             {isConfirming1 && (
                 <ConfirmDialog
                     title="Restore this level"
-                    message={<span>Are you sure you want to restore <UserLevelLabel level={restoredLevel} /></span>}
+                    message={
+                        <span>
+                            Are you sure you want to restore{' '}
+                            <UserLevelLabel level={restoredLevel} />
+                        </span>
+                    }
                     onSubmit={onSubmitRestore}
                     onClose={() => setIsConfirming1(false)}
                 />
@@ -209,48 +221,60 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='_id'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="_id"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="User level"
-                                sortBy='name'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="name"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Floor point"
-                                sortBy='minPoint'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="minPoint"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Discount"
-                                sortBy='discount'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="discount"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Color"
-                                sortBy='color'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="color"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Status"
-                                sortBy='isDeleted'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="isDeleted"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
 
@@ -260,24 +284,18 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                 <tbody>
                     {levels.map((level, index) => (
                         <tr key={index}>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
+                            <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
                                 <UserLevelLabel level={level} />
                             </td>
+                            <td>{level.minPoint}</td>
                             <td>
-                                {level.minPoint}
+                                {level.discount &&
+                                    level.discount.$numberDecimal}
+                                %
                             </td>
-                            <td>
-                                {level.discount && level.discount.$numberDecimal}%
-                            </td>
-                            <td>
-                                {level.color}
-                            </td>
-                            <td>
-                                {level.isDeleted && <DeletedLabel />}
-                            </td>
+                            <td>{level.color}</td>
+                            <td>{level.isDeleted && <DeletedLabel />}</td>
                             <td className="text-center">
                                 <div className="position-relative d-inline-block me-2">
                                     <button
@@ -285,11 +303,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                                         className="btn btn-primary ripple cus-tooltip"
                                         data-bs-toggle="modal"
                                         data-bs-target="#edit-level-form"
-                                        onClick={() =>
-                                            handleEditLevel(
-                                                level,
-                                            )
-                                        }
+                                        onClick={() => handleEditLevel(level)}
                                     >
                                         <i className="fas fa-pen"></i>
                                     </button>
@@ -303,12 +317,14 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() => handleRemoveLevel(level)}
+                                            onClick={() =>
+                                                handleRemoveLevel(level)
+                                            }
                                         >
                                             <i className="fas fa-trash-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Remove address
+                                            Remove level
                                         </small>
                                     </div>
                                 ) : (
@@ -316,12 +332,14 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() => handleRestoreLevel(level)}
+                                            onClick={() =>
+                                                handleRestoreLevel(level)
+                                            }
                                         >
                                             <i className="fas fa-trash-restore-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Restore address
+                                            Restore level
                                         </small>
                                     </div>
                                 )}
@@ -331,11 +349,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                 </tbody>
             </table>
 
-            <Modal
-                id="edit-level-form"
-                hasCloseBtn={false}
-                title="Edit Level"
-            >
+            <Modal id="edit-level-form" hasCloseBtn={false} title="Edit Level">
                 <AdminEditUserLevelForm
                     oldLevel={editedLevel}
                     onRun={() => setRun(!run)}

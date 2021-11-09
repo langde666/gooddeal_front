@@ -59,19 +59,19 @@ const ActiveInactiveStoreButton = ({
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title={!activeFlag ? "Liscense this shop" : "Ban this shop"}
-                    color={!activeFlag ? "primary" : "danger"}
+                    title={!activeFlag ? 'Liscense this shop' : 'Ban this shop'}
+                    color={!activeFlag ? 'primary' : 'danger'}
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             <button
                 type="button"
-                className={`btn ${!activeFlag ? 'btn-outline-primary' : 'btn-outline-danger'
-                    } ripple ${className}`}
+                className={`btn ${
+                    !activeFlag ? 'btn-outline-primary' : 'btn-outline-danger'
+                } ripple ${className}`}
                 onClick={handleActiveStore}
             >
-
                 {!activeFlag ? (
                     <i className="far fa-check-circle"></i>
                 ) : (

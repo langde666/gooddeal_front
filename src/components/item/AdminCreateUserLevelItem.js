@@ -1,7 +1,7 @@
 import Modal from '../ui/Modal';
 import AdminCreateUserLevelForm from './form/AdminCreateUserLevelForm';
 
-const AdminCreateUserLevelItem = ({ onRun = () => { } }) => (
+const AdminCreateUserLevelItem = ({ onRun = () => {} }) => (
     <div className="admin-create-level-item d-inline-block">
         <button
             type="button"

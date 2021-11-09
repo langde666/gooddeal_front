@@ -13,7 +13,7 @@ export const regexTest = (name, value) => {
     };
 
     return regexes[name].test(value);
-}
+};
 
 export const numberTest = (name, value) => {
     const numberValidator = {
@@ -21,7 +21,7 @@ export const numberTest = (name, value) => {
         negative: value !== '' && value < 0,
         zero: value !== '' && value == 0,
         zeroTo100: value !== '' && value >= 0 && value <= 100,
-    }
+    };
 
     return numberValidator[name];
-}
+};

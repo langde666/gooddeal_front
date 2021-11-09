@@ -49,7 +49,7 @@ export const listUserForAdmin = (userId, token, filter) => {
     )
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 // profile
 export const getUserProfile = async (userId, token) => {

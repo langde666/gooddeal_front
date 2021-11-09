@@ -77,7 +77,7 @@ const AdminUsersTable = ({ heading = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     return (
         <div className="admin-users-manager-table-wrap position-relative">
@@ -102,48 +102,60 @@ const AdminUsersTable = ({ heading = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='point'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="point"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="User"
-                                sortBy='firstname'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="firstname"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Id card"
-                                sortBy='id_card'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="id_card"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Email"
-                                sortBy='email'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="email"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Phone"
-                                sortBy='phone'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="phone"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Joined"
-                                sortBy='createdAt'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="createdAt"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
 
@@ -153,9 +165,7 @@ const AdminUsersTable = ({ heading = true }) => {
                 <tbody>
                     {users.map((user, index) => (
                         <tr key={index}>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
+                            <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
                                 <UserSmallCard user={user} />
                             </td>

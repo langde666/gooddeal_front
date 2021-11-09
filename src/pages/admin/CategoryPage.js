@@ -1,16 +1,16 @@
 import { useSelector } from 'react-redux';
 import AdminLayout from '../../components/layout/AdminLayout';
-import AdminCommissionsTable from '../../components/table/AdminCommissionsTable';
+import AdminCategoriesTable from '../../components/table/AdminCategoriesTable';
 
-const CommissionPage = (props) => {
+const CategoryPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-commissions-manager-page">
-                <AdminCommissionsTable />
+            <div className="admin-categories-manager-page">
+                <AdminCategoriesTable />
             </div>
         </AdminLayout>
     );
 };
 
-export default CommissionPage;
+export default CategoryPage;

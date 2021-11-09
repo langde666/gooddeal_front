@@ -101,9 +101,7 @@ const UserAddressesTable = ({ heading = true }) => {
             <table className="addresses-table table align-middle table-hover mt-2 text-center">
                 <thead>
                     <tr>
-                        <th scope="col">
-                            #
-                        </th>
+                        <th scope="col">#</th>
                         <th scope="col">Address</th>
                         <th scope="col"></th>
                     </tr>
@@ -112,9 +110,7 @@ const UserAddressesTable = ({ heading = true }) => {
                     {addresses &&
                         addresses.map((address, index) => (
                             <tr key={index}>
-                                <th scope="row">
-                                    {index + 1}
-                                </th>
+                                <th scope="row">{index + 1}</th>
                                 <td className="text-start ps-4">{address}</td>
                                 <td>
                                     <div className="position-relative d-inline-block me-2">

@@ -8,7 +8,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
+const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -52,19 +52,17 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
             setLevel({
                 ...level,
                 isValidName: regexTest('name', name),
-                isValidMinPoint: numberTest('positive', minPoint) || numberTest('zero', minPoint),
+                isValidMinPoint:
+                    numberTest('positive', minPoint) ||
+                    numberTest('zero', minPoint),
                 isValidDiscount: numberTest('zeroTo100', discount),
                 isValidColor: regexTest('anything', color),
             });
             return;
         }
 
-        const {
-            isValidName,
-            isValidMinPoint,
-            isValidDiscount,
-            isValidColor,
-        } = level;
+        const { isValidName, isValidMinPoint, isValidDiscount, isValidColor } =
+            level;
         if (
             !isValidName ||
             !isValidMinPoint ||
@@ -121,14 +119,17 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
                 />
             )}
 
-            <form className="edit-store-level-form row mb-2" onSubmit={handleSubmit}>
+            <form
+                className="edit-store-level-form row mb-2"
+                onSubmit={handleSubmit}
+            >
                 <div className="col-12">
                     <Input
                         type="text"
                         label="Level name"
                         value={level.name}
                         isValid={level.isValidName}
-                        feedback='Please provide a valid level name.'
+                        feedback="Please provide a valid level name."
                         validator="level"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
@@ -145,7 +146,7 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
                         label="Floor point"
                         value={level.minPoint}
                         isValid={level.isValidMinPoint}
-                        feedback='Please provide a valid floor point (>=0).'
+                        feedback="Please provide a valid floor point (>=0)."
                         validator="positive|zero"
                         onChange={(value) =>
                             handleChange('minPoint', 'isValidMinPoint', value)
@@ -162,7 +163,7 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
                         label="Discount (%)"
                         value={level.discount}
                         isValid={level.isValidDiscount}
-                        feedback='Please provide a valid floor point (0% - 100%).'
+                        feedback="Please provide a valid floor point (0% - 100%)."
                         validator="zeroTo100"
                         onChange={(value) =>
                             handleChange('discount', 'isValidDiscount', value)
@@ -179,7 +180,7 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => { } }) => {
                         label="Color"
                         value={level.color}
                         isValid={level.isValidColor}
-                        feedback='Please provide a valid color.'
+                        feedback="Please provide a valid color."
                         validator="anything"
                         onChange={(value) =>
                             handleChange('color', 'isValidColor', value)

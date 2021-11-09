@@ -19,7 +19,7 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                                     <ManagerRoleLabel
                                         role={
                                             store.ownerId &&
-                                                user._id == store.ownerId._id
+                                            user._id == store.ownerId._id
                                                 ? 'owner'
                                                 : 'staff'
                                         }
@@ -56,8 +56,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/${store._id}`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == store._id ? 'active' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path == store._id ? 'active' : ''
+                        }`}
                     >
                         <i className="fas fa-chart-pie me-3"></i>
                         Dashboard
@@ -67,8 +68,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/profile/${store._id}`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == 'profile' ? 'active' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path == 'profile' ? 'active' : ''
+                        }`}
                     >
                         <i className="fas fa-store me-3"></i>
                         Shop profile
@@ -78,8 +80,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/products/${store._id}`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == 'products' ? 'active' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path == 'products' ? 'active' : ''
+                        }`}
                     >
                         <i className="fas fa-box me-3"></i>
                         Product
@@ -89,8 +92,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/staffs/${store._id}`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == 'staffs' ? 'active' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path == 'staffs' ? 'active' : ''
+                        }`}
                     >
                         <i className="fas fa-user-friends me-3"></i>
                         Staff
@@ -100,8 +104,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/orders/${store._id}`}
-                        className={`nav-link cus-sidebar-item ripple cus-sidebar-item--pink link-pink ${path == 'orders' ? 'active-pink' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item ripple cus-sidebar-item--pink link-pink ${
+                            path == 'orders' ? 'active-pink' : ''
+                        }`}
                     >
                         <i className="fas fa-clipboard me-3"></i>
                         Order
@@ -122,8 +127,9 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                 <li className="nav-item">
                     <Link
                         to={`/vendor/GDCoins/${store._id}`}
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${path == 'GDCoins' ? 'active-golden' : ''
-                            }`}
+                        className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${
+                            path == 'GDCoins' ? 'active-golden' : ''
+                        }`}
                     >
                         <i className="fas fa-coins me-3"></i>
                         GD coin

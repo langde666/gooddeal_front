@@ -7,7 +7,7 @@ import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 
-const SigninForm = ({ onSwap = () => { } }) => {
+const SigninForm = ({ onSwap = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 

@@ -11,12 +11,7 @@ import DropDownMenu from '../../ui/DropDownMenu';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import ConfirmDialog from '../../ui/ConfirmDialog';
-
-const commissionIcons = [
-    <i className="fas fa-cash-register"></i>,
-    <i className="fas fa-building"></i>,
-    <i className="far fa-building"></i>,
-];
+import Logo from '../../layout/menu/Logo';
 
 const CreateShopForm = (props) => {
     const [isloading, setIsLoading] = useState(false);
@@ -166,42 +161,13 @@ const CreateShopForm = (props) => {
                 />
             )}
 
-            <form className="create-shop-form row mb-2" onSubmit={handleSubmit}>
-                <div className="col-12">
-                    <InputFile
-                        label="Shop avatar"
-                        size="avatar"
-                        value={shop.avatar}
-                        isValid={shop.isValidAvatar}
-                        feedback="Please provide a valid shop avatar."
-                        accept="image/jpg, image/jpeg, image/png, image/gif"
-                        onChange={(value) =>
-                            handleChange('avatar', 'isValidAvatar', value)
-                        }
-                        onValidate={(flag) =>
-                            handleValidate('isValidAvatar', flag)
-                        }
-                    />
+            <form className="create-shop-form border border-primary rounded-3 row mb-2" onSubmit={handleSubmit}>
+                <div className="col-12 bg-primary p-3">
+                    <Logo />
+                    <p className="text-white ms-2 fw-light">Creating shop is easy.</p>
                 </div>
 
-                <div className="col-12">
-                    <InputFile
-                        label="Shop cover"
-                        size="cover"
-                        value={shop.cover}
-                        isValid={shop.isValidCover}
-                        feedback="Please provide a valid shop cover."
-                        accept="image/jpg, image/jpeg, image/png, image/gif"
-                        onChange={(value) =>
-                            handleChange('cover', 'isValidCover', value)
-                        }
-                        onValidate={(flag) =>
-                            handleValidate('isValidCover', flag)
-                        }
-                    />
-                </div>
-
-                <div className="col-12">
+                <div className="col-12 px-4 mt-2">
                     <Input
                         type="text"
                         label="Shop name"
@@ -218,7 +184,7 @@ const CreateShopForm = (props) => {
                     />
                 </div>
 
-                <div className="col-12">
+                <div className="col-12 px-4">
                     <TextArea
                         type="text"
                         label="Shop bio"
@@ -235,7 +201,41 @@ const CreateShopForm = (props) => {
                     />
                 </div>
 
-                <div className="col-12 mt-2">
+                <div className="col-12 px-4">
+                    <InputFile
+                        label="Shop avatar"
+                        size="avatar"
+                        value={shop.avatar}
+                        isValid={shop.isValidAvatar}
+                        feedback="Please provide a valid shop avatar."
+                        accept="image/jpg, image/jpeg, image/png, image/gif"
+                        onChange={(value) =>
+                            handleChange('avatar', 'isValidAvatar', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidAvatar', flag)
+                        }
+                    />
+                </div>
+
+                <div className="col-12 px-4">
+                    <InputFile
+                        label="Shop cover"
+                        size="cover"
+                        value={shop.cover}
+                        isValid={shop.isValidCover}
+                        feedback="Please provide a valid shop cover."
+                        accept="image/jpg, image/jpeg, image/png, image/gif"
+                        onChange={(value) =>
+                            handleChange('cover', 'isValidCover', value)
+                        }
+                        onValidate={(flag) =>
+                            handleValidate('isValidCover', flag)
+                        }
+                    />
+                </div>
+
+                <div className="col-12 px-4 mt-2">
                     {error1 && <Error msg={error1} />}
                     {!error1 && (
                         <DropDownMenu
@@ -247,11 +247,9 @@ const CreateShopForm = (props) => {
                                         label:
                                             c.name +
                                             ' (' +
-                                            (
-                                                c.cost.$numberDecimal * 100
-                                            ).toFixed(2) +
-                                            '% / order)',
-                                        icon: commissionIcons[i],
+                                            c.cost.$numberDecimal +
+                                            '%/order)',
+                                        icon: <i className="fas fa-cash-register"></i>,
                                     };
                                     return newC;
                                 })
@@ -270,8 +268,16 @@ const CreateShopForm = (props) => {
                     </div>
                 )}
 
-                <div className="col-12 mt-4">
+                <div className="col-12 px-4 mt-2">
                     <small className="text-center d-block mx-2">
+                        <span className="text-muted">
+                            How you'll get paid? Set up billing?{' '}
+                        </span>
+                        <Link to="/legal/sellOnGoodDeal" target="_blank">
+                            Sell on GoodDeal
+                        </Link>
+                        .
+                        <br />
                         <span className="text-muted">
                             By Creating shop, you agree to GoodDeal's{' '}
                         </span>
@@ -282,22 +288,22 @@ const CreateShopForm = (props) => {
                         <Link to="/legal/privacy" target="_blank">
                             Privacy Policy
                         </Link>
-                        .{' '}
-                        <span className="text-muted">
-                            How you'll get paid? Set up billing?{' '}
-                        </span>
-                        <Link to="/legal/sellOnGoodDeal" target="_blank">
-                            Sell on GoodDeal
-                        </Link>
                         .
+
                     </small>
                 </div>
 
-                <div className="col-12 d-grid mt-4">
+                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
+                    <Link to="/account/shopManager"
+                        className="text-decoration-none link-hover"
+                    >
+                        <i className="fas fa-arrow-circle-left"></i> Back to Shop Manager
+                    </Link>
                     <button
                         type="submit"
                         className="btn btn-primary ripple"
                         onClick={handleSubmit}
+                        style={{ width: '40%' }}
                     >
                         Submit
                     </button>

@@ -9,7 +9,6 @@ import ManagerRoleLabel from '../label/ManagerRoleLabel';
 import StoreLicenseLabel from '../label/StoreLicenseLabel';
 import StoreStatusLabel from '../label/StoreStatusLabel';
 import OpenCloseStoreButton from '../button/OpenCloseStoreButton';
-import UserCreateShopItem from '../item/UserCreateShopItem';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import Loading from '../ui/Loading';
@@ -27,9 +26,9 @@ const UserStoresTable = ({ heading = true }) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'rating',
-        sortMoreBy: 'point',
-        order: 'desc',
+        sortBy: 'name',
+        sortMoreBy: 'rating',
+        order: '',
         limit: 6,
         page: 1,
     });
@@ -93,7 +92,7 @@ const UserStoresTable = ({ heading = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     return (
         <div className="store-manager-table-wrap position-relative">
@@ -106,7 +105,13 @@ const UserStoresTable = ({ heading = true }) => {
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
-                        <UserCreateShopItem />
+                        <Link
+                            type="button"
+                            className="btn btn-primary ripple text-nowrap"
+                            to="/account/shopManager/createNewShop"
+                        >
+                            <i className="fas fa-plus-circle me-2"></i>New shop
+                        </Link>
                     </div>
                 </div>
                 <span className="me-2">{pagination.size || 0} results</span>
@@ -119,40 +124,50 @@ const UserStoresTable = ({ heading = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='rating'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="point"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Shop"
-                                sortBy='name'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="name"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Role"
-                                sortBy='ownerId'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="ownerId"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="License"
-                                sortBy='isActive'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="isActive"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Status"
-                                sortBy='isOpen'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="isOpen"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
 
@@ -162,9 +177,7 @@ const UserStoresTable = ({ heading = true }) => {
                 <tbody>
                     {stores.map((store, index) => (
                         <tr key={index}>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
+                            <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
                                 <StoreSmallCard store={store} />
                             </td>
@@ -190,7 +203,9 @@ const UserStoresTable = ({ heading = true }) => {
                                             storeId={store._id}
                                             isOpen={store.isOpen}
                                             detail={false}
-                                            onRun={(store) => onHandleRun(store)}
+                                            onRun={(store) =>
+                                                onHandleRun(store)
+                                            }
                                         />
                                     </div>
 

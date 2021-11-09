@@ -90,7 +90,7 @@ export const listStoresForAdmin = (userId, token, filter) => {
     )
         .then((res) => res.json())
         .catch((error) => console.log(error));
-}
+};
 
 //create store
 export const createStore = (userId, token, store) => {

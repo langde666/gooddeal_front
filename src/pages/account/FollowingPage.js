@@ -15,33 +15,41 @@ const FollowingPage = (props) => {
                     <div className="position-relative d-inline-block me-2">
                         <button
                             type="button"
-                            className={`btn ${flag ? 'btn-pink' : 'btn-outline-pink'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                flag ? 'btn-pink' : 'btn-outline-pink'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
                             <i className="fas fa-box"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Your following products</small>
+                        <small className="cus-tooltip-msg">
+                            Your following products
+                        </small>
                     </div>
 
                     <div className="position-relative d-inline-block">
                         <button
                             type="button"
-                            className={`btn ${!flag ? 'btn-pink' : 'btn-outline-pink'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                !flag ? 'btn-pink' : 'btn-outline-pink'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
                             <i className="fas fa-store"></i>
                         </button>
 
-                        <small className="cus-tooltip-msg">Your following stores</small>
+                        <small className="cus-tooltip-msg">
+                            Your following stores
+                        </small>
                     </div>
                 </div>
 
-                {flag ?
+                {flag ? (
                     <FollowingProductsCollection />
-                    :
+                ) : (
                     <FollowingStoresCollection />
-                }
+                )}
             </div>
         </AccountLayout>
     );

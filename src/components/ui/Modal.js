@@ -7,17 +7,17 @@ const Modal = ({
     hasCloseBtn = true,
     children = null,
 }) => (
-    <div className="cus-modal-wrap">
+    <div className="modal-wrap">
         <div
             className="cus-modal modal fade"
             id={id}
             tabIndex="-1"
             aria-hidden="true"
         >
-            <div className="cus-modal-dialog modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <div className="modal-header-wrap">
+                        <div>
                             {title ? (
                                 <h5 className="modal-title ms-2 text-primary">
                                     {title}
@@ -56,7 +56,19 @@ const Modal = ({
             </div>
         </div>
 
-        <div className="cus-modal-backdrop fade"></div>
+        <div className="fade cus-modal-backdrop"
+            style={{
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                zIndex: '4',
+                width: '100vw',
+                height: '100vh',
+                animation: 'fade 0.6s ease',
+                backgroundColor: '#000',
+                opacity: '0.5',
+            }}
+        ></div>
     </div>
 );
 

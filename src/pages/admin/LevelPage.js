@@ -15,7 +15,9 @@ const LevelPage = (props) => {
                     <div className="position-relative d-inline-block me-2">
                         <button
                             type="button"
-                            className={`btn ${flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                flag ? 'btn-primary' : 'btn-outline-primary'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
                             <i className="fas fa-user-friends"></i>
@@ -27,7 +29,9 @@ const LevelPage = (props) => {
                     <div className="position-relative d-inline-block">
                         <button
                             type="button"
-                            className={`btn ${!flag ? 'btn-primary' : 'btn-outline-primary'} btn-lg ripple cus-tooltip`}
+                            className={`btn ${
+                                !flag ? 'btn-primary' : 'btn-outline-primary'
+                            } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
                             <i className="fas fa-store"></i>
@@ -37,11 +41,7 @@ const LevelPage = (props) => {
                     </div>
                 </div>
 
-                {flag ?
-                    <AdminUserLevelsTable />
-                    :
-                    <AdminStoreLevelTable />
-                }
+                {flag ? <AdminUserLevelsTable /> : <AdminStoreLevelTable />}
             </div>
         </AdminLayout>
     );

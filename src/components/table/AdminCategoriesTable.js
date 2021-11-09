@@ -1,24 +1,24 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
 import {
-    listStoreLevels,
-    removeStoreLevel,
-    restoreStoreLevel,
-} from '../../apis/level';
+    listCategories,
+    removeCategory,
+    restoreCategory,
+} from '../../apis/category';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
-import StoreLevelLabel from '../label/StoreLevelLabel';
 import DeletedLabel from '../label/DeletedLabel';
-import AdminCreateStoreLevelItem from '../item/AdminCreateStoreLevelItem';
-import AdminEditStoreLevelForm from '../item/form/AdminEditStoreLevelForm';
-import Modal from '../ui/Modal';
+import CategorySmallCard from '../card/CategorySmallCard';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const AdminStoreLevelsTable = ({ heading = true }) => {
+const IMG = process.env.REACT_APP_STATIC_URL;
+
+const AdminCateroriesTable = ({ heading = true }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,17 +26,17 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     const [isConfirming1, setIsConfirming1] = useState(false);
     const [run, setRun] = useState(false);
 
-    const [editedLevel, setEditedLevel] = useState({});
-    const [removedLevel, setRemovedLevel] = useState({});
-    const [restoredLevel, setRestoredLevel] = useState({});
+    const [removedCategory, setRemovedCategory] = useState({});
+    const [restoredCategory, setRestoredCategory] = useState({});
 
-    const [levels, setLevels] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'name',
+        categoryId: '',
+        sortBy: 'categoryId',
         order: 'asc',
         limit: 6,
         page: 1,
@@ -47,13 +47,13 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     const init = () => {
         setError('');
         setIsLoading(true);
-        listStoreLevels(_id, accessToken, filter)
+        listCategories(_id, accessToken, filter)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    setLevels(data.levels);
+                    setCategories(data.categories);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
@@ -95,17 +95,13 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         });
     };
 
-    const handleEditLevel = (level) => {
-        setEditedLevel(level);
-    };
-
-    const handleRemoveLevel = (level) => {
-        setRemovedLevel(level);
+    const handleRemoveCategory = (category) => {
+        setRemovedCategory(category);
         setIsConfirming(true);
     };
 
-    const handleRestoreLevel = (level) => {
-        setRestoredLevel(level);
+    const handleRestoreCategory = (category) => {
+        setRestoredCategory(category);
         setIsConfirming1(true);
     };
 
@@ -113,7 +109,7 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeStoreLevel(_id, accessToken, removedLevel._id)
+        removeCategory(_id, accessToken, removedCategory._id)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -142,7 +138,7 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        restoreStoreLevel(_id, accessToken, restoredLevel._id)
+        restoreCategory(_id, accessToken, restoredCategory._id)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -168,15 +164,15 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-store-levels-manager-table-wrap position-relative">
+        <div className="admin-categories-manager-table-wrap position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this level"
+                    title="Remove this category"
                     message={
                         <span>
                             Are you sure you want to remove{' '}
-                            <StoreLevelLabel level={removedLevel} />
+                            <CategorySmallCard category={removedCategory} />
                         </span>
                     }
                     color="danger"
@@ -186,11 +182,11 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this level"
+                    title="Restore this category"
                     message={
                         <span>
                             Are you sure you want to restore{' '}
-                            <StoreLevelLabel level={restoredLevel} />
+                            <CategorySmallCard category={restoredCategory} />
                         </span>
                     }
                     onSubmit={onSubmitRestore}
@@ -198,7 +194,7 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                 />
             )}
 
-            {heading && <h4 className="mb-3">Store Levels</h4>}
+            {heading && <h4 className="mb-3">Category</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -208,13 +204,19 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
-                        <AdminCreateStoreLevelItem onRun={() => setRun(!run)} />
+                        <Link
+                            type="button"
+                            className="btn btn-primary ripple text-nowrap"
+                            to="/admin/category/createNewCategory"
+                        >
+                            <i className="fas fa-plus-circle me-2"></i>New category
+                        </Link>
                     </div>
                 </div>
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="admin-store-levels-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="admin-categories-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -230,7 +232,17 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="store level"
+                                title="Category"
+                                sortBy="categoryId"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Name"
                                 sortBy="name"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
@@ -240,28 +252,8 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Floor point"
-                                sortBy="minPoint"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Discount"
-                                sortBy="discount"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Color"
-                                sortBy="color"
+                                title="Image"
+                                sortBy="image"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -281,50 +273,69 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody className="text-center">
-                    {levels.map((level, index) => (
+                <tbody>
+                    {categories.map((category, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
-                                <StoreLevelLabel level={level} />
+                            <td
+                                className="text-start ps-4"
+                                style={{ width: '400px' }}
+                            >
+                                <CategorySmallCard category={category} />
                             </td>
-                            <td>{level.minPoint}</td>
+                            <td className="text-start ps-4">{category.name}</td>
                             <td>
-                                {level.discount &&
-                                    level.discount.$numberDecimal}
-                                %
+                                <div style={{
+                                    position: 'relative',
+                                    paddingBottom: '100px',
+                                    width: '100px',
+                                    height: '0',
+                                }}
+                                >
+                                    <img
+                                        src={IMG + category.image}
+                                        alt={category.name}
+                                        style={{
+                                            position: 'absolute',
+                                            width: '100%',
+                                            height: '100%',
+                                            top: '0',
+                                            left: '0',
+                                            objectFit: 'cover'
+                                        }}
+                                    />
+                                </div>
                             </td>
-                            <td>{level.color}</td>
-                            <td>{level.isDeleted && <DeletedLabel />}</td>
-                            <td className="text-center">
+                            <td>{category.isDeleted && <DeletedLabel />}</td>
+                            <td className="text-nowrap">
                                 <div className="position-relative d-inline-block me-2">
-                                    <button
+                                    <Link
                                         type="button"
                                         className="btn btn-primary ripple cus-tooltip"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#edit-level-form"
-                                        onClick={() => handleEditLevel(level)}
+                                        to={`/admin/category/editCategory/${category._id}`}
                                     >
                                         <i className="fas fa-pen"></i>
-                                    </button>
+                                    </Link>
                                     <small className="cus-tooltip-msg">
-                                        Edit Level
+                                        Edit category
                                     </small>
                                 </div>
 
-                                {!level.isDeleted ? (
+                                {!category.isDeleted ? (
                                     <div className="position-relative d-inline-block">
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger ripple cus-tooltip"
                                             onClick={() =>
-                                                handleRemoveLevel(level)
+                                                handleRemoveCategory(
+                                                    category,
+                                                )
                                             }
                                         >
                                             <i className="fas fa-trash-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Remove level
+                                            Remove category
                                         </small>
                                     </div>
                                 ) : (
@@ -333,13 +344,15 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                                             type="button"
                                             className="btn btn-outline-primary ripple cus-tooltip"
                                             onClick={() =>
-                                                handleRestoreLevel(level)
+                                                handleRestoreCategory(
+                                                    category,
+                                                )
                                             }
                                         >
                                             <i className="fas fa-trash-restore-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Restore level
+                                            Restore category
                                         </small>
                                     </div>
                                 )}
@@ -348,13 +361,6 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                     ))}
                 </tbody>
             </table>
-
-            <Modal id="edit-level-form" hasCloseBtn={false} title="Edit Level">
-                <AdminEditStoreLevelForm
-                    oldLevel={editedLevel}
-                    onRun={() => setRun(!run)}
-                />
-            </Modal>
 
             {pagination.size != 0 && (
                 <Pagination
@@ -366,4 +372,4 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     );
 };
 
-export default AdminStoreLevelsTable;
+export default AdminCateroriesTable;

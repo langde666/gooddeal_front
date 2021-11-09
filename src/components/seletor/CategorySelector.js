@@ -1,0 +1,246 @@
+import { useState, useEffect } from 'react';
+import { getToken } from '../../apis/auth';
+import { listCategories, listActiveCategories } from '../../apis/category';
+import SearchInput from '../ui/SearchInput';
+import CategorySmallCard from '../card/CategorySmallCard';
+import Error from '../ui/Error';
+import Loading from '../ui/Loading';
+
+const CategorySelector = ({
+    isActive = false, selected = 'child', label = 'Choosed category', onSet = () => { },
+}) => {
+    const [isloading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const [lv1Categories, setLv1Categories] = useState([]);
+    const [lv2Categories, setLv2Categories] = useState([]);
+    const [lv3Categories, setLv3Categories] = useState([]);
+    const [lv1Filter, setLv1Filter] = useState({
+        search: '',
+        categoryId: null,
+        sortBy: 'name',
+        order: 'asc',
+        limit: 100,
+        page: 1,
+    });
+    const [lv2Filter, setLv2Filter] = useState({
+        search: '',
+        categoryId: '',
+        sortBy: 'name',
+        order: 'asc',
+        limit: 100,
+        page: 1,
+    });
+    const [lv3Filter, setLv3Filter] = useState({
+        search: '',
+        categoryId: '',
+        sortBy: 'name',
+        order: 'asc',
+        limit: 100,
+        page: 1,
+    });
+
+    const [selectedCategory, setSelectedCategory] = useState();
+
+    const loadCategories = (filter, setCategories) => {
+        setError('');
+        setIsLoading(true);
+        if (isActive) {
+            listActiveCategories(filter)
+                .then(data => {
+                    if (data.error) {
+                        setError(data.error);
+                    }
+                    else {
+                        setCategories(data.categories);
+                    }
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    setError('Server Error');
+                    setIsLoading(false);
+                })
+        }
+        else {
+            const { _id, accessToken } = getToken();
+            listCategories(_id, accessToken, filter)
+                .then(data => {
+                    if (data.error) {
+                        setError(data.error);
+                    }
+                    else {
+                        setCategories(data.categories);
+                    }
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    setError('Server Error');
+                    setIsLoading(false);
+                })
+        }
+    }
+
+    useEffect(() => {
+        loadCategories(lv1Filter, setLv1Categories);
+    }, [lv1Filter]);
+
+    useEffect(() => {
+        if (lv2Filter.categoryId) loadCategories(lv2Filter, setLv2Categories);
+        else setLv2Categories([])
+    }, [lv2Filter]);
+
+    useEffect(() => {
+        if (lv3Filter.categoryId) loadCategories(lv3Filter, setLv3Categories);
+        else setLv3Categories([])
+    }, [lv3Filter]);
+
+    const handleChangeKeyword = (keyword) => {
+        setLv1Filter({
+            ...lv1Filter,
+            search: keyword,
+        });
+
+        setLv2Filter({
+            ...lv2Filter,
+            categoryId: '',
+        });
+
+        setLv3Filter({
+            ...lv3Filter,
+            categoryId: '',
+        });
+    };
+
+    const handleClick = (filter, setFilter, category) => {
+        if (setFilter, filter)
+            setFilter({
+                ...filter,
+                categoryId: category._id,
+            });
+
+        if ((selected === 'parent' && filter === lv2Filter) ||
+            (selected === 'parent' && filter === lv3Filter) ||
+            (selected === 'child' && filter === null)) {
+            setSelectedCategory(category);
+            if (onSet) onSet(category);
+        }
+
+    }
+
+    const handleRemove = () => {
+        setSelectedCategory('');
+        if (onSet) onSet('');
+    }
+
+
+    return (
+        <div className="row">
+            <div className="col">
+                <SearchInput onChange={handleChangeKeyword} />
+            </div>
+
+            <div className="col-12 position-relative">
+                {isloading && <Loading />}
+                {error && <Error msg={error} />}
+
+                <div className="d-flex justify-content-start align-items-start">
+                    <div
+                        className="mt-2 p-2 border border-primary p-2 border border-primary border-end-0 rounded-start"
+                        style={{ width: '30%', height: '164px', overflowY: 'auto' }}
+                    >
+                        {lv1Categories &&
+                            lv1Categories.map((category, index) => (
+                                <div
+                                    key={index}
+                                    className={
+                                        `d-flex justify-content-between align-items-center 
+                                    ${category._id == lv2Filter.categoryId && ' text-primary'}`
+                                    }
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleClick(lv2Filter, setLv2Filter, category)}
+                                >
+                                    <span>{category.name}</span>
+                                    <span>></span>
+                                </div>
+                            ))}
+                    </div>
+
+                    <div
+                        className="mt-2 p-2 border border-primary p-2 border border-primary border-end-0"
+                        style={{ width: '30%', height: '164px', overflowY: 'auto' }}
+                    >
+                        {lv2Categories &&
+                            lv2Categories.map((category, index) => (
+                                <div
+                                    key={index}
+                                    className={
+                                        `d-flex justify-content-between align-items-center 
+                                    ${category._id == lv3Filter.categoryId && ' text-primary'}`
+                                    }
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleClick(lv3Filter, setLv3Filter, category)}
+                                >
+                                    <span>{category.name}</span>
+                                    <span>></span>
+                                </div>
+                            ))}
+                    </div>
+
+                    <div
+                        className="mt-2 p-2 border border-primary p-2 border border-primary rounded-end"
+                        style={{ width: '30%', height: '164px', overflowY: 'auto' }}
+                    >
+                        {lv3Categories &&
+                            lv3Categories.map((category, index) => (
+                                <div
+                                    key={index}
+                                    style={{ cursor: 'pointer' }}
+                                    className={
+                                        `d-flex justify-content-between align-items-center 
+                                    ${category._id == selectedCategory._id && ' text-primary'}`
+                                    }
+                                    onClick={() => handleClick(null, null, category)}
+                                >
+                                    <span>{category.name}</span>
+                                </div>
+                            ))}
+                    </div>
+                </div>
+            </div>
+
+            <div className="col mt-2">
+                <div className="mt-4 position-relative">
+                    <lalel
+                        className="position-absolute text-primary"
+                        style={{
+                            fontSize: '0.8rem',
+                            left: '12px',
+                            top: '-16px',
+                        }}>
+                        {label}
+                    </lalel>
+
+                    <div className="form-control border-0">
+                        {selectedCategory ? (
+                            <span className="mb-1 d-flex align-items-center">
+                                <CategorySmallCard category={selectedCategory} />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-danger btn-sm ripple ms-2"
+                                    onClick={() => handleRemove()}
+                                >
+                                    <i className="fas fa-times-circle"></i>
+                                </button>
+                            </span>
+                        ) : (
+                            <span>No category choosed</span>
+                        )}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+export default CategorySelector

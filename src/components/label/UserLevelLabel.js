@@ -8,7 +8,7 @@ const shields = {
 const UserLevelLabel = ({ level = {}, detail = true }) => (
     <span className="position-relative d-inline-block">
         <span
-            className='badge cus-tooltip'
+            className="badge cus-tooltip"
             style={{ backgroundColor: level.color }}
         >
             <i className="fas fa-shield-alt"></i>

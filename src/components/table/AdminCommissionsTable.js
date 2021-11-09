@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
-import { listCommissions, removeCommission, restoreCommission, } from '../../apis/commission';
+import {
+    listCommissions,
+    removeCommission,
+    restoreCommission,
+} from '../../apis/commission';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
@@ -32,7 +36,7 @@ const AdminCommissionTable = ({ heading = true }) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: '_id',
+        sortBy: 'name',
         order: 'asc',
         limit: 6,
         page: 1,
@@ -89,21 +93,21 @@ const AdminCommissionTable = ({ heading = true }) => {
             sortBy,
             order,
         });
-    }
+    };
 
     const handleEditCommission = (commission) => {
         setEditedCommission(commission);
-    }
+    };
 
     const handleRemoveCommission = (commission) => {
         setRemovedCommission(commission);
         setIsConfirming(true);
-    }
+    };
 
     const handleRestoreCommission = (commission) => {
         setRestoredCommission(commission);
         setIsConfirming1(true);
-    }
+    };
 
     const onSubmitRemove = () => {
         setError('');
@@ -116,7 +120,6 @@ const AdminCommissionTable = ({ heading = true }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-
                 } else {
                     setSuccess(data.success);
                     setTimeout(() => {
@@ -133,7 +136,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                 }, 3000);
                 setIsLoading(false);
             });
-    }
+    };
 
     const onSubmitRestore = () => {
         setError('');
@@ -146,7 +149,6 @@ const AdminCommissionTable = ({ heading = true }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-
                 } else {
                     setSuccess(data.success);
                     setTimeout(() => {
@@ -163,7 +165,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                 }, 3000);
                 setIsLoading(false);
             });
-    }
+    };
 
     return (
         <div className="admin-commissions-manager-table-wrap position-relative">
@@ -171,7 +173,14 @@ const AdminCommissionTable = ({ heading = true }) => {
             {isConfirming && (
                 <ConfirmDialog
                     title="Remove this commission"
-                    message={<span>Are you sure you want to remove <StoreCommissionLabel commission={removedCommission} /></span>}
+                    message={
+                        <span>
+                            Are you sure you want to remove{' '}
+                            <StoreCommissionLabel
+                                commission={removedCommission}
+                            />
+                        </span>
+                    }
                     color="danger"
                     onSubmit={onSubmitRemove}
                     onClose={() => setIsConfirming(false)}
@@ -180,7 +189,14 @@ const AdminCommissionTable = ({ heading = true }) => {
             {isConfirming1 && (
                 <ConfirmDialog
                     title="Restore this commission"
-                    message={<span>Are you sure you want to restore <StoreCommissionLabel commission={restoredCommission} /></span>}
+                    message={
+                        <span>
+                            Are you sure you want to restore{' '}
+                            <StoreCommissionLabel
+                                commission={restoredCommission}
+                            />
+                        </span>
+                    }
                     onSubmit={onSubmitRestore}
                     onClose={() => setIsConfirming1(false)}
                 />
@@ -209,40 +225,50 @@ const AdminCommissionTable = ({ heading = true }) => {
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="#"
-                                sortBy='_id'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="_id"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Commission"
-                                sortBy='name'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="name"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Cost"
-                                sortBy='cost'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="cost"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Description"
-                                sortBy='description'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="description"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
                                 title="Status"
-                                sortBy='isDeleted'
-                                onSet={(order, sortBy) => handleSetSortBy(order, sortBy)}
+                                sortBy="isDeleted"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
                             />
                         </th>
 
@@ -252,21 +278,17 @@ const AdminCommissionTable = ({ heading = true }) => {
                 <tbody>
                     {commissions.map((commission, index) => (
                         <tr key={index}>
-                            <th scope="row">
-                                {index + 1}
-                            </th>
+                            <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
                                 <StoreCommissionLabel commission={commission} />
                             </td>
                             <td>
-                                {commission.cost && commission.cost.$numberDecimal} %
+                                {commission.cost &&
+                                    commission.cost.$numberDecimal}{' '}
+                                %
                             </td>
-                            <td>
-                                {commission.description}
-                            </td>
-                            <td>
-                                {commission.isDeleted && <DeletedLabel />}
-                            </td>
+                            <td className="text-start ps-4">{commission.description}</td>
+                            <td>{commission.isDeleted && <DeletedLabel />}</td>
                             <td className="text-center">
                                 <div className="position-relative d-inline-block me-2">
                                     <button
@@ -274,12 +296,14 @@ const AdminCommissionTable = ({ heading = true }) => {
                                         className="btn btn-primary ripple cus-tooltip"
                                         data-bs-toggle="modal"
                                         data-bs-target="#edit-commission-form"
-                                        onClick={() => handleEditCommission(commission)}
+                                        onClick={() =>
+                                            handleEditCommission(commission)
+                                        }
                                     >
                                         <i className="fas fa-pen"></i>
                                     </button>
                                     <small className="cus-tooltip-msg">
-                                        Edit Level
+                                        Edit commission
                                     </small>
                                 </div>
 
@@ -288,12 +312,16 @@ const AdminCommissionTable = ({ heading = true }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() => handleRemoveCommission(commission)}
+                                            onClick={() =>
+                                                handleRemoveCommission(
+                                                    commission,
+                                                )
+                                            }
                                         >
                                             <i className="fas fa-trash-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Remove address
+                                            Remove commission
                                         </small>
                                     </div>
                                 ) : (
@@ -301,12 +329,16 @@ const AdminCommissionTable = ({ heading = true }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() => handleRestoreCommission(commission)}
+                                            onClick={() =>
+                                                handleRestoreCommission(
+                                                    commission,
+                                                )
+                                            }
                                         >
                                             <i className="fas fa-trash-restore-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Restore address
+                                            Restore commission
                                         </small>
                                     </div>
                                 )}

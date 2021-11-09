@@ -95,13 +95,11 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
 
     const handleAddBtn = (user) => {
         setListRight([...listRight, user]);
-
         setListLeft(listLeft.filter((u) => u._id != user._id));
     };
 
     const handleRemoveBtn = (user) => {
         setListLeft([...listLeft, user]);
-
         setListRight(listRight.filter((u) => u._id != user._id));
     };
 
@@ -165,71 +163,71 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                 />
             )}
 
-            <div className="col-12 mb-2">
+            <div className="col-12">
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-12 mb-2">
                         <SearchInput onChange={handleChangeKeyword} />
                     </div>
-                </div>
-            </div>
 
-            <div className="col-6">
-                <div className="border border-primary rounded p-2 cus-group">
-                    {listLeft &&
-                        listLeft.map((user, index) => (
-                            <div
-                                key={index}
-                                className="d-flex justify-content-between align-items-center"
-                            >
-                                <div className="mb-2">
-                                    <UserSmallCard
-                                        user={user}
-                                        style={{
-                                            width: '150px',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}
-                                    />
-                                </div>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-sm ripple"
-                                    onClick={() => handleAddBtn(user)}
-                                >
-                                    <i className="fas fa-arrow-alt-circle-right"></i>
-                                </button>
-                            </div>
-                        ))}
-                </div>
-            </div>
+                    <div className="col-6">
+                        <div className="border border-primary rounded p-2 cus-group">
+                            {listLeft &&
+                                listLeft.map((user, index) => (
+                                    <div
+                                        key={index}
+                                        className="d-flex justify-content-between align-items-center"
+                                    >
+                                        <div className="mb-2">
+                                            <UserSmallCard
+                                                user={user}
+                                                style={{
+                                                    width: '150px',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                }}
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-sm ripple"
+                                            onClick={() => handleAddBtn(user)}
+                                        >
+                                            <i className="fas fa-arrow-alt-circle-right"></i>
+                                        </button>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
 
-            <div className="col-6">
-                <div className="border border-primary rounded p-2 cus-group">
-                    {listRight &&
-                        listRight.map((user, index) => (
-                            <div
-                                key={index}
-                                className="d-flex justify-content-between align-items-center"
-                            >
-                                <div className="mb-2">
-                                    <UserSmallCard
-                                        user={user}
-                                        style={{
-                                            width: '150px',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}
-                                    />
-                                </div>
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-danger btn-sm ripple"
-                                    onClick={() => handleRemoveBtn(user)}
-                                >
-                                    <i className="fas fa-times-circle"></i>
-                                </button>
-                            </div>
-                        ))}
+                    <div className="col-6">
+                        <div className="border border-primary rounded p-2 cus-group">
+                            {listRight &&
+                                listRight.map((user, index) => (
+                                    <div
+                                        key={index}
+                                        className="d-flex justify-content-between align-items-center"
+                                    >
+                                        <div className="mb-2">
+                                            <UserSmallCard
+                                                user={user}
+                                                style={{
+                                                    width: '150px',
+                                                    overflow: 'hidden',
+                                                    textOverflow: 'ellipsis',
+                                                }}
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger btn-sm ripple"
+                                            onClick={() => handleRemoveBtn(user)}
+                                        >
+                                            <i className="fas fa-times-circle"></i>
+                                        </button>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -240,7 +238,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                             type="button"
                             disabled={
                                 pagination &&
-                                pagination.pageCount > pagination.pageCurrent
+                                    pagination.pageCount > pagination.pageCurrent
                                     ? false
                                     : true
                             }

@@ -3,6 +3,7 @@ import { getToken } from '../../../apis/auth';
 import { updateCommission } from '../../../apis/commission';
 import { regexTest, numberTest } from '../../../helper/test';
 import Input from '../../ui/Input';
+import TextArea from '../../ui/TextArea';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
@@ -56,17 +57,8 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => { } }) => {
             return;
         }
 
-        const {
-            isValidName,
-            isValidDescription,
-            isValidCost,
-        } = commission;
-        if (
-            !isValidName ||
-            !isValidDescription ||
-            !isValidCost
-        )
-            return;
+        const { isValidName, isValidDescription, isValidCost } = commission;
+        if (!isValidName || !isValidDescription || !isValidCost) return;
 
         setIsConfirming(true);
     };
@@ -116,14 +108,17 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => { } }) => {
                 />
             )}
 
-            <form className="edit-store-commission-form row mb-2" onSubmit={handleSubmit}>
+            <form
+                className="edit-store-commission-form row mb-2"
+                onSubmit={handleSubmit}
+            >
                 <div className="col-12">
                     <Input
                         type="text"
                         label="Commission name"
                         value={commission.name}
                         isValid={commission.isValidName}
-                        feedback='Please provide a valid commission name.'
+                        feedback="Please provide a valid commission name."
                         validator="level"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
@@ -135,15 +130,19 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => { } }) => {
                 </div>
 
                 <div className="col-12">
-                    <Input
+                    <TextArea
                         type="text"
                         label="Description"
                         value={commission.description}
                         isValid={commission.isValidDescription}
-                        feedback='Please provide a valid commission description.'
+                        feedback="Please provide a valid commission description."
                         validator="bio"
                         onChange={(value) =>
-                            handleChange('description', 'isValidDescription', value)
+                            handleChange(
+                                'description',
+                                'isValidDescription',
+                                value,
+                            )
                         }
                         onValidate={(flag) =>
                             handleValidate('isValidDescription', flag)
@@ -157,7 +156,7 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => { } }) => {
                         label="Cost (%)"
                         value={commission.cost}
                         isValid={commission.isValidCost}
-                        feedback='Please provide a valid cost (>=0).'
+                        feedback="Please provide a valid cost (>=0)."
                         validator="zeroTo100"
                         onChange={(value) =>
                             handleChange('cost', 'isValidCost', value)

@@ -12,6 +12,8 @@ import AdminLevelPage from './admin/LevelPage';
 import AdminCommissionPage from './admin/CommissionPage';
 import AdminUserPage from './admin/UserPage';
 import AdminStorePage from './admin/StorePage';
+import AdminCategoryPage from './admin/CategoryPage';
+import AdminCreateCategoryPage from './admin/CreateCategoryPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -20,6 +22,7 @@ import AccountFollowingPage from './account/FollowingPage';
 // import AccountGiftWalletPage from './account/GiftWalletPage';
 import AccountGDCoinsPage from './account/GDCoinsPage';
 import AccountShopManagerPage from './account/ShopManagerPage';
+import AccountCreateShopPage from './account/CreateShopPage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
 import AccountCartPage from './account/CartPage';
 //vendor
@@ -83,6 +86,16 @@ const Routes = () => {
                     exact
                     component={AdminStorePage}
                 />
+                <AdminRoute
+                    path="/admin/category"
+                    exact
+                    component={AdminCategoryPage}
+                />
+                <AdminRoute
+                    path="/admin/category/createNewCategory"
+                    exact
+                    component={AdminCreateCategoryPage}
+                />
 
                 <PrivateRoute
                     path="/account/profile"
@@ -118,6 +131,11 @@ const Routes = () => {
                     path="/account/shopManager"
                     exact
                     component={AccountShopManagerPage}
+                />
+                <PrivateRoute
+                    path="/account/shopManager/createNewShop"
+                    exact
+                    component={AccountCreateShopPage}
                 />
                 <PrivateRoute path="/cart" exact component={AccountCartPage} />
                 <Route

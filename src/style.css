@@ -311,12 +311,6 @@ header {
 .cus-paragraph-group {
     position: relative;
     margin-top: 24px;
-    min-height: 46px;
-    flex: 1;
-}
-
-.cus-paragraph-group {
-    min-height: unset;
 }
 
 .cus-input-group.cus-input-group--file {
@@ -419,47 +413,12 @@ header {
     display: none;
 }
 
-.cus-modal-dialog {
-    z-index: 5;
-}
-
 .cus-modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 4;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000;
     display: none;
 }
 
 .cus-modal.show ~ .cus-modal-backdrop {
-    opacity: 0.5;
     display: unset;
-}
-
-.cus-modal-dialog .modal-footer {
-    border-top: 0;
-}
-
-.cus-modal-dialog .modal-header {
-    /* border-bottom: 0; */
-    align-items: start;
-}
-
-.cus-modal-dialog .modal-body {
-    padding-top: 0;
-    /* padding-bottom: 0; */
-}
-
-/* dialog */
-.cus-dialog {
-    animation: show 0.6s ease;
-}
-
-.cus-dialog ~ .cus-modal-backdrop {
-    animation: fade 0.6s ease;
 }
 
 @keyframes show {
@@ -524,50 +483,6 @@ header {
 .social-img.social-img--small {
     width: 13px;
     height: 13px;
-}
-
-/* cus loading */
-.cus-loading {
-    display: block;
-    background-color: rgba(255, 255, 255, 0.6);
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 3;
-}
-
-.cus-loading.large .cus-loading-circle {
-    top: 50%;
-}
-
-.cus-loading.small .cus-loading-circle {
-    width: 1.6rem;
-    height: 1.6rem;
-    top: -40%;
-}
-
-.cus-loading-circle-animation {
-    width: 100%;
-    height: 100%;
-    animation: show 0.6s ease;
-}
-
-.cus-loading-circle {
-    width: 3.6rem;
-    height: 3.6rem;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--white-color);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    position: absolute;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4;
 }
 
 /* for loading */
@@ -719,7 +634,6 @@ header {
 }
 
 /* sidbar */
-
 .cus-sidebar-item {
     display: block;
     margin: 1px 0;
@@ -831,6 +745,10 @@ header {
     text-decoration: underline !important;
 }
 
+.cus-link-hover:hover {
+    text-decoration: underline !important;
+}
+
 /* cus-casural-img */
 .cus-carousel {
     position: relative;
@@ -936,7 +854,7 @@ header {
 
 .cus-cover-icon.cus-cover-icon--rm {
     bottom: 6%;
-    right: 16%;
+    right: 10%;
 }
 
 .cus-cover-label {
