@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../../apis/auth';
-import { createCategory } from '../../../apis/category';
+import { updateCategory, getCategoryById } from '../../../apis/category';
 import { regexTest } from '../../../helper/test';
 import Input from '../../ui/Input';
 import InputFile from '../../ui/InputFile';
@@ -11,7 +11,7 @@ import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 import CategorySelector from '../../seletor/CategorySelector';
 
-const AdminCreateCategoryForm = (props) => {
+const AdminEditCategoryForm = ({ categoryId = '' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -21,9 +21,46 @@ const AdminCreateCategoryForm = (props) => {
         name: '',
         image: '',
         categoryId: '',
+        defaultParentCategory: '',
+        defaultSrc: '',
         isValidName: true,
         isValidImage: true,
     });
+
+    const init = () => {
+        const { _id, accessToken } = getToken();
+        setError('');
+        setIsLoading(true);
+        getCategoryById(_id, accessToken, categoryId)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                } else {
+                    setNewCategory({
+                        name: data.category.name,
+                        image: '',
+                        categoryId: data.category.categoryId
+                            ? data.category.categoryId._id
+                            : '',
+                        defaultParentCategory: data.category.categoryId
+                            ? data.category.categoryId
+                            : '',
+                        defaultSrc: data.category.image,
+                        isValidName: true,
+                        isValidImage: true,
+                    });
+                }
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setIsLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        init();
+    }, [categoryId]);
 
     const handleChange = (name, isValidName, value) => {
         setNewCategory({
@@ -43,12 +80,11 @@ const AdminCreateCategoryForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const { name, image } = newCategory;
-        if (!name || !image) {
+        const { name } = newCategory;
+        if (!name) {
             setNewCategory({
                 ...newCategory,
                 isValidName: regexTest('anything', name),
-                isValidImage: !!image,
             });
             return;
         }
@@ -64,16 +100,18 @@ const AdminCreateCategoryForm = (props) => {
 
         const formData = new FormData();
         formData.set('name', newCategory.name);
-        formData.set('image', newCategory.image);
+        if (newCategory.image) formData.set('image', newCategory.image);
         if (newCategory.categoryId)
             formData.set('categoryId', newCategory.categoryId);
 
-        // console.log(newCategory);
+        for (var value of formData.values()) {
+            console.log(value);
+        }
 
         setError('');
         setSuccess('');
         setIsLoading(true);
-        createCategory(_id, accessToken, formData)
+        updateCategory(_id, accessToken, categoryId, formData)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -122,6 +160,7 @@ const AdminCreateCategoryForm = (props) => {
                         label="Choosed parent category"
                         selected="parent"
                         isActive={false}
+                        defaultValue={newCategory.defaultParentCategory}
                         onSet={(category) =>
                             setNewCategory({
                                 ...newCategory,
@@ -153,6 +192,7 @@ const AdminCreateCategoryForm = (props) => {
                         label="Category image"
                         size="avatar"
                         noRadius={true}
+                        defaultSrc={newCategory.defaultSrc}
                         value={newCategory.image}
                         isValid={newCategory.isValidImage}
                         feedback="Please provide a valid category avatar."
@@ -177,6 +217,7 @@ const AdminCreateCategoryForm = (props) => {
                         <Success msg={success} />
                     </div>
                 )}
+
                 <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
                     <Link
                         to="/admin/category"
@@ -191,7 +232,7 @@ const AdminCreateCategoryForm = (props) => {
                         onClick={handleSubmit}
                         style={{ width: '40%' }}
                     >
-                        Submit
+                        Edit
                     </button>
                 </div>
             </form>
@@ -199,4 +240,4 @@ const AdminCreateCategoryForm = (props) => {
     );
 };
 
-export default AdminCreateCategoryForm;
+export default AdminEditCategoryForm;

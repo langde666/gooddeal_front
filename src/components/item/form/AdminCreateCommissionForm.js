@@ -9,7 +9,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const AdminCreateCommissionForm = ({ onRun = () => { } }) => {
+const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');

@@ -8,6 +8,7 @@ import SortByButton from './sub/SortByButton';
 import StoreSmallCard from '../card/StoreSmallCard';
 import StarRating from '../label/StarRating';
 import StoreStatusLabel from '../label/StoreStatusLabel';
+import StoreCommissionLabel from '../label/StoreCommissionLabel';
 import ActiveInactiveStoreButton from '../button/ActiveInactiveStoreButton';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
@@ -157,6 +158,16 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
+                                title="Commission"
+                                sortBy="commissionId"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
                                 title="Joined"
                                 sortBy="createdAt"
                                 onSet={(order, sortBy) =>
@@ -173,21 +184,30 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
-                                <small>
-                                    <StoreSmallCard store={store} />
-                                </small>
+                                <StoreSmallCard store={store} />
                             </td>
                             <td>
                                 <small>
                                     <StarRating stars={store.rating} />
                                 </small>
                             </td>
-                            <td>
+                            <td className="text-start ps-4">
                                 <small>
                                     <StoreStatusLabel isOpen={store.isOpen} />
                                 </small>
                             </td>
-                            <td>{humanReadableDate(store.createdAt)}</td>
+                            <td className="text-start ps-4">
+                                <small>
+                                    <StoreCommissionLabel
+                                        commission={store.commissionId}
+                                    />
+                                </small>
+                            </td>
+                            <td>
+                                <small>
+                                    {humanReadableDate(store.createdAt)}
+                                </small>
+                            </td>
                             <td>
                                 <div className="position-relative d-inline-block me-2">
                                     <div className="cus-tooltip d-inline-block text-start">

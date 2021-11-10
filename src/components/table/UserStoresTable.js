@@ -179,22 +179,32 @@ const UserStoresTable = ({ heading = true }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
-                                <StoreSmallCard store={store} />
+                                <small>
+                                    <StoreSmallCard store={store} />
+                                </small>
                             </td>
-                            <td>
-                                <ManagerRoleLabel
-                                    role={
-                                        _id == store.ownerId._id
-                                            ? 'owner'
-                                            : 'staff'
-                                    }
-                                />
+                            <td className="text-start ps-5">
+                                <small>
+                                    <ManagerRoleLabel
+                                        role={
+                                            _id == store.ownerId._id
+                                                ? 'owner'
+                                                : 'staff'
+                                        }
+                                    />
+                                </small>
                             </td>
-                            <td>
-                                <StoreLicenseLabel isActive={store.isActive} />
+                            <td className="text-start ps-5">
+                                <small>
+                                    <StoreLicenseLabel
+                                        isActive={store.isActive}
+                                    />
+                                </small>
                             </td>
-                            <td>
-                                <StoreStatusLabel isOpen={store.isOpen} />
+                            <td className="text-start ps-5">
+                                <small>
+                                    <StoreStatusLabel isOpen={store.isOpen} />
+                                </small>
                             </td>
                             <td>
                                 <div className="position-relative d-inline-block me-2">

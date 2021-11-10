@@ -15,6 +15,7 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
+import CategorySelector from '../seletor/CategorySelector';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -196,6 +197,10 @@ const AdminCateroriesTable = ({ heading = true }) => {
 
             {heading && <h4 className="mb-3">Category</h4>}
 
+            <div className="mb-4">
+                <CategorySelector isActive={true} isSelected={false} />
+            </div>
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -209,7 +214,8 @@ const AdminCateroriesTable = ({ heading = true }) => {
                             className="btn btn-primary ripple text-nowrap"
                             to="/admin/category/createNewCategory"
                         >
-                            <i className="fas fa-plus-circle me-2"></i>New category
+                            <i className="fas fa-plus-circle me-2"></i>New
+                            category
                         </Link>
                     </div>
                 </div>
@@ -285,12 +291,13 @@ const AdminCateroriesTable = ({ heading = true }) => {
                             </td>
                             <td className="text-start ps-4">{category.name}</td>
                             <td>
-                                <div style={{
-                                    position: 'relative',
-                                    paddingBottom: '100px',
-                                    width: '100px',
-                                    height: '0',
-                                }}
+                                <div
+                                    style={{
+                                        position: 'relative',
+                                        paddingBottom: '100px',
+                                        width: '100px',
+                                        height: '0',
+                                    }}
                                 >
                                     <img
                                         src={IMG + category.image}
@@ -301,7 +308,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                             height: '100%',
                                             top: '0',
                                             left: '0',
-                                            objectFit: 'cover'
+                                            objectFit: 'cover',
                                         }}
                                     />
                                 </div>
@@ -327,9 +334,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                             type="button"
                                             className="btn btn-outline-danger ripple cus-tooltip"
                                             onClick={() =>
-                                                handleRemoveCategory(
-                                                    category,
-                                                )
+                                                handleRemoveCategory(category)
                                             }
                                         >
                                             <i className="fas fa-trash-alt"></i>
@@ -344,9 +349,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                             type="button"
                                             className="btn btn-outline-primary ripple cus-tooltip"
                                             onClick={() =>
-                                                handleRestoreCategory(
-                                                    category,
-                                                )
+                                                handleRestoreCategory(category)
                                             }
                                         >
                                             <i className="fas fa-trash-restore-alt"></i>

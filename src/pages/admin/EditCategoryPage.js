@@ -1,16 +1,18 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import AdminLayout from '../../components/layout/AdminLayout';
-import AdminCreateCategoryForm from '../../components/item/form/AdminCreateCategoryForm';
+import AdminEditCategoryForm from '../../components/item/form/AdminEditCategoryForm';
 
-const CreateCategoryPage = (props) => {
+const EditCategoryPage = (props) => {
     const user = useSelector((state) => state.account.user);
+    const { categoryId } = useParams();
     return (
         <AdminLayout user={user}>
             <div className="admin-create-category-page">
-                <AdminCreateCategoryForm />
+                <AdminEditCategoryForm categoryId={categoryId} />
             </div>
         </AdminLayout>
     );
 };
 
-export default CreateCategoryPage;
+export default EditCategoryPage;

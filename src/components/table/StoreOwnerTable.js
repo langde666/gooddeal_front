@@ -28,9 +28,15 @@ const StoreOwnerTable = (props) => {
                             <td>
                                 <UserSmallCard user={ownerId} />
                             </td>
-                            <td>{ownerId.id_card || '-'}</td>
-                            <td>{ownerId.email || '-'}</td>
-                            <td>{ownerId.phone || '-'}</td>
+                            <td>
+                                <small>{ownerId.id_card || '-'}</small>
+                            </td>
+                            <td>
+                                <small>{ownerId.email || '-'}</small>
+                            </td>
+                            <td>
+                                <small>{ownerId.phone || '-'}</small>
+                            </td>
                         </tr>
                     )}
                 </tbody>

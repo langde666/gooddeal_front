@@ -2,7 +2,9 @@
     --header-height: 80px;
     --logo-width: 180px;
     --header-subnav-width: 180px;
-    --search-bar-width: calc(100vw - var(--logo-width) - var(--header-subnav-width));
+    --search-bar-width: calc(
+        100vw - var(--logo-width) - var(--header-subnav-width)
+    );
 
     --primary-color: #0d6efd;
     --muted-color: #6c757d;
@@ -101,7 +103,7 @@ header {
     overflow: hidden;
 }
 .ripple:after {
-    content: "";
+    content: '';
     background: rgba(255, 255, 255, 0.3);
     display: block;
     position: absolute;
@@ -124,7 +126,7 @@ header {
     transition: 0s;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
 .cus-navbar-brand {
     display: block;
     min-width: var(--logo-width);
@@ -133,7 +135,7 @@ header {
 .logo {
     text-transform: uppercase;
     font-size: 32px;
-    font-family: "Luckiest Guy", cursive;
+    font-family: 'Luckiest Guy', cursive;
     display: block;
     min-width: var(--logo-width);
 }
@@ -250,7 +252,7 @@ header {
 
 .your-account-options::before,
 .your-shop-options::before {
-    content: "";
+    content: '';
     height: 10px;
     width: 100%;
     position: absolute;
@@ -262,7 +264,7 @@ header {
 
 .your-account-options::after,
 .your-shop-options::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -14px;
     left: 50%;
@@ -370,7 +372,7 @@ header {
 }
 
 .cus-input-group-bar::before {
-    content: "";
+    content: '';
     height: 1.6px;
     width: 0;
     bottom: 0;
@@ -456,7 +458,7 @@ header {
 }
 
 .cus-decoration-paragraph::before {
-    content: "";
+    content: '';
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -619,7 +621,7 @@ header {
     z-index: 3;
 }
 .cus-tooltip-msg::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -46%;
     left: 50%;

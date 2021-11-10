@@ -14,6 +14,7 @@ import AdminUserPage from './admin/UserPage';
 import AdminStorePage from './admin/StorePage';
 import AdminCategoryPage from './admin/CategoryPage';
 import AdminCreateCategoryPage from './admin/CreateCategoryPage';
+import AdminEditCategoryPage from './admin/EditCategoryPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -95,6 +96,11 @@ const Routes = () => {
                     path="/admin/category/createNewCategory"
                     exact
                     component={AdminCreateCategoryPage}
+                />
+                <AdminRoute
+                    path="/admin/category/editCategory/:categoryId"
+                    exact
+                    component={AdminEditCategoryPage}
                 />
 
                 <PrivateRoute

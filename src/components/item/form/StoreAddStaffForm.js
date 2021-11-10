@@ -220,7 +220,9 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger btn-sm ripple"
-                                            onClick={() => handleRemoveBtn(user)}
+                                            onClick={() =>
+                                                handleRemoveBtn(user)
+                                            }
                                         >
                                             <i className="fas fa-times-circle"></i>
                                         </button>
@@ -238,7 +240,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                             type="button"
                             disabled={
                                 pagination &&
-                                    pagination.pageCount > pagination.pageCurrent
+                                pagination.pageCount > pagination.pageCurrent
                                     ? false
                                     : true
                             }

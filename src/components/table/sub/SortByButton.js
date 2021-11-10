@@ -5,7 +5,7 @@ const SortByButton = ({
     currentSortBy = '',
     sortBy = '',
     order = 'asc',
-    onSet = () => { },
+    onSet = () => {},
 }) => {
     const [flag, setFlag] = useState('');
 

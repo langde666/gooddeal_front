@@ -286,16 +286,28 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
-                                <UserLevelLabel level={level} />
+                                <small>
+                                    <UserLevelLabel level={level} />
+                                </small>
                             </td>
-                            <td>{level.minPoint}</td>
                             <td>
-                                {level.discount &&
-                                    level.discount.$numberDecimal}
-                                %
+                                <small>{level.minPoint}</small>
                             </td>
-                            <td>{level.color}</td>
-                            <td>{level.isDeleted && <DeletedLabel />}</td>
+                            <td>
+                                <small>
+                                    {level.discount &&
+                                        level.discount.$numberDecimal}
+                                    %
+                                </small>
+                            </td>
+                            <td>
+                                <small>{level.color}</small>
+                            </td>
+                            <td>
+                                <small>
+                                    {level.isDeleted && <DeletedLabel />}
+                                </small>
+                            </td>
                             <td className="text-center">
                                 <div className="position-relative d-inline-block me-2">
                                     <button

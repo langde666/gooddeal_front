@@ -2,8 +2,8 @@ const ConfirmDialog = ({
     title = 'Confirm the action',
     message = 'Are you sure about that?',
     color = 'primary',
-    onSubmit = () => { },
-    onClose = () => { },
+    onSubmit = () => {},
+    onClose = () => {},
 }) => {
     const onConfirm = () => {
         onSubmit();
@@ -23,10 +23,7 @@ const ConfirmDialog = ({
                     animation: 'show 0.6s ease',
                 }}
             >
-                <div
-                    className="modal-dialog"
-                    style={{ zIndex: '5', }}
-                >
+                <div className="modal-dialog" style={{ zIndex: '5' }}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className={`modal-title text-${color}`}>

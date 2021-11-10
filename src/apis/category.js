@@ -1,14 +1,30 @@
 const API = process.env.REACT_APP_API_URL;
 
-export const listActiveCategories = (filter) => {
-    const { search, sortBy, order, limit, page, categoryId } = filter;
-    return fetch(`${API}/active/categories?search=${search}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`, {
+export const getCategoryById = (userId, token, categoryId) => {
+    return fetch(`${API}/category/by/id/${categoryId}/${userId}?`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
         },
     })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const listActiveCategories = (filter) => {
+    const { search, sortBy, order, limit, page, categoryId } = filter;
+    return fetch(
+        `${API}/active/categories?search=${search}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        },
+    )
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
@@ -50,10 +66,9 @@ export const updateCategory = (userId, token, categoryId, category) => {
         mode: 'cors',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(category),
+        body: category,
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));

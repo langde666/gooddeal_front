@@ -56,7 +56,8 @@ const Modal = ({
             </div>
         </div>
 
-        <div className="fade cus-modal-backdrop"
+        <div
+            className="fade cus-modal-backdrop"
             style={{
                 position: 'fixed',
                 top: '0',

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const InputFile = ({
-    onChange = () => { },
-    onValidate = () => { },
+    onChange = () => {},
+    onValidate = () => {},
     size = 'avatar',
     label = 'File',
     isValid = false,
@@ -14,7 +14,11 @@ const InputFile = ({
     defaultSrc = '',
     noRadius = false,
 }) => {
-    const [src, setSrc] = useState(defaultSrc);
+    const [src, setSrc] = useState('');
+
+    useEffect(() => {
+        if (defaultSrc) setSrc(IMG + defaultSrc);
+    }, [defaultSrc]);
 
     const onHandleChange = (e) => {
         const input = e.target;
@@ -37,19 +41,22 @@ const InputFile = ({
 
     return (
         <div
-            className={`cus-input-group cus-input-group--file ${size == 'avatar' ? 'cus-avatar-wrap' : 'cus-cover-wrap'
-                }`}
+            className={`cus-input-group cus-input-group--file ${
+                size == 'avatar' ? 'cus-avatar-wrap' : 'cus-cover-wrap'
+            }`}
         >
             <label className="cus-input-group-label cus-input-group-label--file text-muted">
                 {label}
             </label>
             <div
-                className={`${size == 'avatar' ? 'cus-avatar-box' : 'cus-cover-box '
-                    }`}
+                className={`${
+                    size == 'avatar' ? 'cus-avatar-box' : 'cus-cover-box '
+                }`}
             >
                 <div
-                    className={`${size == 'avatar' ? 'cus-avatar' : 'cus-cover'
-                        }`}
+                    className={`${
+                        size == 'avatar' ? 'cus-avatar' : 'cus-cover'
+                    }`}
                 >
                     {src && (
                         <img
@@ -65,10 +72,11 @@ const InputFile = ({
 
                     {src && (
                         <label
-                            className={`${size == 'avatar'
-                                ? 'cus-avatar-icon cus-avatar-icon--rm'
-                                : 'cus-cover-icon cus-cover-icon--rm'
-                                }`}
+                            className={`${
+                                size == 'avatar'
+                                    ? 'cus-avatar-icon cus-avatar-icon--rm'
+                                    : 'cus-cover-icon cus-cover-icon--rm'
+                            }`}
                             onClick={handleReset}
                         >
                             <i className="fas fa-times"></i>
@@ -77,15 +85,17 @@ const InputFile = ({
 
                     {src && (
                         <label
-                            className={`${size == 'avatar'
-                                ? 'cus-avatar-icon'
-                                : 'cus-cover-icon'
-                                }`}
+                            className={`${
+                                size == 'avatar'
+                                    ? 'cus-avatar-icon'
+                                    : 'cus-cover-icon'
+                            }`}
                         >
                             <i className="fas fa-camera"></i>
                             <input
-                                className={`visually-hidden cus-input-group-input form-control ${isValid ? '' : 'is-invalid'
-                                    }`}
+                                className={`visually-hidden cus-input-group-input form-control ${
+                                    isValid ? '' : 'is-invalid'
+                                }`}
                                 type="file"
                                 disabled={isDisabled}
                                 accept={accept}
@@ -96,16 +106,18 @@ const InputFile = ({
 
                     {!src && (
                         <label
-                            className={`${size == 'avatar'
-                                ? 'cus-avatar-label'
-                                : 'cus-cover-label'
-                                }`}
+                            className={`${
+                                size == 'avatar'
+                                    ? 'cus-avatar-label'
+                                    : 'cus-cover-label'
+                            }`}
                             style={{ borderRadius: `${noRadius && '0'}` }}
                         >
                             <i className="fas fa-camera"></i>
                             <input
-                                className={`visually-hidden cus-input-group-input form-control ${isValid ? '' : 'is-invalid'
-                                    }`}
+                                className={`visually-hidden cus-input-group-input form-control ${
+                                    isValid ? '' : 'is-invalid'
+                                }`}
                                 type="file"
                                 disabled={isDisabled}
                                 accept={accept}

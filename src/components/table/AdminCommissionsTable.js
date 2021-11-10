@@ -280,15 +280,27 @@ const AdminCommissionTable = ({ heading = true }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
-                                <StoreCommissionLabel commission={commission} />
+                                <small>
+                                    <StoreCommissionLabel
+                                        commission={commission}
+                                    />
+                                </small>
                             </td>
                             <td>
-                                {commission.cost &&
-                                    commission.cost.$numberDecimal}{' '}
-                                %
+                                <small>
+                                    {commission.cost &&
+                                        commission.cost.$numberDecimal}
+                                    %
+                                </small>
                             </td>
-                            <td className="text-start ps-4">{commission.description}</td>
-                            <td>{commission.isDeleted && <DeletedLabel />}</td>
+                            <td className="text-start ps-4">
+                                <small>{commission.description}</small>
+                            </td>
+                            <td>
+                                <small>
+                                    {commission.isDeleted && <DeletedLabel />}
+                                </small>
+                            </td>
                             <td className="text-center">
                                 <div className="position-relative d-inline-block me-2">
                                     <button

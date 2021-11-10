@@ -169,10 +169,20 @@ const AdminUsersTable = ({ heading = true }) => {
                             <td className="text-start ps-4">
                                 <UserSmallCard user={user} />
                             </td>
-                            <td>{user.id_card || '-'}</td>
-                            <td>{user.email || '-'}</td>
-                            <td>{user.phone || '-'}</td>
-                            <td>{humanReadableDate(user.createdAt)}</td>
+                            <td className="text-start ps-4">
+                                <small>{user.id_card || '-'}</small>
+                            </td>
+                            <td className="text-start ps-4">
+                                <small>{user.email || '-'}</small>
+                            </td>
+                            <td className="text-start ps-4">
+                                <small>{user.phone || '-'}</small>
+                            </td>
+                            <td className="text-start ps-4">
+                                <small>
+                                    {humanReadableDate(user.createdAt)}
+                                </small>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

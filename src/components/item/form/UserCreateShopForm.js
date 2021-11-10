@@ -161,10 +161,15 @@ const CreateShopForm = (props) => {
                 />
             )}
 
-            <form className="create-shop-form border border-primary rounded-3 row mb-2" onSubmit={handleSubmit}>
+            <form
+                className="create-shop-form border border-primary rounded-3 row mb-2"
+                onSubmit={handleSubmit}
+            >
                 <div className="col-12 bg-primary p-3">
                     <Logo />
-                    <p className="text-white ms-2 fw-light">Creating shop is easy.</p>
+                    <p className="text-white ms-2 fw-light">
+                        Creating shop is easy.
+                    </p>
                 </div>
 
                 <div className="col-12 px-4 mt-2">
@@ -249,7 +254,9 @@ const CreateShopForm = (props) => {
                                             ' (' +
                                             c.cost.$numberDecimal +
                                             '%/order)',
-                                        icon: <i className="fas fa-cash-register"></i>,
+                                        icon: (
+                                            <i className="fas fa-cash-register"></i>
+                                        ),
                                     };
                                     return newC;
                                 })
@@ -289,15 +296,16 @@ const CreateShopForm = (props) => {
                             Privacy Policy
                         </Link>
                         .
-
                     </small>
                 </div>
 
                 <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
-                    <Link to="/account/shopManager"
+                    <Link
+                        to="/account/shopManager"
                         className="text-decoration-none link-hover"
                     >
-                        <i className="fas fa-arrow-circle-left"></i> Back to Shop Manager
+                        <i className="fas fa-arrow-circle-left"></i> Back to
+                        Shop Manager
                     </Link>
                     <button
                         type="submit"

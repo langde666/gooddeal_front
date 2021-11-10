@@ -3,7 +3,7 @@ const IMG = process.env.REACT_APP_STATIC_URL;
 
 const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
     <div
-        className='d-inline-flex align-items-center px-2 py-1 border rounded'
+        className="d-inline-flex align-items-center px-2 py-1 border rounded"
         style={style}
     >
         <Link
@@ -22,8 +22,13 @@ const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
             to={`/category/${category._id}`}
         >
             <h6>
-                {parent && category.categoryId && category.categoryId.categoryId && (category.categoryId.categoryId.name + ' > ')}
-                {parent && category.categoryId && (category.categoryId.name + ' > ')}
+                {parent &&
+                    category.categoryId &&
+                    category.categoryId.categoryId &&
+                    category.categoryId.categoryId.name + ' > '}
+                {parent &&
+                    category.categoryId &&
+                    category.categoryId.name + ' > '}
                 {category.name}
             </h6>
         </Link>

@@ -245,9 +245,15 @@ const StoreStaffsTable = ({ heading = true }) => {
                             <td>
                                 <UserSmallCard user={staff} />
                             </td>
-                            <td>{staff.id_card || '-'}</td>
-                            <td>{staff.email || '-'}</td>
-                            <td>{staff.phone || '-'}</td>
+                            <td>
+                                <small>{staff.id_card || '-'}</small>
+                            </td>
+                            <td>
+                                <small>{staff.email || '-'}</small>
+                            </td>
+                            <td>
+                                <small>{staff.phone || '-'}</small>
+                            </td>
                             {ownerId && userId == ownerId._id && (
                                 <td className="text-center">
                                     <div className="position-relative d-inline-block">
