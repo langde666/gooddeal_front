@@ -3,7 +3,7 @@ const IMG = process.env.REACT_APP_STATIC_URL;
 
 const StoreSmallCard = ({ store = {}, bodername = false }) => (
     <div
-        className={`d-inline-flex align-items-center px-2 py-1 border rounded ${
+        className={`d-inline-flex align-items-center ${
             bodername && 'bg-body shadow'
         }`}
     >

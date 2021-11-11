@@ -15,6 +15,8 @@ import AdminStorePage from './admin/StorePage';
 import AdminCategoryPage from './admin/CategoryPage';
 import AdminCreateCategoryPage from './admin/CreateCategoryPage';
 import AdminEditCategoryPage from './admin/EditCategoryPage';
+import AdminStylePage from './admin/StylePage';
+import AdminStyleValuesPage from './admin/StyleValuePage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -101,6 +103,16 @@ const Routes = () => {
                     path="/admin/category/editCategory/:categoryId"
                     exact
                     component={AdminEditCategoryPage}
+                />
+                <AdminRoute
+                    path="/admin/style"
+                    exact
+                    component={AdminStylePage}
+                />
+                <AdminRoute
+                    path="/admin/style/values/:styleId"
+                    exact
+                    component={AdminStyleValuesPage}
                 />
 
                 <PrivateRoute

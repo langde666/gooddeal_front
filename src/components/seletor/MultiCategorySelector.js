@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import { listCategories, listActiveCategories } from '../../apis/category';
 import SearchInput from '../ui/SearchInput';
-import CategorySmallCard from '../card/CategorySmallCard';
 import Error from '../ui/Error';
 import Loading from '../ui/Loading';
 
-const CategorySelector = ({
+const MultiCategorySelector = ({
     defaultValue = '',
     isActive = false,
-    selected = 'child',
-    label = 'Choosed category',
     onSet = () => {},
-    isSelected = true,
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -45,7 +41,8 @@ const CategorySelector = ({
         page: 1,
     });
 
-    const [selectedCategory, setSelectedCategory] = useState(defaultValue);
+    const [nonSelectedCategories, setNonSelectedCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState(defaultValue);
 
     const loadCategories = (filter, setCategories) => {
         setError('');
@@ -83,6 +80,10 @@ const CategorySelector = ({
     };
 
     useEffect(() => {
+        setSelectedCategories(defaultValue);
+    }, [defaultValue]);
+
+    useEffect(() => {
         loadCategories(lv1Filter, setLv1Categories);
     }, [lv1Filter]);
 
@@ -97,8 +98,10 @@ const CategorySelector = ({
     }, [lv3Filter]);
 
     useEffect(() => {
-        setSelectedCategory(defaultValue);
-    }, [defaultValue]);
+        setNonSelectedCategories(
+            lv3Categories.filter((c) => selectedCategories.indexOf(c) === -1),
+        );
+    }, [lv3Categories]);
 
     const handleChangeKeyword = (keyword) => {
         setLv1Filter({
@@ -129,21 +132,27 @@ const CategorySelector = ({
                 ...lv3Filter,
                 categoryId: '',
             });
-
-        if (isSelected)
-            if (
-                (selected === 'parent' && filter === lv2Filter) ||
-                (selected === 'parent' && filter === lv3Filter) ||
-                (selected === 'child' && filter === null)
-            ) {
-                setSelectedCategory(category);
-                if (onSet) onSet(category);
-            }
     };
 
-    const handleRemove = () => {
-        setSelectedCategory('');
-        if (onSet) onSet('');
+    const handleAdd = (category) => {
+        setSelectedCategories([...selectedCategories, category]);
+        setNonSelectedCategories(
+            nonSelectedCategories.filter((c) => c._id !== category._id),
+        );
+
+        if (onSet) onSet([...selectedCategories, category]);
+    };
+
+    const handleRemove = (category) => {
+        if (lv3Categories.indexOf(category) !== -1)
+            setNonSelectedCategories([...nonSelectedCategories, category]);
+
+        setSelectedCategories(
+            selectedCategories.filter((c) => c._id !== category._id),
+        );
+
+        if (onSet)
+            onSet(selectedCategories.filter((c) => c._id !== category._id));
     };
 
     return (
@@ -224,64 +233,36 @@ const CategorySelector = ({
                             overflowY: 'auto',
                         }}
                     >
-                        {lv3Categories &&
-                            lv3Categories.map((category, index) => (
+                        {selectedCategories &&
+                            selectedCategories.map((category, index) => (
                                 <button
                                     key={index}
                                     type="button"
-                                    className={`list-group-item ripple list-group-item-action ${
-                                        selectedCategory &&
-                                        category._id == selectedCategory._id &&
-                                        'active'
-                                    }`}
-                                    onClick={() =>
-                                        handleClick(null, null, category)
-                                    }
+                                    className="list-group-item ripple list-group-item-action active d-flex justify-content-between align-items-center"
+                                    onClick={() => handleRemove(category)}
                                 >
                                     {category.name}
+                                    <i className="fas fa-check-square"></i>
+                                </button>
+                            ))}
+
+                        {nonSelectedCategories &&
+                            nonSelectedCategories.map((category, index) => (
+                                <button
+                                    key={index}
+                                    type="button"
+                                    className="list-group-item ripple list-group-item-action d-flex justify-content-between align-items-center"
+                                    onClick={() => handleAdd(category)}
+                                >
+                                    {category.name}
+                                    <i className="far fa-check-square"></i>
                                 </button>
                             ))}
                     </div>
                 </div>
             </div>
-
-            {isSelected && (
-                <div className="col mt-2">
-                    <div className="mt-4 position-relative">
-                        <label
-                            className="position-absolute text-muted"
-                            style={{
-                                fontSize: '0.8rem',
-                                left: '12px',
-                                top: '-16px',
-                            }}
-                        >
-                            {label}
-                        </label>
-
-                        <div className="form-control border-0">
-                            {selectedCategory ? (
-                                <span className="mb-1 d-flex align-items-center">
-                                    <CategorySmallCard
-                                        category={selectedCategory}
-                                    />
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger btn-sm ripple ms-2"
-                                        onClick={() => handleRemove()}
-                                    >
-                                        <i className="fas fa-times-circle"></i>
-                                    </button>
-                                </span>
-                            ) : (
-                                <span>No category choosed</span>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
 
-export default CategorySelector;
+export default MultiCategorySelector;

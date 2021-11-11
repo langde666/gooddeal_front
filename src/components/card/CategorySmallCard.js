@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
-    <div
-        className="d-inline-flex align-items-center px-2 py-1 border rounded"
-        style={style}
-    >
+    <div className="d-inline-flex align-items-center" style={style}>
         <Link
             className="text-reset text-decoration-none me-2"
             to={`/category/${category._id}`}

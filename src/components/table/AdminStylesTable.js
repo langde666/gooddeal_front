@@ -1,24 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import {
-    listCategories,
-    removeCategory,
-    restoreCategory,
-} from '../../apis/category';
+import { listStyles, removeStyle, restoreStyle } from '../../apis/style';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
 import DeletedLabel from '../label/DeletedLabel';
-import CategorySmallCard from '../card/CategorySmallCard';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
+import CategorySmallCard from '../card/CategorySmallCard';
 
-const IMG = process.env.REACT_APP_STATIC_URL;
-
-const AdminCateroriesTable = ({ heading = true }) => {
+const AdminStylesTable = ({ heading = true }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,17 +20,17 @@ const AdminCateroriesTable = ({ heading = true }) => {
     const [isConfirming1, setIsConfirming1] = useState(false);
     const [run, setRun] = useState(false);
 
-    const [removedCategory, setRemovedCategory] = useState({});
-    const [restoredCategory, setRestoredCategory] = useState({});
+    const [removedStyle, setRemovedStyle] = useState({});
+    const [restoredStyle, setRestoredStyle] = useState({});
 
-    const [categories, setCategories] = useState([]);
+    const [styles, setStyles] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
     });
     const [filter, setFilter] = useState({
         search: '',
+        sortBy: 'name',
         categoryId: '',
-        sortBy: 'categoryId',
         order: 'asc',
         limit: 6,
         page: 1,
@@ -47,13 +41,14 @@ const AdminCateroriesTable = ({ heading = true }) => {
     const init = () => {
         setError('');
         setIsLoading(true);
-        listCategories(_id, accessToken, filter)
+        listStyles(_id, accessToken, filter)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    setCategories(data.categories);
+                    setStyles(data.styles);
+                    console.log(data.styles);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
@@ -95,13 +90,13 @@ const AdminCateroriesTable = ({ heading = true }) => {
         });
     };
 
-    const handleRemoveCategory = (category) => {
-        setRemovedCategory(category);
+    const handleRemove = (style) => {
+        setRemovedStyle(style);
         setIsConfirming(true);
     };
 
-    const handleRestoreCategory = (category) => {
-        setRestoredCategory(category);
+    const handleRestore = (style) => {
+        setRestoredStyle(style);
         setIsConfirming1(true);
     };
 
@@ -109,7 +104,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeCategory(_id, accessToken, removedCategory._id)
+        removeStyle(_id, accessToken, removedStyle._id)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -138,7 +133,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        restoreCategory(_id, accessToken, restoredCategory._id)
+        restoreStyle(_id, accessToken, restoredStyle._id)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -164,17 +159,11 @@ const AdminCateroriesTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-categories-manager-table-wrap position-relative">
+        <div className="admin-styles-manager-table-wrap position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this category"
-                    message={
-                        <span>
-                            Are you sure you want to remove{' '}
-                            <CategorySmallCard category={removedCategory} />
-                        </span>
-                    }
+                    title="Remove this style"
                     color="danger"
                     onSubmit={onSubmitRemove}
                     onClose={() => setIsConfirming(false)}
@@ -182,19 +171,13 @@ const AdminCateroriesTable = ({ heading = true }) => {
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this category"
-                    message={
-                        <span>
-                            Are you sure you want to restore{' '}
-                            <CategorySmallCard category={restoredCategory} />
-                        </span>
-                    }
+                    title="Restore this style"
                     onSubmit={onSubmitRestore}
                     onClose={() => setIsConfirming1(false)}
                 />
             )}
 
-            {heading && <h4 className="mb-3">Category</h4>}
+            {heading && <h4 className="mb-3">Style</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -207,17 +190,16 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         <Link
                             type="button"
                             className="btn btn-primary ripple text-nowrap"
-                            to="/admin/category/createNewCategory"
+                            to="/admin/style/createNewStyle"
                         >
-                            <i className="fas fa-plus-circle me-2"></i>New
-                            category
+                            <i className="fas fa-plus-circle me-2"></i>New Style
                         </Link>
                     </div>
                 </div>
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="admin-categories-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="admin-styles-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -233,17 +215,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Category"
-                                sortBy="categoryId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Name"
+                                title="Style"
                                 sortBy="name"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
@@ -253,8 +225,8 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Image"
-                                sortBy="image"
+                                title="Of categories"
+                                sortBy="categoryIds "
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -270,72 +242,67 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                 }
                             />
                         </th>
-
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map((category, index) => (
+                    {styles.map((style, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td
-                                className="text-start ps-4"
-                                style={{ width: '400px' }}
-                            >
-                                <CategorySmallCard category={category} />
+                            <td className="text-start ps-4">{style.name}</td>
+
+                            <td className="text-start ps-5">
+                                {style.categoryIds.map((category, index) => (
+                                    <div className="" key={index}>
+                                        <CategorySmallCard
+                                            category={category}
+                                        />
+                                    </div>
+                                ))}
                             </td>
-                            <td className="text-start ps-4">{category.name}</td>
+
+                            <td>{style.isDeleted && <DeletedLabel />}</td>
                             <td>
-                                <div
-                                    style={{
-                                        position: 'relative',
-                                        paddingBottom: '100px',
-                                        width: '100px',
-                                        height: '0',
-                                    }}
-                                >
-                                    <img
-                                        src={IMG + category.image}
-                                        alt={category.name}
-                                        style={{
-                                            position: 'absolute',
-                                            width: '100%',
-                                            height: '100%',
-                                            top: '0',
-                                            left: '0',
-                                            objectFit: 'cover',
-                                        }}
-                                    />
+                                <div className="position-relative d-inline-block me-2">
+                                    <Link
+                                        type="button"
+                                        className="btn btn-primary ripple cus-tooltip"
+                                        to={`/admin/style/values/${style._id}`}
+                                    >
+                                        <i className="fas fa-list-ul"></i>
+                                    </Link>
+                                    <small className="cus-tooltip-msg">
+                                        View list of values
+                                    </small>
                                 </div>
                             </td>
-                            <td>{category.isDeleted && <DeletedLabel />}</td>
+
                             <td className="text-nowrap">
                                 <div className="position-relative d-inline-block me-2">
                                     <Link
                                         type="button"
                                         className="btn btn-primary ripple cus-tooltip"
-                                        to={`/admin/category/editCategory/${category._id}`}
+                                        to={`/admin/style/editStyle/${style._id}`}
                                     >
                                         <i className="fas fa-pen"></i>
                                     </Link>
                                     <small className="cus-tooltip-msg">
-                                        Edit category
+                                        Edit style
                                     </small>
                                 </div>
 
-                                {!category.isDeleted ? (
+                                {!style.isDeleted ? (
                                     <div className="position-relative d-inline-block">
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveCategory(category)
-                                            }
+                                            onClick={() => handleRemove(style)}
                                         >
                                             <i className="fas fa-trash-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Remove category
+                                            Remove style
                                         </small>
                                     </div>
                                 ) : (
@@ -343,14 +310,12 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                         <button
                                             type="button"
                                             className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRestoreCategory(category)
-                                            }
+                                            onClick={() => handleRestore(style)}
                                         >
                                             <i className="fas fa-trash-restore-alt"></i>
                                         </button>
                                         <small className="cus-tooltip-msg">
-                                            Restore category
+                                            Restore style
                                         </small>
                                     </div>
                                 )}
@@ -370,4 +335,4 @@ const AdminCateroriesTable = ({ heading = true }) => {
     );
 };
 
-export default AdminCateroriesTable;
+export default AdminStylesTable;
