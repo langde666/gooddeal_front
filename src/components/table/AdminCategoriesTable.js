@@ -233,16 +233,6 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
-                                title="Category"
-                                sortBy="categoryId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
                                 title="Name"
                                 sortBy="name"
                                 onSet={(order, sortBy) =>
@@ -260,6 +250,18 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                 }
                             />
                         </th>
+
+                        <th scope="col">
+                            <SortByButton
+                                currentSortBy={filter.sortBy}
+                                title="Parent category"
+                                sortBy="categoryId"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+
                         <th scope="col">
                             <SortByButton
                                 currentSortBy={filter.sortBy}
@@ -278,12 +280,6 @@ const AdminCateroriesTable = ({ heading = true }) => {
                     {categories.map((category, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td
-                                className="text-start ps-4"
-                                style={{ width: '400px' }}
-                            >
-                                <CategorySmallCard category={category} />
-                            </td>
                             <td className="text-start ps-4">{category.name}</td>
                             <td>
                                 <div
@@ -307,6 +303,15 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                         }}
                                     />
                                 </div>
+                            </td>
+                            <td className="text-start ps-4">
+                                {category.categoryId ? (
+                                    <CategorySmallCard
+                                        category={category.categoryId}
+                                    />
+                                ) : (
+                                    <span>No parent category</span>
+                                )}
                             </td>
                             <td>{category.isDeleted && <DeletedLabel />}</td>
                             <td className="text-nowrap">

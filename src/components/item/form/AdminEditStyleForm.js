@@ -1,53 +1,44 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../../apis/auth';
-import { updateCategory, getCategoryById } from '../../../apis/category';
+import { updateStyle, getStyleById } from '../../../apis/style';
 import { regexTest } from '../../../helper/test';
 import Input from '../../ui/Input';
-import InputFile from '../../ui/InputFile';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
-import CategorySelector from '../../seletor/CategorySelector';
+import MultiCategorySelector from '../../seletor/MultiCategorySelector';
 
-const AdminEditCategoryForm = ({ categoryId = '' }) => {
+const AdminEditStyleForm = ({ styleId = '' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [newCategory, setNewCategory] = useState({
+    const [newStyle, setNewStyle] = useState({
         name: '',
-        image: '',
-        categoryId: '',
-        defaultParentCategory: '',
-        defaultSrc: '',
+        categoryIds: '',
+        defaultParentCategories: '',
         isValidName: true,
-        isValidImage: true,
     });
 
     const init = () => {
         const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
-        getCategoryById(_id, accessToken, categoryId)
+        getStyleById(_id, accessToken, styleId)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setNewCategory({
-                        name: data.category.name,
-                        image: '',
-                        categoryId: data.category.categoryId
-                            ? data.category.categoryId._id
-                            : '',
-                        defaultParentCategory: data.category.categoryId
-                            ? data.category.categoryId
-                            : '',
-                        defaultSrc: data.category.image,
+                    setNewStyle({
+                        name: data.style.name,
+                        categoryId: data.style.categoryIds.map(
+                            (category) => category._id,
+                        ),
+                        defaultParentCategories: data.style.categoryIds,
                         isValidName: true,
-                        isValidImage: true,
                     });
                 }
                 setIsLoading(false);
@@ -60,19 +51,19 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
 
     useEffect(() => {
         init();
-    }, [categoryId]);
+    }, [styleId]);
 
     const handleChange = (name, isValidName, value) => {
-        setNewCategory({
-            ...newCategory,
+        setNewStyle({
+            ...newStyle,
             [name]: value,
             [isValidName]: true,
         });
     };
 
     const handleValidate = (isValidName, flag) => {
-        setNewCategory({
-            ...newCategory,
+        setNewStyle({
+            ...newStyle,
             [isValidName]: flag,
         });
     };
@@ -80,38 +71,29 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const { name } = newCategory;
-        if (!name) {
-            setNewCategory({
-                ...newCategory,
+        const { name, categoryIds } = newStyle;
+        if (!name || !categoryIds || categoryIds.length === 0) {
+            setNewStyle({
+                ...newStyle,
                 isValidName: regexTest('anything', name),
             });
             return;
         }
 
-        const { isValidName, isValidImage } = newCategory;
-        if (!isValidName || !isValidImage) return;
+        const { isValidName } = newStyle;
+        if (!isValidName) return;
 
         setIsConfirming(true);
     };
 
     const onSubmit = () => {
         const { _id, accessToken } = getToken();
-
-        const formData = new FormData();
-        formData.set('name', newCategory.name);
-        if (newCategory.image) formData.set('image', newCategory.image);
-        if (newCategory.categoryId)
-            formData.set('categoryId', newCategory.categoryId);
-
-        for (var value of formData.values()) {
-            console.log(value);
-        }
+        // console.log(newStyle);
 
         setError('');
         setSuccess('');
         setIsLoading(true);
-        updateCategory(_id, accessToken, categoryId, formData)
+        updateStyle(_id, accessToken, styleId, newStyle)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -137,7 +119,7 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
     };
 
     return (
-        <div className="edit-category-form-wrap position-relative">
+        <div className="edit-style-form-wrap position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -148,23 +130,25 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
             )}
 
             <form
-                className="edit-category-form border border-primary rounded-3 row mb-2"
+                className="edit-style-form border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
-                    <h1 className="text-white fs-5 m-0">Edit category</h1>
+                    <h1 className="text-white fs-5 m-0">Create new style</h1>
                 </div>
 
                 <div className="col-12 mt-4 px-4">
-                    <CategorySelector
-                        label="Choosed parent category"
-                        selected="parent"
+                    <MultiCategorySelector
+                        label="Choosed categories"
                         isActive={false}
-                        defaultValue={newCategory.defaultParentCategory}
-                        onSet={(category) =>
-                            setNewCategory({
-                                ...newCategory,
-                                categoryId: category._id,
+                        isRequired={true}
+                        defaultValue={newStyle.defaultParentCategories}
+                        onSet={(categories) =>
+                            setNewStyle({
+                                ...newStyle,
+                                categoryIds: categories
+                                    ? categories.map((category) => category._id)
+                                    : '',
                             })
                         }
                     />
@@ -173,35 +157,16 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
                 <div className="col-12 px-4">
                     <Input
                         type="text"
-                        label="Category name"
-                        value={newCategory.name}
-                        isValid={newCategory.isValidName}
-                        feedback="Please provide a valid category name."
+                        label="Style name"
+                        value={newStyle.name}
+                        isValid={newStyle.isValidName}
+                        feedback="Please provide a valid style name."
                         validator="anything"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
                         }
                         onValidate={(flag) =>
                             handleValidate('isValidName', flag)
-                        }
-                    />
-                </div>
-
-                <div className="col-12 px-4 mt-2">
-                    <InputFile
-                        label="Category image"
-                        size="avatar"
-                        noRadius={true}
-                        defaultSrc={newCategory.defaultSrc}
-                        value={newCategory.image}
-                        isValid={newCategory.isValidImage}
-                        feedback="Please provide a valid category avatar."
-                        accept="image/jpg, image/jpeg, image/png, image/gif"
-                        onChange={(value) =>
-                            handleChange('image', 'isValidImage', value)
-                        }
-                        onValidate={(flag) =>
-                            handleValidate('isValidImage', flag)
                         }
                     />
                 </div>
@@ -217,14 +182,13 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
                         <Success msg={success} />
                     </div>
                 )}
-
                 <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
                     <Link
-                        to="/admin/category"
+                        to="/admin/style"
                         className="text-decoration-none cus-link-hover"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
-                        Category Manager
+                        Style Manager
                     </Link>
                     <button
                         type="submit"
@@ -232,7 +196,7 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
                         onClick={handleSubmit}
                         style={{ width: '40%' }}
                     >
-                        Edit
+                        Submit
                     </button>
                 </div>
             </form>
@@ -240,4 +204,4 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
     );
 };
 
-export default AdminEditCategoryForm;
+export default AdminEditStyleForm;

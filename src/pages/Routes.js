@@ -16,6 +16,8 @@ import AdminCategoryPage from './admin/CategoryPage';
 import AdminCreateCategoryPage from './admin/CreateCategoryPage';
 import AdminEditCategoryPage from './admin/EditCategoryPage';
 import AdminStylePage from './admin/StylePage';
+import AdminCreateStylePage from './admin/CreateStylePage';
+import AdminEditStylePage from './admin/EditStylePage';
 import AdminStyleValuesPage from './admin/StyleValuePage';
 //account
 import AccountProfilePage from './account/ProfilePage';
@@ -108,6 +110,16 @@ const Routes = () => {
                     path="/admin/style"
                     exact
                     component={AdminStylePage}
+                />
+                <AdminRoute
+                    path="/admin/style/createNewStyle"
+                    exact
+                    component={AdminCreateStylePage}
+                />
+                <AdminRoute
+                    path="/admin/style/editStyle/:styleId"
+                    exact
+                    component={AdminEditStylePage}
                 />
                 <AdminRoute
                     path="/admin/style/values/:styleId"

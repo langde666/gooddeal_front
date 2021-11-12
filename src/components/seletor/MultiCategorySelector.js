@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import { listCategories, listActiveCategories } from '../../apis/category';
 import SearchInput from '../ui/SearchInput';
+import CategorySmallCard from '../card/CategorySmallCard';
 import Error from '../ui/Error';
 import Loading from '../ui/Loading';
 
 const MultiCategorySelector = ({
     defaultValue = '',
     isActive = false,
+    isRequired = false,
+    label = 'Choosed category',
     onSet = () => {},
+    isSelected = true,
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -41,7 +45,6 @@ const MultiCategorySelector = ({
         page: 1,
     });
 
-    const [nonSelectedCategories, setNonSelectedCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState(defaultValue);
 
     const loadCategories = (filter, setCategories) => {
@@ -80,10 +83,6 @@ const MultiCategorySelector = ({
     };
 
     useEffect(() => {
-        setSelectedCategories(defaultValue);
-    }, [defaultValue]);
-
-    useEffect(() => {
         loadCategories(lv1Filter, setLv1Categories);
     }, [lv1Filter]);
 
@@ -98,10 +97,9 @@ const MultiCategorySelector = ({
     }, [lv3Filter]);
 
     useEffect(() => {
-        setNonSelectedCategories(
-            lv3Categories.filter((c) => selectedCategories.indexOf(c) === -1),
-        );
-    }, [lv3Categories]);
+        console.log(defaultValue);
+        setSelectedCategories(defaultValue);
+    }, [defaultValue]);
 
     const handleChangeKeyword = (keyword) => {
         setLv1Filter({
@@ -132,27 +130,29 @@ const MultiCategorySelector = ({
                 ...lv3Filter,
                 categoryId: '',
             });
+
+        if (isSelected && filter === null) {
+            const temp = [...selectedCategories].map(
+                (category) => category._id,
+            );
+            if (temp.indexOf(category._id) === -1) {
+                setSelectedCategories([...selectedCategories, category]);
+                if (onSet) onSet([...selectedCategories, category]);
+            }
+        }
     };
 
-    const handleAdd = (category) => {
-        setSelectedCategories([...selectedCategories, category]);
-        setNonSelectedCategories(
-            nonSelectedCategories.filter((c) => c._id !== category._id),
-        );
+    const handleRemove = (index) => {
+        let newArray = selectedCategories;
+        newArray.splice(index, 1);
 
-        if (onSet) onSet([...selectedCategories, category]);
-    };
-
-    const handleRemove = (category) => {
-        if (lv3Categories.indexOf(category) !== -1)
-            setNonSelectedCategories([...nonSelectedCategories, category]);
-
-        setSelectedCategories(
-            selectedCategories.filter((c) => c._id !== category._id),
-        );
-
-        if (onSet)
-            onSet(selectedCategories.filter((c) => c._id !== category._id));
+        if (newArray.length !== 0) {
+            setSelectedCategories(newArray);
+            if (onSet) onSet(newArray);
+        } else {
+            setSelectedCategories('');
+            if (onSet) onSet('');
+        }
     };
 
     return (
@@ -170,7 +170,6 @@ const MultiCategorySelector = ({
                         className="list-group m-1"
                         style={{
                             width: '33.33333%',
-                            overflowY: 'auto',
                         }}
                     >
                         {lv1Categories &&
@@ -200,7 +199,6 @@ const MultiCategorySelector = ({
                         className="list-group m-1"
                         style={{
                             width: '33.33333%',
-                            overflowY: 'auto',
                         }}
                     >
                         {lv2Categories &&
@@ -230,37 +228,73 @@ const MultiCategorySelector = ({
                         className="list-group m-1"
                         style={{
                             width: '33.33333%',
-                            overflowY: 'auto',
                         }}
                     >
-                        {selectedCategories &&
-                            selectedCategories.map((category, index) => (
+                        {lv3Categories &&
+                            lv3Categories.map((category, index) => (
                                 <button
                                     key={index}
                                     type="button"
-                                    className="list-group-item ripple list-group-item-action active d-flex justify-content-between align-items-center"
-                                    onClick={() => handleRemove(category)}
+                                    className={`list-group-item ripple list-group-item-action ${
+                                        selectedCategories &&
+                                        selectedCategories
+                                            .map((category) => category._id)
+                                            .indexOf(category._id) !== -1 &&
+                                        'active'
+                                    }`}
+                                    onClick={() =>
+                                        handleClick(null, null, category)
+                                    }
                                 >
                                     {category.name}
-                                    <i className="fas fa-check-square"></i>
-                                </button>
-                            ))}
-
-                        {nonSelectedCategories &&
-                            nonSelectedCategories.map((category, index) => (
-                                <button
-                                    key={index}
-                                    type="button"
-                                    className="list-group-item ripple list-group-item-action d-flex justify-content-between align-items-center"
-                                    onClick={() => handleAdd(category)}
-                                >
-                                    {category.name}
-                                    <i className="far fa-check-square"></i>
                                 </button>
                             ))}
                     </div>
                 </div>
             </div>
+
+            {isSelected && (
+                <div className="col mt-2">
+                    <div className="mt-4 position-relative">
+                        <label
+                            className="position-absolute text-muted"
+                            style={{
+                                fontSize: '0.8rem',
+                                left: '12px',
+                                top: '-16px',
+                            }}
+                        >
+                            {label}
+                        </label>
+
+                        <div className="form-control border-0">
+                            {selectedCategories ? (
+                                selectedCategories.map((category, index) => (
+                                    <span
+                                        key={index}
+                                        className="mb-1 d-flex align-items-center"
+                                    >
+                                        <CategorySmallCard
+                                            category={category}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger btn-sm ripple ms-2"
+                                            onClick={() => handleRemove(index)}
+                                        >
+                                            <i className="fas fa-times-circle"></i>
+                                        </button>
+                                    </span>
+                                ))
+                            ) : (
+                                <span className={isRequired && 'text-danger'}>
+                                    No category choosed
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

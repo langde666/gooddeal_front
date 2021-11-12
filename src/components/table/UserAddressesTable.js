@@ -111,9 +111,7 @@ const UserAddressesTable = ({ heading = true }) => {
                         addresses.map((address, index) => (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td className="text-start ps-4">
-                                    <small>{address}</small>
-                                </td>
+                                <td className="text-start ps-4">{address}</td>
                                 <td>
                                     <div className="position-relative d-inline-block me-2">
                                         <button

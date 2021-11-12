@@ -48,7 +48,6 @@ const AdminStylesTable = ({ heading = true }) => {
                     setIsLoading(false);
                 } else {
                     setStyles(data.styles);
-                    console.log(data.styles);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,

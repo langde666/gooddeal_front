@@ -286,7 +286,9 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td className="text-start ps-4">
-                                <StoreLevelLabel level={level} />
+                                <small>
+                                    <StoreLevelLabel level={level} />
+                                </small>
                             </td>
                             <td>{level.minPoint}</td>
                             <td>

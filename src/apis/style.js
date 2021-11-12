@@ -1,5 +1,18 @@
 const API = process.env.REACT_APP_API_URL;
 
+export const getStyleById = (userId, token, styleId) => {
+    return fetch(`${API}/style/by/id/${styleId}/${userId}?`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const listStyles = (userId, token, filter) => {
     const { search, sortBy, order, limit, page, categoryId } = filter;
     return fetch(
