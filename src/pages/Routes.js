@@ -38,6 +38,7 @@ import VendorOrdersPage from './vendor/OrdersPage';
 import VendorStaffsPage from './vendor/StaffsPage';
 // import VendorGiftsPage from './vendor/GiftsPage';
 import VendorGDCoinsPage from './vendor/GDCoinsPage';
+import VendorStyleValuePage from './vendor/StyleValuePage';
 //user
 import UserHomePage from './user/UserHomePage';
 import UserAboutPage from './user/UserAboutPage';
@@ -188,6 +189,11 @@ const Routes = () => {
                     path="/vendor/products/:storeId"
                     exact
                     component={VendorProductsPage}
+                />
+                <PrivateRoute
+                    path="/vendor/products/createNewStyleValue/:styleId/:storeId"
+                    exact
+                    component={VendorStyleValuePage}
                 />
                 <PrivateRoute
                     path="/vendor/orders/:storeId"

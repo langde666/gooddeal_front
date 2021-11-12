@@ -34,10 +34,10 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
                 } else {
                     setNewStyle({
                         name: data.style.name,
-                        categoryId: data.style.categoryIds.map(
+                        defaultParentCategories: data.style.categoryIds,
+                        categoryIds: data.style.categoryIds.map(
                             (category) => category._id,
                         ),
-                        defaultParentCategories: data.style.categoryIds,
                         isValidName: true,
                     });
                 }
@@ -134,7 +134,7 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
-                    <h1 className="text-white fs-5 m-0">Create new style</h1>
+                    <h1 className="text-white fs-5 m-0">Edit style</h1>
                 </div>
 
                 <div className="col-12 mt-4 px-4">

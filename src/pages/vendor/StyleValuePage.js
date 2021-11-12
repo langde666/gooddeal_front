@@ -1,27 +1,29 @@
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import AdminLayout from '../../components/layout/AdminLayout';
+import VendorLayout from '../../components/layout/VendorLayout';
 import StyleValuesTable from '../../components/table/StyleValuesTable';
 
 const StyleValuesPage = (props) => {
     const user = useSelector((state) => state.account.user);
-    const { styleId } = useParams();
+    const store = useSelector((state) => state.vendor.store);
+
+    const { styleId, storeId } = useParams();
     return (
-        <AdminLayout user={user}>
-            <div className="admin-style-values-manager-page">
-                <StyleValuesTable styleId={styleId} />
+        <VendorLayout user={user} store={store}>
+            <div className="vendor-style-values-manager-page">
+                <StyleValuesTable styleId={styleId} isActive={true} />
 
                 <div className="mt-4">
                     <Link
-                        to="/admin/style"
+                        to={`/vendor/product/createNewProduct/${storeId}`}
                         className="text-decoration-none cus-link-hover"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
-                        Style Manager
+                        Create new product
                     </Link>
                 </div>
             </div>
-        </AdminLayout>
+        </VendorLayout>
     );
 };
 

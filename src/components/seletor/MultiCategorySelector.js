@@ -97,7 +97,7 @@ const MultiCategorySelector = ({
     }, [lv3Filter]);
 
     useEffect(() => {
-        console.log(defaultValue);
+        // console.log(defaultValue);
         setSelectedCategories(defaultValue);
     }, [defaultValue]);
 

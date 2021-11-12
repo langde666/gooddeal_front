@@ -89,6 +89,18 @@ export const restoreStyle = (userId, token, styleId) => {
 };
 
 //style value
+export const listActiveStyleValues = (styleId) => {
+    return fetch(`${API}/active/style/values/by/style/${styleId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const listStyleValues = (userId, token, styleId) => {
     return fetch(`${API}/style/values/by/style/${styleId}/${userId}`, {
         method: 'GET',
@@ -97,6 +109,36 @@ export const listStyleValues = (userId, token, styleId) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
         },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const createStyleValue = (userId, token, styleValue) => {
+    return fetch(`${API}/style/value/create/${userId}`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(styleValue),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const updateStyleValue = (userId, token, valueId, styleValue) => {
+    return fetch(`${API}/style/value/${valueId}/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(styleValue),
     })
         .then((res) => res.json())
         .catch((error) => console.log(error));
