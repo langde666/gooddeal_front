@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import { removeStaff } from '../../apis/store';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
@@ -14,7 +14,12 @@ import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import SortByButton from './sub/SortByButton';
 
-const StoreStaffsTable = ({ heading = true }) => {
+const StoreStaffsTable = ({
+    heading = true,
+    staffIds = [],
+    ownerId = {},
+    storeId = '',
+}) => {
     const [removedStaff, setRemovedStaff] = useState({});
 
     const [isloading, setIsLoading] = useState(false);
@@ -23,11 +28,11 @@ const StoreStaffsTable = ({ heading = true }) => {
     const [isConfirming, setIsConfirming] = useState(false);
 
     const { _id: userId, accessToken } = getToken();
-    const {
-        staffIds,
-        ownerId,
-        _id: storeId,
-    } = useSelector((state) => state.vendor.store);
+    // const {
+    //     staffIds,
+    //     ownerId,
+    //     _id: storeId,
+    // } = useSelector((state) => state.vendor.store);
     const [updateDispatch] = useUpdateDispatch();
 
     const [listStaffs, setListStaffs] = useState([]);

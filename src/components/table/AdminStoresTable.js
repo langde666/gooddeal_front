@@ -27,7 +27,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
         sortBy: 'name',
         sortMoreBy: 'point',
         isActive,
-        order: '',
+        order: 'asc',
         limit: 6,
         page: 1,
     });

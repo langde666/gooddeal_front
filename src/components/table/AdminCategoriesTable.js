@@ -285,8 +285,8 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                 <div
                                     style={{
                                         position: 'relative',
-                                        paddingBottom: '100px',
-                                        width: '100px',
+                                        paddingBottom: '72px',
+                                        width: '72px',
                                         height: '0',
                                     }}
                                 >

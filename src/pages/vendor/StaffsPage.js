@@ -42,7 +42,15 @@ const StaffsPage = (props) => {
                     </div>
                 </div>
 
-                {flag ? <StoreStaffsTable /> : <StoreOwnerTable />}
+                {flag ? (
+                    <StoreStaffsTable
+                        staffIds={store.staffIds}
+                        ownerId={store.ownerId}
+                        storeId={store._id}
+                    />
+                ) : (
+                    <StoreOwnerTable ownerId={store.ownerId} />
+                )}
             </div>
         </VendorLayout>
     );

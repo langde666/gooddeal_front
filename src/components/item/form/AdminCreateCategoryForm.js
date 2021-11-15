@@ -118,6 +118,7 @@ const AdminCreateCategoryForm = (props) => {
                 </div>
 
                 <div className="col-12 mt-4 px-4">
+                    <p className="">Choose category</p>
                     <CategorySelector
                         label="Choosed parent category"
                         selected="parent"

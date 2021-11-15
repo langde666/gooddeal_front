@@ -13,6 +13,7 @@ const CategorySelector = ({
     label = 'Choosed category',
     onSet = () => {},
     isSelected = true,
+    isRequired = false,
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -274,7 +275,9 @@ const CategorySelector = ({
                                     </button>
                                 </span>
                             ) : (
-                                <span>No category choosed</span>
+                                <span className={isRequired && 'text-danger'}>
+                                    No category choosed
+                                </span>
                             )}
                         </div>
                     </div>

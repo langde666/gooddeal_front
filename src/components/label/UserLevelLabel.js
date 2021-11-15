@@ -1,9 +1,9 @@
-const shields = {
-    bronze: '#CD7F32',
-    silver: '#C0C0C0',
-    gold: '#FFD700',
-    diamond: '#82aeb3',
-};
+// const shields = {
+//     bronze: '#CD7F32',
+//     silver: '#C0C0C0',
+//     gold: '#FFD700',
+//     diamond: '#82aeb3',
+// };
 
 const UserLevelLabel = ({ level = {}, detail = true }) => (
     <span className="position-relative d-inline-block">

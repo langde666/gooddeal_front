@@ -7,7 +7,10 @@ const AddressesPage = (props) => {
     return (
         <AccountLayout user={user}>
             <div className="user-addresses-page mt-2">
-                <UserAddressesTable heading={false} />
+                <UserAddressesTable
+                    heading={false}
+                    addresses={user.addresses}
+                />
             </div>
         </AccountLayout>
     );

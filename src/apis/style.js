@@ -30,6 +30,18 @@ export const listStyles = (userId, token, filter) => {
         .catch((error) => console.log(error));
 };
 
+export const listStyleByCategory = (categoryId) => {
+    return fetch(`${API}/active/styles?categoryId=${categoryId}&limit=100`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const createStyle = (userId, token, style) => {
     return fetch(`${API}/style/create/${userId}`, {
         method: 'POST',

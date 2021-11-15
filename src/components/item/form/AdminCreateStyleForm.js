@@ -107,6 +107,7 @@ const AdminCreateStyleForm = (props) => {
                 </div>
 
                 <div className="col-12 mt-4 px-4">
+                    <p className="">Choose category</p>
                     <MultiCategorySelector
                         label="Choosed categories"
                         isActive={false}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import { removeAddresses } from '../../apis/user';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
@@ -11,7 +11,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const UserAddressesTable = ({ heading = true }) => {
+const UserAddressesTable = ({ heading = true, addresses = [] }) => {
     const [editAddress, setEditAddress] = useState({});
     const [deleteAddress, setDeleteAddress] = useState({});
 
@@ -20,7 +20,7 @@ const UserAddressesTable = ({ heading = true }) => {
     const [success, setSuccess] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
 
-    const { addresses } = useSelector((state) => state.account.user);
+    // const { addresses } = useSelector((state) => state.account.user);
     const [updateDispatch] = useUpdateDispatch();
 
     const handleEditAddress = (address, index) => {

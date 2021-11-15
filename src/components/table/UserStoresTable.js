@@ -28,7 +28,7 @@ const UserStoresTable = ({ heading = true }) => {
         search: '',
         sortBy: 'name',
         sortMoreBy: 'rating',
-        order: '',
+        order: 'asc',
         limit: 6,
         page: 1,
     });

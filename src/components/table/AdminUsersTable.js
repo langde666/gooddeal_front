@@ -21,7 +21,7 @@ const AdminUsersTable = ({ heading = true }) => {
         search: '',
         sortBy: 'firstname',
         role: 'customer',
-        order: '',
+        order: 'asc',
         limit: 6,
         page: 1,
     });

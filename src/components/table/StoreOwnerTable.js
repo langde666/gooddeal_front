@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import UserSmallCard from '../card/UserSmallCard';
 
-const StoreOwnerTable = (props) => {
-    const { ownerId } = useSelector((state) => state.vendor.store);
+const StoreOwnerTable = ({ ownerId = {} }) => {
+    // const { ownerId } = useSelector((state) => state.vendor.store);
     return (
         <div className="store-owner-table-wrap position-relative">
             <h4 className="mb-2">Shop owner</h4>
