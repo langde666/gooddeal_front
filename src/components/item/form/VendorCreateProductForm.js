@@ -134,7 +134,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
         if (newProduct.image4) formData.set('image4', newProduct.image4);
         if (newProduct.image5) formData.set('image5', newProduct.image5);
 
-        console.log(formData.values());
+        // console.log(formData.values());
 
         setError('');
         setSuccess('');
@@ -200,7 +200,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                     />
                 </div>
 
-                <div className="col-12 px-4">
+                <div className="col-12 mt-2 px-4">
                     <InputFile
                         label="Product avatar"
                         size="avatar"
@@ -400,14 +400,15 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                     <StyleSelector
                         label="Choosed styles"
                         categoryId={newProduct.categoryId}
-                        onSet={(styleValues) =>
+                        onSet={(styleValues) => {
+                            // console.log('createProduct: ', styleValues);
                             setNewProduct({
                                 ...newProduct,
                                 styleValueIds: styleValues.map(
                                     (value) => value._id,
                                 ),
-                            })
-                        }
+                            });
+                        }}
                     />
                 </div>
 
@@ -424,11 +425,11 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                 )}
                 <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
                     <Link
-                        to="/admin/style"
+                        to={`/vendor/products/${storeId}`}
                         className="text-decoration-none cus-link-hover"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
-                        Style Manager
+                        Product Manager
                     </Link>
                     <button
                         type="submit"

@@ -314,14 +314,13 @@ const StoreProductsTable = ({
                                     >
                                         {product.listImages.length > 1 ? (
                                             product.listImages.map(
-                                                (product, index) => {
+                                                (image, index) => {
                                                     if (index === 0) return;
 
                                                     return (
                                                         <div
+                                                            className="position-relative mx-auto"
                                                             style={{
-                                                                position:
-                                                                    'relative',
                                                                 paddingBottom:
                                                                     '72px',
                                                                 width: '72px',
@@ -329,19 +328,12 @@ const StoreProductsTable = ({
                                                             }}
                                                         >
                                                             <img
+                                                                className="position-absolute"
                                                                 src={
-                                                                    IMG +
-                                                                    product
-                                                                        .listImages[
-                                                                        index
-                                                                    ]
+                                                                    IMG + image
                                                                 }
-                                                                alt={
-                                                                    product.name
-                                                                }
+                                                                alt="other images"
                                                                 style={{
-                                                                    position:
-                                                                        'absolute',
                                                                     width: '100%',
                                                                     height: '100%',
                                                                     top: '0',
@@ -414,7 +406,11 @@ const StoreProductsTable = ({
                                     >
                                         {product.styleValueIds &&
                                         product.styleValueIds.length > 0 ? (
-                                            'has value'
+                                            product.styleValueIds.map(
+                                                (value) => (
+                                                    <span>{value.name}</span>
+                                                ),
+                                            )
                                         ) : (
                                             <small className="mx-auto">
                                                 No styles

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { listStyleByCategory } from '../../apis/style';
 import Error from '../ui/Error';
 import Loading from '../ui/Loading';
+import Success from '../ui/Success';
+import MultiStyleValueSelector from '../seletor/MultiStyleValueSelector';
 
 const StyleSelector = ({
     categoryId = '',
@@ -10,10 +12,13 @@ const StyleSelector = ({
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState(true);
 
     const [styles, setStyles] = useState([]);
+    const [selectedStyleValues, setSelectedStyleValues] = useState([]);
 
     const init = () => {
+        setSuccess('');
         setError('');
         setIsLoading(true);
         listStyleByCategory(categoryId)
@@ -22,6 +27,8 @@ const StyleSelector = ({
                     setError(data.error);
                 } else {
                     setStyles(data.styles);
+                    if (data.styles.length <= 0)
+                        setSuccess('This category does not have styles.');
                 }
                 setIsLoading(false);
             })
@@ -34,17 +41,70 @@ const StyleSelector = ({
     useEffect(() => {
         if (categoryId) init();
         else setStyles([]);
+
+        setSelectedStyleValues([]);
         if (onSet) onSet([]);
     }, [categoryId]);
+
+    const handleSet = (olds, news) => {
+        // console.log(olds, news);
+
+        let newArray = selectedStyleValues;
+        let newValues = [];
+        let flag = true;
+
+        if (olds.length > news.length) {
+            flag = false;
+            let temps = news.map((n) => n._id);
+            olds.forEach((o) => {
+                if (temps.indexOf(o._id) === -1) newValues.push(o);
+            });
+        } else {
+            let temps = olds.map((o) => o._id);
+            news.forEach((n) => {
+                if (temps.indexOf(n._id) === -1) newValues.push(n);
+            });
+        }
+
+        if (flag) {
+            let temps = newArray.map((na) => na._id);
+            newValues.forEach((nv) => {
+                if (temps.indexOf(nv._id) === -1) newArray.push(nv);
+            });
+        } else {
+            let temps = newArray.map((na) => na._id);
+            newValues.forEach((nv) => {
+                if (temps.indexOf(nv._id) !== -1)
+                    newArray.splice(temps.indexOf(nv._id), 1);
+            });
+        }
+
+        setSelectedStyleValues(newArray);
+        // console.log('styleSelector: ', newArray);
+        if (onSet) onSet(newArray);
+    };
 
     return (
         <div className="row position-relative">
             {isloading && <Loading />}
-            {error && <Error msg={error} />}
+            {error && (
+                <span className="ms-2">
+                    <Error msg={error} />
+                </span>
+            )}
+            {success && (
+                <span className="ms-2">
+                    <Success msg={success} />
+                </span>
+            )}
 
             {styles.map((style, index) => (
                 <div className="col-12 mt-2 mx-3" key={index}>
-                    {style.name}
+                    <MultiStyleValueSelector
+                        styleId={style._id}
+                        styleName={style.name}
+                        onSet={(olds, news) => handleSet(olds, news)}
+                    />
                 </div>
             ))}
         </div>
