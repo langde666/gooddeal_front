@@ -17,6 +17,32 @@ export const getProductByIdForManager = (userId, token, productId, storeId) => {
 };
 
 //list product
+export const listActiveProducts = (filter) => {
+    const {
+        search,
+        sortBy,
+        order,
+        limit,
+        page,
+        rating,
+        minPrice,
+        maxPrice,
+        categoryId,
+    } = filter;
+    return fetch(
+        `${API}/active/products?search=${search}&rating=${rating}&minPrice=${minPrice}&maxPrice=${maxPrice}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const listProductsForManager = (userId, token, filter, storeId) => {
     const { search, sortBy, order, limit, page, isSelling } = filter;
     return fetch(
@@ -34,9 +60,41 @@ export const listProductsForManager = (userId, token, filter, storeId) => {
         .catch((error) => console.log(error));
 };
 
+export const listProductsForAdmin = (userId, token, filter) => {
+    const { search, sortBy, order, limit, page, isActive } = filter;
+    return fetch(
+        `${API}/products/${userId}?search=${search}&isActive=${isActive}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 //sell-store product
 export const sellingProduct = (userId, token, value, storeId, productId) => {
     return fetch(`${API}/product/selling/${productId}/${storeId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(value),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+//activeProduct
+export const activeProduct = (userId, token, value, productId) => {
+    return fetch(`${API}/product/active/${productId}/${userId}`, {
         method: 'PUT',
         headers: {
             Accept: 'application/json',

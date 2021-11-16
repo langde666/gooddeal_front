@@ -71,6 +71,7 @@ const StoreCard = ({ store = {}, onRun }) => {
             <Link
                 className="text-reset text-decoration-none"
                 to={`/store/${storeValue._id}`}
+                title={storeValue.name}
             >
                 <div className="card-img-top cus-card-img-top">
                     <img
@@ -128,6 +129,7 @@ const StoreCard = ({ store = {}, onRun }) => {
                 <Link
                     className="text-reset text-decoration-none link-hover d-block mt-1"
                     to={`/store/${store._id}`}
+                    title={storeValue.name}
                 >
                     <h6 className="card-title text-nowrap">{store.name}</h6>
                 </Link>

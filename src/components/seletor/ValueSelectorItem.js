@@ -20,7 +20,7 @@ const ValueSelectorItem = ({ listValues = [], isEditable = true, onSet }) => {
     };
 
     return (
-        <div className="position-relative mb-4">
+        <div className="position-relative mt-3 mb-1">
             <label
                 className="position-absolute text-muted"
                 style={{

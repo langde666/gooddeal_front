@@ -808,6 +808,7 @@ header {
 .cus-card-img-top {
     position: relative;
     padding-bottom: 100%;
+    /* width: 240px; */
     height: 0;
 }
 

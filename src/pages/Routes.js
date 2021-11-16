@@ -6,6 +6,7 @@ import HomePage from './core/HomePage';
 import ProductSearchPage from './core/ProductSearchPage';
 import StoreSearchPage from './core/StoreSearchPage';
 import UserSearchPage from './core/UserSearchPage';
+import CategoryPage from './core/CategoryPage';
 //admin
 import AdminDashboardPage from './admin/DashboardPage';
 import AdminLevelPage from './admin/LevelPage';
@@ -19,6 +20,7 @@ import AdminStylePage from './admin/StylePage';
 import AdminCreateStylePage from './admin/CreateStylePage';
 import AdminEditStylePage from './admin/EditStylePage';
 import AdminStyleValuesPage from './admin/StyleValuePage';
+import AdminProductPage from './admin/ProductPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -68,6 +70,11 @@ const Routes = () => {
                     component={StoreSearchPage}
                 />
                 <Route path="/users/search" exact component={UserSearchPage} />
+                <Route
+                    path="/category/:categoryId"
+                    exact
+                    component={CategoryPage}
+                />
 
                 <AdminRoute
                     path="/admin/dashboard"
@@ -128,6 +135,11 @@ const Routes = () => {
                     path="/admin/style/values/:styleId"
                     exact
                     component={AdminStyleValuesPage}
+                />
+                <AdminRoute
+                    path="/admin/product"
+                    exact
+                    component={AdminProductPage}
                 />
 
                 <PrivateRoute

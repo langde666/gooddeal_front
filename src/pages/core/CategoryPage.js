@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { listActiveProducts } from '../../apis/product';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
@@ -8,25 +8,26 @@ import Pagination from '../../components/ui/Pagination.js';
 import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
 import ProductFilter from '../../components/filter/ProductFilter';
+import ListCategories from '../../components/list/ListCategories';
 
-const ProductSearchPage = (props) => {
+const CategoryPage = (props) => {
     const [error, setError] = useState('');
     const [isloading, setIsLoading] = useState(false);
 
-    const keyword =
-        new URLSearchParams(useLocation().search).get('keyword') || '';
+    const { categoryId } = useParams();
+
     const [listProducts, setListProducts] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
     });
     const [filter, setFilter] = useState({
-        search: keyword,
+        search: '',
         rating: '',
+        categoryId,
         minPrice: '',
         maxPrice: '',
         sortBy: 'sold',
         order: 'desc',
-        categoryId: '',
         limit: 8,
         page: 1,
     });
@@ -59,13 +60,12 @@ const ProductSearchPage = (props) => {
         init();
     }, [filter]);
 
-    useUpdateEffect(() => {
+    useEffect(() => {
         setFilter({
             ...filter,
-            search: keyword,
-            page: 1,
+            categoryId,
         });
-    }, [keyword]);
+    }, [categoryId]);
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -85,6 +85,13 @@ const ProductSearchPage = (props) => {
                     <div className="col-9 position-relative">
                         {isloading && <Loading />}
                         {error && <Error msg={error} />}
+                        <div className="mb-4">
+                            <ListCategories
+                                categoryId={categoryId}
+                                heading={false}
+                                col="col-3"
+                            />
+                        </div>
 
                         <div className="d-flex justify-content-end">
                             <span className="me-3">
@@ -114,4 +121,4 @@ const ProductSearchPage = (props) => {
     );
 };
 
-export default ProductSearchPage;
+export default CategoryPage;

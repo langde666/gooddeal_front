@@ -13,6 +13,7 @@ const Input = ({
     isDisabled = false,
     accept = '*/*',
     feedback = 'Please provide a valid value',
+    min = '0',
 }) => {
     const [tempValue, setTempValue] = useState('');
     const [showPasswordFlag, togglePasswordFlag] = useToggle(true);
@@ -54,6 +55,7 @@ const Input = ({
                             : 'text'
                         : type
                 }
+                min={type === 'number' && min}
                 required
                 disabled={isDisabled}
                 accept={accept}
