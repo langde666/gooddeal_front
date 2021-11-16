@@ -7,13 +7,13 @@ const AddValueStyleItem = ({ styleId = '', styleName = '', onRun }) => (
             type="button"
             className="btn btn-primary ripple text-nowrap"
             data-bs-toggle="modal"
-            data-bs-target="#add-style-value-form"
+            data-bs-target={`#add-style-value-form-${styleId}`}
         >
             <i className="fas fa-plus-circle me-2"></i>New Value
         </button>
 
         <Modal
-            id="add-style-value-form"
+            id={`add-style-value-form-${styleId}`}
             hasCloseBtn={false}
             title={`Add new value for '${styleName}'`}
         >

@@ -1,16 +1,21 @@
 import UserAvatarUpload from './uploadButton/UserAvatarUpload';
 import StoreAvatarUpload from './uploadButton/StoreAvatarUpload';
+import ProductUpload from './uploadButton/ProductUpload';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const Avatar = ({
     storeId = '',
+    productId = '',
+    productIndex = '',
     avatar = '',
     name = '',
     alt = 'avatar',
     bodername = false,
     isEditable = false,
     size = '',
+    noRadius = false,
+    onRun,
 }) => (
     <div className="cus-avatar-wrap">
         <div className={`cus-avatar-box ${size && 'cus-avatar-box--small'}`}>
@@ -18,11 +23,20 @@ const Avatar = ({
                 <img
                     src={`${IMG + avatar}`}
                     className="cus-avatar-img"
+                    style={{ borderRadius: `${noRadius && 'unset'}` }}
                     alt={alt}
                 />
                 {isEditable == 'user' && <UserAvatarUpload />}
                 {isEditable == 'store' && (
                     <StoreAvatarUpload storeId={storeId} />
+                )}
+                {isEditable == 'product' && (
+                    <ProductUpload
+                        productId={productId}
+                        index={productIndex}
+                        storeId={storeId}
+                        onRun={onRun}
+                    />
                 )}
             </div>
         </div>

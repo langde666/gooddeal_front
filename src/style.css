@@ -855,8 +855,10 @@ header {
 }
 
 .cus-cover-icon.cus-cover-icon--rm {
-    bottom: 6%;
-    right: 10%;
+    top: 6%;
+    bottom: unset;
+    padding: 4px 18px;
+    right: 4%;
 }
 
 .cus-cover-label {

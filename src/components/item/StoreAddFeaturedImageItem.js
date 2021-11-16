@@ -25,7 +25,9 @@ const StoreAddFeaturedImageItem = ({ count = 6, storeId = '' }) => (
             )}
         </div>
         {count >= 6 && (
-            <small className="cus-tooltip-msg">The limit is 6 addresses</small>
+            <small className="cus-tooltip-msg">
+                The limit is 6 featured images
+            </small>
         )}
     </div>
 );

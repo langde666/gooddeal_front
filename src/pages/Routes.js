@@ -40,6 +40,7 @@ import VendorStaffsPage from './vendor/StaffsPage';
 import VendorGDCoinsPage from './vendor/GDCoinsPage';
 import VendorStyleValuePage from './vendor/StyleValuePage';
 import VendorCreateProductPage from './vendor/CreateProductPage';
+import VendorEditProductPage from './vendor/EditProductPage';
 //user
 import UserHomePage from './user/UserHomePage';
 import UserAboutPage from './user/UserAboutPage';
@@ -195,6 +196,11 @@ const Routes = () => {
                     path="/vendor/products/createNewProduct/:storeId"
                     exact
                     component={VendorCreateProductPage}
+                />
+                <PrivateRoute
+                    path="/vendor/products/editProduct/:productId/:storeId"
+                    exact
+                    component={VendorEditProductPage}
                 />
                 <PrivateRoute
                     path="/vendor/products/createNewStyleValue/:styleId/:storeId"

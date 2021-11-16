@@ -2,10 +2,18 @@ import { useState, useEffect } from 'react';
 import { listActiveStyleValues } from '../../apis/style';
 import Error from '../ui/Error';
 import Loading from '../ui/Loading';
+import AddValueStyleItem from '../item/AddValueStyleItem';
 
-const MultiStyleValueSelector = ({ styleId = '', styleName = '', onSet }) => {
+const MultiStyleValueSelector = ({
+    defaultValue = '',
+    categoryId = '',
+    styleId = '',
+    styleName = '',
+    onSet,
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [run, setRun] = useState('');
 
     const [values, setValues] = useState([]);
     const [selectedValues, setSelectedValues] = useState([]);
@@ -35,7 +43,23 @@ const MultiStyleValueSelector = ({ styleId = '', styleName = '', onSet }) => {
 
         setSelectedValues(newArray);
         if (onSet) onSet(oldArray, newArray);
-    }, [styleId]);
+    }, [styleId, categoryId]);
+
+    useEffect(() => {
+        init();
+    }, [run]);
+
+    useEffect(() => {
+        if (defaultValue) {
+            const oldArray = selectedValues;
+            const newArray = defaultValue.filter(
+                (v) => v.styleId._id === styleId,
+            );
+
+            setSelectedValues(newArray);
+            if (onSet) onSet(oldArray, newArray);
+        }
+    }, [defaultValue]);
 
     const handleChoose = (value) => {
         const oldArray = selectedValues;
@@ -76,7 +100,7 @@ const MultiStyleValueSelector = ({ styleId = '', styleName = '', onSet }) => {
                     {styleName}
                 </label>
 
-                <div className="form-control border-0">
+                <div className="">
                     {selectedValues && selectedValues.length > 0 ? (
                         selectedValues.map((value, index) => (
                             <span
@@ -88,7 +112,7 @@ const MultiStyleValueSelector = ({ styleId = '', styleName = '', onSet }) => {
                                 </span>
                                 <button
                                     type="button"
-                                    className="btn btn-outline-danger btn-sm ripple ms-2 me-4"
+                                    className="btn btn-outline-danger btn-sm ripple me-4"
                                     onClick={() => handleRemove(index)}
                                 >
                                     <i className="fas fa-times-circle"></i>
@@ -123,6 +147,14 @@ const MultiStyleValueSelector = ({ styleId = '', styleName = '', onSet }) => {
                                     {value.name}
                                 </button>
                             ))}
+
+                            <span className="list-group-item">
+                                <AddValueStyleItem
+                                    styleId={styleId}
+                                    styleName={styleName}
+                                    onRun={() => setRun(!run)}
+                                />
+                            </span>
                         </div>
                     </div>
                 </div>

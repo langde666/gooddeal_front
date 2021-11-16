@@ -11,6 +11,7 @@ import ProductLicenseLabel from '../label/ProductLicenseLabel';
 import SellStoreProductButton from '../button/SellStoreProductButton';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
+import StyleValueSelector from '../seletor/StyleValueSelector';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -320,6 +321,7 @@ const StoreProductsTable = ({
                                                     return (
                                                         <div
                                                             className="position-relative mx-auto"
+                                                            key={index}
                                                             style={{
                                                                 paddingBottom:
                                                                     '72px',
@@ -388,7 +390,7 @@ const StoreProductsTable = ({
                                 <td
                                     className="text-start ps-4"
                                     style={{
-                                        whiteSpace: 'nowrap',
+                                        minWidth: '360px',
                                     }}
                                 >
                                     <CategorySmallCard
@@ -406,11 +408,12 @@ const StoreProductsTable = ({
                                     >
                                         {product.styleValueIds &&
                                         product.styleValueIds.length > 0 ? (
-                                            product.styleValueIds.map(
-                                                (value) => (
-                                                    <span>{value.name}</span>
-                                                ),
-                                            )
+                                            <StyleValueSelector
+                                                listValues={
+                                                    product.styleValueIds
+                                                }
+                                                isEditable={false}
+                                            />
                                         ) : (
                                             <small className="mx-auto">
                                                 No styles
@@ -436,21 +439,40 @@ const StoreProductsTable = ({
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block me-2">
-                                        <div className="cus-tooltip d-inline-block text-start">
-                                            <SellStoreProductButton
-                                                productId={product._id}
-                                                storeId={product.storeId._id}
-                                                isSelling={product.isSelling}
-                                                onRun={() => setRun(!run)}
-                                            />
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        <div className="position-relative d-inline-block me-2">
+                                            <div className="cus-tooltip d-inline-block text-start">
+                                                <SellStoreProductButton
+                                                    productId={product._id}
+                                                    storeId={
+                                                        product.storeId._id
+                                                    }
+                                                    isSelling={
+                                                        product.isSelling
+                                                    }
+                                                    onRun={() => setRun(!run)}
+                                                />
+                                            </div>
+
+                                            <small className="cus-tooltip-msg">
+                                                {isSelling
+                                                    ? 'Store this product'
+                                                    : 'Sell this product'}
+                                            </small>
                                         </div>
 
-                                        <small className="cus-tooltip-msg">
-                                            {isSelling
-                                                ? 'Store this product'
-                                                : 'Sell this product'}
-                                        </small>
+                                        <div className="position-relative d-inline-block me-2">
+                                            <Link
+                                                type="button"
+                                                className="btn btn-primary ripple cus-tooltip"
+                                                to={`/vendor/products/editProduct/${product._id}/${storeId}`}
+                                            >
+                                                <i className="fas fa-pen"></i>
+                                            </Link>
+                                            <small className="cus-tooltip-msg">
+                                                Edit product
+                                            </small>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

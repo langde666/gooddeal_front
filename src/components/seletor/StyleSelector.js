@@ -5,11 +5,7 @@ import Loading from '../ui/Loading';
 import Success from '../ui/Success';
 import MultiStyleValueSelector from '../seletor/MultiStyleValueSelector';
 
-const StyleSelector = ({
-    categoryId = '',
-    label = 'Choosed category',
-    onSet,
-}) => {
+const StyleSelector = ({ defaultValue = '', categoryId = '', onSet }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(true);
@@ -45,6 +41,13 @@ const StyleSelector = ({
         setSelectedStyleValues([]);
         if (onSet) onSet([]);
     }, [categoryId]);
+
+    useEffect(() => {
+        if (defaultValue) {
+            setSelectedStyleValues(defaultValue);
+            if (onSet) onSet(defaultValue);
+        }
+    }, [defaultValue]);
 
     const handleSet = (olds, news) => {
         // console.log(olds, news);
@@ -101,6 +104,8 @@ const StyleSelector = ({
             {styles.map((style, index) => (
                 <div className="col-12 mt-2 mx-3" key={index}>
                     <MultiStyleValueSelector
+                        defaultValue={defaultValue}
+                        categoryId={categoryId}
                         styleId={style._id}
                         styleName={style.name}
                         onSet={(olds, news) => handleSet(olds, news)}
