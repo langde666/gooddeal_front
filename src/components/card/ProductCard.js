@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-// import { getNumberOfFollowersForProduct, checkFollowingProduct } from '../../apis/follow';
-import StoreCommissionLabel from '../label/StoreCommissionLabel';
-import StoreFollowLabel from '../label/StoreFollowLabel';
+import {
+    getNumberOfFollowersForProduct,
+    checkFollowingProduct,
+} from '../../apis/follow';
+import FollowLabel from '../label/StoreFollowLabel';
 import StarRating from '../label/StarRating';
+import FollowProductButton from '../button/FollowProductButton';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -15,19 +18,23 @@ const ProductCard = ({ product = {}, onRun }) => {
         let newProduct = product;
 
         try {
-            // const data = await getNumberOfFollowersForProduct(product._id);
-            // newProduct.numberOfFollowers = data.count;
-
+            const data = await getNumberOfFollowersForProduct(product._id);
+            newProduct.numberOfFollowers = data.count;
+        } catch {
             newProduct.numberOfFollowers = 0;
-        } catch {}
+        }
 
         try {
-            // const { _id, accessToken } = getToken();
-            // const data = await checkFollowingProduct(_id, accessToken, product._id);
-            // newProduct.isFollowing = data.success ? true : false;
-
+            const { _id, accessToken } = getToken();
+            const data = await checkFollowingProduct(
+                _id,
+                accessToken,
+                product._id,
+            );
+            newProduct.isFollowing = data.success ? true : false;
+        } catch {
             newProduct.isFollowing = false;
-        } catch {}
+        }
 
         setProductValue(newProduct);
     };
@@ -41,12 +48,8 @@ const ProductCard = ({ product = {}, onRun }) => {
 
         let numberOfFollowers;
         try {
-            // const data = await getNumberOfFollowersForProduct(newProduct._id);
-            // numberOfFollowers = data.count;
-            const currentNumberOfFollowers = productValue.numberOfFollowers;
-            numberOfFollowers = newProduct.isFollowing
-                ? currentNumberOfFollowers + 1
-                : currentNumberOfFollowers - 1;
+            const data = await getNumberOfFollowersForProduct(newProduct._id);
+            numberOfFollowers = data.count;
         } catch {
             const currentNumberOfFollowers = productValue.numberOfFollowers;
             numberOfFollowers = newProduct.isFollowing
@@ -84,7 +87,7 @@ const ProductCard = ({ product = {}, onRun }) => {
                     <div className="d-flex justify-content-between align-items-center">
                         <div className="d-flex align-items-center">
                             <span className="">
-                                <StoreFollowLabel
+                                <FollowLabel
                                     numberOfFollowers={
                                         productValue.numberOfFollowers
                                     }
@@ -93,12 +96,12 @@ const ProductCard = ({ product = {}, onRun }) => {
                         </div>
                     </div>
 
-                    <StarRating stars={product.rating} />
+                    <StarRating stars={productValue.rating} />
                 </small>
 
                 <Link
                     className="text-reset text-decoration-none link-hover d-block mt-1 mb-2"
-                    to={`/product/${product._id}`}
+                    to={`/product/${productValue._id}`}
                     style={{
                         width: '200px',
                         maxWidth: '100%',
@@ -109,9 +112,9 @@ const ProductCard = ({ product = {}, onRun }) => {
                         WebkitLineClamp: '3',
                         WebkitBoxOrient: 'vertical',
                     }}
-                    title={product.name}
+                    title={productValue.name}
                 >
-                    <h6 className="card-title">{product.name}</h6>
+                    <h6 className="card-title">{productValue.name}</h6>
                 </Link>
 
                 <small className="card-subtitle">
@@ -129,14 +132,14 @@ const ProductCard = ({ product = {}, onRun }) => {
                     </h6>
                 </small>
 
-                {/* {getToken() && (
-                    <FollowStoreButton
-                        storeId={store._id}
-                        isFollowing={store.isFollowing}
+                {getToken() && (
+                    <FollowProductButton
+                        productId={productValue._id}
+                        isFollowing={productValue.isFollowing}
                         className="w-100 mt-1"
-                        onRun={(store) => onHandleRun(store)}
+                        onRun={(product) => onHandleRun(product)}
                     />
-                )} */}
+                )}
             </div>
         </div>
     );

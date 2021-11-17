@@ -24,19 +24,25 @@ const SearchBar = (props) => {
     const location = useLocation();
     const history = useHistory();
 
-    const [query, setQuery] = useState(
-        () => new URLSearchParams(location.search).get('keyword') || '',
-    );
-    const [option, setOption] = useState(() => {
-        let currentOption = location.pathname.split('/')[1];
+    const currentOption = location.pathname.split('/')[1];
+
+    const [query, setQuery] = useState(() => {
         if (
-            currentOption != 'products' &&
-            currentOption != 'stores' &&
-            currentOption != 'users'
-        ) {
-            currentOption = 'products';
-        }
-        return currentOption;
+            currentOption === 'products' ||
+            currentOption === 'stores' ||
+            currentOption === 'users'
+        )
+            return new URLSearchParams(location.search).get('keyword') || '';
+        else return '';
+    });
+    const [option, setOption] = useState(() => {
+        if (
+            currentOption === 'products' ||
+            currentOption === 'stores' ||
+            currentOption === 'users'
+        )
+            return currentOption;
+        else return 'products';
     });
 
     const handleChange = (e) => {

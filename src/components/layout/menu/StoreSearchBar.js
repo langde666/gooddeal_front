@@ -28,6 +28,7 @@ const StoreSearchBar = ({ storeId = '' }) => {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={query}
                 onChange={handleChange}
             />
             <button

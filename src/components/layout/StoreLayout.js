@@ -32,11 +32,11 @@ const StoreLayout = ({ store = {}, children = null }) => (
                     <StoreLevelInfo store={store} />
                 </div>
             </div>
-
-            <StoreNav store={store} />
-
-            <div className="store-page-main mt-4">{children}</div>
         </div>
+
+        <StoreNav store={store} />
+
+        <div className="store-page-main mt-4">{children}</div>
     </MainLayout>
 );
 

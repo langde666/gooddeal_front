@@ -43,6 +43,32 @@ export const listActiveProducts = (filter) => {
         .catch((error) => console.log(error));
 };
 
+export const listSellingProductsByStore = (filter, storeId) => {
+    const {
+        search,
+        sortBy,
+        order,
+        limit,
+        page,
+        rating,
+        minPrice,
+        maxPrice,
+        categoryId,
+    } = filter;
+    return fetch(
+        `${API}/selling/products/by/store/${storeId}?search=${search}&rating=${rating}&minPrice=${minPrice}&maxPrice=${maxPrice}&categoryId=${categoryId}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const listProductsForManager = (userId, token, filter, storeId) => {
     const { search, sortBy, order, limit, page, isSelling } = filter;
     return fetch(

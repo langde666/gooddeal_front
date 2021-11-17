@@ -26,18 +26,17 @@ const StoreCard = ({ store = {}, onRun }) => {
         try {
             const data = await getNumberOfFollowers(store._id);
             newStore.numberOfFollowers = data.count;
-        } catch {}
+        } catch {
+            newStore.numberOfFollower = 0;
+        }
 
         try {
             const { _id, accessToken } = getToken();
             const data = await checkFollowingStore(_id, accessToken, store._id);
             newStore.isFollowing = data.success ? true : false;
-        } catch {}
-
-        try {
-            //call api get numberOfReviews
-            newStore.numberOfReviews = 0;
-        } catch {}
+        } catch {
+            newStore.isFollowing = false;
+        }
 
         setStoreValue(newStore);
     };
@@ -117,13 +116,7 @@ const StoreCard = ({ store = {}, onRun }) => {
                         </span>
                     </div>
 
-                    <StarRating
-                        stars={
-                            store.rating == 0 && store.numberOfReviews == 0
-                                ? 3
-                                : store.rating
-                        }
-                    />
+                    <StarRating stars={store.rating} />
                 </small>
 
                 <Link

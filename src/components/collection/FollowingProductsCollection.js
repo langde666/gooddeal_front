@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
-// import { listFollowingProducts } from '../../apis/follow';
-// import ProductCard from '../item/ProductCard';
+import { listFollowingProducts } from '../../apis/follow';
+import ProductCard from '../card/ProductCard';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Pagination from '../ui/Pagination';
@@ -17,37 +17,36 @@ const FollowingProductsCollection = (props) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'point',
+        sortBy: 'name',
         order: 'desc',
-        limit: 4,
+        limit: 8,
         page: 1,
     });
 
     const { _id, accessToken } = getToken();
 
     const init = () => {
-        // setError('');
-        // setIsLoading(true);
-        // listFollowingProducts(_id, accessToken, filter)
-        //     .then(data => {
-        //         if (data.error) {
-        //             setIsLoading(false);
-        //             setError(data.error);
-        //         }
-        //         else {
-        //             setIsLoading(false);
-        //             setListProducts(data.products);
-        //             setPagination({
-        //                 size: data.size,
-        //                 pageCurrent: data.filter.pageCurrent,
-        //                 pageCount: data.filter.pageCount,
-        //             });
-        //         }
-        //     })
-        //     .catch(error => {
-        //         setIsLoading(false);
-        //         setError('Server Error');
-        //     });
+        setError('');
+        setIsLoading(true);
+        listFollowingProducts(_id, accessToken, filter)
+            .then((data) => {
+                if (data.error) {
+                    setIsLoading(false);
+                    setError(data.error);
+                } else {
+                    setIsLoading(false);
+                    setListProducts(data.products);
+                    setPagination({
+                        size: data.size,
+                        pageCurrent: data.filter.pageCurrent,
+                        pageCount: data.filter.pageCount,
+                    });
+                }
+            })
+            .catch((error) => {
+                setIsLoading(false);
+                setError('Server Error');
+            });
     };
 
     useEffect(() => {
@@ -71,13 +70,17 @@ const FollowingProductsCollection = (props) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            {/* <div className="following-products-collection row mt-3">
-                {listProducts && listProducts.map((store, index) => (
-                    <div className="col-3 mb-4" key={index}>
-                        <ProductCard product={product} hasFollowBtn={true} onRun={() => setRun(!run)} />
-                    </div>
-                ))}
-            </div> */}
+            <div className="following-products-collection row mt-3">
+                {listProducts &&
+                    listProducts.map((product, index) => (
+                        <div className="col-3 mb-4" key={index}>
+                            <ProductCard
+                                product={product}
+                                onRun={() => setRun(!run)}
+                            />
+                        </div>
+                    ))}
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

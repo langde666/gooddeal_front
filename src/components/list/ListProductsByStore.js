@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
-import { listActiveProducts } from '../../apis/product';
+import { listSellingProductsByStore } from '../../apis/product';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import ProductCard from '../card/ProductCard';
 
-const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
+const ListProductsByStore = ({
+    heading = '',
+    col = 'col',
+    storeId = '',
+    sortBy = 'sold',
+    limit = '5',
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -13,17 +19,20 @@ const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
     const init = () => {
         setError('');
         setIsLoading(true);
-        listActiveProducts({
-            search: '',
-            rating: '',
-            categoryId: '',
-            minPrice: '',
-            maxPrice: '',
-            sortBy: 'sold',
-            order: 'desc',
-            limit: 5,
-            page: 1,
-        })
+        listSellingProductsByStore(
+            {
+                search: '',
+                rating: '',
+                categoryId: '',
+                minPrice: '',
+                maxPrice: '',
+                sortBy,
+                order: 'desc',
+                limit,
+                page: 1,
+            },
+            storeId,
+        )
             .then((data) => {
                 if (data.error) setError(data.error);
                 else setProducts(data.products);
@@ -37,14 +46,14 @@ const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
 
     useEffect(() => {
         init();
-    }, []);
+    }, [storeId, sortBy]);
 
     return (
         <div className="products-list-wrap position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
-            {heading && <h4>Best Seller</h4>}
+            {heading && <h4>{heading}</h4>}
 
             <div className="products-list row mt-3">
                 {products &&
@@ -58,4 +67,4 @@ const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
     );
 };
 
-export default ListBestSellerProducts;
+export default ListProductsByStore;

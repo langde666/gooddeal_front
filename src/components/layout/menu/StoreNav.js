@@ -16,7 +16,10 @@ const StoreNav = ({ store = {} }) => {
     };
 
     return (
-        <nav className="store-nav navbar sticky-topnav navbar-expand-lg navbar-light bg-body shadow rounded-bottom">
+        <nav
+            className="store-nav navbar sticky-topnav navbar-expand-lg navbar-light px-2 bg-body shadow rounded-bottom"
+            style={{ maxWidth: '990px', margin: '0 auto' }}
+        >
             <div className="container-fluid p-0">
                 <Link
                     className="navbar-brand m-0 p-0"

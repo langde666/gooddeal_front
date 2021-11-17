@@ -17,7 +17,7 @@ const FollowingStoresCollection = (props) => {
     });
     const [filter, setFilter] = useState({
         search: '',
-        sortBy: 'point',
+        sortBy: 'name',
         order: 'desc',
         limit: 8,
         page: 1,
