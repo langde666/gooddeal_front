@@ -16,9 +16,9 @@ const AccountInit = ({ user, actions }) => {
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
 
-    const { firstname, lastname, avatar, role } = user;
+    const { firstname, lastname, avatar } = user;
     const history = useHistory();
-    const { _id, accessToken, refreshToken } = getToken();
+    const { _id, accessToken, refreshToken, role } = getToken();
 
     const init = () => {
         setIsLoading(true);
@@ -44,9 +44,6 @@ const AccountInit = ({ user, actions }) => {
 
                     actions(newUser);
                     setIsLoading(false);
-
-                    // if (newUser.role === 'admin')
-                    //     history.push('/admin/dashboard');
                 }
             })
             .catch((error) => {
@@ -110,7 +107,7 @@ const AccountInit = ({ user, actions }) => {
                         Your profile
                     </Link>
 
-                    {role == 'user' && (
+                    {role === 'user' && (
                         <Link
                             className="list-group-item your-account-options-item ripple"
                             to="/account/purchase"

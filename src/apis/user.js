@@ -54,10 +54,10 @@ export const listUserForAdmin = (userId, token, filter) => {
 // profile
 export const getUserProfile = async (userId, token) => {
     //user validate
-    const { refreshToken, _id } = getToken();
+    const { refreshToken, _id, role } = getToken();
     const decoded = jwt.decode(token);
     const timeout = (decoded.exp - 60) * 1000 - Date.now().valueOf();
-    setTimeout(() => refreshTokenApi(refreshToken, _id), timeout);
+    setTimeout(() => refreshTokenApi(refreshToken, _id, role), timeout);
 
     // getuser
     return fetch(`${API}/user/profile/${userId}`, {

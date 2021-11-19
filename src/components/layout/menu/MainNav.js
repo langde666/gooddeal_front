@@ -9,7 +9,7 @@ import AccountInit from '../../init/AccountInit';
 import VendorInit from '../../init/VendorInit';
 
 const MainNav = ({ navFor = 'user' }) => {
-    const { role, cart } = useSelector((state) => state.account.user);
+    const { cart } = useSelector((state) => state.account.user);
     const count =
         cart && cart.length > 0
             ? cart.reduce(
@@ -48,13 +48,13 @@ const MainNav = ({ navFor = 'user' }) => {
                         </li>
                     )}
 
-                    {navFor == 'vendor' && getToken() && (
+                    {navFor === 'vendor' && getToken() && (
                         <li className="nav-item">
                             <VendorInit />
                         </li>
                     )}
 
-                    {navFor == 'user' && getToken() && (
+                    {navFor === 'user' && getToken() && (
                         <li className="nav-item position-relative">
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"
@@ -67,55 +67,65 @@ const MainNav = ({ navFor = 'user' }) => {
                         </li>
                     )}
 
-                    {navFor == 'user' && getToken() && role == 'user' && (
-                        <li className="nav-item position-relative">
-                            <Link
-                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/account/shopManager"
-                            >
-                                <i className="fas fa-store"></i>
-                            </Link>
-                            <small className="cus-tooltip-msg">
-                                Shop Manager
-                            </small>
-                        </li>
-                    )}
-
-                    {navFor == 'user' && getToken() && role == 'user' && (
-                        <li className="nav-item">
-                            <div className="cart-item-wrap position-relative">
+                    {navFor === 'user' &&
+                        getToken() &&
+                        getToken().role === 'user' && (
+                            <li className="nav-item position-relative">
                                 <Link
                                     className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                    to="/cart"
+                                    to="/account/shopManager"
                                 >
-                                    <i className="fas fa-shopping-basket"></i>
+                                    <i className="fas fa-store"></i>
                                 </Link>
-                                {
-                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info cus-tooltip">
-                                        {count < 10 ? count : '9+'}
-                                        <span className="visually-hidden">
-                                            products
+                                <small className="cus-tooltip-msg">
+                                    Shop Manager
+                                </small>
+                            </li>
+                        )}
+
+                    {navFor === 'user' &&
+                        getToken() &&
+                        getToken().role === 'user' && (
+                            <li className="nav-item">
+                                <div className="cart-item-wrap position-relative">
+                                    <Link
+                                        className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                        to="/cart"
+                                    >
+                                        <i className="fas fa-shopping-basket"></i>
+                                    </Link>
+                                    {
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info cus-tooltip">
+                                            {count < 10 ? count : '9+'}
+                                            <span className="visually-hidden">
+                                                products
+                                            </span>
                                         </span>
-                                    </span>
-                                }
-                                <small className="cus-tooltip-msg">Cart</small>
-                            </div>
-                        </li>
-                    )}
+                                    }
+                                    <small className="cus-tooltip-msg">
+                                        Cart
+                                    </small>
+                                </div>
+                            </li>
+                        )}
 
-                    {navFor == 'user' && getToken() && role == 'admin' && (
-                        <li className="nav-item position-relative">
-                            <Link
-                                className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                to="/admin/dashboard"
-                            >
-                                <i className="fas fa-user-tie"></i>
-                            </Link>
-                            <small className="cus-tooltip-msg">Dashboard</small>
-                        </li>
-                    )}
+                    {navFor === 'user' &&
+                        getToken() &&
+                        getToken().role === 'admin' && (
+                            <li className="nav-item position-relative">
+                                <Link
+                                    className="btn btn-outline-light cus-outline ripple cus-tooltip"
+                                    to="/admin/dashboard"
+                                >
+                                    <i className="fas fa-user-tie"></i>
+                                </Link>
+                                <small className="cus-tooltip-msg">
+                                    Dashboard
+                                </small>
+                            </li>
+                        )}
 
-                    {navFor != 'user' && getToken() && (
+                    {navFor !== 'user' && getToken() && (
                         <li className="nav-item position-relative">
                             <Link
                                 className="btn btn-outline-light cus-outline ripple cus-tooltip"

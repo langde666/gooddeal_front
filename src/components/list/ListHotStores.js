@@ -39,10 +39,10 @@ const ListHotStores = ({ heading = true, col = 'col' }) => {
 
     return (
         <div className="categories-list-wrap position-relative">
+            {heading && <h4>Hot Stores</h4>}
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-
-            {heading && <h4>Hot Stores</h4>}
 
             <div className="categories-list row mt-3">
                 {stores &&

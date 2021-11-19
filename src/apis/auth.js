@@ -25,7 +25,7 @@ export const removeToken = () => {
     }
 };
 
-export const refreshTokenApi = (refreshToken, userId) => {
+export const refreshTokenApi = (refreshToken, userId, role) => {
     return fetch(`${API}/refresh/token`, {
         method: 'POST',
         headers: {
@@ -45,6 +45,7 @@ export const refreshTokenApi = (refreshToken, userId) => {
                         accessToken: data.accessToken,
                         refreshToken: data.refreshToken,
                         _id: userId,
+                        role,
                     },
                     () => {},
                 );

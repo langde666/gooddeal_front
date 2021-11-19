@@ -38,10 +38,10 @@ const ListCategories = ({ heading = true, categoryId = null, col = 'col' }) => {
 
     return (
         <div className="categories-list-wrap position-relative">
+            {heading && <h4>Discover</h4>}
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-
-            {heading && <h4>Discover</h4>}
 
             <div className="categories-list row mt-3">
                 {categories &&

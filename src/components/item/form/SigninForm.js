@@ -67,9 +67,10 @@ const SigninForm = ({ onSwap = () => {} }) => {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    const { accessToken, refreshToken, _id } = data;
-                    setToken({ accessToken, refreshToken, _id }, () => {
-                        history.go(0);
+                    const { accessToken, refreshToken, _id, role } = data;
+                    setToken({ accessToken, refreshToken, _id, role }, () => {
+                        if (role === 'admin') history.push('/admin/dashboard');
+                        else history.go(0);
                     });
                 }
             })
