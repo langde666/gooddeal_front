@@ -28,36 +28,43 @@ const StoreInit = ({ store, actions }) => {
                     setIsLoading(false);
                 } else {
                     const newStore = data.store;
-
+                    //get level
                     try {
-                        const data = await getStoreLevel(storeId);
-                        newStore.level = data.error ? {} : data.level;
-                    } catch {}
+                        const res = await getStoreLevel(storeId);
+                        newStore.level = res.level;
+                    } catch {
+                        newStore.level = {};
+                    }
 
+                    //get count followers
                     try {
-                        const data = await getNumberOfFollowers(storeId);
-                        newStore.numberOfFollowers = data.count;
-                    } catch {}
+                        const res = await getNumberOfFollowers(storeId);
+                        newStore.numberOfFollowers = res.count;
+                    } catch {
+                        newStore.numberOfFollowers = 0;
+                    }
 
+                    //check follow
                     try {
-                        const data = await checkFollowingStore(
+                        const res = await checkFollowingStore(
                             _id,
                             accessToken,
                             storeId,
                         );
-                        newStore.isFollowing = data.success ? true : false;
-                    } catch {}
+                        newStore.isFollowing = res.success ? true : false;
+                    } catch {
+                        newStore.isFollowing = false;
+                    }
 
+                    //get count orders
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newStore.numberOfSucessfulOrders = 0;
                         newStore.numberOfFailedOrders = 0;
-                    } catch {}
-
-                    try {
-                        //call api get numberOfReviews
-                        newStore.numberOfReviews = 0;
-                    } catch {}
+                    } catch {
+                        newStore.numberOfSucessfulOrders = 0;
+                        newStore.numberOfFailedOrders = 0;
+                    }
 
                     actions(newStore);
                     setIsLoading(false);

@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import ValueSelectorItem from './ValueSelectorItem';
 
-const StyleValueSelector = ({ listValues = [], isEditable = true, onSet }) => {
+const StyleValueSelector = ({
+    listValues = [],
+    isEditable = true,
+    onSet,
+    defaultValue = '',
+}) => {
     const [values, setValues] = useState([]);
-    const [selectedValues, setSelectedValues] = useState([]);
+    const [selectedValues, setSelectedValues] = useState(defaultValue);
 
     const init = () => {
         let defaultList = [];
-
         listValues.forEach((value) => {
             let flag = true;
             defaultList.forEach((list) => {
@@ -36,8 +40,13 @@ const StyleValueSelector = ({ listValues = [], isEditable = true, onSet }) => {
         init();
     }, [listValues]);
 
+    useEffect(() => {
+        console.log('render', defaultValue);
+        setSelectedValues(defaultValue);
+    }, [defaultValue]);
+
     const handleSet = (oldValue, newValue) => {
-        if (isEditable) {
+        if (isEditable && selectedValues) {
             const newArray = selectedValues;
             const index = newArray.map((v) => v._id).indexOf(oldValue._id);
             if (index !== -1) {
@@ -59,6 +68,7 @@ const StyleValueSelector = ({ listValues = [], isEditable = true, onSet }) => {
                 <ValueSelectorItem
                     key={index}
                     listValues={list}
+                    defaultValue={defaultValue}
                     isEditable={isEditable}
                     onSet={(oldValue, newValue) =>
                         handleSet(oldValue, newValue)

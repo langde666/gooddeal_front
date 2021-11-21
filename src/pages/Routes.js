@@ -53,6 +53,7 @@ import StoreCollectionPage from './store/CollectionPage';
 // import StoreGiftPage from './store/GiftPage';
 import StoreReviewAndRatingPage from './store/ReviewAndRatingPage';
 //product
+import ProductDetailPage from './product/DetailPage';
 
 const Routes = () => {
     return (
@@ -267,6 +268,11 @@ const Routes = () => {
                     path="/store/about/:storeId"
                     exact
                     component={StoreAboutPage}
+                />
+                <Route
+                    path="/product/:productId"
+                    exact
+                    component={ProductDetailPage}
                 />
             </Switch>
         </BrowserRouter>

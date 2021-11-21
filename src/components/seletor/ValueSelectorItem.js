@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 
-const ValueSelectorItem = ({ listValues = [], isEditable = true, onSet }) => {
+const ValueSelectorItem = ({
+    listValues = [],
+    isEditable = true,
+    onSet,
+    defaultValue = '',
+}) => {
     const [values, setValues] = useState(listValues);
-    const [selectedValue, setSelectedValue] = useState({});
+    const [selectedValue, setSelectedValue] = useState(defaultValue);
 
     useEffect(() => {
         setValues(listValues);
@@ -11,6 +16,16 @@ const ValueSelectorItem = ({ listValues = [], isEditable = true, onSet }) => {
         setSelectedValue(newValue);
         if (onSet) onSet(oldValue, newValue);
     }, [listValues]);
+
+    useEffect(() => {
+        if (defaultValue)
+            setSelectedValue(() => {
+                const temp = listValues.map((value) => value._id);
+                return defaultValue.find(
+                    (value) => temp.indexOf(value._id) != -1,
+                );
+            });
+    }, [defaultValue]);
 
     const handleChoose = (value) => {
         const oldValue = selectedValue;

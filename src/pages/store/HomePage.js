@@ -20,8 +20,8 @@ const HomePage = (props) => {
                         heading="Best seller"
                         storeId={store._id}
                         sortBy="sold"
-                        col="col-3"
-                        limit="4"
+                        col="col"
+                        limit="5"
                     />
                 </div>
 
@@ -30,8 +30,8 @@ const HomePage = (props) => {
                         heading="New products"
                         storeId={store._id}
                         sortBy="createdAt"
-                        col="col-3"
-                        limit="4"
+                        col="col"
+                        limit="5"
                     />
                 </div>
             </div>

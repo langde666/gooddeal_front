@@ -1,4 +1,3 @@
-import { getToken } from '../../apis/auth';
 import MainLayout from '../../components/layout/MainLayout';
 import ListCategories from '../../components/list/ListCategories';
 import ListBestSellerProduct from '../../components/list/ListBestSellerProduct';
@@ -9,15 +8,15 @@ const HomePage = () => {
         <MainLayout container="container" navFor="user">
             <div className="home-page">
                 <div className="mb-4">
-                    <ListCategories heading={true} />
+                    <ListCategories heading={true} col="col" limit={5} />
                 </div>
 
                 <div className="mb-4">
-                    <ListBestSellerProduct heading={true} />
+                    <ListBestSellerProduct col="col" limit={5} />
                 </div>
 
                 <div className="mb-4">
-                    <ListHotStores heading={true} />
+                    <ListHotStores heading={true} col="col" limit={5} />
                 </div>
             </div>
         </MainLayout>

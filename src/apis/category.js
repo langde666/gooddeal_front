@@ -1,7 +1,7 @@
 const API = process.env.REACT_APP_API_URL;
 
 export const getCategoryById = (userId, token, categoryId) => {
-    return fetch(`${API}/category/by/id/${categoryId}/${userId}?`, {
+    return fetch(`${API}/category/by/id/${categoryId}/${userId}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',

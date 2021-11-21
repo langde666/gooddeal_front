@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
+import { formatPrice } from '../../helper/formatPrice';
 import {
     getNumberOfFollowersForProduct,
     checkFollowingProduct,
@@ -16,22 +17,23 @@ const ProductCard = ({ product = {}, onRun }) => {
 
     const init = async () => {
         let newProduct = product;
-
+        //get count followers
         try {
-            const data = await getNumberOfFollowersForProduct(product._id);
-            newProduct.numberOfFollowers = data.count;
+            const res = await getNumberOfFollowersForProduct(product._id);
+            newProduct.numberOfFollowers = res.count;
         } catch {
             newProduct.numberOfFollowers = 0;
         }
 
+        //check follow
         try {
             const { _id, accessToken } = getToken();
-            const data = await checkFollowingProduct(
+            const res = await checkFollowingProduct(
                 _id,
                 accessToken,
                 product._id,
             );
-            newProduct.isFollowing = data.success ? true : false;
+            newProduct.isFollowing = res.success ? true : false;
         } catch {
             newProduct.isFollowing = false;
         }
@@ -146,8 +148,3 @@ const ProductCard = ({ product = {}, onRun }) => {
 };
 
 export default ProductCard;
-
-const formatPrice = (price) =>
-    new Intl.NumberFormat('de-DE', { maximumSignificantDigits: 3 }).format(
-        price,
-    );

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
 import { getUserLevel } from '../../apis/level';
+import { getCartCount } from '../../apis/cart';
 import { addAccount } from '../../actions/account';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
@@ -30,17 +31,31 @@ const AccountInit = ({ user, actions }) => {
                     setIsLoading(false);
                 } else {
                     const newUser = data.user;
-
+                    //get level
                     try {
-                        const data = await getUserLevel(_id);
-                        newUser.level = data.error ? {} : data.level;
-                    } catch {}
+                        const res = await getUserLevel(_id);
+                        newUser.level = res.level;
+                    } catch {
+                        newUser.level = {};
+                    }
 
+                    //get count carts
+                    try {
+                        const res = await getCartCount(_id, accessToken);
+                        newUser.cartCount = res.count;
+                    } catch {
+                        newUser.cartCount = 0;
+                    }
+
+                    //get count orders
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newUser.numberOfSucessfulOrders = 0;
                         newUser.numberOfFailedOrders = 0;
-                    } catch {}
+                    } catch {
+                        newUser.numberOfSucessfulOrders = 0;
+                        newUser.numberOfFailedOrders = 0;
+                    }
 
                     actions(newUser);
                     setIsLoading(false);

@@ -1,8 +1,20 @@
 const API = process.env.REACT_APP_API_URL;
 
+export const getProduct = (productId) => {
+    return fetch(`${API}/product/${productId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const getProductByIdForManager = (userId, token, productId, storeId) => {
     return fetch(
-        `${API}/product/for/manager/${productId}/${storeId}/${userId}?`,
+        `${API}/product/for/manager/${productId}/${storeId}/${userId}`,
         {
             method: 'GET',
             headers: {

@@ -4,7 +4,12 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import CategoryCard from '../card/CategoryCard';
 
-const ListCategories = ({ heading = true, categoryId = null, col = 'col' }) => {
+const ListCategories = ({
+    heading = true,
+    categoryId = null,
+    col = 'col',
+    limit = '5',
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -18,7 +23,7 @@ const ListCategories = ({ heading = true, categoryId = null, col = 'col' }) => {
             categoryId,
             sortBy: 'name',
             order: 'asc',
-            limit: 6,
+            limit,
             page: 1,
         })
             .then((data) => {

@@ -9,14 +9,7 @@ import AccountInit from '../../init/AccountInit';
 import VendorInit from '../../init/VendorInit';
 
 const MainNav = ({ navFor = 'user' }) => {
-    const { cart } = useSelector((state) => state.account.user);
-    const count =
-        cart && cart.length > 0
-            ? cart.reduce(
-                  (count, product) => count + product && product.count,
-                  0,
-              )
-            : 0;
+    const { cartCount } = useSelector((state) => state.account.user);
 
     return (
         <header className="main-nav cus-nav navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
@@ -96,7 +89,7 @@ const MainNav = ({ navFor = 'user' }) => {
                                     </Link>
                                     {
                                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info cus-tooltip">
-                                            {count < 10 ? count : '9+'}
+                                            {cartCount < 10 ? cartCount : '9+'}
                                             <span className="visually-hidden">
                                                 products
                                             </span>

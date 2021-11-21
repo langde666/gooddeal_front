@@ -26,20 +26,26 @@ const UserInit = ({ user, actions }) => {
                 } else {
                     const newUser = data.user;
 
+                    //get level
                     try {
-                        const data = await getUserLevel(userId);
-                        newUser.level = data.error ? {} : data.level;
-                    } catch {}
+                        const res = await getUserLevel(userId);
+                        newUser.level = res.level;
+                    } catch {
+                        newUser.level = {};
+                    }
 
+                    //get count orders
                     try {
                         //call api get numberOfSucessfulOrders, numberOfFailedOrders
                         newUser.numberOfSucessfulOrders = 0;
                         newUser.numberOfFailedOrders = 0;
-                    } catch {}
+                    } catch {
+                        newUser.numberOfSucessfulOrders = 0;
+                        newUser.numberOfFailedOrders = 0;
+                    }
 
                     actions(newUser);
                     setIsLoading(false);
-                    console.log(newUser);
                 }
             })
             .catch((error) => {

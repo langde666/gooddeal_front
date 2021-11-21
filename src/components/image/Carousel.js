@@ -6,10 +6,11 @@ const Carousel = ({
     listImages = [],
     alt = 'carousel',
     isEditable = false,
+    style = {},
 }) => (
     <div
         id="carouselInterval"
-        className="carousel slide"
+        className="carousel carousel-dark slide"
         data-bs-ride="carousel"
     >
         <div className="carousel-indicators">
@@ -33,7 +34,7 @@ const Carousel = ({
                         className={`carousel-item ${index == 0 && 'active'}`}
                         data-bs-interval="3000"
                     >
-                        <div className="cus-carousel">
+                        <div className="cus-carousel" style={style}>
                             <img
                                 src={`${IMG + image}`}
                                 className="d-block w-100 cus-carousel-img"

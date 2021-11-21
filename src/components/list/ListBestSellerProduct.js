@@ -4,7 +4,12 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import ProductCard from '../card/ProductCard';
 
-const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
+const ListBestSellerProducts = ({
+    heading = 'Best Seller',
+    col = 'col',
+    categoryId = '',
+    limit = '5',
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -16,12 +21,12 @@ const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
         listActiveProducts({
             search: '',
             rating: '',
-            categoryId: '',
+            categoryId,
             minPrice: '',
             maxPrice: '',
             sortBy: 'sold',
             order: 'desc',
-            limit: 5,
+            limit,
             page: 1,
         })
             .then((data) => {
@@ -37,11 +42,11 @@ const ListBestSellerProducts = ({ heading = true, col = 'col' }) => {
 
     useEffect(() => {
         init();
-    }, []);
+    }, [categoryId]);
 
     return (
         <div className="products-list-wrap position-relative">
-            {heading && <h4>Best Seller</h4>}
+            {heading && <h4>{heading}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
