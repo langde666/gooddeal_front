@@ -42,10 +42,10 @@ const AddToCartForm = ({ product = {} }) => {
                 if (flag) defaultList.push([value]);
             });
 
-        const defaultStyleValueIds = defaultList
-            .map((list) => list[0]._id)
-            .join('|');
         const defaultStyleValues = defaultList.map((list) => list[0]);
+        const defaultStyleValueIds = defaultStyleValues
+            .map((value) => value._id)
+            .join('|');
 
         setCartItem({
             storeId: product.storeId && product.storeId._id,
@@ -56,8 +56,16 @@ const AddToCartForm = ({ product = {} }) => {
         });
     }, [product]);
 
+    const handleSet = (values) => {
+        setCartItem({
+            ...cartItem,
+            styleValueIds: values.map((value) => value._id).join('|'),
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(cartItem);
         setIsConfirming(true);
     };
 
@@ -108,14 +116,7 @@ const AddToCartForm = ({ product = {} }) => {
                         listValues={product.styleValueIds}
                         isEditable={true}
                         defaultValue={cartItem.defaultStyleValues}
-                        onSet={(values) =>
-                            setCartItem({
-                                ...cartItem,
-                                styleValueIds: values
-                                    .map((value) => value._id)
-                                    .join('|'),
-                            })
-                        }
+                        onSet={(values) => handleSet(values)}
                     />
                 </div>
 

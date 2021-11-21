@@ -41,8 +41,9 @@ const StyleValueSelector = ({
     }, [listValues]);
 
     useEffect(() => {
-        console.log('render', defaultValue);
+        // console.log('render', defaultValue);
         setSelectedValues(defaultValue);
+        if (onSet && defaultValue) onSet(defaultValue);
     }, [defaultValue]);
 
     const handleSet = (oldValue, newValue) => {

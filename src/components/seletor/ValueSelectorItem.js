@@ -37,7 +37,7 @@ const ValueSelectorItem = ({
     return (
         <div className="position-relative mt-3 mb-1">
             <label
-                className="position-absolute text-muted"
+                className="position-absolute text-primary"
                 style={{
                     fontSize: '0.8rem',
                     left: '12px',

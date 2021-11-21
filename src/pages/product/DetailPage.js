@@ -23,7 +23,6 @@ import ListProductsByStore from '../../components/list/ListProductsByStore';
 const DetailPage = () => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
 
     const [product, setProduct] = useState({});
     const { productId } = useParams();
@@ -71,7 +70,7 @@ const DetailPage = () => {
 
     useEffect(() => {
         init();
-    }, [productId, run]);
+    }, [productId]);
 
     return (
         <MainLayout container="container" navFor="user">
@@ -120,7 +119,12 @@ const DetailPage = () => {
                             <FollowProductButton
                                 productId={product._id}
                                 isFollowing={product.isFollowing}
-                                onRun={() => setRun(!run)}
+                                onRun={() =>
+                                    setProduct({
+                                        ...product,
+                                        isFollowing: !product.isFollowing,
+                                    })
+                                }
                                 className="w-100 btn-lg"
                             />
                         </div>
