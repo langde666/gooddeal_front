@@ -359,7 +359,7 @@ const StoreProductsTable = ({
                                     <div
                                         style={{
                                             width: '300px',
-                                            height: '200px',
+                                            maxHeight: '200px',
                                             overflow: 'auto',
                                         }}
                                     >

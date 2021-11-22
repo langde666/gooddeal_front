@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
-import { createCommission } from '../../../apis/commission';
+import { createDelivery } from '../../../apis/delivery';
 import { regexTest, numberTest } from '../../../helper/test';
 import TextArea from '../../ui/TextArea';
 import Input from '../../ui/Input';
@@ -9,32 +9,32 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
+const AdminCreateDeliveryForm = ({ onRun = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [commission, setCommission] = useState({
+    const [delivery, setDelivery] = useState({
         name: '',
         description: '',
-        cost: 0,
+        price: 1000,
         isValidName: true,
         isValidDescription: true,
-        isValidCost: true,
+        isValidPrice: true,
     });
 
     const handleChange = (name, isValidName, value) => {
-        setCommission({
-            ...commission,
+        setDelivery({
+            ...delivery,
             [name]: value,
             [isValidName]: true,
         });
     };
 
     const handleValidate = (isValidName, flag) => {
-        setCommission({
-            ...commission,
+        setDelivery({
+            ...delivery,
             [isValidName]: flag,
         });
     };
@@ -42,19 +42,19 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const { name, description, cost } = commission;
-        if (!name || !description || cost === '') {
-            setCommission({
-                ...commission,
+        const { name, description, price } = delivery;
+        if (!name || !description || !price) {
+            setDelivery({
+                ...delivery,
                 isValidName: regexTest('name', name),
                 isValidDescription: regexTest('bio', description),
-                isValidCost: numberTest('zeroTo100', cost),
+                isValidPrice: numberTest('positive', price),
             });
             return;
         }
 
-        const { isValidName, isValidDescription, isValidCost } = commission;
-        if (!isValidName || !isValidDescription || !isValidCost) return;
+        const { isValidName, isValidDescription, isValidPrice } = delivery;
+        if (!isValidName || !isValidDescription || !isValidPrice) return;
 
         setIsConfirming(true);
     };
@@ -62,10 +62,12 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     const onSubmit = () => {
         const { _id, accessToken } = getToken();
 
+        console.log(delivery);
+
         setError('');
         setSuccess('');
         setIsLoading(true);
-        createCommission(_id, accessToken, commission)
+        createDelivery(_id, accessToken, delivery)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -79,13 +81,13 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
                     setTimeout(() => {
                         setSuccess('');
                     }, 3000);
-                    setCommission({
+                    setDelivery({
                         name: '',
                         description: '',
-                        cost: 0,
+                        price: 1000,
                         isValidName: true,
                         isValidDescription: true,
-                        isValidCost: true,
+                        isValidPrice: true,
                     });
                     if (onRun) onRun();
                 }
@@ -100,28 +102,28 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     };
 
     return (
-        <div className="create-commission-form-wrap position-relative">
+        <div className="create-delivery-form-wrap position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this commission"
+                    title="Create this delivery"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
             <form
-                className="create-commission-form row mb-2"
+                className="create-delivery-form row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12">
                     <Input
                         type="text"
-                        label="Commission name"
-                        value={commission.name}
-                        isValid={commission.isValidName}
-                        feedback="Please provide a valid commission name."
+                        label="Delivery unit name"
+                        value={delivery.name}
+                        isValid={delivery.isValidName}
+                        feedback="Please provide a valid delivery name."
                         validator="level"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
@@ -136,9 +138,9 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
                     <TextArea
                         type="text"
                         label="Description"
-                        value={commission.description}
-                        isValid={commission.isValidDescription}
-                        feedback="Please provide a valid commission description."
+                        value={delivery.description}
+                        isValid={delivery.isValidDescription}
+                        feedback="Please provide a valid delivery description."
                         validator="bio"
                         onChange={(value) =>
                             handleChange(
@@ -156,16 +158,16 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
                 <div className="col-12">
                     <Input
                         type="number"
-                        label="Cost (%)"
-                        value={commission.cost}
-                        isValid={commission.isValidCost}
-                        feedback="Please provide a valid cost (>=0)."
-                        validator="zeroTo100"
+                        label="Price (VND)"
+                        value={delivery.price}
+                        isValid={delivery.isValidPrice}
+                        feedback="Please provide a valid price (>0)."
+                        validator="positive"
                         onChange={(value) =>
-                            handleChange('cost', 'isValidCost', value)
+                            handleChange('price', 'isValidPrice', value)
                         }
                         onValidate={(flag) =>
-                            handleValidate('isValidCost', flag)
+                            handleValidate('isValidPrice', flag)
                         }
                     />
                 </div>
@@ -196,4 +198,4 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     );
 };
 
-export default AdminCreateCommissionForm;
+export default AdminCreateDeliveryForm;

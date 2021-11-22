@@ -21,6 +21,7 @@ import AdminCreateStylePage from './admin/CreateStylePage';
 import AdminEditStylePage from './admin/EditStylePage';
 import AdminStyleValuesPage from './admin/StyleValuePage';
 import AdminProductPage from './admin/ProductPage';
+import AdminDeliveryPage from './admin/DeliveryPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -141,6 +142,11 @@ const Routes = () => {
                     path="/admin/product"
                     exact
                     component={AdminProductPage}
+                />
+                <AdminRoute
+                    path="/admin/delivery"
+                    exact
+                    component={AdminDeliveryPage}
                 />
 
                 <PrivateRoute
