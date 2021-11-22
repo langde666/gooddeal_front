@@ -102,7 +102,7 @@ const StyleSelector = ({ defaultValue = '', categoryId = '', onSet }) => {
             )}
 
             {styles.map((style, index) => (
-                <div className="col-12 mt-2 mx-3" key={index}>
+                <div className="col mt-2 mx-3" key={index}>
                     <MultiStyleValueSelector
                         defaultValue={defaultValue}
                         categoryId={categoryId}

@@ -9,6 +9,7 @@ import Loading from '../../components/ui/Loading';
 import Error from '../../components/ui/Error';
 import ProductFilter from '../../components/filter/ProductFilter';
 import StoreLayout from '../../components/layout/StoreLayout';
+import MainLayout from '../../components/layout/MainLayout';
 
 const CollectionPage = (props) => {
     const store = useSelector((state) => state.store.store);
@@ -77,7 +78,11 @@ const CollectionPage = (props) => {
         });
     };
 
-    return (
+    return typeof store.isActive === 'boolean' && !store.isActive ? (
+        <MainLayout>
+            <Error msg="This store is banned by GoodDeal!" />
+        </MainLayout>
+    ) : (
         <StoreLayout store={store}>
             <div className="store-collection-page">
                 <div className="row flex-nowrap">

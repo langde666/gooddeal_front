@@ -120,12 +120,12 @@ const MultiStyleValueSelector = ({
                             </span>
                         ))
                     ) : (
-                        <span>No values choosed</span>
+                        <span className="text-danger">No values choosed</span>
                     )}
 
                     <div
+                        className="mt-2"
                         style={{
-                            width: '33.33333%',
                             maxHeight: '200px',
                             overflow: 'auto',
                         }}
@@ -148,7 +148,7 @@ const MultiStyleValueSelector = ({
                                 </button>
                             ))}
 
-                            <span className="list-group-item">
+                            <span className="list-group-item d-flex justify-content-end">
                                 <AddValueStyleItem
                                     styleId={styleId}
                                     styleName={styleName}

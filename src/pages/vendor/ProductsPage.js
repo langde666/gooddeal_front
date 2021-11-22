@@ -32,7 +32,9 @@ const ProductsPage = (props) => {
                         <button
                             type="button"
                             className={`btn ${
-                                !flag ? 'btn-primary' : 'btn-outline-primary'
+                                !flag
+                                    ? 'btn-secondary'
+                                    : 'btn-outline-secondary'
                             } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >

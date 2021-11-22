@@ -71,7 +71,9 @@ const SellStoreProductButton = ({
             )}
             <button
                 type="button"
-                className={`btn btn-outline-primary ripple ${className}`}
+                className={`btn btn-outline-${
+                    !sellingFlag ? 'primary' : 'secondary'
+                } ripple ${className}`}
                 onClick={handleSellingProduct}
             >
                 {!sellingFlag ? (

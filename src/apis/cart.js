@@ -68,3 +68,18 @@ export const removeFromCart = (userId, token, cartItemId) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
+
+export const updateCartItem = (userId, token, count, cartItemId) => {
+    return fetch(`${API}/cart/update/${cartItemId}/${userId}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(count),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

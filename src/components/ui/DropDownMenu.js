@@ -9,9 +9,12 @@ const DropDownMenu = ({
     side = '',
     label = '',
     borderBtn = false,
+    resetDefault = true,
 }) => {
-    const [selectedItem, setSelectedItem] = useState(
-        () => listItem.find((item) => item.value == value) || listItem[0],
+    const [selectedItem, setSelectedItem] = useState(() =>
+        resetDefault
+            ? listItem.find((item) => item.value == value) || listItem[0]
+            : { value: value, label: value },
     );
     const [showDropDownFlag, toggleShowDropDownFlag] = useToggle(false);
 
@@ -36,6 +39,10 @@ const DropDownMenu = ({
                 className={`list-group cus-dropdown-menu ${
                     showDropDownFlag ? 'show' : ''
                 }`}
+                style={{
+                    maxHeight: '240px',
+                    overflow: 'auto',
+                }}
             >
                 {listItem &&
                     listItem.map((item, index) => (

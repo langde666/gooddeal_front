@@ -1,12 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { listItemsByCard, removeFromCart } from '../../apis/cart';
+import {
+    listItemsByCard,
+    removeFromCart,
+    updateCartItem,
+} from '../../apis/cart';
+import { formatPrice } from '../../helper/formatPrice';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
+import DropDownMenu from '../ui/DropDownMenu';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -78,6 +84,35 @@ const ListCartItems = ({ cartId = '', onRun }) => {
             });
     };
 
+    const handleUpdate = (value, item) => {
+        // console.log(value, item);
+        const { _id, accessToken } = getToken();
+        setError('');
+        setSuccess('');
+        setIsLoading(true);
+        updateCartItem(_id, accessToken, { count: value }, item._id)
+            .then((data) => {
+                if (data.error) setError(data.error);
+                else {
+                    setSuccess(data.success);
+                    updateDispatch('account', data.user);
+                    setRun(!run);
+                    if (onRun) onRun();
+                }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
+            });
+    };
+
     return (
         <div className="list-cart-item position-relative">
             {isloading && <Loading />}
@@ -122,7 +157,7 @@ const ListCartItems = ({ cartId = '', onRun }) => {
 
                     <div className="flex-grow-1 mx-4 my-2">
                         <Link
-                            className="text-reset text-decoration-none link-hover d-block mt-1 mb-2"
+                            className="text-reset text-decoration-none link-hover d-block mt-1"
                             to={`/product/${
                                 item.productId && item.productId._id
                             }`}
@@ -133,7 +168,7 @@ const ListCartItems = ({ cartId = '', onRun }) => {
                             </h3>
                         </Link>
 
-                        <div className="">
+                        <div className="mt-2">
                             {item.styleValueIds &&
                                 item.styleValueIds.map((value, index) => (
                                     <p className="fs-6" key={index}>
@@ -142,9 +177,91 @@ const ListCartItems = ({ cartId = '', onRun }) => {
                                     </p>
                                 ))}
                         </div>
+
+                        <div className="mt-2">
+                            <p className="text-decoration-line-through text-muted">
+                                {item.productId &&
+                                    item.productId.price &&
+                                    formatPrice(
+                                        item.productId &&
+                                            item.productId.price.$numberDecimal,
+                                    )}{' '}
+                                VND
+                            </p>
+
+                            <h4 className="text-primary fs-5">
+                                {item.productId &&
+                                    item.productId.promotionalPrice &&
+                                    formatPrice(
+                                        item.productId &&
+                                            item.productId.promotionalPrice
+                                                .$numberDecimal,
+                                    )}{' '}
+                                VND
+                            </h4>
+                        </div>
+
+                        {item.productId && !item.productId.isActive && (
+                            <Error msg="The product is banned by GoodDeal!" />
+                        )}
+
+                        {item.productId &&
+                            item.productId.isActive &&
+                            !item.productId.isSelling && (
+                                <Error msg="The product is out of business, please remove it from your cart, you can continue with others!" />
+                            )}
+
+                        {item.productId &&
+                            item.productId.isActive &&
+                            item.productId.isSelling &&
+                            item.productId.quantity <= 0 && (
+                                <Error msg="The product is sold out, please remove it from your cart, you can continue with others!" />
+                            )}
+
+                        {item.productId &&
+                            item.productId.isActive &&
+                            item.productId.isSelling &&
+                            item.productId.quantity > 0 &&
+                            item.productId.quantity < item.count && (
+                                <Error
+                                    msg={`Only ${item.productId.quantity} products left, please update the count!`}
+                                />
+                            )}
                     </div>
 
-                    <div className="my-2">
+                    <div className="d-flex justify-content-between align-items-center my-2">
+                        {item.productId &&
+                            item.productId.isActive &&
+                            item.productId.isSelling &&
+                            item.productId.quantity > 0 && (
+                                <div className="px-2">
+                                    <DropDownMenu
+                                        listItem={
+                                            item.productId &&
+                                            item.productId.quantity &&
+                                            Array.from(
+                                                {
+                                                    length: item.productId
+                                                        .quantity,
+                                                },
+                                                (_, i) => {
+                                                    return {
+                                                        value: i + 1,
+                                                        label: i + 1,
+                                                    };
+                                                },
+                                            )
+                                        }
+                                        resetDefault={false}
+                                        value={item.count}
+                                        setValue={(value) =>
+                                            handleUpdate(value, item)
+                                        }
+                                        borderBtn={true}
+                                    />
+                                </div>
+                            )}
+
                         <div className="d-inline-block position-relative">
                             <button
                                 type="button"
@@ -160,6 +277,59 @@ const ListCartItems = ({ cartId = '', onRun }) => {
                     </div>
                 </div>
             ))}
+
+            {items.reduce(
+                (prev, item) =>
+                    prev &&
+                    item.productId &&
+                    item.productId.isActive &&
+                    item.productId.isSelling &&
+                    item.productId.quantity > 0 &&
+                    item.productId.quantity >= item.count,
+                true,
+            ) && (
+                <div className="d-flex justify-content-end align-items-center">
+                    <div className="me-4">
+                        <p className="text-decoration-line-through text-muted">
+                            {formatPrice(
+                                items.reduce((prev, item) => {
+                                    return (
+                                        parseFloat(prev) +
+                                        parseFloat(
+                                            item.productId.price.$numberDecimal,
+                                        ) *
+                                            parseFloat(item.count)
+                                    );
+                                }, 0),
+                            )}{' '}
+                            VND
+                        </p>
+
+                        <h4 className="text-primary fs-5">
+                            {formatPrice(
+                                items.reduce((prev, item) => {
+                                    return (
+                                        parseFloat(prev) +
+                                        parseFloat(
+                                            item.productId.promotionalPrice
+                                                .$numberDecimal,
+                                        ) *
+                                            parseFloat(item.count)
+                                    );
+                                }, 0),
+                            )}{' '}
+                            VND
+                        </h4>
+                    </div>
+
+                    <Link
+                        className="btn btn-primary ripple btn-lg"
+                        to={`/checkout/${cartId}`}
+                    >
+                        Checkout
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };
