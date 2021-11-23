@@ -19,6 +19,7 @@ import CategorySmallCard from '../../components/card/CategorySmallCard';
 import StoreSmallCard from '../../components/card/StoreSmallCard';
 import ListBestSellerProducts from '../../components/list/ListBestSellerProduct';
 import ListProductsByStore from '../../components/list/ListProductsByStore';
+import SigninButton from '../../components/item/SigninItem';
 
 const DetailPage = () => {
     const [isloading, setIsLoading] = useState(false);
@@ -129,9 +130,15 @@ const DetailPage = () => {
                                     <Error msg="The product is sold out!" />
                                 )}
 
+                                {!getToken() && (
+                                    <SigninButton className="w-100 btn-lg" />
+                                )}
+
                                 {product.storeId &&
                                     product.storeId.isOpen &&
-                                    product.quantity > 0 && (
+                                    product.quantity > 0 &&
+                                    getToken() &&
+                                    getToken().role === 'user' && (
                                         <AddToCartForm product={product} />
                                     )}
 
@@ -144,7 +151,7 @@ const DetailPage = () => {
                                             isFollowing: !product.isFollowing,
                                         })
                                     }
-                                    className="w-100 btn-lg"
+                                    className="mt-2 w-100 btn-lg"
                                 />
                             </div>
 

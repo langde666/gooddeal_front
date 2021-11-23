@@ -110,7 +110,7 @@ const AddToCartForm = ({ product = {} }) => {
                 />
             )}
 
-            <form className="add-to-cart-form row mb-2">
+            <form className="add-to-cart-form row">
                 <div className="col-12">
                     <StyleValueSelector
                         listValues={product.styleValueIds}

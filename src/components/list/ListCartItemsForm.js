@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import {
     listItemsByCard,
@@ -8,11 +9,14 @@ import {
 } from '../../apis/cart';
 import { formatPrice } from '../../helper/formatPrice';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
+import useToggle from '../../hooks/useToggle';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import DropDownMenu from '../ui/DropDownMenu';
+import UserLevelLabel from '../label/UserLevelLabel';
+import CheckoutForm from '../item/form/CheckoutForm';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -22,10 +26,17 @@ const ListCartItems = ({ cartId = '', onRun }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [run, setRun] = useState(false);
+    const [showCheckoutFlag, toogleShowCheckoutFlag] = useToggle(false);
 
+    const { level } = useSelector((state) => state.account.user);
     const [updateDispatch] = useUpdateDispatch();
 
     const [items, setItems] = useState([]);
+    const [totals, setTotals] = useState({
+        totalPrices: 0,
+        totalPromotionalPrices: 0,
+        totalPricesForUser: 0,
+    });
     const [removedItem, setRemovedItem] = useState({});
 
     const init = () => {
@@ -36,7 +47,44 @@ const ListCartItems = ({ cartId = '', onRun }) => {
         listItemsByCard(_id, accessToken, cartId)
             .then((data) => {
                 if (data.error) setError(data.error);
-                else setItems(data.items);
+                else {
+                    const items = data.items;
+
+                    const totalPrices = items.reduce(
+                        (prev, item) =>
+                            parseFloat(prev) +
+                            parseFloat(item.productId.price.$numberDecimal) *
+                                parseFloat(item.count),
+                        0,
+                    );
+
+                    const totalPromotionalPrices = items.reduce(
+                        (prev, item) =>
+                            parseFloat(prev) +
+                            parseFloat(
+                                item.productId.promotionalPrice.$numberDecimal,
+                            ) *
+                                parseFloat(item.count),
+                        0,
+                    );
+
+                    const totalPricesForUser =
+                        level && level.discount
+                            ? (totalPromotionalPrices *
+                                  (100 -
+                                      parseFloat(
+                                          level.discount.$numberDecimal,
+                                      ))) /
+                              100
+                            : totalPromotionalPrices;
+
+                    setItems(items);
+                    setTotals({
+                        totalPrices,
+                        totalPromotionalPrices,
+                        totalPricesForUser,
+                    });
+                }
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -48,6 +96,19 @@ const ListCartItems = ({ cartId = '', onRun }) => {
     useEffect(() => {
         if (cartId) init();
     }, [cartId, run]);
+
+    useEffect(() => {
+        const totalPricesForUser =
+            level && level.discount
+                ? (totals.totalPromotionalPrices *
+                      (100 - parseFloat(level.discount.$numberDecimal))) /
+                  100
+                : totals.totalPromotionalPrices;
+        setTotals({
+            ...totals,
+            totalPricesForUser,
+        });
+    }, [level]);
 
     const handleRemove = (item) => {
         if (!item) return;
@@ -291,43 +352,41 @@ const ListCartItems = ({ cartId = '', onRun }) => {
                 <div className="d-flex justify-content-end align-items-center">
                     <div className="me-4">
                         <p className="text-decoration-line-through text-muted">
-                            {formatPrice(
-                                items.reduce((prev, item) => {
-                                    return (
-                                        parseFloat(prev) +
-                                        parseFloat(
-                                            item.productId.price.$numberDecimal,
-                                        ) *
-                                            parseFloat(item.count)
-                                    );
-                                }, 0),
-                            )}{' '}
-                            VND
+                            {formatPrice(totals.totalPrices)} VND
                         </p>
 
-                        <h4 className="text-primary fs-5">
-                            {formatPrice(
-                                items.reduce((prev, item) => {
-                                    return (
-                                        parseFloat(prev) +
-                                        parseFloat(
-                                            item.productId.promotionalPrice
-                                                .$numberDecimal,
-                                        ) *
-                                            parseFloat(item.count)
-                                    );
-                                }, 0),
-                            )}{' '}
-                            VND
+                        <h4 className="text-decoration-line-through text-primary fs-5">
+                            {formatPrice(totals.totalPromotionalPrices)} VND
                         </h4>
                     </div>
 
-                    <Link
-                        className="btn btn-primary ripple btn-lg"
-                        to={`/checkout/${cartId}`}
+                    <div className="me-4">
+                        <small>
+                            <UserLevelLabel level={level} />
+                        </small>
+
+                        <h4 className="text-primary fs-5">
+                            {formatPrice(totals.totalPricesForUser)} VND
+                        </h4>
+                    </div>
+
+                    <button
+                        className={`btn ${
+                            showCheckoutFlag
+                                ? 'btn-primary'
+                                : 'btn-outline-primary'
+                        } ripple`}
+                        type="button"
+                        onClick={toogleShowCheckoutFlag}
                     >
-                        Checkout
-                    </Link>
+                        Proceed to checkout
+                    </button>
+                </div>
+            )}
+
+            {showCheckoutFlag && (
+                <div className="mx-3 mt-2">
+                    <CheckoutForm cartId={cartId} totals={totals} />
                 </div>
             )}
         </div>

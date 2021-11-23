@@ -15,6 +15,10 @@
 }
 
 /* boostrap */
+.card {
+    max-width: 240px !important;
+}
+
 .form-control:focus,
 .btn:focus,
 .btn-close:focus {
