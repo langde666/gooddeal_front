@@ -37,8 +37,8 @@ const SocialForm = (props) => {
                     setError(data.error);
                     setIsLoading(false);
                 } else {
-                    const { accessToken, refreshToken, _id } = data;
-                    setToken({ accessToken, refreshToken, _id }, () => {
+                    const { accessToken, refreshToken, _id, role } = data;
+                    setToken({ accessToken, refreshToken, _id, role }, () => {
                         history.go(0);
                     });
                 }

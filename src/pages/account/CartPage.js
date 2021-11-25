@@ -89,6 +89,8 @@ const AddressesPage = (props) => {
                                             cart.storeId.isOpen && (
                                                 <ListCartItemsForm
                                                     cartId={cart._id}
+                                                    storeId={cart.storeId._id}
+                                                    userId={cart.userId._id}
                                                     onRun={() => setRun(!run)}
                                                 />
                                             )}

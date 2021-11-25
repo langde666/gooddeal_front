@@ -7,6 +7,7 @@ import {
     removeFromCart,
     updateCartItem,
 } from '../../apis/cart';
+import { totalProducts } from '../../helper/total';
 import { formatPrice } from '../../helper/formatPrice';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import useToggle from '../../hooks/useToggle';
@@ -20,7 +21,7 @@ import CheckoutForm from '../item/form/CheckoutForm';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const ListCartItems = ({ cartId = '', onRun }) => {
+const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -32,12 +33,12 @@ const ListCartItems = ({ cartId = '', onRun }) => {
     const [updateDispatch] = useUpdateDispatch();
 
     const [items, setItems] = useState([]);
-    const [totals, setTotals] = useState({
-        totalPrices: 0,
-        totalPromotionalPrices: 0,
-        totalPricesForUser: 0,
-    });
     const [removedItem, setRemovedItem] = useState({});
+    const [totals, setTotals] = useState({
+        totalPrice: 0,
+        totalPromotionalPrice: 0,
+        amountFromUser1: 0,
+    });
 
     const init = () => {
         const { _id, accessToken } = getToken();
@@ -45,44 +46,19 @@ const ListCartItems = ({ cartId = '', onRun }) => {
         setSuccess('');
         setIsLoading(true);
         listItemsByCard(_id, accessToken, cartId)
-            .then((data) => {
+            .then(async (data) => {
                 if (data.error) setError(data.error);
                 else {
-                    const items = data.items;
-
-                    const totalPrices = items.reduce(
-                        (prev, item) =>
-                            parseFloat(prev) +
-                            parseFloat(item.productId.price.$numberDecimal) *
-                                parseFloat(item.count),
-                        0,
-                    );
-
-                    const totalPromotionalPrices = items.reduce(
-                        (prev, item) =>
-                            parseFloat(prev) +
-                            parseFloat(
-                                item.productId.promotionalPrice.$numberDecimal,
-                            ) *
-                                parseFloat(item.count),
-                        0,
-                    );
-
-                    const totalPricesForUser =
-                        level && level.discount
-                            ? (totalPromotionalPrices *
-                                  (100 -
-                                      parseFloat(
-                                          level.discount.$numberDecimal,
-                                      ))) /
-                              100
-                            : totalPromotionalPrices;
-
-                    setItems(items);
+                    setItems(data.items);
+                    const {
+                        totalPrice,
+                        totalPromotionalPrice,
+                        amountFromUser1,
+                    } = totalProducts(data.items, level);
                     setTotals({
-                        totalPrices,
-                        totalPromotionalPrices,
-                        totalPricesForUser,
+                        totalPrice,
+                        totalPromotionalPrice,
+                        amountFromUser1,
                     });
                 }
                 setIsLoading(false);
@@ -95,20 +71,7 @@ const ListCartItems = ({ cartId = '', onRun }) => {
 
     useEffect(() => {
         if (cartId) init();
-    }, [cartId, run]);
-
-    useEffect(() => {
-        const totalPricesForUser =
-            level && level.discount
-                ? (totals.totalPromotionalPrices *
-                      (100 - parseFloat(level.discount.$numberDecimal))) /
-                  100
-                : totals.totalPromotionalPrices;
-        setTotals({
-            ...totals,
-            totalPricesForUser,
-        });
-    }, [level]);
+    }, [cartId, storeId, userId, level, run]);
 
     const handleRemove = (item) => {
         if (!item) return;
@@ -350,25 +313,30 @@ const ListCartItems = ({ cartId = '', onRun }) => {
                 true,
             ) && (
                 <div className="d-flex justify-content-end align-items-center">
-                    <div className="me-4">
-                        <p className="text-decoration-line-through text-muted">
-                            {formatPrice(totals.totalPrices)} VND
-                        </p>
+                    {!showCheckoutFlag && (
+                        <>
+                            <div className="me-4">
+                                <p className="text-decoration-line-through text-muted">
+                                    {formatPrice(totals.totalPrice)} VND
+                                </p>
 
-                        <h4 className="text-decoration-line-through text-primary fs-5">
-                            {formatPrice(totals.totalPromotionalPrices)} VND
-                        </h4>
-                    </div>
+                                <h4 className="text-decoration-line-through text-primary fs-5">
+                                    {formatPrice(totals.totalPromotionalPrice)}{' '}
+                                    VND
+                                </h4>
+                            </div>
 
-                    <div className="me-4">
-                        <small>
-                            <UserLevelLabel level={level} />
-                        </small>
+                            <div className="me-4">
+                                <small>
+                                    <UserLevelLabel level={level} />
+                                </small>
 
-                        <h4 className="text-primary fs-5">
-                            {formatPrice(totals.totalPricesForUser)} VND
-                        </h4>
-                    </div>
+                                <h4 className="text-primary fs-5">
+                                    {formatPrice(totals.amountFromUser1)} VND
+                                </h4>
+                            </div>
+                        </>
+                    )}
 
                     <button
                         className={`btn ${
@@ -386,7 +354,12 @@ const ListCartItems = ({ cartId = '', onRun }) => {
 
             {showCheckoutFlag && (
                 <div className="mx-3 mt-2">
-                    <CheckoutForm cartId={cartId} totals={totals} />
+                    <CheckoutForm
+                        cartId={cartId}
+                        userId={userId}
+                        storeId={storeId}
+                        items={items}
+                    />
                 </div>
             )}
         </div>

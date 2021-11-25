@@ -29,6 +29,18 @@ export const listCommissions = (userId, token, filter) => {
         .catch((error) => console.log(error));
 };
 
+export const getCommissionByStore = (storeId) => {
+    return fetch(`${API}/store/commission/${storeId}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
 export const createCommission = (userId, token, commission) => {
     return fetch(`${API}/commission/create/${userId}`, {
         method: 'POST',

@@ -13,7 +13,7 @@ const DropDownMenu = ({
 }) => {
     const [selectedItem, setSelectedItem] = useState(() =>
         resetDefault
-            ? listItem.find((item) => item.value == value) || listItem[0]
+            ? listItem.find((item) => item.value === value) || listItem[0]
             : { value: value, label: value },
     );
     const [showDropDownFlag, toggleShowDropDownFlag] = useToggle(false);
@@ -24,7 +24,10 @@ const DropDownMenu = ({
     };
 
     useUpdateEffect(() => {
-        const selected = listItem.find((item) => item.value == value);
+        const selected = resetDefault
+            ? listItem.find((item) => item.value === value) || listItem[0]
+            : { value: value, label: value };
+
         setSelectedItem(selected);
     }, [value]);
 
