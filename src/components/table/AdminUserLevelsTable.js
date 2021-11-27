@@ -217,18 +217,10 @@ const AdminUserLevelsTable = ({ heading = true }) => {
             <table className="admin-user-levels-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="User level"
                                 sortBy="name"
@@ -239,6 +231,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Floor point"
                                 sortBy="minPoint"
@@ -249,6 +242,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Discount"
                                 sortBy="discount"
@@ -259,6 +253,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Color"
                                 sortBy="color"
@@ -269,6 +264,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isDeleted"
@@ -285,7 +281,7 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                     {levels.map((level, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     <UserLevelLabel level={level} />
                                 </small>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
 import { listProductsForManager } from '../../apis/product';
 import { humanReadableDate } from '../../helper/humanReadable';
+import { formatPrice } from '../../helper/formatPrice';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
@@ -138,18 +139,10 @@ const StoreProductsTable = ({
                 <table className="vendor-products-manager-table table align-middle table-hover mt-2 table-sm text-center">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">
                                 <SortByButton
-                                    currentSortBy={filter.sortBy}
-                                    title="#"
-                                    sortBy="rating"
-                                    onSet={(order, sortBy) =>
-                                        handleSetSortBy(order, sortBy)
-                                    }
-                                />
-                            </th>
-                            <th scope="col">
-                                <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Name"
                                     sortBy="name"
@@ -160,6 +153,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Avatar"
                                     sortBy="listImages"
@@ -171,6 +165,7 @@ const StoreProductsTable = ({
 
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Other images"
                                     sortBy="listImages"
@@ -182,6 +177,7 @@ const StoreProductsTable = ({
 
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Desctiption"
                                     sortBy="description"
@@ -192,6 +188,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Price"
                                     sortBy="price"
@@ -202,6 +199,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Promotional price"
                                     sortBy="promotionalPrice"
@@ -212,6 +210,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Quantity"
                                     sortBy="quantity"
@@ -222,6 +221,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Sold"
                                     sortBy="sold"
@@ -232,6 +232,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Category"
                                     sortBy="categoryId"
@@ -242,6 +243,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Styles"
                                     sortBy="styleValueIds"
@@ -252,6 +254,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="License"
                                     sortBy="isActive"
@@ -262,6 +265,7 @@ const StoreProductsTable = ({
                             </th>
                             <th scope="col">
                                 <SortByButton
+                                    currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
                                     title="Created at"
                                     sortBy="createdAt"
@@ -278,7 +282,7 @@ const StoreProductsTable = ({
                         {products.map((product, index) => (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td className="text-start">
+                                <td>
                                     <small>{product.name}</small>
                                 </td>
                                 <td>
@@ -355,7 +359,7 @@ const StoreProductsTable = ({
                                         )}
                                     </div>
                                 </td>
-                                <td className="text-start">
+                                <td>
                                     <div
                                         style={{
                                             width: '300px',
@@ -366,40 +370,43 @@ const StoreProductsTable = ({
                                         <small>{product.description}</small>
                                     </div>
                                 </td>
-                                <td className="text-start ps-4">
+                                <td>
                                     <small>
                                         {product.price &&
-                                            product.price.$numberDecimal}
+                                            formatPrice(
+                                                product.price.$numberDecimal,
+                                            )}
                                         VND
                                     </small>
                                 </td>
-                                <td className="text-start ps-4">
+                                <td>
                                     <small>
                                         {product.promotionalPrice &&
-                                            product.promotionalPrice
-                                                .$numberDecimal}
+                                            formatPrice(
+                                                product.promotionalPrice
+                                                    .$numberDecimal,
+                                            )}
                                         VND
                                     </small>
                                 </td>
-                                <td className="text-start ps-4">
+                                <td>
                                     <small>{product.quantity}</small>
                                 </td>
-                                <td className="text-start ps-4">
+                                <td>
                                     <small>{product.sold}</small>
                                 </td>
                                 <td
-                                    className="text-start ps-4"
                                     style={{
-                                        minWidth: '360px',
+                                        minWidth: '300px',
                                     }}
                                 >
                                     <CategorySmallCard
                                         category={product.categoryId}
                                     />
                                 </td>
-                                <td className="text-start">
+                                <td>
                                     <div
-                                        className="d-flex justify-content-center align-items-center"
+                                        className="d-flex justify-content-start align-items-center text-start"
                                         style={{
                                             width: '300px',
                                             height: '200px',
@@ -421,19 +428,14 @@ const StoreProductsTable = ({
                                         )}
                                     </div>
                                 </td>
-                                <td className="text-start ps-2">
+                                <td>
                                     <small>
                                         <ProductLicenseLabel
                                             isActive={product.isActive}
                                         />
                                     </small>
                                 </td>
-                                <td
-                                    className="text-start"
-                                    style={{
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
+                                <td>
                                     <small>
                                         {humanReadableDate(product.createdAt)}
                                     </small>

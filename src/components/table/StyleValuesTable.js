@@ -184,7 +184,7 @@ const StyleValuesTable = ({
                 <span className="me-2">{styleValues.length || 0} results</span>
             </div>
 
-            <table className="style-values-manager-table table align-middle table-hover mt-2 table-sm">
+            <table className="style-values-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -201,7 +201,7 @@ const StyleValuesTable = ({
                     {styleValues.map((value, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="">{value.name}</td>
+                            <td>{value.name}</td>
                             {!isActive && (
                                 <Fragment>
                                     <td>

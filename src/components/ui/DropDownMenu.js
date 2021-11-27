@@ -6,7 +6,7 @@ const DropDownMenu = ({
     listItem = [],
     value = '',
     setValue = () => {},
-    side = '',
+    size = '',
     label = '',
     borderBtn = false,
     resetDefault = true,
@@ -33,8 +33,8 @@ const DropDownMenu = ({
 
     return (
         <div
-            className={`cus-dropdown ${side == 'large' ? 'w-100' : ''} ${
-                label ? 'cus-dropdown--has-label' : ''
+            className={`cus-dropdown ${size === 'large' && 'w-100'} ${
+                label && 'cus-dropdown--has-label'
             }`}
         >
             {label && <label className="cus-dropdown-label">{label}</label>}
@@ -64,13 +64,15 @@ const DropDownMenu = ({
                 type="button"
                 className={`btn ${
                     borderBtn ? 'cus-dropdown-btn--border' : 'cus-dropdown-btn'
-                } ${side == 'large' ? 'w-100' : ''} `}
+                } ${size === 'large' && 'w-100'} ${
+                    size === 'small' && 'btn-sm'
+                }`}
                 onClick={toggleShowDropDownFlag}
                 onBlur={() => toggleShowDropDownFlag(false)}
             >
                 <span
                     className={`d-inline-flex justify-content-start align-items-center ${
-                        side == 'large' ? 'flex-grow-1 text-start ps-2' : ''
+                        size == 'large' ? 'flex-grow-1 text-start ps-2' : ''
                     }`}
                 >
                     {selectedItem && selectedItem.icon}

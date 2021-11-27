@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 const SortByButton = ({
     title = '',
     currentSortBy = '',
+    currentOrder = 'asc',
     sortBy = '',
-    order = 'asc',
     onSet = () => {},
 }) => {
     const [flag, setFlag] = useState('');
 
     useEffect(
-        () => setFlag(() => (currentSortBy == sortBy ? order : '')),
-        [currentSortBy],
+        () => setFlag(() => (currentSortBy === sortBy ? currentOrder : '')),
+        [currentSortBy, currentOrder],
     );
 
     const handleClick = () => {

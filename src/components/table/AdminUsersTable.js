@@ -98,18 +98,10 @@ const AdminUsersTable = ({ heading = true }) => {
             <table className="admin-users-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="point"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="User"
                                 sortBy="firstname"
@@ -120,6 +112,7 @@ const AdminUsersTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Id card"
                                 sortBy="id_card"
@@ -130,6 +123,7 @@ const AdminUsersTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Email"
                                 sortBy="email"
@@ -140,6 +134,7 @@ const AdminUsersTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Phone"
                                 sortBy="phone"
@@ -150,6 +145,7 @@ const AdminUsersTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Joined"
                                 sortBy="createdAt"
@@ -166,19 +162,22 @@ const AdminUsersTable = ({ heading = true }) => {
                     {users.map((user, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td
+                                className="text-start ps-4"
+                                style={{ maxWidth: '360px' }}
+                            >
                                 <UserSmallCard user={user} />
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>{user.id_card || '-'}</small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>{user.email || '-'}</small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>{user.phone || '-'}</small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     {humanReadableDate(user.createdAt)}
                                 </small>

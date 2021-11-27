@@ -7,12 +7,10 @@ const StoreOwnerTable = ({ ownerId = {} }) => {
         <div className="store-owner-table-wrap position-relative">
             <h4 className="mb-2">Shop owner</h4>
 
-            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm">
+            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
-                        <th scope="col" className="text-center">
-                            #
-                        </th>
+                        <th scope="col">#</th>
                         <th scope="col">Owner</th>
                         <th scope="col">Id card</th>
                         <th scope="col">Email</th>
@@ -22,9 +20,7 @@ const StoreOwnerTable = ({ ownerId = {} }) => {
                 <tbody>
                     {ownerId && (
                         <tr>
-                            <th scope="row" className="text-center">
-                                1
-                            </th>
+                            <th scope="row">1</th>
                             <td>
                                 <UserSmallCard user={ownerId} />
                             </td>

@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { getToken } from '../../../apis/auth';
+import { createOrder } from '../../../apis/order';
 import { listActiveDeliveries } from '../../../apis/delivery';
 import { getStoreLevel } from '../../../apis/level';
 import { getCommissionByStore } from '../../../apis/commission';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
-import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 import UserAddAddressItem from '../../item/UserAddAddressItem';
+import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
 import { regexTest } from '../../../helper/test';
 import {
     totalDelivery,
@@ -32,7 +33,9 @@ const CheckoutForm = ({
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [error1, setError1] = useState('');
-    const [success, setSuccess] = useState('');
+
+    const [updateDispatch] = useUpdateDispatch();
+    const history = useHistory();
 
     const {
         addresses,
@@ -150,6 +153,7 @@ const CheckoutForm = ({
             phone,
             address,
             deliveryId,
+            commissionId,
             amountFromUser,
             amountFromStore,
             amountToStore,
@@ -161,6 +165,7 @@ const CheckoutForm = ({
             phone,
             address,
             deliveryId,
+            commissionId,
             amountFromUser,
             amountFromStore,
             amountToStore,
@@ -169,6 +174,25 @@ const CheckoutForm = ({
         };
 
         console.log('order', orderBody);
+
+        setError('');
+        setIsLoading(true);
+        createOrder(_id, accessToken, cartId, orderBody)
+            .then((data) => {
+                if (data.error) setError(data.error);
+                else {
+                    updateDispatch('account', data.user);
+                    history.push('/account/purchase');
+                }
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -255,7 +279,7 @@ const CheckoutForm = ({
                                     address: address,
                                 })
                             }
-                            side="large"
+                            size="large"
                             label="Address"
                         />
                         {addresses && addresses.length <= 0 && (
@@ -309,7 +333,7 @@ const CheckoutForm = ({
                                         order.amountToStore,
                                 });
                             }}
-                            side="large"
+                            size="large"
                             label="Delivery unit"
                         />
                     )}

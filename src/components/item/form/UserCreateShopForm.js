@@ -263,7 +263,7 @@ const CreateShopForm = (props) => {
                             }
                             value={shop.commissionId}
                             setValue={handleSelect}
-                            side="large"
+                            size="large"
                             label="Commission"
                         />
                     )}

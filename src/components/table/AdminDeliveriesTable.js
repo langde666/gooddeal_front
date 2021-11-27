@@ -204,18 +204,10 @@ const AdminDeliveriesTable = ({ heading = true }) => {
             <table className="admin-deliveries-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Name"
                                 sortBy="name"
@@ -226,6 +218,7 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Price"
                                 sortBy="price"
@@ -236,6 +229,7 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Description"
                                 sortBy="description"
@@ -246,6 +240,7 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isDeleted"
@@ -262,7 +257,7 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                     {deliveries.map((delivery, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>{delivery.name}</small>
                             </td>
                             <td>
@@ -272,23 +267,18 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                                     VND
                                 </small>
                             </td>
-                            <td className="text-start ps-4">
-                                <div
-                                    style={{
-                                        width: '300px',
-                                        maxHeight: '200px',
-                                        overflow: 'auto',
-                                    }}
-                                >
-                                    <small>{delivery.description}</small>
-                                </div>
+                            <td
+                                className="text-start px-4"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <small>{delivery.description}</small>
                             </td>
                             <td>
                                 <small>
                                     {delivery.isDeleted && <DeletedLabel />}
                                 </small>
                             </td>
-                            <td className="text-center">
+                            <td>
                                 <div className="position-relative d-inline-block me-2">
                                     <button
                                         type="button"

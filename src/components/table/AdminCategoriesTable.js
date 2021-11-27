@@ -220,18 +220,10 @@ const AdminCateroriesTable = ({ heading = true }) => {
             <table className="admin-categories-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Name"
                                 sortBy="name"
@@ -242,6 +234,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Image"
                                 sortBy="image"
@@ -253,6 +246,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
 
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Parent category"
                                 sortBy="categoryId"
@@ -264,6 +258,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
 
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isDeleted"
@@ -280,7 +275,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                     {categories.map((category, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">{category.name}</td>
+                            <td>{category.name}</td>
                             <td>
                                 <div
                                     style={{
@@ -304,7 +299,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                     />
                                 </div>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 {category.categoryId ? (
                                     <CategorySmallCard
                                         category={category.categoryId}

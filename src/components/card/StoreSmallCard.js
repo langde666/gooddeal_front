@@ -22,7 +22,7 @@ const StoreSmallCard = ({ store = {}, bodername = false }) => (
             className="text-reset text-decoration-none link-hover mt-2"
             to={`/store/${store._id}`}
         >
-            <h6 className="text-nowrap">{store.name}</h6>
+            <h6 className="">{store.name}</h6>
         </Link>
     </div>
 );

@@ -20,7 +20,6 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
     const [success, setSuccess] = useState('');
     const [isConfirming, setIsConfirming] = useState(false);
 
-    // const { addresses } = useSelector((state) => state.account.user);
     const [updateDispatch] = useUpdateDispatch();
 
     const handleEditAddress = (address, index) => {
@@ -111,7 +110,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
                         addresses.map((address, index) => (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td className="text-start ps-4">{address}</td>
+                                <td>{address}</td>
                                 <td>
                                     <div className="position-relative d-inline-block me-2">
                                         <button

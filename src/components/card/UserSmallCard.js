@@ -24,9 +24,7 @@ const UserSmallCard = ({ user = {}, bodername = false, style = {} }) => (
             to={`/user/${user._id}`}
             style={style}
         >
-            <h6 className="text-nowrap">
-                {user.firstname + ' ' + user.lastname}
-            </h6>
+            <h6 className="">{user.firstname + ' ' + user.lastname}</h6>
         </Link>
     </div>
 );

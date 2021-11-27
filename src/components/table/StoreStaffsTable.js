@@ -28,11 +28,6 @@ const StoreStaffsTable = ({
     const [isConfirming, setIsConfirming] = useState(false);
 
     const { _id: userId, accessToken } = getToken();
-    // const {
-    //     staffIds,
-    //     ownerId,
-    //     _id: storeId,
-    // } = useSelector((state) => state.vendor.store);
     const [updateDispatch] = useUpdateDispatch();
 
     const [listStaffs, setListStaffs] = useState([]);
@@ -183,21 +178,13 @@ const StoreStaffsTable = ({
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm">
+            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
-                        <th scope="col" className="text-center">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Staff"
                                 sortBy="name"
@@ -208,6 +195,7 @@ const StoreStaffsTable = ({
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Id card"
                                 sortBy="id_card"
@@ -218,6 +206,7 @@ const StoreStaffsTable = ({
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Email"
                                 sortBy="email"
@@ -228,6 +217,7 @@ const StoreStaffsTable = ({
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Phone"
                                 sortBy="phone"
@@ -244,10 +234,11 @@ const StoreStaffsTable = ({
                 <tbody>
                     {listStaffs.map((staff, index) => (
                         <tr key={index}>
-                            <th scope="row" className="text-center">
-                                {index + 1}
-                            </th>
-                            <td>
+                            <th scope="row">{index + 1}</th>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
                                 <UserSmallCard user={staff} />
                             </td>
                             <td>

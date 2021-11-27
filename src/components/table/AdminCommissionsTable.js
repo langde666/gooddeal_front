@@ -221,18 +221,10 @@ const AdminCommissionTable = ({ heading = true }) => {
             <table className="admin-commissions-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Commission"
                                 sortBy="name"
@@ -243,6 +235,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Cost"
                                 sortBy="cost"
@@ -253,6 +246,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Description"
                                 sortBy="description"
@@ -263,6 +257,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isDeleted"
@@ -279,7 +274,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                     {commissions.map((commission, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     <StoreCommissionLabel
                                         commission={commission}
@@ -293,7 +288,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                                     %
                                 </small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <div
                                     style={{
                                         width: '300px',
@@ -309,7 +304,7 @@ const AdminCommissionTable = ({ heading = true }) => {
                                     {commission.isDeleted && <DeletedLabel />}
                                 </small>
                             </td>
-                            <td className="text-center">
+                            <td>
                                 <div className="position-relative d-inline-block me-2">
                                     <button
                                         type="button"

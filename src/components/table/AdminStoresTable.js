@@ -115,18 +115,10 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             <table className="admin-stores-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="point"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Store"
                                 sortBy="name"
@@ -137,6 +129,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Rating"
                                 sortBy="rating"
@@ -147,6 +140,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isOpen"
@@ -157,6 +151,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Commission"
                                 sortBy="commissionId"
@@ -167,6 +162,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Joined"
                                 sortBy="createdAt"
@@ -183,7 +179,10 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                     {stores.map((store, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
                                 <StoreSmallCard store={store} />
                             </td>
                             <td>
@@ -191,12 +190,12 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                                     <StarRating stars={store.rating} />
                                 </small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     <StoreStatusLabel isOpen={store.isOpen} />
                                 </small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     <StoreCommissionLabel
                                         commission={store.commissionId}
@@ -209,7 +208,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                                 </small>
                             </td>
                             <td>
-                                <div className="position-relative d-inline-block me-2">
+                                <div className="position-relative d-inline-block">
                                     <div className="cus-tooltip d-inline-block text-start">
                                         <ActiveInactiveStoreButton
                                             storeId={store._id}

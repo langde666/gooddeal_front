@@ -201,18 +201,10 @@ const AdminStylesTable = ({ heading = true }) => {
             <table className="admin-styles-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Style"
                                 sortBy="name"
@@ -223,6 +215,7 @@ const AdminStylesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Of categories"
                                 sortBy="categoryIds "
@@ -233,6 +226,7 @@ const AdminStylesTable = ({ heading = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="isDeleted"
@@ -242,27 +236,40 @@ const AdminStylesTable = ({ heading = true }) => {
                             />
                         </th>
                         <th scope="col"></th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {styles.map((style, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">{style.name}</td>
+                            <td>{style.name}</td>
 
-                            <td className="text-start ps-5">
-                                {style.categoryIds.map((category, index) => (
-                                    <div className="" key={index}>
-                                        <CategorySmallCard
-                                            category={category}
-                                        />
-                                    </div>
-                                ))}
+                            <td
+                                className="text-start ps-4"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <div
+                                    className=""
+                                    style={{
+                                        maxHeight: '200px',
+                                        overflow: 'auto',
+                                    }}
+                                >
+                                    {style.categoryIds.map(
+                                        (category, index) => (
+                                            <div className="" key={index}>
+                                                <CategorySmallCard
+                                                    category={category}
+                                                />
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
                             </td>
 
                             <td>{style.isDeleted && <DeletedLabel />}</td>
-                            <td>
+
+                            <td className="text-nowrap">
                                 <div className="position-relative d-inline-block me-2">
                                     <Link
                                         type="button"
@@ -275,10 +282,8 @@ const AdminStylesTable = ({ heading = true }) => {
                                         View list of values
                                     </small>
                                 </div>
-                            </td>
 
-                            <td className="text-nowrap">
-                                <div className="position-relative d-inline-block me-2">
+                                <div className="position-relative d-inline-block me-1">
                                     <Link
                                         type="button"
                                         className="btn btn-primary ripple cus-tooltip"

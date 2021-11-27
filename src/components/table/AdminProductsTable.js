@@ -114,18 +114,10 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
             <table className="admin-products-manager-table table align-middle table-hover mt-2 table-sm text-center">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="point"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Product"
                                 sortBy="name"
@@ -136,26 +128,7 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Rating"
-                                sortBy="rating"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isSelling"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Store"
                                 sortBy="storeId"
@@ -166,6 +139,30 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                         </th>
                         <th scope="col">
                             <SortByButton
+                                currentOrder={filter.order}
+                                currentSortBy={filter.sortBy}
+                                title="Rating"
+                                sortBy="rating"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentOrder={filter.order}
+                                currentSortBy={filter.sortBy}
+                                title="Status"
+                                sortBy="isSelling"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+
+                        <th scope="col">
+                            <SortByButton
+                                currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
                                 title="Created at"
                                 sortBy="createdAt"
@@ -182,24 +179,28 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                     {products.map((product, index) => (
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td className="text-start ps-4">
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
                                 <ProductSmallCard product={product} />
+                            </td>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <StoreSmallCard store={product.storeId} />
                             </td>
                             <td>
                                 <small>
                                     <StarRating stars={product.rating} />
                                 </small>
                             </td>
-                            <td className="text-start ps-4">
+                            <td>
                                 <small>
                                     <ProductStatusLabel
                                         isSelling={product.isSelling}
                                     />
-                                </small>
-                            </td>
-                            <td className="text-start ps-4">
-                                <small>
-                                    <StoreSmallCard store={product.storeId} />
                                 </small>
                             </td>
                             <td>
@@ -208,7 +209,7 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                                 </small>
                             </td>
                             <td>
-                                <div className="position-relative d-inline-block me-2">
+                                <div className="position-relative d-inline-block">
                                     <div className="cus-tooltip d-inline-block text-start">
                                         <ActiveInactiveProductButton
                                             productId={product._id}
