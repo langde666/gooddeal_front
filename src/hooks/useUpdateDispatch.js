@@ -6,6 +6,7 @@ import { addStore } from '../actions/store';
 import { addProduct } from '../actions/product';
 import { getNumberOfFollowers, checkFollowingStore } from '../apis/follow';
 import { getUserLevel, getStoreLevel } from '../apis/level';
+import { countOrder } from '../apis/order';
 import { getCartCount } from '../apis/cart';
 import { getToken } from '../apis/auth';
 
@@ -40,10 +41,10 @@ const useUpdateDispatch = () => {
 
                 //get count orders
                 try {
-                    //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                    data.numberOfSucessfulOrders =
-                        account.numberOfSucessfulOrders;
-                    data.numberOfFailedOrders = account.numberOfFailedOrders;
+                    const res1 = await countOrder('Delivered', _id, '');
+                    const res2 = await countOrder('Cancelled', _id, '');
+                    data.numberOfSucessfulOrders = res1.count;
+                    data.numberOfFailedOrders = res2.count;
                 } catch {
                     data.numberOfSucessfulOrders =
                         account.numberOfSucessfulOrders;
@@ -72,14 +73,14 @@ const useUpdateDispatch = () => {
 
                 //get count orders
                 try {
-                    //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                    data.numberOfFailedOrders = vendor.numberOfFailedOrders;
-                    data.numberOfSucessfulOrders =
-                        vendor.numberOfSucessfulOrders;
+                    const res1 = await countOrder('Delivered', '', data._id);
+                    const res2 = await countOrder('Cancelled', '', data._id);
+                    data.numberOfSucessfulOrders = res1.count;
+                    data.numberOfFailedOrders = res2.count;
                 } catch {
-                    data.numberOfFailedOrders = vendor.numberOfFailedOrders;
                     data.numberOfSucessfulOrders =
                         vendor.numberOfSucessfulOrders;
+                    data.numberOfFailedOrders = vendor.numberOfFailedOrders;
                 }
 
                 return dispatch(addVendor(data));
@@ -96,9 +97,10 @@ const useUpdateDispatch = () => {
 
                 //get count orders
                 try {
-                    //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                    data.numberOfSucessfulOrders = user.numberOfSucessfulOrders;
-                    data.numberOfFailedOrders = user.numberOfFailedOrders;
+                    const res1 = await countOrder('Delivered', data._id, '');
+                    const res2 = await countOrder('Cancelled', data._id, '');
+                    data.numberOfSucessfulOrders = res1.count;
+                    data.numberOfFailedOrders = res2.count;
                 } catch {
                     data.numberOfSucessfulOrders = user.numberOfSucessfulOrders;
                     data.numberOfFailedOrders = user.numberOfFailedOrders;
@@ -148,10 +150,10 @@ const useUpdateDispatch = () => {
 
                 //get count orders
                 try {
-                    //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                    data.numberOfSucessfulOrders =
-                        store.numberOfSucessfulOrders;
-                    data.numberOfFailedOrders = store.numberOfFailedOrders;
+                    const res1 = await countOrder('Delivered', '', data._id);
+                    const res2 = await countOrder('Cancelled', '', data._id);
+                    data.numberOfSucessfulOrders = res1.count;
+                    data.numberOfFailedOrders = res2.count;
                 } catch {
                     data.numberOfSucessfulOrders =
                         store.numberOfSucessfulOrders;

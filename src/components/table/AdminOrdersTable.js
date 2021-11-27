@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { listOrdersByStore } from '../../apis/order';
+import { listOrdersForAdmin } from '../../apis/order';
 import { humanReadableDate } from '../../helper/humanReadable';
 import { formatPrice } from '../../helper/formatPrice';
 import Pagination from '../ui/Pagination';
@@ -9,13 +9,12 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
-import VendorUpdateOrderStatus from '../button/VendorUpdateOrderStatus';
+import AdminUpdateOrderStatus from '../button/AdminUpdateOrderStatus';
 
-const VendorOrdersTable = ({
+const AdminOrdersTable = ({
     heading = true,
-    storeId = '',
-    isEditable = false,
     status = '',
+    isEditable = false,
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -26,19 +25,18 @@ const VendorOrdersTable = ({
         size: 0,
     });
     const [filter, setFilter] = useState({
-        status,
         sortBy: 'createdAt',
         order: 'desc',
+        status,
         limit: 6,
         page: 1,
     });
 
-    const { _id, accessToken } = getToken();
-
     const init = () => {
+        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
-        listOrdersByStore(_id, accessToken, filter, storeId)
+        listOrdersForAdmin(_id, accessToken, filter)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -68,7 +66,7 @@ const VendorOrdersTable = ({
 
     useEffect(() => {
         init();
-    }, [filter, storeId, run]);
+    }, [filter, run]);
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -87,11 +85,12 @@ const VendorOrdersTable = ({
 
     return (
         <div className="orders-manager-table-wrap position-relative">
-            {heading && isEditable ? (
-                <h4>Processing Orders</h4>
+            {heading && status === '' ? (
+                <h4 className="mb-3">All Orders In System</h4>
             ) : (
-                <h4>Processed Orders</h4>
+                <h4 className="mb-3">Delivery Service</h4>
             )}
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
@@ -140,7 +139,7 @@ const VendorOrdersTable = ({
                             <SortByButton
                                 currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
-                                title="Earn"
+                                title="Seller Earn"
                                 sortBy="amountToStore"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
@@ -259,19 +258,16 @@ const VendorOrdersTable = ({
                                     <OrderStatusLabel status={order.status} />
                                 </small>
 
-                                {isEditable &&
-                                    (order.status === 'Not processed' ||
-                                        order.status === 'Processing') && (
-                                        <div className="text-nowrap mt-1">
-                                            <VendorUpdateOrderStatus
-                                                storeId={storeId}
-                                                orderId={order._id}
-                                                detail={false}
-                                                status={order.status}
-                                                onRun={() => setRun(!run)}
-                                            />
-                                        </div>
-                                    )}
+                                {isEditable && order.status === 'Shipped' && (
+                                    <div className="text-nowrap mt-1">
+                                        <AdminUpdateOrderStatus
+                                            orderId={order._id}
+                                            detail={false}
+                                            status={order.status}
+                                            onRun={() => setRun(!run)}
+                                        />
+                                    </div>
+                                )}
                             </td>
                             <td>
                                 <div className="position-relative d-inline-block">
@@ -279,7 +275,7 @@ const VendorOrdersTable = ({
                                         <Link
                                             type="button"
                                             className="btn btn-primary ripple cus-tooltip"
-                                            to={`/vendor/orders/detail/${order._id}/${storeId}`}
+                                            to={`/admin/order/detail/${order._id}`}
                                         >
                                             <i className="fas fa-list-ul"></i>
                                         </Link>
@@ -304,4 +300,4 @@ const VendorOrdersTable = ({
     );
 };
 
-export default VendorOrdersTable;
+export default AdminOrdersTable;

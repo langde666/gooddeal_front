@@ -5,6 +5,7 @@ import { addStore } from '../../actions/store';
 import { getToken } from '../../apis/auth';
 import { getStore } from '../../apis/store';
 import { getStoreLevel } from '../../apis/level';
+import { countOrder } from '../../apis/order';
 import { getNumberOfFollowers, checkFollowingStore } from '../../apis/follow';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
@@ -58,9 +59,10 @@ const StoreInit = ({ store, actions }) => {
 
                     //get count orders
                     try {
-                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                        newStore.numberOfSucessfulOrders = 0;
-                        newStore.numberOfFailedOrders = 0;
+                        const res1 = await countOrder('Delivered', '', storeId);
+                        const res2 = await countOrder('Cancelled', '', storeId);
+                        newStore.numberOfSucessfulOrders = res1.count;
+                        newStore.numberOfFailedOrders = res2.count;
                     } catch {
                         newStore.numberOfSucessfulOrders = 0;
                         newStore.numberOfFailedOrders = 0;

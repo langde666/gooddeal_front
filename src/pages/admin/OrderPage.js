@@ -1,16 +1,15 @@
 import { useSelector } from 'react-redux';
-import VendorLayout from '../../components/layout/VendorLayout';
-import VendorOrdersTable from '../../components/table/VendorOrdersTable';
+import AdminLayout from '../../components/layout/AdminLayout';
+import AdminOrdersTable from '../../components/table/AdminOrdersTable';
 import useToggle from '../../hooks/useToggle';
 
-const OrdersPage = (props) => {
+const OrderPage = (props) => {
     const user = useSelector((state) => state.account.user);
-    const store = useSelector((state) => state.vendor.store);
     const [flag, toggleFlag] = useToggle(true);
 
     return (
-        <VendorLayout user={user} store={store}>
-            <div className="vendor-orders-manager-page">
+        <AdminLayout user={user}>
+            <div className="admin-orders-manager-page">
                 <div className="d-flex align-items-center my-2">
                     <div className="position-relative d-inline-block me-2">
                         <button
@@ -20,11 +19,11 @@ const OrdersPage = (props) => {
                             } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(true)}
                         >
-                            <i className="fas fa-clipboard"></i>
+                            <i className="fas fa-truck"></i>
                         </button>
 
                         <small className="cus-tooltip-msg">
-                            Processing Orders
+                            Delivery Service
                         </small>
                     </div>
 
@@ -36,28 +35,23 @@ const OrdersPage = (props) => {
                             } btn-lg ripple cus-tooltip`}
                             onClick={() => toggleFlag(false)}
                         >
-                            <i className="fas fa-clipboard-check"></i>
+                            <i className="fas fa-clipboard"></i>
                         </button>
 
                         <small className="cus-tooltip-msg">
-                            Processed Orders
+                            All Orders in System
                         </small>
                     </div>
                 </div>
 
-                <VendorOrdersTable
+                <AdminOrdersTable
                     heading={true}
-                    storeId={store._id}
                     isEditable={flag}
-                    status={
-                        flag
-                            ? 'Not processed|Processing'
-                            : 'Shipped|Delivered|Cancelled'
-                    }
+                    status={flag ? 'Shipped' : ''}
                 />
             </div>
-        </VendorLayout>
+        </AdminLayout>
     );
 };
 
-export default OrdersPage;
+export default OrderPage;

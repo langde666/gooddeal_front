@@ -23,6 +23,7 @@ const UserOrdersTable = ({ heading = true }) => {
         size: 0,
     });
     const [filter, setFilter] = useState({
+        status: '',
         sortBy: 'createdAt',
         order: 'desc',
         limit: 6,

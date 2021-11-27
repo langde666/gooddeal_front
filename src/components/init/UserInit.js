@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addUser } from '../../actions/user';
 import { getUser } from '../../apis/user';
 import { getUserLevel } from '../../apis/level';
+import { countOrder } from '../../apis/order';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
@@ -36,9 +37,10 @@ const UserInit = ({ user, actions }) => {
 
                     //get count orders
                     try {
-                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                        newUser.numberOfSucessfulOrders = 0;
-                        newUser.numberOfFailedOrders = 0;
+                        const res1 = await countOrder('Delivered', userId, '');
+                        const res2 = await countOrder('Cancelled', userId, '');
+                        newUser.numberOfSucessfulOrders = res1.count;
+                        newUser.numberOfFailedOrders = res2.count;
                     } catch {
                         newUser.numberOfSucessfulOrders = 0;
                         newUser.numberOfFailedOrders = 0;

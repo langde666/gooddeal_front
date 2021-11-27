@@ -5,6 +5,7 @@ import { getToken, signout } from '../../apis/auth';
 import { getUserProfile } from '../../apis/user';
 import { getUserLevel } from '../../apis/level';
 import { getCartCount } from '../../apis/cart';
+import { countOrder } from '../../apis/order';
 import { addAccount } from '../../actions/account';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
@@ -49,9 +50,10 @@ const AccountInit = ({ user, actions }) => {
 
                     //get count orders
                     try {
-                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                        newUser.numberOfSucessfulOrders = 0;
-                        newUser.numberOfFailedOrders = 0;
+                        const res1 = await countOrder('Delivered', _id, '');
+                        const res2 = await countOrder('Cancelled', _id, '');
+                        newUser.numberOfSucessfulOrders = res1.count;
+                        newUser.numberOfFailedOrders = res2.count;
                     } catch {
                         newUser.numberOfSucessfulOrders = 0;
                         newUser.numberOfFailedOrders = 0;

@@ -16,9 +16,9 @@ export const createOrder = (userId, token, cartId, order) => {
 };
 
 export const listOrdersByUser = (userId, token, filter) => {
-    const { sortBy, order, limit, page } = filter;
+    const { sortBy, order, limit, page, status } = filter;
     return fetch(
-        `${API}/orders/by/user/${userId}?sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/orders/by/user/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {
@@ -33,9 +33,26 @@ export const listOrdersByUser = (userId, token, filter) => {
 };
 
 export const listOrdersByStore = (userId, token, filter, storeId) => {
-    const { sortBy, order, limit, page } = filter;
+    const { sortBy, order, limit, page, status } = filter;
     return fetch(
-        `${API}/orders/by/store/${storeId}/${userId}?sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/orders/by/store/${storeId}/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const listOrdersForAdmin = (userId, token, filter) => {
+    const { sortBy, order, limit, page, status } = filter;
+    return fetch(
+        `${API}/orders/for/admin/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {
@@ -80,6 +97,35 @@ export const vendorUpdateStatusOrder = (
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(status),
+        },
+    )
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const adminUpdateStatusOrder = (userId, token, status, orderId) => {
+    return fetch(`${API}/order/update/for/admin/${orderId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(status),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const countOrder = (status, userId, storeId) => {
+    return fetch(
+        `${API}/orders/count?status=${status}&userId=${userId}&storeId=${storeId}`,
+        {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
         },
     )
         .then((res) => res.json())

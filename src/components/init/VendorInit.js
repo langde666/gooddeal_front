@@ -6,6 +6,7 @@ import { getToken } from '../../apis/auth';
 import { getStoreProfile } from '../../apis/store';
 import { getStoreLevel } from '../../apis/level';
 import { getNumberOfFollowers } from '../../apis/follow';
+import { countOrder } from '../../apis/order';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
@@ -53,9 +54,10 @@ const VendorInit = ({ store, actions }) => {
 
                     //get count orders
                     try {
-                        //call api get numberOfSucessfulOrders, numberOfFailedOrders
-                        newStore.numberOfSucessfulOrders = 0;
-                        newStore.numberOfFailedOrders = 0;
+                        const res1 = await countOrder('Delivered', '', storeId);
+                        const res2 = await countOrder('Cancelled', '', storeId);
+                        newStore.numberOfSucessfulOrders = res1.count;
+                        newStore.numberOfFailedOrders = res2.count;
                     } catch {
                         newStore.numberOfSucessfulOrders = 0;
                         newStore.numberOfFailedOrders = 0;
