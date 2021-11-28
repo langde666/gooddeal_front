@@ -66,7 +66,7 @@ const StoreProductsTable = ({
 
     useEffect(() => {
         init();
-    }, [filter, run]);
+    }, [filter, storeId, run]);
 
     useEffect(() => {
         setFilter({
@@ -136,7 +136,7 @@ const StoreProductsTable = ({
                     overflow: 'auto',
                 }}
             >
-                <table className="vendor-products-manager-table table align-middle table-hover mt-2 table-sm text-center">
+                <table className="vendor-products-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

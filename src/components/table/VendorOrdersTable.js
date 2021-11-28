@@ -10,8 +10,9 @@ import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
 import VendorUpdateOrderStatus from '../button/VendorUpdateOrderStatus';
+import UserSmallCard from '../card/UserSmallCard';
 
-const VendorOrdersTable = ({
+const StoreOrdersTable = ({
     heading = true,
     storeId = '',
     isEditable = false,
@@ -99,7 +100,7 @@ const VendorOrdersTable = ({
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="orders-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="orders-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -140,8 +141,8 @@ const VendorOrdersTable = ({
                             <SortByButton
                                 currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
-                                title="Earn"
-                                sortBy="amountToStore"
+                                title="Buyer"
+                                sortBy="userId"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -164,17 +165,6 @@ const VendorOrdersTable = ({
                                 currentSortBy={filter.sortBy}
                                 title="Delivery"
                                 sortBy="deliveryId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Other info"
-                                sortBy="address"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -216,17 +206,25 @@ const VendorOrdersTable = ({
                                     VND
                                 </small>
                             </td>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <UserSmallCard user={order.userId} />
+                            </td>
                             <td>
                                 <small className="text-nowrap">
+                                    For Store:{' '}
                                     {order.amountToStore &&
                                         formatPrice(
                                             order.amountToStore.$numberDecimal,
                                         )}{' '}
                                     VND
                                 </small>
-                            </td>
-                            <td>
+                                <br />
+
                                 <small className="text-nowrap">
+                                    For GoodDeal:{' '}
                                     {order.amountToGD &&
                                         formatPrice(
                                             order.amountToGD.$numberDecimal,
@@ -237,22 +235,15 @@ const VendorOrdersTable = ({
                             <td>
                                 {order.deliveryId && (
                                     <small>
-                                        {order.deliveryId.name} -{' '}
-                                        {order.deliveryId.price.$numberDecimal}{' '}
+                                        {order.deliveryId.name}
+                                        <br />
+                                        {formatPrice(
+                                            order.deliveryId.price
+                                                .$numberDecimal,
+                                        )}{' '}
                                         VND
                                     </small>
                                 )}
-                            </td>
-                            <td className="text-start">
-                                <small>
-                                    <span className="fw-bold">Phone: </span>
-                                    {order.phone}
-                                    <br />
-                                    <span className="fw-bold">
-                                        To address:{' '}
-                                    </span>
-                                    {order.address}
-                                </small>
                             </td>
                             <td>
                                 <small>
@@ -304,4 +295,4 @@ const VendorOrdersTable = ({
     );
 };
 
-export default VendorOrdersTable;
+export default StoreOrdersTable;

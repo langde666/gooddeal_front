@@ -225,7 +225,7 @@ const CheckoutForm = ({
                             value={order.phone}
                             isValid={order.isValidPhone}
                             feedback="Please provide a valid shop name."
-                            validator="name"
+                            validator="phone"
                             onChange={(value) =>
                                 handleChange('phone', 'isValidPhone', value)
                             }

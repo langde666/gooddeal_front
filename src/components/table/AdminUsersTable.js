@@ -95,7 +95,7 @@ const AdminUsersTable = ({ heading = true }) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="admin-users-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="admin-users-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

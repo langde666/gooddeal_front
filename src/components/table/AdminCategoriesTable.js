@@ -217,7 +217,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="admin-categories-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="admin-categories-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -280,6 +280,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                 <div
                                     style={{
                                         position: 'relative',
+                                        margin: 'auto',
                                         paddingBottom: '72px',
                                         width: '72px',
                                         height: '0',
