@@ -97,7 +97,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
                 </span>
             </div>
 
-            <table className="addresses-table table align-middle table-hover mt-2 text-center">
+            <table className="addresses-table table align-middle table-hover mt-2 text-center table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

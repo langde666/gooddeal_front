@@ -1,6 +1,6 @@
 const Paragraph = ({ value = '-', label = '-', multiLine = false }) => (
     <div className="cus-paragraph-group">
-        <label className="cus-paragraph-group-label">{label}</label>
+        <label className="cus-paragraph-group-label text-nowrap">{label}</label>
         {!multiLine ? (
             <p className="cus-paragraph-group-paragraph form-control">
                 {value}

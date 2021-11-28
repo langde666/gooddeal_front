@@ -86,7 +86,7 @@ const UserOrdersTable = ({ heading = true }) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="purchases-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="purchases-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -149,17 +149,6 @@ const UserOrdersTable = ({ heading = true }) => {
                             <SortByButton
                                 currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
-                                title="Other info"
-                                sortBy="address"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
                                 title="Status"
                                 sortBy="status"
                                 onSet={(order, sortBy) =>
@@ -192,30 +181,24 @@ const UserOrdersTable = ({ heading = true }) => {
                                     VND
                                 </small>
                             </td>
-                            <td>
-                                <small>
-                                    <StoreSmallCard store={order.storeId} />
-                                </small>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <StoreSmallCard store={order.storeId} />
                             </td>
                             <td>
                                 {order.deliveryId && (
                                     <small>
-                                        {order.deliveryId.name} -{' '}
-                                        {order.deliveryId.price.$numberDecimal}{' '}
+                                        {order.deliveryId.name}
+                                        <br />
+                                        {formatPrice(
+                                            order.deliveryId.price
+                                                .$numberDecimal,
+                                        )}{' '}
                                         VND
                                     </small>
                                 )}
-                            </td>
-                            <td className="text-start">
-                                <small>
-                                    <span className="fw-bold">Phone: </span>
-                                    {order.phone}
-                                    <br />
-                                    <span className="fw-bold">
-                                        To address:{' '}
-                                    </span>
-                                    {order.address}
-                                </small>
                             </td>
                             <td>
                                 <small>

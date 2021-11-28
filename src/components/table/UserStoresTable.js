@@ -117,7 +117,7 @@ const UserStoresTable = ({ heading = true }) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="store-manager-table table align-middle table-hover mt-2 table-sm text-center">
+            <table className="store-manager-table table align-middle table-hover mt-2 table-sm text-center table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">

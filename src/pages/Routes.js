@@ -23,6 +23,7 @@ import AdminStyleValuesPage from './admin/StyleValuePage';
 import AdminProductPage from './admin/ProductPage';
 import AdminDeliveryPage from './admin/DeliveryPage';
 import AdminOrderPage from './admin/OrderPage';
+import AdminOrderDetailPage from './admin/OrderDetailPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -34,6 +35,7 @@ import AccountShopManagerPage from './account/ShopManagerPage';
 import AccountCreateShopPage from './account/CreateShopPage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
 import AccountCartPage from './account/CartPage';
+import AccountOrderDetailPage from './account/OrderDetailPage';
 //vendor
 import VendorProfilePage from './vendor/ProfilePage';
 import VendorDashboardPage from './vendor/DashboardPage';
@@ -154,6 +156,11 @@ const Routes = () => {
                     exact
                     component={AdminOrderPage}
                 />
+                <AdminRoute
+                    path="/admin/order/detail/:orderId"
+                    exact
+                    component={AdminOrderDetailPage}
+                />
 
                 <PrivateRoute
                     path="/account/profile"
@@ -169,6 +176,11 @@ const Routes = () => {
                     path="/account/purchase"
                     exact
                     component={AccountPurchasePage}
+                />
+                <PrivateRoute
+                    path="/account/purchase/detail/:orderId"
+                    exact
+                    component={AccountOrderDetailPage}
                 />
                 <PrivateRoute
                     path="/account/following"

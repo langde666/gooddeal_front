@@ -10,6 +10,8 @@ import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
 import AdminUpdateOrderStatus from '../button/AdminUpdateOrderStatus';
+import StoreSmallCard from '../card/StoreSmallCard';
+import UserSmallCard from '../card/UserSmallCard';
 
 const AdminOrdersTable = ({
     heading = true,
@@ -139,8 +141,19 @@ const AdminOrdersTable = ({
                             <SortByButton
                                 currentOrder={filter.order}
                                 currentSortBy={filter.sortBy}
-                                title="Seller Earn"
-                                sortBy="amountToStore"
+                                title="Buyer"
+                                sortBy="userId"
+                                onSet={(order, sortBy) =>
+                                    handleSetSortBy(order, sortBy)
+                                }
+                            />
+                        </th>
+                        <th scope="col">
+                            <SortByButton
+                                currentOrder={filter.order}
+                                currentSortBy={filter.sortBy}
+                                title="Seller"
+                                sortBy="storeId"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -163,17 +176,6 @@ const AdminOrdersTable = ({
                                 currentSortBy={filter.sortBy}
                                 title="Delivery"
                                 sortBy="deliveryId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Other info"
-                                sortBy="address"
                                 onSet={(order, sortBy) =>
                                     handleSetSortBy(order, sortBy)
                                 }
@@ -215,17 +217,31 @@ const AdminOrdersTable = ({
                                     VND
                                 </small>
                             </td>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <UserSmallCard user={order.userId} />
+                            </td>
+                            <td
+                                className="text-start ps-2"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <StoreSmallCard store={order.storeId} />
+                            </td>
                             <td>
                                 <small className="text-nowrap">
+                                    For seller:{' '}
                                     {order.amountToStore &&
                                         formatPrice(
                                             order.amountToStore.$numberDecimal,
                                         )}{' '}
                                     VND
                                 </small>
-                            </td>
-                            <td>
+                                <br />
+
                                 <small className="text-nowrap">
+                                    For GoodDeal:{' '}
                                     {order.amountToGD &&
                                         formatPrice(
                                             order.amountToGD.$numberDecimal,
@@ -236,22 +252,15 @@ const AdminOrdersTable = ({
                             <td>
                                 {order.deliveryId && (
                                     <small>
-                                        {order.deliveryId.name} -{' '}
-                                        {order.deliveryId.price.$numberDecimal}{' '}
+                                        {order.deliveryId.name}
+                                        <br />
+                                        {formatPrice(
+                                            order.deliveryId.price
+                                                .$numberDecimal,
+                                        )}{' '}
                                         VND
                                     </small>
                                 )}
-                            </td>
-                            <td className="text-start">
-                                <small>
-                                    <span className="fw-bold">Phone: </span>
-                                    {order.phone}
-                                    <br />
-                                    <span className="fw-bold">
-                                        To address:{' '}
-                                    </span>
-                                    {order.address}
-                                </small>
                             </td>
                             <td>
                                 <small>
