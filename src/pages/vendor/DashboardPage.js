@@ -60,7 +60,7 @@ const DashboardPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-dashboard-page mt-2 position-relative">
+            <div className="vendor-dashboard-page position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 

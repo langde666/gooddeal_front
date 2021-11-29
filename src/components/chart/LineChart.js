@@ -10,6 +10,7 @@ const LineChart = ({
     items = [],
     role = 'admin',
     groupBy = groupByDate,
+    title = 'Sales statistics',
 }) => {
     const [data, setData] = useState({
         labels: [],
@@ -23,7 +24,7 @@ const LineChart = ({
             datasets: [
                 {
                     data: Object.values(newData),
-                    label: `sales statistics by ${by}`,
+                    label: title,
                     borderColor: randomColor(),
                     fill: false,
                 },
@@ -42,7 +43,7 @@ const LineChart = ({
                 options={{
                     title: {
                         display: true,
-                        text: `Sales statistics by ${by}`,
+                        text: title,
                     },
                     legend: {
                         display: true,

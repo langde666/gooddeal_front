@@ -30,3 +30,25 @@ export const groupByDate = (items, by, role) => {
             return acc;
         }, {});
 };
+
+export const groupByJoined = (items, by) => {
+    let formatFunc = formatTime;
+    if (by === 'date') formatFunc = formatDate;
+    if (by === 'month') formatFunc = formatMonth;
+    if (by === 'year') formatFunc = formatYear;
+
+    return items
+        .map((item) => {
+            return {
+                createdAt: formatFunc(item.createdAt),
+            };
+        })
+        .reduce((acc, value) => {
+            if (!acc[value.createdAt]) {
+                acc[value.createdAt] = 0;
+            }
+
+            acc[value.createdAt] += 1;
+            return acc;
+        }, {});
+};

@@ -10,6 +10,7 @@ const BarChart = ({
     items = [],
     role = 'admin',
     groupBy = groupByDate,
+    title = 'Sales statistics',
 }) => {
     const [data, setData] = useState({
         labels: [],
@@ -23,7 +24,7 @@ const BarChart = ({
             datasets: [
                 {
                     data: Object.values(newData),
-                    label: `sales statistics by ${by}`,
+                    label: title,
                     backgroundColor: randomColorsArray(
                         Object.values(newData).length,
                     ),
@@ -44,7 +45,7 @@ const BarChart = ({
                     legend: { display: false },
                     title: {
                         display: true,
-                        text: `Sales statistics by ${by}`,
+                        text: title,
                     },
                 }}
             />

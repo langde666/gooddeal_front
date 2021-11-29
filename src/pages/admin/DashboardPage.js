@@ -50,7 +50,7 @@ const DashboardPage = (props) => {
 
     return (
         <AdminLayout user={user}>
-            <div className="admin-dashboard-page mt-2 position-relative">
+            <div className="admin-dashboard-page position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 

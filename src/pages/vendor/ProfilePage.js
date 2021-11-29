@@ -56,14 +56,16 @@ const ProfilePage = (props) => {
                     </div>
                 </div>
 
-                <div className="mt-2">
-                    <Carousel
-                        listImages={store.featured_images}
-                        alt={store.name}
-                        isEditable="store"
-                        storeId={store._id}
-                    />
-                </div>
+                {store.featured_images && store.featured_images.length > 0 && (
+                    <div className="mt-2">
+                        <Carousel
+                            listImages={store.featured_images}
+                            alt={store.name}
+                            isEditable="store"
+                            storeId={store._id}
+                        />
+                    </div>
+                )}
 
                 <div className="d-flex justify-content-between align-items-center mt-2">
                     <div className="position-relative">

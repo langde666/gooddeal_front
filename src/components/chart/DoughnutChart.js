@@ -10,6 +10,7 @@ const DoughnutChart = ({
     items = [],
     role = 'admin',
     groupBy = groupByDate,
+    title = 'Sales statistics',
 }) => {
     const [data, setData] = useState({
         labels: [],
@@ -23,7 +24,7 @@ const DoughnutChart = ({
             datasets: [
                 {
                     data: Object.values(newData),
-                    label: `sales statistics by ${by}`,
+                    label: title,
                     backgroundColor: randomColorsArray(
                         Object.values(newData).length,
                     ),
@@ -46,7 +47,7 @@ const DoughnutChart = ({
                 options={{
                     title: {
                         display: true,
-                        text: `Sales statistics by ${by}`,
+                        text: title,
                     },
                 }}
             />

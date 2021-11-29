@@ -53,6 +53,18 @@ const AdminSideBar = ({ user = {} }) => {
 
                 <li className="nav-item">
                     <Link
+                        to="/admin/order"
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path == 'order' ? 'active' : ''
+                        }`}
+                    >
+                        <i className="fas fa-clipboard me-3"></i>
+                        Order
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link
                         to={`/admin/category`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
                             path == 'category' ? 'active' : ''
@@ -131,18 +143,6 @@ const AdminSideBar = ({ user = {} }) => {
                     >
                         <i className="fas fa-truck me-3"></i>
                         Delivery
-                    </Link>
-                </li>
-
-                <li className="nav-item">
-                    <Link
-                        to="/admin/order"
-                        className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'order' ? 'active' : ''
-                        }`}
-                    >
-                        <i className="fas fa-clipboard me-3"></i>
-                        Order
                     </Link>
                 </li>
 
