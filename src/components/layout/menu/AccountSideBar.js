@@ -96,7 +96,7 @@ const AccountSideBar = ({ user = {} }) => {
                     </li>
                 )} */}
 
-                {user.role == 'user' && (
+                {/* {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
                             to="/account/GDCoins"
@@ -108,7 +108,7 @@ const AccountSideBar = ({ user = {} }) => {
                             GD coins
                         </Link>
                     </li>
-                )}
+                )} */}
             </ul>
         </div>
     );

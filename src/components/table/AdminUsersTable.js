@@ -154,8 +154,6 @@ const AdminUsersTable = ({ heading = true }) => {
                                 }
                             />
                         </th>
-
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -563,7 +563,7 @@ header {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
+    min-width: 100%;
     z-index: 3;
     background-color: var(--white-color);
     border-radius: 0;
