@@ -19,7 +19,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/dashboard`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'dashboard' ? 'active' : ''
+                            path === 'dashboard' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-chart-pie me-3"></i>
@@ -31,7 +31,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/user`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'user' ? 'active' : ''
+                            path === 'user' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-user-friends me-3"></i>
@@ -43,7 +43,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/store`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'store' ? 'active' : ''
+                            path === 'store' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-store me-3"></i>
@@ -55,7 +55,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to="/admin/order"
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'order' ? 'active' : ''
+                            path === 'order' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-clipboard me-3"></i>
@@ -65,9 +65,21 @@ const AdminSideBar = ({ user = {} }) => {
 
                 <li className="nav-item">
                     <Link
+                        to="/admin/transaction"
+                        className={`nav-link cus-sidebar-item ripple link-dark ${
+                            path === 'transaction' ? 'active' : ''
+                        }`}
+                    >
+                        <i className="fas fa-retweet me-3"></i>
+                        Transaction
+                    </Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link
                         to={`/admin/category`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'category' ? 'active' : ''
+                            path === 'category' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-th-large me-3"></i>
@@ -78,7 +90,7 @@ const AdminSideBar = ({ user = {} }) => {
                 {/* <li className="nav-item">
                     <Link
                         to={`/admin/brand`}
-                        className={`nav-link cus-sidebar-item ripple link-dark ${path == 'brand' ? 'active' : ''
+                        className={`nav-link cus-sidebar-item ripple link-dark ${path === 'brand' ? 'active' : ''
                             }`}
                     >
                         <i className="fas fa-copyright me-3"></i>
@@ -90,7 +102,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/style`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'style' ? 'active' : ''
+                            path === 'style' ? 'active' : ''
                         }`}
                     >
                         <i className="fab fa-black-tie me-3"></i>
@@ -102,7 +114,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/product`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'product' ? 'active' : ''
+                            path === 'product' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-box me-3"></i>
@@ -114,7 +126,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/level`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'level' ? 'active' : ''
+                            path === 'level' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-shield-alt me-3"></i>
@@ -126,7 +138,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/commission`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'commission' ? 'active' : ''
+                            path === 'commission' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-calculator me-3"></i>
@@ -138,7 +150,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to={`/admin/delivery`}
                         className={`nav-link cus-sidebar-item ripple link-dark ${
-                            path == 'delivery' ? 'active' : ''
+                            path === 'delivery' ? 'active' : ''
                         }`}
                     >
                         <i className="fas fa-truck me-3"></i>
@@ -150,7 +162,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to="/admin/gifts"
                         className={`nav-link cus-sidebar-item ripple cus-sidebar-item--funny link-funny ${
-                            path == 'gifts' ? 'active-funny' : ''
+                            path === 'gifts' ? 'active-funny' : ''
                         }`}
                     >
                         <i className="fas fa-gift me-3"></i>
@@ -162,7 +174,7 @@ const AdminSideBar = ({ user = {} }) => {
                     <Link
                         to="/admin/GDCoin"
                         className={`nav-link cus-sidebar-item cus-sidebar-item--golden ripple link-golden ${
-                            path == 'GDCoin' ? 'active-golden' : ''
+                            path === 'GDCoin' ? 'active-golden' : ''
                         }`}
                     >
                         <i className="fas fa-coins me-3"></i>

@@ -6,11 +6,8 @@ const AddressesPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
-            <div className="user-addresses-page mt-2">
-                <UserAddressesTable
-                    heading={false}
-                    addresses={user.addresses}
-                />
+            <div className="user-addresses-page">
+                <UserAddressesTable addresses={user.addresses} />
             </div>
         </AccountLayout>
     );

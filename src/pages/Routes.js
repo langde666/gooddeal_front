@@ -24,6 +24,7 @@ import AdminProductPage from './admin/ProductPage';
 import AdminDeliveryPage from './admin/DeliveryPage';
 import AdminOrderPage from './admin/OrderPage';
 import AdminOrderDetailPage from './admin/OrderDetailPage';
+import AdminTransactionPage from './admin/TransactionPage';
 //account
 import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
@@ -161,6 +162,11 @@ const Routes = () => {
                     path="/admin/order/detail/:orderId"
                     exact
                     component={AdminOrderDetailPage}
+                />
+                <AdminRoute
+                    path="/admin/transaction"
+                    exact
+                    component={AdminTransactionPage}
                 />
 
                 <PrivateRoute

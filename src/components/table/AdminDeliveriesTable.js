@@ -256,7 +256,9 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                 <tbody>
                     {deliveries.map((delivery, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>
                                 <small>{delivery.name}</small>
                             </td>

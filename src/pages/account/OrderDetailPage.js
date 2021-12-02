@@ -8,7 +8,7 @@ const OrderDetailPage = (props) => {
     const { orderId } = useParams();
     return (
         <AccountLayout user={user}>
-            <div className="purchase-history-order-detail-page mt-2">
+            <div className="purchase-history-order-detail-page">
                 <OrderDetailInfo orderId={orderId} />
 
                 <div className="mt-4">

@@ -6,8 +6,8 @@ const PurchasePage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
-            <div className="purchase-history-page mt-2">
-                <UserOrdersTable heading={false} />
+            <div className="purchase-history-page">
+                <UserOrdersTable />
             </div>
         </AccountLayout>
     );

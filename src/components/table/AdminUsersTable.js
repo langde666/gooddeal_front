@@ -159,7 +159,9 @@ const AdminUsersTable = ({ heading = true }) => {
                 <tbody>
                     {users.map((user, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td
                                 className="text-start ps-4"
                                 style={{ maxWidth: '360px' }}

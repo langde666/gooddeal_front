@@ -161,7 +161,7 @@ const StoreStaffsTable = ({
             {success && <Success msg={success} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
+                <div className="\d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
                         {ownerId && userId == ownerId._id ? (
@@ -234,7 +234,9 @@ const StoreStaffsTable = ({
                 <tbody>
                     {listStaffs.map((staff, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td
                                 className="text-start ps-2"
                                 style={{ maxWidth: '300px' }}

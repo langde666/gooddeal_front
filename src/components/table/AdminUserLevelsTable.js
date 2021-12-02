@@ -280,7 +280,9 @@ const AdminUserLevelsTable = ({ heading = true }) => {
                 <tbody>
                     {levels.map((level, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>
                                 <small>
                                     <UserLevelLabel level={level} />

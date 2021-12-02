@@ -77,7 +77,7 @@ const UserOrdersTable = ({ heading = true }) => {
 
     return (
         <div className="purchases-manager-table-wrap position-relative">
-            {heading && <h4 className="mb-3">Your Purchases</h4>}
+            {heading && <h4 className="">Your Purchases</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -86,7 +86,7 @@ const UserOrdersTable = ({ heading = true }) => {
                 <span className="me-2">{pagination.size || 0} results</span>
             </div>
 
-            <table className="purchases-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
+            <table className="purchases-manager-table table align-middle table-hover table-bordered table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -163,7 +163,9 @@ const UserOrdersTable = ({ heading = true }) => {
                 <tbody>
                     {orders.map((order, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>
                                 <small>{order._id}</small>
                             </td>

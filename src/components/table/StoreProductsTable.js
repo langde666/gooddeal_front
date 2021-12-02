@@ -281,7 +281,11 @@ const StoreProductsTable = ({
                     <tbody>
                         {products.map((product, index) => (
                             <tr key={index}>
-                                <th scope="row">{index + 1}</th>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
                                 <td>
                                     <small>{product.name}</small>
                                 </td>

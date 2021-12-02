@@ -274,7 +274,9 @@ const AdminCateroriesTable = ({ heading = true }) => {
                 <tbody>
                     {categories.map((category, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>{category.name}</td>
                             <td>
                                 <div

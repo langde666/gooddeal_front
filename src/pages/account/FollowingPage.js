@@ -11,7 +11,7 @@ const FollowingPage = (props) => {
     return (
         <AccountLayout user={user}>
             <div className="account-following-page">
-                <div className="d-flex align-items-center my-2">
+                <div className="d-flex align-items-center mb-2">
                     <div className="position-relative d-inline-block me-2">
                         <button
                             type="button"

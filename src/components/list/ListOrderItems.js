@@ -77,7 +77,7 @@ const ListOrderItems = ({ orderId = '', storeId = '', by = 'user' }) => {
                 List products
             </label>
 
-            <small className="text-muted mt-2">
+            <small className="text-muted d-inline-block mb-2">
                 *Note: The products will sometimes differ from your original
                 order, as it may have been updated
             </small>

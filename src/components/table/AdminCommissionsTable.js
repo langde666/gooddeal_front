@@ -273,7 +273,9 @@ const AdminCommissionTable = ({ heading = true }) => {
                 <tbody>
                     {commissions.map((commission, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>
                                 <small>
                                     <StoreCommissionLabel

@@ -280,7 +280,9 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                 <tbody className="text-center">
                     {levels.map((level, index) => (
                         <tr key={index}>
-                            <th scope="row">{index + 1}</th>
+                            <th scope="row">
+                                {index + 1 + (filter.page - 1) * filter.limit}
+                            </th>
                             <td>
                                 <small>
                                     <StoreLevelLabel level={level} />
