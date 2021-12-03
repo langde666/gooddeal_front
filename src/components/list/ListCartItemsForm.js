@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import {
-    listItemsByCard,
+    listItemsByCart,
     removeFromCart,
     updateCartItem,
 } from '../../apis/cart';
@@ -45,7 +45,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        listItemsByCard(_id, accessToken, cartId)
+        listItemsByCart(_id, accessToken, cartId)
             .then(async (data) => {
                 if (data.error) setError(data.error);
                 else {
@@ -221,7 +221,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                                             item.productId.promotionalPrice
                                                 .$numberDecimal,
                                     )}{' '}
-                                VND
+                                VND x {item.count}
                             </h4>
                         </div>
 

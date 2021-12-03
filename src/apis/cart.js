@@ -42,7 +42,7 @@ export const listCarts = (userId, token, filter) => {
         .catch((error) => console.log(error));
 };
 
-export const listItemsByCard = (userId, token, cartId) => {
+export const listItemsByCart = (userId, token, cartId) => {
     return fetch(`${API}/cart/items/${cartId}/${userId}`, {
         method: 'GET',
         headers: {

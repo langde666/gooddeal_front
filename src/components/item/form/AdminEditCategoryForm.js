@@ -28,10 +28,9 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
     });
 
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
-        getCategoryById(_id, accessToken, categoryId)
+        getCategoryById(categoryId)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);

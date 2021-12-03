@@ -18,11 +18,10 @@ const AddressesPage = (props) => {
 
     const init = () => {
         const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
-        listCarts(_id, accessToken, { limit: '100', page: '1' })
+        listCarts(_id, accessToken, { limit: '1000', page: '1' })
             .then((data) => {
                 if (data.error) setError(data.error);
                 else if (data.carts.length <= 0)

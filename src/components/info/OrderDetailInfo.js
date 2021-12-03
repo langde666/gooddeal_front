@@ -142,9 +142,9 @@ const OrderDetailInfo = ({ orderId = '', storeId = '', by = 'user' }) => {
                 <ListOrderItems orderId={orderId} storeId={storeId} by={by} />
 
                 <div className="col-12 mt-2 d-flex justify-content-end">
-                    <div className="me-4">
+                    <div className="me-5">
                         <Paragraph
-                            label="Total (include discounts)"
+                            label="Final total (include discounts)"
                             value={
                                 <h5 className="text-primary">
                                     {formatPrice(

@@ -13,7 +13,10 @@ const AboutPage = (props) => {
         </MainLayout>
     ) : (
         <StoreLayout store={store}>
-            <div className="store-about-page">
+            <div
+                className="store-about-page"
+                style={{ maxWidth: '990px', margin: '0 auto' }}
+            >
                 <div className="">
                     <StoreProfileInfo store={store} />
                 </div>

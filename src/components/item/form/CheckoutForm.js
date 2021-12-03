@@ -401,7 +401,7 @@ const CheckoutForm = ({
                         </div>
 
                         <div className="d-flex justify-content-between align-items-end mt-4">
-                            <h3 className="mx-2 fs-6">Total:</h3>
+                            <h3 className="mx-2 fs-6">Final total:</h3>
                             <div className="mx-2">
                                 <h4 className="text-primary fs-5">
                                     {formatPrice(order.amountFromUser)} VND

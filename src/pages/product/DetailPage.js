@@ -20,6 +20,7 @@ import StoreSmallCard from '../../components/card/StoreSmallCard';
 import ListBestSellerProducts from '../../components/list/ListBestSellerProduct';
 import ListProductsByStore from '../../components/list/ListProductsByStore';
 import SigninButton from '../../components/item/SigninItem';
+import ListReviews from '../../components/list/ListReviews';
 
 const DetailPage = () => {
     const [isloading, setIsLoading] = useState(false);
@@ -96,7 +97,9 @@ const DetailPage = () => {
                                 }}
                             />
 
-                            <div className="mt-5">list reviews....</div>
+                            <div className="mt-5">
+                                <ListReviews productId={product._id} />
+                            </div>
                         </div>
 
                         <div className="col-4">

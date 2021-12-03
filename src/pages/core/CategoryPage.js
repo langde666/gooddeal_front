@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { getCategoryById } from '../../apis/category';
 import { listActiveProducts } from '../../apis/product';
 import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
@@ -16,6 +17,8 @@ const CategoryPage = (props) => {
 
     const { categoryId } = useParams();
 
+    const [category, setCategory] = useState({});
+
     const [listProducts, setListProducts] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
@@ -31,6 +34,17 @@ const CategoryPage = (props) => {
         limit: 8,
         page: 1,
     });
+
+    const getCategory = () => {
+        getCategoryById(categoryId)
+            .then((data) => {
+                if (data.success) setCategory(data.category);
+                else return;
+            })
+            .catch((error) => {
+                return;
+            });
+    };
 
     const init = () => {
         setError('');
@@ -61,6 +75,7 @@ const CategoryPage = (props) => {
     }, [filter]);
 
     useEffect(() => {
+        getCategory();
         setFilter({
             ...filter,
             categoryId,
@@ -85,8 +100,47 @@ const CategoryPage = (props) => {
                     <div className="col-9 position-relative">
                         {isloading && <Loading />}
                         {error && <Error msg={error} />}
+
+                        {
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    {category.categoryId &&
+                                        category.categoryId.categoryId && (
+                                            <Link
+                                                to={`/category/${category.categoryId.categoryId._id}`}
+                                                className="breadcrumb-item"
+                                            >
+                                                {
+                                                    category.categoryId
+                                                        .categoryId.name
+                                                }
+                                            </Link>
+                                        )}
+
+                                    {category.categoryId && (
+                                        <Link
+                                            to={`/category/${category.categoryId._id}`}
+                                            className="breadcrumb-item"
+                                        >
+                                            {category.categoryId.name}
+                                        </Link>
+                                    )}
+
+                                    {category && (
+                                        <Link
+                                            to={`/category/${category._id}`}
+                                            className="breadcrumb-item active"
+                                        >
+                                            {category.name}
+                                        </Link>
+                                    )}
+                                </ol>
+                            </nav>
+                        }
+
                         <div className="mb-4">
                             <ListCategories
+                                hasBreadcrumb={true}
                                 categoryId={categoryId}
                                 heading={false}
                                 col="col-3"
