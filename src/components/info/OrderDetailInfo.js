@@ -139,20 +139,25 @@ const OrderDetailInfo = ({ orderId = '', storeId = '', by = 'user' }) => {
             </div>
 
             <div className="row py-2 border border-primary rounded-3">
-                <ListOrderItems orderId={orderId} storeId={storeId} by={by} />
+                <ListOrderItems
+                    orderId={orderId}
+                    storeId={storeId}
+                    by={by}
+                    status={order.status}
+                />
 
                 <div className="col-12 mt-2 d-flex justify-content-end">
                     <div className="me-5">
                         <Paragraph
                             label="Final total (include discounts)"
                             value={
-                                <h5 className="text-primary">
+                                <span className="text-primary fs-5">
                                     {formatPrice(
                                         order.amountFromUser &&
                                             order.amountFromUser.$numberDecimal,
                                     )}{' '}
                                     VND
-                                </h5>
+                                </span>
                             }
                         />
                     </div>

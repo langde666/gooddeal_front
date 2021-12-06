@@ -17,3 +17,31 @@ export const listReviews = (filter) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
+
+export const checkReview = (userId, token, data) => {
+    return fetch(`${API}/review/check/${userId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const reviewProduct = (userId, token, review) => {
+    return fetch(`${API}/review/create/${userId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(review),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

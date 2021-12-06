@@ -9,10 +9,16 @@ import {
 import { formatPrice } from '../../helper/formatPrice';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
+import ReviewItem from '../item/ReviewItem';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const ListOrderItems = ({ orderId = '', storeId = '', by = 'user' }) => {
+const ListOrderItems = ({
+    orderId = '',
+    status = '',
+    storeId = '',
+    by = 'user',
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [items, setItems] = useState([]);
@@ -179,6 +185,16 @@ const ListOrderItems = ({ orderId = '', storeId = '', by = 'user' }) => {
                                 />
                             )}
                     </div>
+
+                    {by === 'user' && status === 'Delivered' && (
+                        <div className="d-flex justify-content-between align-items-center my-2">
+                            <ReviewItem
+                                orderId={item.orderId}
+                                storeId={item.productId.storeId._id}
+                                productId={item.productId._id}
+                            />
+                        </div>
+                    )}
                 </div>
             ))}
         </div>

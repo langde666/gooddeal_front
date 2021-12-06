@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const UserSmallCard = ({ user = {}, bodername = false, style = {} }) => (
-    <div
+    <span
         className={`d-inline-flex align-items-center ${
             bodername && 'bg-body shadow'
         }`}
@@ -24,9 +24,11 @@ const UserSmallCard = ({ user = {}, bodername = false, style = {} }) => (
             to={`/user/${user._id}`}
             style={style}
         >
-            <h6 className="">{user.firstname + ' ' + user.lastname}</h6>
+            <span className="fs-6 fw-bold">
+                {user.firstname + ' ' + user.lastname}
+            </span>
         </Link>
-    </div>
+    </span>
 );
 
 export default UserSmallCard;

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const ProductSmallCard = ({ product = {}, bodername = false }) => (
-    <div
+    <span
         className={`d-inline-flex align-items-center ${
             bodername && 'bg-body shadow'
         }`}
@@ -22,9 +22,9 @@ const ProductSmallCard = ({ product = {}, bodername = false }) => (
             className="text-reset text-decoration-none link-hover mt-2"
             to={`/product/${product._id}`}
         >
-            <h6>{product.name}</h6>
+            <span className="fs-6 fw-bold">{product.name}</span>
         </Link>
-    </div>
+    </span>
 );
 
 export default ProductSmallCard;

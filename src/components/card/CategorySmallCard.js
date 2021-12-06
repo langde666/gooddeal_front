@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
 const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
-    <div className="d-inline-flex align-items-center" style={style}>
+    <span className="d-inline-flex align-items-center" style={style}>
         <Link
             className="text-reset text-decoration-none me-2"
             to={`/category/${category._id}`}
@@ -18,7 +18,7 @@ const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
             className="text-reset text-decoration-none mt-2 cus-link-hover"
             to={`/category/${category._id}`}
         >
-            <h6>
+            <span className="fs-6 fw-bold">
                 {parent &&
                     category.categoryId &&
                     category.categoryId.categoryId &&
@@ -27,9 +27,9 @@ const CategorySmallCard = ({ category = {}, style = {}, parent = true }) => (
                     category.categoryId &&
                     category.categoryId.name + ' > '}
                 {category.name}
-            </h6>
+            </span>
         </Link>
-    </div>
+    </span>
 );
 
 export default CategorySmallCard;

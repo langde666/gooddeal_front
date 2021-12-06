@@ -1132,3 +1132,14 @@ textarea {
     -webkit-box-orient: vertical;
     padding-bottom: 0 !important;
 }
+
+.cus-rating span label {
+    cursor: pointer;
+}
+.cus-rating span:hover ~ span label i,
+.cus-rating span:hover label i,
+.cus-rating span.checked label i,
+.cus-rating span.checked ~ span label i {
+    color: #ffd700 !important;
+    /* transition: color 0.3s ease-in; */
+}

@@ -217,143 +217,151 @@ const CheckoutForm = ({
                     </p>
                 </div>
 
-                <div className="col-12 px-4 mt-2 d-flex justify-content-between align-items-end">
-                    <div className="flex-grow-1">
-                        <Input
-                            type="text"
-                            label="Phone"
-                            value={order.phone}
-                            isValid={order.isValidPhone}
-                            feedback="Please provide a valid shop name."
-                            validator="phone"
-                            onChange={(value) =>
-                                handleChange('phone', 'isValidPhone', value)
-                            }
-                            onValidate={(flag) =>
-                                handleValidate('isValidPhone', flag)
-                            }
-                        />
-                    </div>
+                <div className="row">
+                    <div className="col-8">
+                        <div className="row">
+                            <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
+                                <div className="flex-grow-1">
+                                    <Input
+                                        type="text"
+                                        label="Phone"
+                                        value={order.phone}
+                                        isValid={order.isValidPhone}
+                                        feedback="Please provide a valid shop name."
+                                        validator="phone"
+                                        onChange={(value) =>
+                                            handleChange(
+                                                'phone',
+                                                'isValidPhone',
+                                                value,
+                                            )
+                                        }
+                                        onValidate={(flag) =>
+                                            handleValidate('isValidPhone', flag)
+                                        }
+                                    />
+                                </div>
 
-                    <div className="d-inline-block position-relative ms-4">
-                        <div className="d-inline-block cus-tooltip">
-                            <button
-                                className="btn btn-primary ripple"
-                                type="button"
-                                disabled={!!!phone}
-                                onClick={() =>
-                                    setOrder({
-                                        ...order,
-                                        phone: phone,
-                                        isValidPhone: true,
-                                    })
-                                }
-                            >
-                                <i className="fas fa-phone-square-alt me-2"></i>
-                                Set default
-                            </button>
+                                <div className="d-inline-block position-relative ms-4">
+                                    <div className="d-inline-block cus-tooltip">
+                                        <button
+                                            className="btn btn-primary ripple"
+                                            type="button"
+                                            disabled={!!!phone}
+                                            onClick={() =>
+                                                setOrder({
+                                                    ...order,
+                                                    phone: phone,
+                                                    isValidPhone: true,
+                                                })
+                                            }
+                                        >
+                                            <i className="fas fa-phone-square-alt"></i>
+                                        </button>
+                                    </div>
+                                    <small className="cus-tooltip-msg">
+                                        Use registered phone number
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
+                                <div className="flex-grow-1">
+                                    <DropDownMenu
+                                        listItem={
+                                            addresses &&
+                                            addresses.map((a, i) => {
+                                                const newA = {
+                                                    value: a,
+                                                    label: a,
+                                                };
+                                                return newA;
+                                            })
+                                        }
+                                        value={order.address}
+                                        setValue={(address) =>
+                                            setOrder({
+                                                ...order,
+                                                address: address,
+                                            })
+                                        }
+                                        size="large"
+                                        label="Address"
+                                    />
+                                    {addresses && addresses.length <= 0 && (
+                                        <small
+                                            style={{
+                                                marginTop: '-20px',
+                                                display: 'block',
+                                            }}
+                                        >
+                                            <Error msg="No address to choose, please add your address first!" />
+                                        </small>
+                                    )}
+                                </div>
+                                <div className="mb-2 ms-4">
+                                    <UserAddAddressItem
+                                        count={addresses && addresses.length}
+                                        detail={false}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-12 mt-2">
+                                {error1 && <Error msg={error1} />}
+                                {!error1 && (
+                                    <DropDownMenu
+                                        listItem={
+                                            deliveries &&
+                                            deliveries.map((d, i) => {
+                                                const newD = {
+                                                    value: d,
+                                                    label:
+                                                        d.name +
+                                                        ' (' +
+                                                        d.price.$numberDecimal +
+                                                        ' VND)',
+                                                };
+                                                return newD;
+                                            })
+                                        }
+                                        value={order.delivery}
+                                        setValue={(delivery) => {
+                                            const {
+                                                deliveryPrice,
+                                                amountFromUser2,
+                                            } = totalDelivery(
+                                                delivery,
+                                                userLevel,
+                                            );
+                                            setOrder({
+                                                ...order,
+                                                delivery,
+                                                deliveryId: delivery._id,
+                                                deliveryPrice,
+                                                amountFromUser2,
+                                                amountFromUser:
+                                                    order.amountFromUser1 +
+                                                    amountFromUser2,
+                                                amountToGD:
+                                                    order.amountFromUser1 +
+                                                    amountFromUser2 -
+                                                    order.amountToStore,
+                                            });
+                                        }}
+                                        size="large"
+                                        label="Delivery unit"
+                                    />
+                                )}
+                            </div>
                         </div>
-                        <small className="cus-tooltip-msg">
-                            Use registered phone number
-                        </small>
                     </div>
-                </div>
 
-                <div className="col-12 px-4 mt-2 d-flex justify-content-between align-items-end">
-                    <div className="flex-grow-1">
-                        <DropDownMenu
-                            listItem={
-                                addresses &&
-                                addresses.map((a, i) => {
-                                    const newA = {
-                                        value: a,
-                                        label: a,
-                                    };
-                                    return newA;
-                                })
-                            }
-                            value={order.address}
-                            setValue={(address) =>
-                                setOrder({
-                                    ...order,
-                                    address: address,
-                                })
-                            }
-                            size="large"
-                            label="Address"
-                        />
-                        {addresses && addresses.length <= 0 && (
-                            <small
-                                style={{ marginTop: '-20px', display: 'block' }}
-                            >
-                                <Error msg="No address to choose, please add your address first!" />
-                            </small>
-                        )}
-                    </div>
-                    <div className="mb-2 ms-4">
-                        <UserAddAddressItem
-                            count={addresses && addresses.length}
-                        />
-                    </div>
-                </div>
-
-                <div className="col-12 px-4 mt-2">
-                    {error1 && <Error msg={error1} />}
-                    {!error1 && (
-                        <DropDownMenu
-                            listItem={
-                                deliveries &&
-                                deliveries.map((d, i) => {
-                                    const newD = {
-                                        value: d,
-                                        label:
-                                            d.name +
-                                            ' (' +
-                                            d.price.$numberDecimal +
-                                            ' VND)',
-                                    };
-                                    return newD;
-                                })
-                            }
-                            value={order.delivery}
-                            setValue={(delivery) => {
-                                const { deliveryPrice, amountFromUser2 } =
-                                    totalDelivery(delivery, userLevel);
-                                setOrder({
-                                    ...order,
-                                    delivery,
-                                    deliveryId: delivery._id,
-                                    deliveryPrice,
-                                    amountFromUser2,
-                                    amountFromUser:
-                                        order.amountFromUser1 + amountFromUser2,
-                                    amountToGD:
-                                        order.amountFromUser1 +
-                                        amountFromUser2 -
-                                        order.amountToStore,
-                                });
-                            }}
-                            size="large"
-                            label="Delivery unit"
-                        />
-                    )}
-                </div>
-
-                {error && (
-                    <div className="col-12">
-                        <Error msg={error} />
-                    </div>
-                )}
-
-                <div className="d-flex justify-content-between mt-4">
-                    <div className="ms-4">checkbox...</div>
-
-                    <div className="me-4">
-                        <div className="d-flex justify-content-between align-items-end">
-                            <h3 className="mx-2 fs-6">Product's total:</h3>
-
-                            <div className="d-flex align-items-end">
-                                <div className="mx-2">
+                    <div className="col-4 my-4 border-start border-primary">
+                        <dl className="row">
+                            <dt className="col-3">Product's total</dt>
+                            <dd className="col-9 d-flex justify-content-between align-items-end">
+                                <div>
                                     <p className="text-decoration-line-through text-muted">
                                         {formatPrice(order.totalPrice)} VND
                                     </p>
@@ -366,7 +374,7 @@ const CheckoutForm = ({
                                     </h4>
                                 </div>
 
-                                <div className="mx-2">
+                                <div className="ms-4">
                                     <small>
                                         <UserLevelLabel level={userLevel} />
                                     </small>
@@ -375,20 +383,19 @@ const CheckoutForm = ({
                                         {formatPrice(order.amountFromUser1)} VND
                                     </h4>
                                 </div>
-                            </div>
-                        </div>
+                            </dd>
+                        </dl>
 
-                        <div className="d-flex justify-content-between align-items-end mt-2">
-                            <h3 className="mx-2 fs-6">Delivery's total:</h3>
-
-                            <div className="d-flex align-items-end">
-                                <div className="mx-2">
+                        <dl className="row">
+                            <dt className="col-3">Delivery's total</dt>
+                            <dd className="col-9 d-flex justify-content-between align-items-end">
+                                <div>
                                     <h4 className="text-decoration-line-through text-primary fs-5">
                                         {formatPrice(order.deliveryPrice)} VND
                                     </h4>
                                 </div>
 
-                                <div className="mx-2">
+                                <div className="ms-4">
                                     <small>
                                         <UserLevelLabel level={userLevel} />
                                     </small>
@@ -397,29 +404,34 @@ const CheckoutForm = ({
                                         {formatPrice(order.amountFromUser2)} VND
                                     </h4>
                                 </div>
-                            </div>
-                        </div>
+                            </dd>
+                        </dl>
 
-                        <div className="d-flex justify-content-between align-items-end mt-4">
-                            <h3 className="mx-2 fs-6">Final total:</h3>
-                            <div className="mx-2">
+                        <dl className="row">
+                            <dt className="col-3">Final total</dt>
+                            <dd className="col-9 d-flex justify-content-between align-items-end">
                                 <h4 className="text-primary fs-5">
                                     {formatPrice(order.amountFromUser)} VND
                                 </h4>
+                            </dd>
+                        </dl>
+
+                        {error && (
+                            <div className="col-12">
+                                <Error msg={error} />
                             </div>
+                        )}
+
+                        <div className="col-12">
+                            <button
+                                type="submit"
+                                className="btn btn-primary ripple w-100"
+                                onClick={handleSubmit}
+                            >
+                                Only order
+                            </button>
                         </div>
                     </div>
-                </div>
-
-                <div className="col-12 px-4 pb-3 d-flex justify-content-end  align-items-center mt-4">
-                    <button
-                        type="submit"
-                        className="btn btn-primary ripple"
-                        onClick={handleSubmit}
-                        style={{ width: '40%' }}
-                    >
-                        Only order
-                    </button>
                 </div>
             </form>
         </div>
