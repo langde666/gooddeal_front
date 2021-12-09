@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../../apis/auth';
-import { reviewProduct } from '../../../apis/review';
+import { editReview } from '../../../apis/review';
 import { numberTest, regexTest } from '../../../helper/test';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
@@ -9,16 +9,13 @@ import ConfirmDialog from '../../ui/ConfirmDialog';
 import TextArea from '../../ui/TextArea';
 import RatingInput from '../../ui/RatingInput';
 
-const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
+const EditReviewForm = ({ oldReview = {}, onRun }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [review, setReview] = useState({
-        storeId,
-        orderId,
-        productId,
+    const [newReview, setNewReview] = useState({
         rating: 1,
         content: '',
         isValidRating: true,
@@ -26,46 +23,40 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
     });
 
     useEffect(() => {
-        setReview({
-            ...review,
-            storeId,
-            orderId,
-            productId,
+        setNewReview({
+            ...newReview,
+            rating: oldReview.rating,
+            content: oldReview.content,
         });
-    }, [storeId, productId, orderId]);
+    }, [oldReview]);
 
     const handleChange = (name, isValidName, value) => {
-        setReview({
-            ...review,
+        setNewReview({
+            ...newReview,
             [name]: value,
             [isValidName]: true,
         });
     };
 
     const handleValidate = (isValidName, flag) => {
-        setReview({
-            ...review,
+        setNewReview({
+            ...newReview,
             [isValidName]: flag,
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (
-            !review.storeId ||
-            !review.orderId ||
-            !review.productId ||
-            !review.rating
-        ) {
-            setReview({
-                ...review,
-                isValidRating: numberTest('oneTo5', review.rating),
-                isValidContent: regexTest('nullable', review.content),
+        if (!newReview.rating) {
+            setNewReview({
+                ...newReview,
+                isValidRating: numberTest('oneTo5', newReview.rating),
+                isValidContent: regexTest('nullable', newReview.content),
             });
             return;
         }
 
-        if (!review.isValidRating || !review.isValidContent) return;
+        if (!newReview.isValidRating || !newReview.isValidContent) return;
 
         setIsConfirming(true);
     };
@@ -76,7 +67,7 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
         setSuccess('');
         setError('');
         setIsLoading(true);
-        reviewProduct(_id, accessToken, review)
+        editReview(_id, accessToken, newReview, oldReview._id)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -108,21 +99,18 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
             {isLoading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Review & rate"
+                    title="Edit Review"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            {error && <Error msg={error} />}
-            {success && <Success msg={success} />}
-
             <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <RatingInput
                         label="Rate"
-                        value={review.rating}
-                        isValid={review.isValidRating}
+                        value={newReview.rating}
+                        isValid={newReview.isValidRating}
                         feedback="Please provide a valid rating."
                         onChange={(value) =>
                             handleChange('rating', 'isValidRating', value)
@@ -134,8 +122,8 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
                     <TextArea
                         type="text"
                         label="Content"
-                        value={review.content}
-                        isValid={review.isValidContent}
+                        value={newReview.content}
+                        isValid={newReview.isValidContent}
                         feedback="Please provide a valid content."
                         validator="nullable"
                         onChange={(value) =>
@@ -165,7 +153,7 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
                         className="btn btn-primary ripple"
                         onClick={handleSubmit}
                     >
-                        Submit
+                        Edit
                     </button>
                 </div>
             </form>
@@ -173,4 +161,4 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
     );
 };
 
-export default ReviewForm;
+export default EditReviewForm;

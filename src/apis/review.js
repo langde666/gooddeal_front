@@ -45,3 +45,30 @@ export const reviewProduct = (userId, token, review) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
+
+export const editReview = (userId, token, review, reviewId) => {
+    return fetch(`${API}/review/${reviewId}/${userId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(review),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const removeReview = (userId, token, reviewId) => {
+    return fetch(`${API}/review/${reviewId}/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

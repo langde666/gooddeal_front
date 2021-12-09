@@ -9,6 +9,7 @@ import StarRating from '../label/StarRating';
 const ListReviews = ({ productId = '', storeId = '', userId = '' }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [run, setRun] = useState(true);
 
     const [reviews, setReviews] = useState([]);
     const [pagination, setPagination] = useState({
@@ -50,7 +51,7 @@ const ListReviews = ({ productId = '', storeId = '', userId = '' }) => {
     useEffect(() => {
         if (!filter.productId && !filter.storeId) return;
         init();
-    }, [filter]);
+    }, [filter, run]);
 
     useEffect(() => {
         setFilter({
@@ -137,8 +138,12 @@ const ListReviews = ({ productId = '', storeId = '', userId = '' }) => {
             <div className="row mt-2">
                 {reviews &&
                     reviews.map((review, index) => (
-                        <div className="col-12 mb-2">
-                            <ReviewInfo review={review} about={!!storeId} />
+                        <div className="col-12 mb-2" key={index}>
+                            <ReviewInfo
+                                review={review}
+                                about={!!storeId}
+                                onRun={() => setRun(!run)}
+                            />
                         </div>
                     ))}
             </div>
