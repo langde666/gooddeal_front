@@ -221,7 +221,6 @@ header {
     height: 26px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: 4px;
     border: 2px solid var(--white-color);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
@@ -234,15 +233,8 @@ header {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--white-color);
+    margin-left: 4px;
 }
-/* 
-.your-shop-name.your-shop-name--primary {
-    color: var(--primary-color);
-}
-
-.your-shop-card:hover .your-shop-name.your-shop-name--primary {
-    color: var(--white-color);
-} */
 
 .your-account-options,
 .your-shop-options {
@@ -745,6 +737,11 @@ header {
 .cus-cover-img.cus-cover-img--boder {
     border: 4px solid var(--white-color);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+}
+
+.link-hover {
+    text-decoration: none !important;
+    cursor: pointer;
 }
 
 .link-hover:hover {

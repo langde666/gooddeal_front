@@ -5,7 +5,7 @@ import ListHotStores from '../../components/list/ListHotStores';
 
 const HomePage = () => {
     return (
-        <MainLayout container="container" navFor="user">
+        <MainLayout container="container-lg" navFor="user">
             <div className="home-page">
                 <div className="mb-4">
                     <ListCategories heading={true} col="col" limit={5} />

@@ -109,7 +109,7 @@ const AccountInit = ({ user, actions }) => {
                         className="your-account-img"
                     />
 
-                    <span className="your-account-name noselect">
+                    <span className="your-account-name noselect res-hide-xl">
                         {firstname && lastname && firstname + ' ' + lastname}
                         {error && <Error msg={error} />}
                     </span>

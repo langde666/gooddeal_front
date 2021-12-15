@@ -4,6 +4,7 @@ import Routes from './pages/Routes';
 import { Provider } from 'react-redux';
 import store from './store';
 import './style.css';
+import './responsive.css';
 
 ReactDOM.render(
     <Provider store={store}>

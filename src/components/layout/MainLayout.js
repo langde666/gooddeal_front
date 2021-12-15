@@ -1,7 +1,7 @@
 import MainNav from './menu/MainNav';
 
 const MainLayout = ({
-    container = 'container',
+    container = 'container-lg',
     navFor = 'user',
     children = null,
 }) => (

@@ -75,7 +75,7 @@ const DropDownMenu = ({
                         size == 'large' ? 'flex-grow-1 text-start ps-2' : ''
                     }`}
                 >
-                    {selectedItem && selectedItem.icon}
+                    {selectedItem && <span>{selectedItem.icon}</span>}
                     <span className="ms-2">
                         {selectedItem && selectedItem.label}
                     </span>

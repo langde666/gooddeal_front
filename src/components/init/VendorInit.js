@@ -103,7 +103,7 @@ const VendorInit = ({ store, actions }) => {
                                 className="your-shop-img"
                             />
 
-                            <span className="your-shop-name noselect">
+                            <span className="your-shop-name noselect res-hide-xl">
                                 {!error && store.name}
                                 {error && <Error msg={error} />}
                             </span>
