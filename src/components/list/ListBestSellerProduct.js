@@ -6,7 +6,7 @@ import ProductCard from '../card/ProductCard';
 
 const ListBestSellerProducts = ({
     heading = 'Best Seller',
-    col = 'col',
+    col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
     categoryId = '',
     limit = '5',
 }) => {

@@ -163,7 +163,7 @@ const MainNav = ({ navFor = 'user' }) => {
                         </ul>
 
                         <button
-                            className="navbar-toggler ms-4 res-dis-lg"
+                            className="navbar-toggler ms-4 d-none res-dis-lg"
                             type="button"
                             data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar"
@@ -173,7 +173,7 @@ const MainNav = ({ navFor = 'user' }) => {
                         </button>
 
                         <div
-                            className="offcanvas offcanvas-end res-dis-lg"
+                            className="offcanvas offcanvas-end d-none res-dis-lg"
                             tabIndex="-1"
                             id="offcanvasNavbar"
                             aria-labelledby="offcanvasNavbarLabel"

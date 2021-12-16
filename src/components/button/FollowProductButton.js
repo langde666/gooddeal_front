@@ -89,11 +89,13 @@ const FollowProductButton = ({
                 <Error msg={error} />
             ) : followingFlag ? (
                 <span>
-                    <i className="fas fa-heart me-2"></i>Following
+                    <i className="fas fa-heart me-2"></i>
+                    <span className="res-hide-md">Following</span>
                 </span>
             ) : (
                 <span>
-                    <i className="far fa-heart me-2"></i>Follow
+                    <i className="far fa-heart me-2"></i>
+                    <span className="res-hide-md">Follow</span>
                 </span>
             )}
         </button>

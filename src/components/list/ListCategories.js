@@ -7,7 +7,7 @@ import CategoryCard from '../card/CategoryCard';
 const ListCategories = ({
     heading = true,
     categoryId = null,
-    col = 'col',
+    col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
     limit = '5',
 }) => {
     const [isloading, setIsLoading] = useState(false);

@@ -8,15 +8,15 @@ const HomePage = () => {
         <MainLayout container="container-lg" navFor="user">
             <div className="home-page">
                 <div className="mb-4">
-                    <ListCategories heading={true} col="col" limit={5} />
+                    <ListCategories heading={true} />
                 </div>
 
                 <div className="mb-4">
-                    <ListBestSellerProduct col="col" limit={5} />
+                    <ListBestSellerProduct />
                 </div>
 
                 <div className="mb-4">
-                    <ListHotStores heading={true} col="col" limit={5} />
+                    <ListHotStores heading={true} />
                 </div>
             </div>
         </MainLayout>

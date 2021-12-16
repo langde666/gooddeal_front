@@ -4,7 +4,10 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import StoreCard from '../card/StoreCard';
 
-const ListHotStores = ({ heading = true, col = 'col' }) => {
+const ListHotStores = ({
+    heading = true,
+    col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
+}) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 

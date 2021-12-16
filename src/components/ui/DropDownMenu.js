@@ -55,7 +55,9 @@ const DropDownMenu = ({
                             onMouseDown={() => handleSelect(item)}
                         >
                             {item && item.icon}
-                            <span>{item && item.label}</span>
+                            <span className={item && item.icon && 'res-hide'}>
+                                {item && item.label}
+                            </span>
                         </li>
                     ))}
             </ul>
@@ -76,7 +78,11 @@ const DropDownMenu = ({
                     }`}
                 >
                     {selectedItem && <span>{selectedItem.icon}</span>}
-                    <span className="ms-2">
+                    <span
+                        className={`ms-2 ${
+                            selectedItem && selectedItem.icon && 'res-hide'
+                        }`}
+                    >
                         {selectedItem && selectedItem.label}
                     </span>
                 </span>

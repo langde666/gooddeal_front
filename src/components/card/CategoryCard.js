@@ -50,31 +50,43 @@ const CategoryCard = ({ category = {} }) => {
 
             <div className="card-body border-top border-secondary">
                 <Link
-                    className="text-reset text-decoration-none link-hover d-block mt-1"
+                    className="text-reset link-hover d-block mt-1"
                     to={`/category/${categoryValue._id}`}
                     title={categoryValue.name}
                 >
-                    <h6 className="card-title text-nowrap">
+                    <h6
+                        className="card-title"
+                        style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
                         {categoryValue.name}
                     </h6>
                 </Link>
 
                 {children && children.length > 0 && (
-                    <small
-                        className="card-subtitle d-inline-block ms-2"
+                    <div
+                        className="card-subtitle ms-2"
                         style={{ minHeight: '70px' }}
                     >
                         {children &&
                             children.map((child, index) => (
                                 <Link
                                     key={index}
-                                    className="text-reset text-decoration-none link-hover d-block mt-1"
+                                    className="text-reset link-hover d-block mt-1"
                                     to={`/category/${child._id}`}
+                                    style={{
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap',
+                                    }}
                                 >
-                                    {child.name}
+                                    <small>{child.name}</small>
                                 </Link>
                             ))}
-                    </small>
+                    </div>
                 )}
             </div>
         </div>

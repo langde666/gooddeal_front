@@ -94,9 +94,9 @@ const VendorInit = ({ store, actions }) => {
             ) : (
                 <div className="your-shop-wrap">
                     <div className="your-shop">
-                        <Link
+                        <div
+                            type="button"
                             className="your-shop-card btn btn-outline-light cus-outline ripple"
-                            to={`/vendor/${storeId}`}
                         >
                             <img
                                 src={`${IMG + store.avatar}`}
@@ -107,7 +107,7 @@ const VendorInit = ({ store, actions }) => {
                                 {!error && store.name}
                                 {error && <Error msg={error} />}
                             </span>
-                        </Link>
+                        </div>
 
                         <ul className="list-group your-shop-options">
                             <Link

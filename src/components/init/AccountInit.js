@@ -99,10 +99,9 @@ const AccountInit = ({ user, actions }) => {
                 />
             )}
             <div className="your-account">
-                <Link
+                <div
                     type="button"
                     className="your-account-card btn btn-outline-light cus-outline ripple"
-                    to="/account/profile"
                 >
                     <img
                         src={avatar ? `${IMG + avatar}` : ''}
@@ -113,7 +112,7 @@ const AccountInit = ({ user, actions }) => {
                         {firstname && lastname && firstname + ' ' + lastname}
                         {error && <Error msg={error} />}
                     </span>
-                </Link>
+                </div>
 
                 <ul className="list-group your-account-options">
                     <Link
