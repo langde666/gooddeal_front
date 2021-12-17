@@ -70,7 +70,7 @@ const UserInit = ({ user, actions }) => {
             className="your-shop-card btn btn-outline-light cus-outline ripple"
         >
             <img src={`${IMG + user.avatar}`} className="your-shop-img" />
-            <span className="your-shop-name tetx noselect">
+            <span className="your-shop-name noselect">
                 {user.firstname + ' ' + user.lastname}
                 {error && <Error msg={error} />}
             </span>

@@ -26,12 +26,12 @@ const CollectionPage = (props) => {
     const [filter, setFilter] = useState({
         search: keyword,
         rating: '',
-        minPrice: '',
+        minPrice: 0,
         maxPrice: '',
         sortBy: 'sold',
         order: 'desc',
         categoryId: '',
-        limit: 8,
+        limit: 10,
         page: 1,
     });
 
@@ -84,39 +84,35 @@ const CollectionPage = (props) => {
         </MainLayout>
     ) : (
         <StoreLayout store={store}>
-            <div className="store-collection-page">
-                <div className="row flex-nowrap">
-                    <div className="col-3">
+            <div className="store-collection-page position-relative">
+                {isloading && <Loading />}
+                {error && <Error msg={error} />}
+
+                <div className="d-flex justify-content-between align-items-end">
+                    <div className="">
                         <ProductFilter filter={filter} setFilter={setFilter} />
                     </div>
-
-                    <div className="col-9 position-relative">
-                        {isloading && <Loading />}
-                        {error && <Error msg={error} />}
-
-                        <div className="d-flex justify-content-end">
-                            <span className="me-3">
-                                {pagination.size || 0} results
-                            </span>
-                        </div>
-
-                        <div className="product-search-list row mt-3">
-                            {listProducts &&
-                                listProducts.map((product, index) => (
-                                    <div className="col-3 mb-4" key={index}>
-                                        <ProductCard product={product} />
-                                    </div>
-                                ))}
-                        </div>
-
-                        {pagination.size != 0 && (
-                            <Pagination
-                                pagination={pagination}
-                                onChangePage={handleChangePage}
-                            />
-                        )}
-                    </div>
+                    <span className="me-3">{pagination.size || 0} results</span>
                 </div>
+
+                <div className="product-search-list row mt-3">
+                    {listProducts &&
+                        listProducts.map((product, index) => (
+                            <div
+                                className="col-xl-2-5 col-md-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
+                                <ProductCard product={product} />
+                            </div>
+                        ))}
+                </div>
+
+                {pagination.size != 0 && (
+                    <Pagination
+                        pagination={pagination}
+                        onChangePage={handleChangePage}
+                    />
+                )}
             </div>
         </StoreLayout>
     );

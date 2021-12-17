@@ -6,12 +6,12 @@ import StoreStatusLabel from '../label/StoreStatusLabel';
 import StoreLevelInfo from '../info/StoreLevelInfo';
 
 const StoreLayout = ({ store = {}, children = null }) => (
-    <MainLayout container="container" navFor="user">
+    <MainLayout>
         <div
-            className="store-layout row"
+            className="store-layout"
             style={{ maxWidth: '990px', margin: '0 auto' }}
         >
-            <div className="col-12 position-relative shadow">
+            <div className="px-2 position-relative shadow">
                 <Cover cover={store.cover} alt={store.name} />
                 <div className="avatar-absolute avatar-absolute--store">
                     <Avatar
@@ -28,7 +28,7 @@ const StoreLayout = ({ store = {}, children = null }) => (
                         bodername={true}
                     />
                 </div>
-                <div className="level-group-absolute">
+                <div className="level-group-absolute res-hide">
                     <StoreLevelInfo store={store} />
                 </div>
             </div>
@@ -36,7 +36,7 @@ const StoreLayout = ({ store = {}, children = null }) => (
 
         <StoreNav store={store} />
 
-        <div className="store-page-main mt-4">{children}</div>
+        <div className="store-page-main mt-3">{children}</div>
     </MainLayout>
 );
 

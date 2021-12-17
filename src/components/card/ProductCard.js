@@ -102,21 +102,23 @@ const ProductCard = ({ product = {}, onRun }) => {
                 </small>
 
                 <Link
-                    className="text-reset text-decoration-none link-hover d-block mt-1 mb-2"
+                    className="text-reset link-hover d-block mt-1 mb-2"
                     to={`/product/${productValue._id}`}
-                    style={{
-                        width: '200px',
-                        maxWidth: '100%',
-                        height: '38px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: '-webkit-box',
-                        WebkitLineClamp: '3',
-                        WebkitBoxOrient: 'vertical',
-                    }}
                     title={productValue.name}
                 >
-                    <h6 className="card-title">{productValue.name}</h6>
+                    <h6
+                        className="card-title"
+                        style={{
+                            height: '38px',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: '2',
+                            WebkitBoxOrient: 'vertical',
+                        }}
+                    >
+                        {productValue.name}
+                    </h6>
                 </Link>
 
                 <small className="card-subtitle">

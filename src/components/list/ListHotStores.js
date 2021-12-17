@@ -5,7 +5,7 @@ import Error from '../ui/Error';
 import StoreCard from '../card/StoreCard';
 
 const ListHotStores = ({
-    heading = true,
+    heading = 'Hot Stores',
     col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
 }) => {
     const [isloading, setIsLoading] = useState(false);
@@ -42,7 +42,7 @@ const ListHotStores = ({
 
     return (
         <div className="categories-list-wrap position-relative">
-            {heading && <h4>Hot Stores</h4>}
+            {heading && <h4>{heading}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}

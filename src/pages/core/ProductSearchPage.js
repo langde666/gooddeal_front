@@ -27,7 +27,7 @@ const ProductSearchPage = (props) => {
         sortBy: 'sold',
         order: 'desc',
         categoryId: '',
-        limit: 8,
+        limit: 10,
         page: 1,
     });
 
@@ -75,40 +75,34 @@ const ProductSearchPage = (props) => {
     };
 
     return (
-        <MainLayout container="container" navFor="user">
-            <div className="product-search-page">
-                <div className="row flex-nowrap">
-                    <div className="col-3">
-                        <ProductFilter filter={filter} setFilter={setFilter} />
-                    </div>
+        <MainLayout>
+            <div className="product-search-page position-relative">
+                {isloading && <Loading />}
+                {error && <Error msg={error} />}
 
-                    <div className="col-9 position-relative">
-                        {isloading && <Loading />}
-                        {error && <Error msg={error} />}
-
-                        <div className="d-flex justify-content-end">
-                            <span className="me-3">
-                                {pagination.size || 0} results
-                            </span>
-                        </div>
-
-                        <div className="product-search-list row mt-3">
-                            {listProducts &&
-                                listProducts.map((product, index) => (
-                                    <div className="col-3 mb-4" key={index}>
-                                        <ProductCard product={product} />
-                                    </div>
-                                ))}
-                        </div>
-
-                        {pagination.size != 0 && (
-                            <Pagination
-                                pagination={pagination}
-                                onChangePage={handleChangePage}
-                            />
-                        )}
-                    </div>
+                <div className="d-flex justify-content-between align-items-end">
+                    <ProductFilter filter={filter} setFilter={setFilter} />
+                    <span className="me-3">{pagination.size || 0} results</span>
                 </div>
+
+                <div className="product-search-list row mt-3">
+                    {listProducts &&
+                        listProducts.map((product, index) => (
+                            <div
+                                className="col-xl-2-5 col-md-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
+                                <ProductCard product={product} />
+                            </div>
+                        ))}
+                </div>
+
+                {pagination.size != 0 && (
+                    <Pagination
+                        pagination={pagination}
+                        onChangePage={handleChangePage}
+                    />
+                )}
             </div>
         </MainLayout>
     );

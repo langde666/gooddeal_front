@@ -24,7 +24,7 @@ const UserSearchPage = (props) => {
         sortBy: 'point',
         role: 'customer',
         order: 'desc',
-        limit: 8,
+        limit: 10,
         page: 1,
     });
 
@@ -73,11 +73,8 @@ const UserSearchPage = (props) => {
     };
 
     return (
-        <MainLayout container="container" navFor="user">
-            <div
-                className="user-search-page position-relative mx-auto"
-                style={{ maxWidth: '990px', minHeight: '80vh' }}
-            >
+        <MainLayout>
+            <div className="user-search-page position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -88,7 +85,10 @@ const UserSearchPage = (props) => {
                 <div className="user-search-list row mt-3">
                     {listUsers &&
                         listUsers.map((user, index) => (
-                            <div className="col-3 mb-4" key={index}>
+                            <div
+                                className="col-xl-2-5 col-md-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
                                 <UserCard
                                     user={user}
                                     hasFollowBtn={getToken()}

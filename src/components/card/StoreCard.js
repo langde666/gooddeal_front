@@ -124,7 +124,16 @@ const StoreCard = ({ store = {}, onRun }) => {
                     to={`/store/${store._id}`}
                     title={storeValue.name}
                 >
-                    <h6 className="card-title text-nowrap">{store.name}</h6>
+                    <h6
+                        className="card-title"
+                        style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
+                        {store.name}
+                    </h6>
                 </Link>
 
                 {getToken() && (

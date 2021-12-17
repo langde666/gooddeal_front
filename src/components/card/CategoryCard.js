@@ -69,7 +69,7 @@ const CategoryCard = ({ category = {} }) => {
                 {children && children.length > 0 && (
                     <div
                         className="card-subtitle ms-2"
-                        style={{ minHeight: '70px' }}
+                        style={{ minHeight: '80px' }}
                     >
                         {children &&
                             children.map((child, index) => (

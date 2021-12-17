@@ -2,16 +2,23 @@ import { useSelector } from 'react-redux';
 import UserLayout from '../../components/layout/UserLayout';
 import UserProfileInfo from '../../components/info/UserProfileInfo';
 import UserJoinedInfo from '../../components/info/UserJoinedInfo';
+import UserLevelInfo from '../../components/info/UserLevelInfo';
 
 const UserAboutPage = (props) => {
     const user = useSelector((state) => state.user.user);
     return (
         <UserLayout user={user}>
-            <div className="user-about-page">
-                <div className="">
+            <div
+                className="user-about-page"
+                style={{ maxWidth: '990px', margin: '0 auto' }}
+            >
+                <div className="mb-1 d-none res-dis">
+                    <UserLevelInfo user={user} border={false} />
+                </div>
+                <div className="mb-1">
                     <UserProfileInfo user={user} />
                 </div>
-                <div className="mt-1">
+                <div className="">
                     <UserJoinedInfo user={user} />
                 </div>
             </div>

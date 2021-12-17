@@ -16,7 +16,6 @@ const UserCard = ({ user = {} }) => {
             newUser.level = data.level;
         } catch {}
         setUserValue(newUser);
-        console.log(newUser.level);
     };
 
     useEffect(() => {
@@ -27,6 +26,7 @@ const UserCard = ({ user = {} }) => {
         <div className="card shadow border-0">
             <Link
                 className="text-reset text-decoration-none"
+                title={userValue.firstname + ' ' + userValue.lastname}
                 to={`/user/${userValue._id}`}
             >
                 <div className="card-img-top cus-card-img-top">
@@ -59,9 +59,17 @@ const UserCard = ({ user = {} }) => {
 
                 <Link
                     className="text-reset text-decoration-none link-hover d-block mt-2"
+                    title={userValue.firstname + ' ' + userValue.lastname}
                     to={`/user/${userValue._id}`}
                 >
-                    <h6 className="card-title text-nowrap">
+                    <h6
+                        className="card-title"
+                        style={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                        }}
+                    >
                         {userValue.firstname + ' ' + userValue.lastname}
                     </h6>
                 </Link>

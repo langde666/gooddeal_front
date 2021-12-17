@@ -5,12 +5,12 @@ import Avatar from '../image/Avatar';
 import UserLevelInfo from '../info/UserLevelInfo';
 
 const UserLayout = ({ user = {}, children = null }) => (
-    <MainLayout container="container">
+    <MainLayout>
         <div
-            className="user-layout row"
+            className="user-layout"
             style={{ maxWidth: '990px', margin: '0 auto' }}
         >
-            <div className="col-12 position-relative shadow">
+            <div className="px-2 position-relative shadow">
                 <Cover
                     cover={user.cover}
                     alt={user.firstname + ' ' + user.lastname}
@@ -23,15 +23,15 @@ const UserLayout = ({ user = {}, children = null }) => (
                         alt={user.firstname + ' ' + user.lastname}
                     />
                 </div>
-                <div className="level-group-absolute level-group-absolute--small">
+                <div className="level-group-absolute level-group-absolute--small res-hide">
                     <UserLevelInfo user={user} />
                 </div>
             </div>
-
-            <UserNav user={user} />
-
-            <div className="user-page-main mt-4">{children}</div>
         </div>
+
+        <UserNav user={user} />
+
+        <div className="user-page-main mt-3">{children}</div>
     </MainLayout>
 );
 

@@ -31,7 +31,7 @@ const MainNav = ({ navFor = 'user' }) => {
     };
 
     return (
-        <header className="main-nav cus-nav navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <header className="main-nav cus-nav navbar fixed-top navbar-expand-md navbar-dark bg-primary">
             {isConfirming && (
                 <ConfirmDialog
                     title="Sign out"
@@ -43,7 +43,7 @@ const MainNav = ({ navFor = 'user' }) => {
 
             <div className="container-lg">
                 <Link
-                    className="navbar-brand cus-navbar-brand me-4 ripple res-hide-lg"
+                    className="navbar-brand cus-navbar-brand me-4 ripple res-hide-md"
                     to="/"
                 >
                     <Logo />
@@ -67,7 +67,7 @@ const MainNav = ({ navFor = 'user' }) => {
                     </ul>
                 ) : (
                     <>
-                        <ul className="nav cus-subnav ms-4 d-flex justify-content-end res-hide-lg">
+                        <ul className="nav cus-subnav ms-4 d-flex justify-content-end res-hide-md">
                             <li className="nav-item">
                                 <AccountInit />
                             </li>
@@ -163,26 +163,26 @@ const MainNav = ({ navFor = 'user' }) => {
                         </ul>
 
                         <button
-                            className="navbar-toggler ms-4 d-none res-dis-lg"
+                            className="btn btn-outline-light cus-outline ripple mx-2 d-none res-dis-md"
                             type="button"
                             data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasNavbar"
-                            aria-controls="offcanvasNavbar"
+                            data-bs-target="#offcanvasNavbarMainNav"
+                            aria-controls="offcanvasNavbarMainNav"
                         >
-                            <span className="navbar-toggler-icon"></span>
+                            <i className="fas fa-bars"></i>
                         </button>
 
                         <div
-                            className="offcanvas offcanvas-end d-none res-dis-lg"
+                            className="offcanvas offcanvas-end d-none res-dis-md"
                             tabIndex="-1"
-                            id="offcanvasNavbar"
-                            aria-labelledby="offcanvasNavbarLabel"
+                            id="offcanvasNavbarMainNav"
+                            aria-labelledby="offcanvasNavbarMainNavLabel"
                             style={{ flexGrow: 'unset', width: 'unset' }}
                         >
                             <div className="offcanvas-header bg-primary">
                                 <h5
-                                    className="offcanvas-title bg-primary"
-                                    id="offcanvasNavbarLabel"
+                                    className="offcanvas-title me-5"
+                                    id="offcanvasNavbarMainNavLabel"
                                 >
                                     <Logo />
                                 </h5>

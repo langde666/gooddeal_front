@@ -5,7 +5,7 @@ import Error from '../ui/Error';
 import CategoryCard from '../card/CategoryCard';
 
 const ListCategories = ({
-    heading = true,
+    heading = 'Discover',
     categoryId = null,
     col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
     limit = '5',
@@ -43,7 +43,7 @@ const ListCategories = ({
 
     return (
         <div className="categories-list-wrap position-relative">
-            {heading && <h4>Discover</h4>}
+            {heading && <h4>{heading}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}

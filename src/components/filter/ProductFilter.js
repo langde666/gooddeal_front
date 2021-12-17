@@ -4,18 +4,13 @@ import Input from '../ui/Input';
 
 const ProductFilter = ({ filter, setFilter }) => {
     const [price, setPrice] = useState({
-        min: '',
+        min: 0,
         max: '',
     });
     const typingTimeoutRef = useRef(null);
 
     const handleFilter = (name, value) => {
         setFilter({
-            ...filter,
-            [name]: value,
-        });
-
-        console.log({
             ...filter,
             [name]: value,
         });
@@ -78,93 +73,124 @@ const ProductFilter = ({ filter, setFilter }) => {
     };
 
     return (
-        <div className="filter-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
-            <h2 className="">Filters</h2>
+        <div>
+            <button
+                className="btn btn-primary ripple"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasFilter"
+                aria-controls="offcanvasFilter"
+            >
+                <i className="fas fa-sliders-h"></i>
+                <span className="ms-2">All filters</span>
+            </button>
 
-            <div className="mt-4">
-                <h6>Sort by</h6>
-
-                <div className="form-check">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="sortBy"
-                        id="sortBy1"
-                        defaultChecked={filter.sortBy === 'sold'}
-                        onClick={() => handleFilter('sortBy', 'sold')}
-                        style={{
-                            cursor: 'pointer',
-                        }}
-                    />
-                    <label
-                        className="form-check-label"
-                        htmlFor="sortBy1"
-                        style={{
-                            cursor: 'pointer',
-                        }}
-                    >
-                        Best seller
-                    </label>
+            <div
+                className="offcanvas offcanvas-start"
+                tabIndex="-1"
+                id="offcanvasFilter"
+                aria-labelledby="offcanvasFilterLabel"
+            >
+                <div className="offcanvas-header">
+                    <h2 className="offcanvas-title" id="offcanvasFilterLabel">
+                        Filters
+                    </h2>
+                    <button
+                        type="button"
+                        className="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
                 </div>
+                <div className="offcanvas-body">
+                    <div className="mb-4">
+                        <h6>Sort by</h6>
 
-                <div className="form-check">
-                    <input
-                        className="form-check-input"
-                        type="radio"
-                        name="sortBy"
-                        id="sortBy2"
-                        defaultChecked={filter.sortBy === 'createdAt'}
-                        onClick={() => handleFilter('sortBy', 'createdAt')}
-                        style={{
-                            cursor: 'pointer',
-                        }}
-                    />
-                    <label
-                        className="form-check-label"
-                        htmlFor="sortBy2"
-                        style={{
-                            cursor: 'pointer',
-                        }}
-                    >
-                        New product
-                    </label>
-                </div>
-            </div>
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="sortBy"
+                                id="sortBy1"
+                                defaultChecked={filter.sortBy === 'sold'}
+                                onClick={() => handleFilter('sortBy', 'sold')}
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                            />
+                            <label
+                                className="form-check-label"
+                                htmlFor="sortBy1"
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Best seller
+                            </label>
+                        </div>
 
-            <div className="mt-4">
-                <h6>Rating</h6>
-                {renderFilterRating()}
-            </div>
-
-            <div className="mt-4">
-                <h6 className="mb-0">Price</h6>
-                <form className="row">
-                    <div className="col-12">
-                        <Input
-                            type="number"
-                            label="Min price"
-                            feedback="Please provide a valid price."
-                            validator="positon|zero"
-                            value={price.min}
-                            onChange={(value) =>
-                                handleSetPrice('min', 'minPrice', value)
-                            }
-                        />
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="sortBy"
+                                id="sortBy2"
+                                defaultChecked={filter.sortBy === 'createdAt'}
+                                onClick={() =>
+                                    handleFilter('sortBy', 'createdAt')
+                                }
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                            />
+                            <label
+                                className="form-check-label"
+                                htmlFor="sortBy2"
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                New product
+                            </label>
+                        </div>
                     </div>
 
-                    <div className="col-12">
-                        <Input
-                            type="number"
-                            label="Max price"
-                            feedback="Please provide a valid price."
-                            validator="positon|zero"
-                            value={price.max}
-                            onChange={(value) =>
-                                handleSetPrice('max', 'maxPrice', value)
-                            }
-                        />
+                    <div className="mb-4">
+                        <h6>Rating</h6>
+                        {renderFilterRating()}
                     </div>
-                </form>
+
+                    <div className="mb-4">
+                        <h6 className="mb-0">Price</h6>
+                        <form className="row">
+                            <div className="col-12">
+                                <Input
+                                    type="number"
+                                    label="Min price"
+                                    feedback="Please provide a valid price."
+                                    validator="positon|zero"
+                                    value={price.min}
+                                    onChange={(value) =>
+                                        handleSetPrice('min', 'minPrice', value)
+                                    }
+                                />
+                            </div>
+
+                            <div className="col-12">
+                                <Input
+                                    type="number"
+                                    label="Max price"
+                                    feedback="Please provide a valid price."
+                                    validator="positon|zero"
+                                    value={price.max}
+                                    onChange={(value) =>
+                                        handleSetPrice('max', 'maxPrice', value)
+                                    }
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     );

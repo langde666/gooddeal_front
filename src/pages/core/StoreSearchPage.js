@@ -24,7 +24,7 @@ const StoreSearchPage = (props) => {
         sortMoreBy: 'point',
         isActive: 'true',
         order: 'desc',
-        limit: 8,
+        limit: 10,
         page: 1,
     });
 
@@ -72,11 +72,8 @@ const StoreSearchPage = (props) => {
     };
 
     return (
-        <MainLayout container="container" navFor="user">
-            <div
-                className="store-search-page position-relative mx-auto"
-                style={{ maxWidth: '990px', minHeight: '80vh' }}
-            >
+        <MainLayout>
+            <div className="store-search-page position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -87,7 +84,10 @@ const StoreSearchPage = (props) => {
                 <div className="store-search-list row mt-3">
                     {listStores &&
                         listStores.map((store, index) => (
-                            <div className="col-3 mb-4" key={index}>
+                            <div
+                                className="col-xl-2-5 col-md-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
                                 <StoreCard store={store} />
                             </div>
                         ))}

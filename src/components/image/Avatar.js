@@ -43,7 +43,7 @@ const Avatar = ({
 
         {size != 'small' && (
             <h1
-                className={`mt-2 p-1 rounded-3 d-inline-block fs-5 ${
+                className={`cus-avatar-name m-0 p-1 rounded d-inline-block fs-5 ${
                     bodername && 'bg-body shadow'
                 }`}
             >

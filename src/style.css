@@ -897,6 +897,15 @@ header {
 .cus-avatar-wrap {
     display: inline-block;
     text-align: center;
+    position: relative;
+}
+
+.cus-avatar-name {
+    white-space: nowrap;
+    position: absolute;
+    bottom: -24%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .cus-avatar-box {
@@ -1012,17 +1021,19 @@ header {
     top: 50%;
     transform: translateY(-50%);
     right: 6%;
-    width: 35%;
+    width: 346px;
+    max-width: 56%;
 }
 
 .level-group-absolute.level-group-absolute--small {
-    width: 24%;
+    width: 262px;
+    max-width: 40%;
     right: 10%;
 }
 
 .avatar-absolute.avatar-absolute--store {
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 56%;
+    transform: translateY(50%);
     left: 6%;
 }
 
