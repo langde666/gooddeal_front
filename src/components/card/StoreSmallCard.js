@@ -19,10 +19,7 @@ const StoreSmallCard = ({
             />
         </Link>
 
-        <Link
-            className="text-reset text-decoration-none link-hover mt-2"
-            to={link}
-        >
+        <Link className="text-reset link-hover mt-2" to={link}>
             <span className="fs-6 fw-bold">{store.name}</span>
         </Link>
     </span>

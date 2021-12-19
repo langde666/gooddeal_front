@@ -138,7 +138,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     };
 
     return (
-        <div className="list-cart-item position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -152,13 +152,17 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
             )}
 
             {items.map((item, index) => (
-                <div key={index} className="d-flex mb-2">
+                <div
+                    key={index}
+                    className="d-flex align-items-center mb-2 res-flex-column"
+                >
                     <div
                         style={{
                             position: 'relative',
-                            paddingBottom: '200px',
                             width: '300px',
-                            height: '0',
+                            maxWidth: '100%',
+                            height: '200px',
+                            maxHeight: '66.6667%',
                         }}
                     >
                         <img
@@ -179,124 +183,128 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                         />
                     </div>
 
-                    <div className="flex-grow-1 mx-4 my-2">
-                        <Link
-                            className="text-reset text-decoration-none link-hover d-block mt-1"
-                            to={`/product/${
-                                item.productId && item.productId._id
-                            }`}
-                            title={item.productId && item.productId.name}
-                        >
-                            <h3 className="fs-5">
-                                {item.productId && item.productId.name}
-                            </h3>
-                        </Link>
-
-                        <div className="mt-2">
-                            {item.styleValueIds &&
-                                item.styleValueIds.map((value, index) => (
-                                    <p className="fs-6" key={index}>
-                                        {value.styleId && value.styleId.name}:{' '}
-                                        {value.name}
-                                    </p>
-                                ))}
-                        </div>
-
-                        <div className="mt-2">
-                            <p className="text-decoration-line-through text-muted">
-                                {item.productId &&
-                                    item.productId.price &&
-                                    formatPrice(
-                                        item.productId &&
-                                            item.productId.price.$numberDecimal,
-                                    )}{' '}
-                                VND
-                            </p>
-
-                            <h4 className="text-primary fs-5">
-                                {item.productId &&
-                                    item.productId.promotionalPrice &&
-                                    formatPrice(
-                                        item.productId &&
-                                            item.productId.promotionalPrice
-                                                .$numberDecimal,
-                                    )}{' '}
-                                VND x {item.count}
-                            </h4>
-                        </div>
-
-                        {item.productId && !item.productId.isActive && (
-                            <Error msg="The product is banned by GoodDeal!" />
-                        )}
-
-                        {item.productId &&
-                            item.productId.isActive &&
-                            !item.productId.isSelling && (
-                                <Error msg="The product is out of business, please remove it from your cart, you can continue with others!" />
-                            )}
-
-                        {item.productId &&
-                            item.productId.isActive &&
-                            item.productId.isSelling &&
-                            item.productId.quantity <= 0 && (
-                                <Error msg="The product is sold out, please remove it from your cart, you can continue with others!" />
-                            )}
-
-                        {item.productId &&
-                            item.productId.isActive &&
-                            item.productId.isSelling &&
-                            item.productId.quantity > 0 &&
-                            item.productId.quantity < item.count && (
-                                <Error
-                                    msg={`Only ${item.productId.quantity} products left, please update the count!`}
-                                />
-                            )}
-                    </div>
-
-                    <div className="d-flex justify-content-between align-items-center my-2">
-                        {item.productId &&
-                            item.productId.isActive &&
-                            item.productId.isSelling &&
-                            item.productId.quantity > 0 && (
-                                <div className="px-2">
-                                    <DropDownMenu
-                                        listItem={
-                                            item.productId &&
-                                            item.productId.quantity &&
-                                            Array.from(
-                                                {
-                                                    length: item.productId
-                                                        .quantity,
-                                                },
-                                                (_, i) => {
-                                                    return {
-                                                        value: i + 1,
-                                                        label: i + 1,
-                                                    };
-                                                },
-                                            )
-                                        }
-                                        resetDefault={false}
-                                        value={item.count}
-                                        setValue={(value) =>
-                                            handleUpdate(value, item)
-                                        }
-                                        borderBtn={true}
-                                    />
-                                </div>
-                            )}
-
-                        <div className="d-inline-block position-relative">
-                            <button
-                                type="button"
-                                className="btn btn-outline-danger ripple cus-tooltip"
-                                onClick={() => handleRemove(item)}
+                    <div className="flex-grow-1 d-flex flex-wrap justify-content-between align-items-center ms-4 res-m-0">
+                        <div className="">
+                            <Link
+                                className="text-reset text-decoration-none link-hover d-block mt-1"
+                                to={`/product/${
+                                    item.productId && item.productId._id
+                                }`}
+                                title={item.productId && item.productId.name}
                             >
-                                <i className="fas fa-trash-alt"></i>
-                            </button>
-                            <small className="cus-tooltip-msg">
-                                Remove from cart
-                            </small>
+                                <h3 className="fs-5">
+                                    {item.productId && item.productId.name}
+                                </h3>
+                            </Link>
+
+                            <div className="mt-2">
+                                {item.styleValueIds &&
+                                    item.styleValueIds.map((value, index) => (
+                                        <p className="fs-6" key={index}>
+                                            {value.styleId &&
+                                                value.styleId.name}
+                                            : {value.name}
+                                        </p>
+                                    ))}
+                            </div>
+
+                            <div className="mt-2">
+                                <p className="text-decoration-line-through text-muted">
+                                    {item.productId &&
+                                        item.productId.price &&
+                                        formatPrice(
+                                            item.productId &&
+                                                item.productId.price
+                                                    .$numberDecimal,
+                                        )}{' '}
+                                    VND
+                                </p>
+
+                                <h4 className="text-primary fs-5">
+                                    {item.productId &&
+                                        item.productId.promotionalPrice &&
+                                        formatPrice(
+                                            item.productId &&
+                                                item.productId.promotionalPrice
+                                                    .$numberDecimal,
+                                        )}{' '}
+                                    VND x {item.count}
+                                </h4>
+                            </div>
+
+                            {item.productId && !item.productId.isActive && (
+                                <Error msg="The product is banned by GoodDeal!" />
+                            )}
+
+                            {item.productId &&
+                                item.productId.isActive &&
+                                !item.productId.isSelling && (
+                                    <Error msg="The product is out of business, please remove it from your cart, you can continue with others!" />
+                                )}
+
+                            {item.productId &&
+                                item.productId.isActive &&
+                                item.productId.isSelling &&
+                                item.productId.quantity <= 0 && (
+                                    <Error msg="The product is sold out, please remove it from your cart, you can continue with others!" />
+                                )}
+
+                            {item.productId &&
+                                item.productId.isActive &&
+                                item.productId.isSelling &&
+                                item.productId.quantity > 0 &&
+                                item.productId.quantity < item.count && (
+                                    <Error
+                                        msg={`Only ${item.productId.quantity} products left, please update the count!`}
+                                    />
+                                )}
+                        </div>
+
+                        <div className="d-flex justify-content-between align-items-center my-2">
+                            {item.productId &&
+                                item.productId.isActive &&
+                                item.productId.isSelling &&
+                                item.productId.quantity > 0 && (
+                                    <div className="me-2">
+                                        <DropDownMenu
+                                            listItem={
+                                                item.productId &&
+                                                item.productId.quantity &&
+                                                Array.from(
+                                                    {
+                                                        length: item.productId
+                                                            .quantity,
+                                                    },
+                                                    (_, i) => {
+                                                        return {
+                                                            value: i + 1,
+                                                            label: i + 1,
+                                                        };
+                                                    },
+                                                )
+                                            }
+                                            resetDefault={false}
+                                            value={item.count}
+                                            setValue={(value) =>
+                                                handleUpdate(value, item)
+                                            }
+                                            borderBtn={true}
+                                        />
+                                    </div>
+                                )}
+
+                            <div className="d-inline-block position-relative">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-danger ripple cus-tooltip"
+                                    onClick={() => handleRemove(item)}
+                                >
+                                    <i className="fas fa-trash-alt"></i>
+                                </button>
+                                <small className="cus-tooltip-msg">
+                                    Remove from cart
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -312,9 +320,9 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                     item.productId.quantity >= item.count,
                 true,
             ) && (
-                <div className="d-flex justify-content-end align-items-center">
+                <div className="d-flex flex-wrap justify-content-end align-items-center mt-4 pt-1 border-top border-primary res-flex-justify-between">
                     {!showCheckoutFlag && (
-                        <>
+                        <div className="d-flex justify-content-end align-items-center">
                             <div className="me-4">
                                 <p className="text-decoration-line-through text-muted">
                                     {formatPrice(totals.totalPrice)} VND
@@ -335,7 +343,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                                     {formatPrice(totals.amountFromUser1)} VND
                                 </h4>
                             </div>
-                        </>
+                        </div>
                     )}
 
                     <button
@@ -353,7 +361,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
             )}
 
             {showCheckoutFlag && (
-                <div className="mx-3 mt-2">
+                <div className="mx-2 mt-2">
                     <CheckoutForm
                         cartId={cartId}
                         userId={userId}

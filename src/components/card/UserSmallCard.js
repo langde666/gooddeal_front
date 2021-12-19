@@ -13,7 +13,11 @@ const UserSmallCard = ({
         }`}
         style={style}
     >
-        <Link className="text-reset text-decoration-none me-2" to={link}>
+        <Link
+            className="text-reset text-decoration-none me-2"
+            title={user.firstname + ' ' + user.lastname}
+            to={link}
+        >
             <img
                 src={`${IMG + user.avatar}`}
                 className="small-card-img"
@@ -21,7 +25,12 @@ const UserSmallCard = ({
             />
         </Link>
 
-        <Link className="text-reset link-hover mt-2" to={link} style={style}>
+        <Link
+            className="text-reset link-hover mt-2"
+            title={user.firstname + ' ' + user.lastname}
+            to={link}
+            style={style}
+        >
             <span className="fs-6 fw-bold">
                 {user.firstname + ' ' + user.lastname}
             </span>

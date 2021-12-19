@@ -16,7 +16,9 @@ const ReviewAndRatingPage = (props) => {
                 className="store-review-and-rating-page"
                 style={{ maxWidth: '990px', margin: '0 auto' }}
             >
-                <ListReviews storeId={store._id} />
+                <div className="mt-4">
+                    <ListReviews storeId={store._id} heading={false} />
+                </div>
             </div>
         </StoreLayout>
     );

@@ -6,7 +6,12 @@ import Pagination from '../ui/Pagination';
 import ReviewInfo from '../info/ReviewInfo';
 import StarRating from '../label/StarRating';
 
-const ListReviews = ({ productId = '', storeId = '', userId = '' }) => {
+const ListReviews = ({
+    productId = '',
+    storeId = '',
+    userId = '',
+    heading = 'Reviews & Rating',
+}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [run, setRun] = useState(true);
@@ -122,17 +127,19 @@ const ListReviews = ({ productId = '', storeId = '', userId = '' }) => {
     };
 
     return (
-        <div className="position-relative">
-            <h4 className="mb-3">Reviews & Rating</h4>
+        <div className="container-fluid position-relative">
+            {heading && <h4 className="mb-3">{heading}</h4>}
 
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="d-flex justify-content-start align-items-center">
+                <div className="d-flex flex-wrap justify-content-start align-items-center">
                     {renderFilterRating()}
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
             <div className="row mt-2">

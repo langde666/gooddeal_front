@@ -5,8 +5,8 @@ import Error from '../ui/Error';
 import ProductCard from '../card/ProductCard';
 
 const ListProductsByStore = ({
-    heading = '',
-    col = 'col',
+    heading = 'Best seller',
+    col = 'col-xl-2-5 col-md-3 col-sm-4 col-6',
     storeId = '',
     sortBy = 'sold',
     limit = '5',

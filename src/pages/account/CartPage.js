@@ -40,8 +40,8 @@ const AddressesPage = (props) => {
     }, [run]);
 
     return (
-        <MainLayout container="container" navFor="user">
-            <div className="cart-page position-relave">
+        <MainLayout>
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error ? (
                     <Error msg={error} />
@@ -71,7 +71,7 @@ const AddressesPage = (props) => {
                                     className="accordion-collapse collapse show"
                                     aria-labelledby={`panelsStayOpen-collapse-${index}`}
                                 >
-                                    <div className="accordion-body">
+                                    <div className="accordion-body px-2">
                                         {cart.storeId &&
                                             !cart.storeId.isActive && (
                                                 <Error msg="This store is banned by GoodDeal!" />

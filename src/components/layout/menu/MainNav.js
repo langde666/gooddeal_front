@@ -184,7 +184,12 @@ const MainNav = ({ navFor = 'user' }) => {
                                     className="offcanvas-title me-5"
                                     id="offcanvasNavbarMainNavLabel"
                                 >
-                                    <Logo />
+                                    <Link
+                                        className="text-decoration-none"
+                                        to="/"
+                                    >
+                                        <Logo />
+                                    </Link>
                                 </h5>
                                 <button
                                     type="button"

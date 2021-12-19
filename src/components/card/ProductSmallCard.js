@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const ProductSmallCard = ({ product = {}, bodername = false }) => (
+const ProductSmallCard = ({ product = {}, bodername = false, style = {} }) => (
     <span
         className={`d-inline-flex align-items-center ${
             bodername && 'bg-body shadow'
         }`}
+        style={style}
     >
         <Link
             className="text-reset text-decoration-none me-2"
@@ -19,8 +20,9 @@ const ProductSmallCard = ({ product = {}, bodername = false }) => (
         </Link>
 
         <Link
-            className="text-reset text-decoration-none link-hover mt-2"
+            className="text-reset link-hover mt-2"
             to={`/product/${product._id}`}
+            style={style}
         >
             <span className="fs-6 fw-bold">{product.name}</span>
         </Link>

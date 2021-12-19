@@ -17,6 +17,22 @@
     .cus-avatar-name {
         bottom: -6%;
     }
+
+    .cus-tooltip:hover ~ .cus-tooltip-msg {
+        display: none !important;
+    }
+
+    .res-flex-column {
+        flex-direction: column !important;
+    }
+
+    .res-m-0 {
+        margin: 0 !important;
+    }
+
+    .res-flex-justify-between {
+        justify-content: space-between !important;
+    }
 }
 
 @media (min-width: 576px) {
@@ -30,6 +46,14 @@
 
     .res-dis-md {
         display: block !important;
+    }
+
+    .res-searchbar-md {
+        width: calc(100% - 100px);
+    }
+
+    .res-flex-reverse-md {
+        flex-direction: column-reverse !important;
     }
 }
 
@@ -49,6 +73,8 @@
     .res-d-flex-end-lg {
         display: flex !important;
         justify-content: end !important;
+        align-items: center;
+        flex-wrap: nowrap;
     }
 }
 

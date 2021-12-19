@@ -36,7 +36,7 @@ const UserNav = ({ user = {} }) => {
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${
-                                    path == 'about' ? 'active' : ''
+                                    path === 'about' ? 'active' : ''
                                 }`}
                                 to={`/user/about/${user._id}`}
                             >
@@ -77,10 +77,22 @@ const UserNav = ({ user = {} }) => {
 
                     <div className="offcanvas-body">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item p-2 pt-0">
+                            <li className="nav-item">
                                 <Link
                                     className={`nav-link ${
-                                        path == 'about' ? 'active' : ''
+                                        path === user._id ? 'active' : ''
+                                    }`}
+                                    to={`/user/${user._id}`}
+                                >
+                                    <i className="fas fa-user-friends me-2"></i>
+                                    User
+                                </Link>
+                            </li>
+
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        path === 'about' ? 'active' : ''
                                     }`}
                                     to={`/user/about/${user._id}`}
                                 >

@@ -14,30 +14,22 @@ const HomePage = (props) => {
     ) : (
         <StoreLayout store={store}>
             <div className="store-home-page">
-                <div className="mt-2">
+                <div className="mb-4">
                     <Carousel
                         listImages={store.featured_images}
                         alt={store.name}
                     />
                 </div>
 
-                <div className="mt-5">
-                    <ListProductsByStore
-                        heading="Best seller"
-                        storeId={store._id}
-                        sortBy="sold"
-                        col="col"
-                        limit="5"
-                    />
+                <div className="mb-4">
+                    <ListProductsByStore storeId={store._id} />
                 </div>
 
-                <div className="mt-4">
+                <div className="mb-4">
                     <ListProductsByStore
                         heading="New products"
                         storeId={store._id}
                         sortBy="createdAt"
-                        col="col"
-                        limit="5"
                     />
                 </div>
             </div>

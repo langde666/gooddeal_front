@@ -54,7 +54,7 @@ const ReviewInfo = ({ review = {}, about = true, onRun }) => {
             )}
 
             <div className="col-12 mx-2 d-flex justify-content-between align-items-center">
-                <div className="d-flex justify-content-start align-items-center">
+                <div className="d-flex justify-content-start align-items-center flex-grown-1">
                     <UserSmallCard user={review.userId} />
                     {about && (
                         <>
@@ -67,18 +67,18 @@ const ReviewInfo = ({ review = {}, about = true, onRun }) => {
                 {getToken() &&
                     review.userId &&
                     getToken()._id === review.userId._id && (
-                        <div className="d-flex justify-content-start align-items-center">
-                            <div className="me-1">
+                        <div className="d-flex justify-content-end flex-wrap me-2">
+                            <div className="mb-1">
                                 <EditReviewItem
                                     oldReview={review}
                                     onRun={onRun}
                                 />
                             </div>
 
-                            <div className="d-inline-block position-relative">
+                            <div className="d-inline-block position-relative ms-1">
                                 <button
                                     type="button"
-                                    className="btn btn-outline-danger btn-sm ripple me-2 cus-tooltip"
+                                    className="btn btn-outline-danger btn-sm ripple cus-tooltip"
                                     onClick={handleRemove}
                                 >
                                     <i className="fas fa-trash-alt"></i>

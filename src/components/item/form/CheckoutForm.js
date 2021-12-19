@@ -217,220 +217,213 @@ const CheckoutForm = ({
                     </p>
                 </div>
 
-                <div className="row">
-                    <div className="col-8">
-                        <div className="row">
-                            <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
-                                <div className="flex-grow-1">
-                                    <Input
-                                        type="text"
-                                        label="Phone"
-                                        value={order.phone}
-                                        isValid={order.isValidPhone}
-                                        feedback="Please provide a valid shop name."
-                                        validator="phone"
-                                        onChange={(value) =>
-                                            handleChange(
-                                                'phone',
-                                                'isValidPhone',
-                                                value,
-                                            )
-                                        }
-                                        onValidate={(flag) =>
-                                            handleValidate('isValidPhone', flag)
-                                        }
-                                    />
-                                </div>
-
-                                <div className="d-inline-block position-relative ms-4">
-                                    <div className="d-inline-block cus-tooltip">
-                                        <button
-                                            className="btn btn-primary ripple"
-                                            type="button"
-                                            disabled={!!!phone}
-                                            onClick={() =>
-                                                setOrder({
-                                                    ...order,
-                                                    phone: phone,
-                                                    isValidPhone: true,
-                                                })
-                                            }
-                                        >
-                                            <i className="fas fa-phone-square-alt"></i>
-                                        </button>
-                                    </div>
-                                    <small className="cus-tooltip-msg">
-                                        Use registered phone number
-                                    </small>
-                                </div>
+                <div className="col-12">
+                    <div className="row">
+                        <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
+                            <div className="flex-grow-1">
+                                <Input
+                                    type="text"
+                                    label="Phone"
+                                    value={order.phone}
+                                    isValid={order.isValidPhone}
+                                    feedback="Please provide a valid shop name."
+                                    validator="phone"
+                                    onChange={(value) =>
+                                        handleChange(
+                                            'phone',
+                                            'isValidPhone',
+                                            value,
+                                        )
+                                    }
+                                    onValidate={(flag) =>
+                                        handleValidate('isValidPhone', flag)
+                                    }
+                                />
                             </div>
 
-                            <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
-                                <div className="flex-grow-1">
-                                    <DropDownMenu
-                                        listItem={
-                                            addresses &&
-                                            addresses.map((a, i) => {
-                                                const newA = {
-                                                    value: a,
-                                                    label: a,
-                                                };
-                                                return newA;
-                                            })
-                                        }
-                                        value={order.address}
-                                        setValue={(address) =>
+                            <div className="d-inline-block position-relative ms-4">
+                                <div className="d-inline-block cus-tooltip">
+                                    <button
+                                        className="btn btn-primary ripple"
+                                        type="button"
+                                        disabled={!!!phone}
+                                        onClick={() =>
                                             setOrder({
                                                 ...order,
-                                                address: address,
+                                                phone: phone,
+                                                isValidPhone: true,
                                             })
                                         }
-                                        size="large"
-                                        label="Address"
-                                    />
-                                    {addresses && addresses.length <= 0 && (
-                                        <small
-                                            style={{
-                                                marginTop: '-20px',
-                                                display: 'block',
-                                            }}
-                                        >
-                                            <Error msg="No address to choose, please add your address first!" />
-                                        </small>
-                                    )}
+                                    >
+                                        <i className="fas fa-phone-square-alt"></i>
+                                    </button>
                                 </div>
-                                <div className="mb-2 ms-4">
-                                    <UserAddAddressItem
-                                        count={addresses && addresses.length}
-                                        detail={false}
-                                    />
-                                </div>
+                                <small className="cus-tooltip-msg">
+                                    Use registered phone number
+                                </small>
                             </div>
+                        </div>
 
-                            <div className="col-12 mt-2">
-                                {error1 && <Error msg={error1} />}
-                                {!error1 && (
-                                    <DropDownMenu
-                                        listItem={
-                                            deliveries &&
-                                            deliveries.map((d, i) => {
-                                                const newD = {
-                                                    value: d,
-                                                    label:
-                                                        d.name +
-                                                        ' (' +
-                                                        d.price.$numberDecimal +
-                                                        ' VND)',
-                                                };
-                                                return newD;
-                                            })
-                                        }
-                                        value={order.delivery}
-                                        setValue={(delivery) => {
-                                            const {
-                                                deliveryPrice,
-                                                amountFromUser2,
-                                            } = totalDelivery(
-                                                delivery,
-                                                userLevel,
-                                            );
-                                            setOrder({
-                                                ...order,
-                                                delivery,
-                                                deliveryId: delivery._id,
-                                                deliveryPrice,
-                                                amountFromUser2,
-                                                amountFromUser:
-                                                    order.amountFromUser1 +
-                                                    amountFromUser2,
-                                                amountToGD:
-                                                    order.amountFromUser1 +
-                                                    amountFromUser2 -
-                                                    order.amountToStore,
-                                            });
+                        <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
+                            <div className="flex-grow-1">
+                                <DropDownMenu
+                                    listItem={
+                                        addresses &&
+                                        addresses.map((a, i) => {
+                                            const newA = {
+                                                value: a,
+                                                label: a,
+                                            };
+                                            return newA;
+                                        })
+                                    }
+                                    value={order.address}
+                                    setValue={(address) =>
+                                        setOrder({
+                                            ...order,
+                                            address: address,
+                                        })
+                                    }
+                                    size="large"
+                                    label="Address"
+                                />
+                                {addresses && addresses.length <= 0 && (
+                                    <small
+                                        style={{
+                                            marginTop: '-20px',
+                                            display: 'block',
                                         }}
-                                        size="large"
-                                        label="Delivery unit"
-                                    />
+                                    >
+                                        <Error msg="No address to choose, please add your address first!" />
+                                    </small>
                                 )}
                             </div>
+                            <div className="mb-2 ms-4">
+                                <UserAddAddressItem
+                                    count={addresses && addresses.length}
+                                    detail={false}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="col-12 mt-2">
+                            {error1 && <Error msg={error1} />}
+                            {!error1 && (
+                                <DropDownMenu
+                                    listItem={
+                                        deliveries &&
+                                        deliveries.map((d, i) => {
+                                            const newD = {
+                                                value: d,
+                                                label:
+                                                    d.name +
+                                                    ' (' +
+                                                    d.price.$numberDecimal +
+                                                    ' VND)',
+                                            };
+                                            return newD;
+                                        })
+                                    }
+                                    value={order.delivery}
+                                    setValue={(delivery) => {
+                                        const {
+                                            deliveryPrice,
+                                            amountFromUser2,
+                                        } = totalDelivery(delivery, userLevel);
+                                        setOrder({
+                                            ...order,
+                                            delivery,
+                                            deliveryId: delivery._id,
+                                            deliveryPrice,
+                                            amountFromUser2,
+                                            amountFromUser:
+                                                order.amountFromUser1 +
+                                                amountFromUser2,
+                                            amountToGD:
+                                                order.amountFromUser1 +
+                                                amountFromUser2 -
+                                                order.amountToStore,
+                                        });
+                                    }}
+                                    size="large"
+                                    label="Delivery unit"
+                                />
+                            )}
                         </div>
                     </div>
+                </div>
 
-                    <div className="col-4 my-4 border-start border-primary">
-                        <dl className="row">
-                            <dt className="col-3">Product's total</dt>
-                            <dd className="col-9 d-flex justify-content-between align-items-end">
-                                <div>
-                                    <p className="text-decoration-line-through text-muted">
-                                        {formatPrice(order.totalPrice)} VND
-                                    </p>
+                <div className="col-12 d-flex flex-column align-items-end">
+                    <dl className="row">
+                        <dt className="col-3">Product's total</dt>
+                        <dd className="col-9 d-flex justify-content-between align-items-end">
+                            <div>
+                                <p className="text-decoration-line-through text-muted">
+                                    {formatPrice(order.totalPrice)} VND
+                                </p>
 
-                                    <h4 className="text-decoration-line-through text-primary fs-5">
-                                        {formatPrice(
-                                            order.totalPromotionalPrice,
-                                        )}{' '}
-                                        VND
-                                    </h4>
-                                </div>
-
-                                <div className="ms-4">
-                                    <small>
-                                        <UserLevelLabel level={userLevel} />
-                                    </small>
-
-                                    <h4 className="text-primary fs-5">
-                                        {formatPrice(order.amountFromUser1)} VND
-                                    </h4>
-                                </div>
-                            </dd>
-                        </dl>
-
-                        <dl className="row">
-                            <dt className="col-3">Delivery's total</dt>
-                            <dd className="col-9 d-flex justify-content-between align-items-end">
-                                <div>
-                                    <h4 className="text-decoration-line-through text-primary fs-5">
-                                        {formatPrice(order.deliveryPrice)} VND
-                                    </h4>
-                                </div>
-
-                                <div className="ms-4">
-                                    <small>
-                                        <UserLevelLabel level={userLevel} />
-                                    </small>
-
-                                    <h4 className="text-primary fs-5">
-                                        {formatPrice(order.amountFromUser2)} VND
-                                    </h4>
-                                </div>
-                            </dd>
-                        </dl>
-
-                        <dl className="row">
-                            <dt className="col-3">Final total</dt>
-                            <dd className="col-9 d-flex justify-content-between align-items-end">
-                                <h4 className="text-primary fs-5">
-                                    {formatPrice(order.amountFromUser)} VND
+                                <h4 className="text-decoration-line-through text-primary fs-5">
+                                    {formatPrice(order.totalPromotionalPrice)}{' '}
+                                    VND
                                 </h4>
-                            </dd>
-                        </dl>
-
-                        {error && (
-                            <div className="col-12">
-                                <Error msg={error} />
                             </div>
-                        )}
 
+                            <div className="ms-4">
+                                <small>
+                                    <UserLevelLabel level={userLevel} />
+                                </small>
+
+                                <h4 className="text-primary fs-5">
+                                    {formatPrice(order.amountFromUser1)} VND
+                                </h4>
+                            </div>
+                        </dd>
+                    </dl>
+
+                    <dl className="row">
+                        <dt className="col-3">Delivery's total</dt>
+                        <dd className="col-9 d-flex justify-content-between align-items-end">
+                            <div>
+                                <h4 className="text-decoration-line-through text-primary fs-5">
+                                    {formatPrice(order.deliveryPrice)} VND
+                                </h4>
+                            </div>
+
+                            <div className="ms-4">
+                                <small>
+                                    <UserLevelLabel level={userLevel} />
+                                </small>
+
+                                <h4 className="text-primary fs-5">
+                                    {formatPrice(order.amountFromUser2)} VND
+                                </h4>
+                            </div>
+                        </dd>
+                    </dl>
+
+                    <dl className="row">
+                        <dt className="col-3">Final total</dt>
+                        <dd className="col-9 d-flex justify-content-between align-items-end">
+                            <h4 className="text-primary fs-5">
+                                {formatPrice(order.amountFromUser)} VND
+                            </h4>
+                        </dd>
+                    </dl>
+
+                    {error && (
                         <div className="col-12">
-                            <button
-                                type="submit"
-                                className="btn btn-primary ripple w-100"
-                                onClick={handleSubmit}
-                            >
-                                Only order
-                            </button>
+                            <Error msg={error} />
                         </div>
+                    )}
+
+                    <div className="col-12">
+                        <button
+                            type="submit"
+                            className="btn btn-primary ripple w-100"
+                            onClick={handleSubmit}
+                        >
+                            Only order
+                        </button>
                     </div>
                 </div>
             </form>

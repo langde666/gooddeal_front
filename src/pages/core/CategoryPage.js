@@ -31,7 +31,7 @@ const CategoryPage = (props) => {
         maxPrice: '',
         sortBy: 'sold',
         order: 'desc',
-        limit: 8,
+        limit: 10,
         page: 1,
     });
 
@@ -90,86 +90,75 @@ const CategoryPage = (props) => {
     };
 
     return (
-        <MainLayout container="container" navFor="user">
-            <div className="product-search-page">
-                <div className="row flex-nowrap">
-                    <div className="col-3">
-                        <ProductFilter filter={filter} setFilter={setFilter} />
-                    </div>
+        <MainLayout>
+            <div className="position-relative">
+                {isloading && <Loading />}
+                {error && <Error msg={error} />}
 
-                    <div className="col-9 position-relative">
-                        {isloading && <Loading />}
-                        {error && <Error msg={error} />}
-
-                        {
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    {category.categoryId &&
-                                        category.categoryId.categoryId && (
-                                            <Link
-                                                to={`/category/${category.categoryId.categoryId._id}`}
-                                                className="breadcrumb-item"
-                                            >
-                                                {
-                                                    category.categoryId
-                                                        .categoryId.name
-                                                }
-                                            </Link>
-                                        )}
-
-                                    {category.categoryId && (
-                                        <Link
-                                            to={`/category/${category.categoryId._id}`}
-                                            className="breadcrumb-item"
-                                        >
-                                            {category.categoryId.name}
-                                        </Link>
-                                    )}
-
-                                    {category && (
-                                        <Link
-                                            to={`/category/${category._id}`}
-                                            className="breadcrumb-item active"
-                                        >
-                                            {category.name}
-                                        </Link>
-                                    )}
-                                </ol>
-                            </nav>
-                        }
-
-                        <div className="mb-4">
-                            <ListCategories
-                                hasBreadcrumb={true}
-                                categoryId={categoryId}
-                                heading={false}
-                                col="col-3"
-                            />
-                        </div>
-
-                        <div className="d-flex justify-content-end">
-                            <span className="me-3">
-                                {pagination.size || 0} results
-                            </span>
-                        </div>
-
-                        <div className="product-search-list row mt-3">
-                            {listProducts &&
-                                listProducts.map((product, index) => (
-                                    <div className="col-3 mb-4" key={index}>
-                                        <ProductCard product={product} />
-                                    </div>
-                                ))}
-                        </div>
-
-                        {pagination.size != 0 && (
-                            <Pagination
-                                pagination={pagination}
-                                onChangePage={handleChangePage}
-                            />
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {category.categoryId && category.categoryId.categoryId && (
+                            <Link
+                                to={`/category/${category.categoryId.categoryId._id}`}
+                                className="breadcrumb-item"
+                            >
+                                {category.categoryId.categoryId.name}
+                            </Link>
                         )}
-                    </div>
+
+                        {category.categoryId && (
+                            <Link
+                                to={`/category/${category.categoryId._id}`}
+                                className="breadcrumb-item"
+                            >
+                                {category.categoryId.name}
+                            </Link>
+                        )}
+
+                        {category && (
+                            <Link
+                                to={`/category/${category._id}`}
+                                className="breadcrumb-item active"
+                            >
+                                {category.name}
+                            </Link>
+                        )}
+                    </ol>
+                </nav>
+
+                <div className="mb-4">
+                    <ListCategories
+                        hasBreadcrumb={true}
+                        categoryId={categoryId}
+                        heading={false}
+                    />
                 </div>
+
+                <div className="d-flex justify-content-between align-items-end">
+                    <ProductFilter filter={filter} setFilter={setFilter} />
+                    <span className="me-3 text-nowrap">
+                        {pagination.size || 0} results
+                    </span>
+                </div>
+
+                <div className="product-search-list row mt-3">
+                    {listProducts &&
+                        listProducts.map((product, index) => (
+                            <div
+                                className="col-xl-2-5 col-md-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
+                                <ProductCard product={product} />
+                            </div>
+                        ))}
+                </div>
+
+                {pagination.size != 0 && (
+                    <Pagination
+                        pagination={pagination}
+                        onChangePage={handleChangePage}
+                    />
+                )}
             </div>
         </MainLayout>
     );

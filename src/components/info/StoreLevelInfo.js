@@ -2,9 +2,15 @@ import StoreLevelLabel from '../label/StoreLevelLabel';
 import StarRating from '../label/StarRating';
 import Paragraph from '../ui/Paragraph';
 
-const StoreLevelInfo = ({ store = {} }) => (
+const StoreLevelInfo = ({ store = {}, border = true }) => (
     <div className="container-fluid">
-        <div className="row bg-body shadow rounded-3">
+        <div
+            className={
+                border
+                    ? 'row bg-body shadow rounded-3'
+                    : 'row py-2 border border-primary rounded-3'
+            }
+        >
             <div className="col-sm-6">
                 <Paragraph
                     label="Point"

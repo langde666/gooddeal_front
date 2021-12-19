@@ -4,6 +4,7 @@ import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
 import StoreSearchBar from './StoreSearchBar';
 import StoreInit from '../../init/StoreInit';
 import FollowStoreButton from '../../button/FollowStoreButton';
+import StoreSmallCard from '../../card/StoreSmallCard';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -17,12 +18,12 @@ const StoreNav = ({ store = {} }) => {
 
     return (
         <nav
-            className="store-nav navbar sticky-topnav navbar-expand navbar-light px-2 bg-body shadow rounded-bottom"
+            className="store-nav navbar sticky-topnav navbar-expand-md navbar-light bg-body shadow rounded-bottom"
             style={{ maxWidth: '990px', margin: '0 auto' }}
         >
-            <div className="container-fluid p-0">
+            <div className="container-fluid res-d-flex-end-lg">
                 <Link
-                    className="navbar-brand m-0 p-0"
+                    className="navbar-brand res-hide-md"
                     to={`/store/${store._id}`}
                 >
                     <StoreInit />
@@ -33,7 +34,7 @@ const StoreNav = ({ store = {} }) => {
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${
-                                    path == 'collection' ? 'active' : ''
+                                    path === 'collection' ? 'active' : ''
                                 }`}
                                 to={`/store/collection/${store._id}`}
                             >
@@ -43,7 +44,7 @@ const StoreNav = ({ store = {} }) => {
                         {/* <li className="nav-item">
                             <Link
                                 className={`nav-link ${
-                                    path == 'gift' ? 'active' : ''
+                                    path === 'gift' ? 'active' : ''
                                 }`}
                                 to={`/store/gift/${store._id}`}
                             >
@@ -53,17 +54,22 @@ const StoreNav = ({ store = {} }) => {
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${
-                                    path == 'review&rating' ? 'active' : ''
+                                    path === 'review&rating' ? 'active' : ''
                                 }`}
                                 to={`/store/review&rating/${store._id}`}
                             >
-                                Review & Rating
+                                <span className="res-hide-lg">
+                                    Review & Rating
+                                </span>
+                                <span className="d-none res-dis-lg">
+                                    Review
+                                </span>
                             </Link>
                         </li>
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${
-                                    path == 'about' ? 'active' : ''
+                                    path === 'about' ? 'active' : ''
                                 }`}
                                 to={`/store/about/${store._id}`}
                             >
@@ -71,20 +77,108 @@ const StoreNav = ({ store = {} }) => {
                             </Link>
                         </li>
                     </ul>
+                </div>
 
-                    <div className="d-inline-block">
-                        <StoreSearchBar storeId={store._id} />
+                <div className="d-inline-block res-searchbar-md">
+                    <StoreSearchBar storeId={store._id} />
+                </div>
+
+                {getToken() && (
+                    <div className="d-inline-block ms-2">
+                        <FollowStoreButton
+                            storeId={store._id}
+                            isFollowing={store.isFollowing}
+                            onRun={(store) => onHandleRun(store)}
+                        />
+                    </div>
+                )}
+
+                <button
+                    className="btn btn-outline-light cus-outline ripple ms-2 d-none res-dis-md"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbarStoreNav"
+                    aria-controls="offcanvasNavbarStoreNav"
+                >
+                    <i className="fas fa-bars"></i>
+                </button>
+
+                <div
+                    className="offcanvas offcanvas-end d-none res-dis-md"
+                    tabIndex="-1"
+                    id="offcanvasNavbarStoreNav"
+                    aria-labelledby="offcanvasNavbarStoreNavLabel"
+                    style={{
+                        flexGrow: 'unset',
+                        width: 'unset',
+                        marginTop: 'var(--header-height)',
+                    }}
+                >
+                    <div className="offcanvas-header border-bottom">
+                        <h5
+                            className="offcanvas-title me-5"
+                            id="offcanvasNavbarStoreNavLabel"
+                        >
+                            <StoreSmallCard
+                                store={store}
+                                link={`/store/${store._id}`}
+                            />
+                        </h5>
+                        <button
+                            type="button"
+                            className="btn-close text-reset"
+                            data-bs-dismiss="offcanvas"
+                            aria-label="Close"
+                        ></button>
                     </div>
 
-                    {getToken() && (
-                        <div className="d-inline-block ms-2">
-                            <FollowStoreButton
-                                storeId={store._id}
-                                isFollowing={store.isFollowing}
-                                onRun={(store) => onHandleRun(store)}
-                            />
-                        </div>
-                    )}
+                    <div className="offcanvas-body">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        path === store._id ? 'active' : ''
+                                    }`}
+                                    to={`/store/${store._id}`}
+                                >
+                                    <i className="fas fa-store me-2"></i>Store
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        path === 'collection' ? 'active' : ''
+                                    }`}
+                                    to={`/store/collection/${store._id}`}
+                                >
+                                    <i className="fas fa-box me-2"></i>
+                                    Collection
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        path === 'review&rating' ? 'active' : ''
+                                    }`}
+                                    to={`/store/review&rating/${store._id}`}
+                                >
+                                    <i className="fas fa-comment-dots me-2"></i>
+                                    Review & Rating
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link
+                                    className={`nav-link ${
+                                        path === 'about' ? 'active' : ''
+                                    }`}
+                                    to={`/store/about/${store._id}`}
+                                >
+                                    <i className="fas fa-info-circle me-2"></i>
+                                    About
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>

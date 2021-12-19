@@ -14,6 +14,11 @@
     --danger-color: #dc3545;
 }
 
+body {
+    overflow: auto !important;
+    padding-right: 0 !important;
+}
+
 /* boostrap */
 .card {
     max-width: 240px !important;
@@ -737,6 +742,11 @@ header {
 .cus-cover-img.cus-cover-img--boder {
     border: 4px solid var(--white-color);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+}
+
+.nolink {
+    text-decoration: none !important;
+    cursor: unset;
 }
 
 .link-hover {
