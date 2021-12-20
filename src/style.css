@@ -987,6 +987,7 @@ header {
     background-color: var(--white-color);
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);
     cursor: pointer;
+    z-index: 1;
 }
 
 .cus-avatar-icon.cus-avatar-icon--rm {
@@ -1160,4 +1161,63 @@ textarea {
 .cus-rating span.checked ~ span label i {
     color: #ffd700 !important;
     /* transition: color 0.3s ease-in; */
+}
+
+/* table-scroll */
+.table-scroll {
+    border-right: 1px solid skyblue;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: auto;
+    overflow: auto;
+    height: 100%;
+    white-space: nowrap;
+}
+.table-scroll table {
+    width: 100%;
+    min-width: 960px;
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-scroll th,
+.table-scroll td {
+    padding: 5px 10px;
+    border: 1px solid #f8f8f8;
+    background: #fff;
+    vertical-align: top;
+    z-index: 1;
+}
+.table-scroll thead th {
+    background: lightskyblue;
+    color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+/* safari and ios need the tfoot itself to be position:sticky also */
+.table-scroll tfoot,
+.table-scroll tfoot th,
+.table-scroll tfoot td {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    background: lightskyblue;
+    color: #fff;
+    z-index: 4;
+}
+
+th:first-child {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: lightskyblue;
+    color: #fff;
+}
+thead th:first-child,
+tfoot th:first-child {
+    z-index: 5;
 }

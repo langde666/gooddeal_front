@@ -27,7 +27,7 @@ const SortByButton = ({
 
     return (
         <span
-            className="sort-by-button btn btn-sm text-nowrap"
+            className="sort-by-button btn btn-sm text-nowrap text-white"
             onClick={handleClick}
             style={{ cursor: 'pointer' }}
         >

@@ -12,7 +12,7 @@ const UserAddAddressItem = ({ count = 0, detail = true }) => (
                 data-bs-target="#add-address-form"
             >
                 <i className="fas fa-plus-circle"></i>
-                {detail && <span className="ms-2">New address</span>}
+                {detail && <span className="ms-2 res-hide">New address</span>}
             </button>
 
             {count < 6 && (

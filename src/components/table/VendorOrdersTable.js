@@ -87,7 +87,7 @@ const StoreOrdersTable = ({
     };
 
     return (
-        <div className="orders-manager-table-wrap position-relative">
+        <div className="position-relative">
             {heading && isEditable ? (
                 <h4>Processing Orders</h4>
             ) : (
@@ -97,10 +97,12 @@ const StoreOrdersTable = ({
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-end align-items-end">
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="orders-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
+            <table className="table align-middle table-hover table-bordered mt-2 table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

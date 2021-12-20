@@ -69,7 +69,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
     };
 
     return (
-        <div className="addresses-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -92,68 +92,70 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
                         count={(addresses && addresses.length) || 0}
                     />
                 </div>
-                <span className="me-2">
+                <span className="me-2 text-nowrap res-hide">
                     {(addresses && addresses.length) || 0} results
                 </span>
             </div>
 
-            <table className="addresses-table table align-middle table-hover mt-2 text-center table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Address</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {addresses &&
-                        addresses.map((address, index) => (
-                            <tr key={index}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{address}</td>
-                                <td>
-                                    <div className="position-relative d-inline-block me-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edit-address-form"
-                                            onClick={() =>
-                                                handleEditAddress(
-                                                    address,
-                                                    index,
-                                                )
-                                            }
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Edit Address
-                                        </small>
-                                    </div>
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Address</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {addresses &&
+                            addresses.map((address, index) => (
+                                <tr key={index}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{address}</td>
+                                    <td>
+                                        <div className="position-relative d-inline-block me-2">
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary ripple cus-tooltip"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#edit-address-form"
+                                                onClick={() =>
+                                                    handleEditAddress(
+                                                        address,
+                                                        index,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-pen"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Edit Address
+                                            </small>
+                                        </div>
 
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveAddress(
-                                                    address,
-                                                    index,
-                                                )
-                                            }
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove address
-                                        </small>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                </tbody>
-            </table>
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemoveAddress(
+                                                        address,
+                                                        index,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove address
+                                            </small>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Modal
                 id="edit-address-form"

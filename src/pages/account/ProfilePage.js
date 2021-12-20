@@ -27,7 +27,7 @@ const ProfilePage = (props) => {
                             isEditable="user"
                         />
                     </div>
-                    <div className="level-group-absolute level-group-absolute--small">
+                    <div className="level-group-absolute level-group-absolute--small res-hide">
                         <UserLevelInfo user={user} />
                     </div>
                 </div>

@@ -95,14 +95,14 @@ const UserStoresTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="store-manager-table-wrap position-relative">
+        <div className="position-relative">
             {heading && <h4 className="mb-3">Your shops</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
+                <div className="d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
                         <Link
@@ -110,140 +110,149 @@ const UserStoresTable = ({ heading = true }) => {
                             className="btn btn-primary ripple text-nowrap"
                             to="/account/shopManager/createNewShop"
                         >
-                            <i className="fas fa-plus-circle me-2"></i>New shop
+                            <i className="fas fa-plus-circle"></i>
+                            <span className="ms-2 res-hide">New shop</span>
                         </Link>
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="store-manager-table table align-middle table-hover mt-2 table-sm text-center table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="#"
-                                sortBy="point"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Shop"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Role"
-                                sortBy="ownerId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="License"
-                                sortBy="isActive"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isOpen"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {stores.map((store, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-sm text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <SortByButton
+                                    currentSortBy={filter.sortBy}
+                                    title="#"
+                                    sortBy="point"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td className="text-start ps-4">
-                                <small>
-                                    <StoreSmallCard store={store} />
-                                </small>
-                            </td>
-                            <td className="text-start ps-5">
-                                <small>
-                                    <ManagerRoleLabel
-                                        role={
-                                            _id == store.ownerId._id
-                                                ? 'owner'
-                                                : 'staff'
-                                        }
-                                    />
-                                </small>
-                            </td>
-                            <td className="text-start ps-5">
-                                <small>
-                                    <StoreLicenseLabel
-                                        isActive={store.isActive}
-                                    />
-                                </small>
-                            </td>
-                            <td className="text-start ps-5">
-                                <small>
-                                    <StoreStatusLabel isOpen={store.isOpen} />
-                                </small>
-                            </td>
-                            <td>
-                                <div className="position-relative d-inline-block me-2">
-                                    <div className="cus-tooltip d-inline-block text-start">
-                                        <OpenCloseStoreButton
-                                            storeId={store._id}
-                                            isOpen={store.isOpen}
-                                            detail={false}
-                                            onRun={(store) =>
-                                                onHandleRun(store)
+                            <th scope="col">
+                                <SortByButton
+                                    currentSortBy={filter.sortBy}
+                                    title="Shop"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentSortBy={filter.sortBy}
+                                    title="Role"
+                                    sortBy="ownerId"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentSortBy={filter.sortBy}
+                                    title="License"
+                                    sortBy="isActive"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isOpen"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stores.map((store, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td className="text-start ps-4">
+                                    <small>
+                                        <StoreSmallCard store={store} />
+                                    </small>
+                                </td>
+                                <td className="text-start ps-5">
+                                    <small>
+                                        <ManagerRoleLabel
+                                            role={
+                                                _id == store.ownerId._id
+                                                    ? 'owner'
+                                                    : 'staff'
                                             }
                                         />
-                                    </div>
+                                    </small>
+                                </td>
+                                <td className="text-start ps-5">
+                                    <small>
+                                        <StoreLicenseLabel
+                                            isActive={store.isActive}
+                                        />
+                                    </small>
+                                </td>
+                                <td className="text-start ps-5">
+                                    <small>
+                                        <StoreStatusLabel
+                                            isOpen={store.isOpen}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <div className="position-relative d-inline-block me-2">
+                                        <div className="cus-tooltip d-inline-block text-start">
+                                            <OpenCloseStoreButton
+                                                storeId={store._id}
+                                                isOpen={store.isOpen}
+                                                detail={false}
+                                                onRun={(store) =>
+                                                    onHandleRun(store)
+                                                }
+                                            />
+                                        </div>
 
-                                    <small className="cus-tooltip-msg">
-                                        {store.isOpen
-                                            ? 'Click to close shop'
-                                            : 'Click to open shop'}
-                                    </small>
-                                </div>
-                                <div className="position-relative d-inline-block">
-                                    <Link
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        to={`/vendor/${store._id}`}
-                                    >
-                                        <i className="fas fa-user-tie"></i>
-                                    </Link>
-                                    <small className="cus-tooltip-msg">
-                                        Go to dashboard
-                                    </small>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                                        <small className="cus-tooltip-msg">
+                                            {store.isOpen
+                                                ? 'Click to close shop'
+                                                : 'Click to open shop'}
+                                        </small>
+                                    </div>
+                                    <div className="position-relative d-inline-block">
+                                        <Link
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            to={`/vendor/${store._id}`}
+                                        >
+                                            <i className="fas fa-user-tie"></i>
+                                        </Link>
+                                        <small className="cus-tooltip-msg">
+                                            Go to dashboard
+                                        </small>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

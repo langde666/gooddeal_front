@@ -164,7 +164,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-categories-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -201,7 +201,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
             {success && <Success msg={success} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
+                <div className="d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
                         <Link
@@ -214,7 +214,9 @@ const AdminCateroriesTable = ({ heading = true }) => {
                         </Link>
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
             <table className="admin-categories-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">

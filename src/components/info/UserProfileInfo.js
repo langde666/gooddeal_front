@@ -6,7 +6,7 @@ import UserEditProfileItem from '../item/UserEditProfileItem';
 import UserEditPasswordItem from '../item/UserEditPasswordItem';
 
 const UserProfileInfo = ({ user = {}, isEditable = false }) => (
-    <div className="container-fluid">
+    <div className="container-fluid p-0">
         <div className="row py-2 border border-primary rounded-3">
             <div className="col-sm-6">
                 <Paragraph label="First name" value={user.firstname} />
@@ -26,7 +26,7 @@ const UserProfileInfo = ({ user = {}, isEditable = false }) => (
                         <Paragraph label="Email" value={user.email || '-'} />
                     </div>
 
-                    <div className="col-sm-6 mt-2">
+                    <div className="col-sm-6 mt-2 ps-4">
                         <EmailActiveButton
                             email={user.email}
                             isEmailActive={user.isEmailActive}

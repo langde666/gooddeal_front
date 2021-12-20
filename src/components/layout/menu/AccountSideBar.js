@@ -4,9 +4,9 @@ import Avatar from '../../image/Avatar';
 const AccountSideBar = ({ user = {} }) => {
     const path = useLocation().pathname.split('/')[2];
     return (
-        <div className="account-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded">
+        <div className="sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded res-account-sidebar">
             <ul className="nav nav-pills flex-column mb-auto">
-                <div className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center mb-4 res-hide-lg">
                     <Avatar
                         avatar={user.avatar}
                         name={user.firstname + ' ' + user.lastname}
@@ -14,7 +14,7 @@ const AccountSideBar = ({ user = {} }) => {
                     />
                 </div>
 
-                <hr />
+                <hr className="res-hide-lg" />
 
                 <li className="nav-item">
                     <Link
@@ -23,8 +23,11 @@ const AccountSideBar = ({ user = {} }) => {
                             path == 'profile' ? 'active' : ''
                         }`}
                     >
-                        <i className="fas fa-user-circle me-3"></i>
-                        Your profile
+                        <i className="fas fa-user-circle"></i>
+                        <span className="ms-3 res-hide-xl">Your profile</span>
+                        <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
+                            Profile
+                        </span>
                     </Link>
                 </li>
 
@@ -36,8 +39,13 @@ const AccountSideBar = ({ user = {} }) => {
                                 path == 'purchase' ? 'active' : ''
                             }`}
                         >
-                            <i className="fas fa-shopping-bag me-3"></i>
-                            Purchase history
+                            <i className="fas fa-shopping-bag"></i>
+                            <span className="ms-3 res-hide-xl">
+                                Purchase history
+                            </span>
+                            <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
+                                Purchase
+                            </span>
                         </Link>
                     </li>
                 )}
@@ -50,8 +58,13 @@ const AccountSideBar = ({ user = {} }) => {
                                 path == 'addresses' ? 'active' : ''
                             }`}
                         >
-                            <i className="fas fa-map-marker-alt me-3"></i>
-                            Your addresses
+                            <i className="fas fa-map-marker-alt"></i>
+                            <span className="ms-3 res-hide-xl">
+                                Your addresses
+                            </span>
+                            <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
+                                Address
+                            </span>
                         </Link>
                     </li>
                 )}
@@ -64,8 +77,13 @@ const AccountSideBar = ({ user = {} }) => {
                                 path == 'shopManager' ? 'active' : ''
                             }`}
                         >
-                            <i className="fas fa-store me-3"></i>
-                            Shop manager
+                            <i className="fas fa-store"></i>
+                            <span className="ms-3 res-hide-xl">
+                                Shop manager
+                            </span>
+                            <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
+                                Shops
+                            </span>
                         </Link>
                     </li>
                 )}
@@ -77,8 +95,8 @@ const AccountSideBar = ({ user = {} }) => {
                             path == 'following' ? 'active-pink' : ''
                         }`}
                     >
-                        <i className="fas fa-heart me-3"></i>
-                        Following
+                        <i className="fas fa-heart"></i>
+                        <span className="ms-3 res-hide-lg">Following</span>
                     </Link>
                 </li>
 

@@ -61,25 +61,32 @@ const FollowingStoresCollection = (props) => {
     };
 
     return (
-        <div className="following-stores-collection-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
                 <h4>Following stores</h4>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <div className="following-stores-collection row mt-3">
-                {listStores &&
-                    listStores.map((store, index) => (
-                        <div className="col-3 mb-4" key={index}>
-                            <StoreCard
-                                store={store}
-                                onRun={() => setRun(!run)}
-                            />
-                        </div>
-                    ))}
+            <div className="container-fluid p-0 mt-3">
+                <div className="row">
+                    {listStores &&
+                        listStores.map((store, index) => (
+                            <div
+                                className="col-lg-3 col-sm-4 col-6 mb-4"
+                                key={index}
+                            >
+                                <StoreCard
+                                    store={store}
+                                    onRun={() => setRun(!run)}
+                                />
+                            </div>
+                        ))}
+                </div>
             </div>
 
             {pagination.size != 0 && (
