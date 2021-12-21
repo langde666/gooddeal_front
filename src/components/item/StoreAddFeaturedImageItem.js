@@ -11,7 +11,8 @@ const StoreAddFeaturedImageItem = ({ count = 6, storeId = '' }) => (
                 data-bs-toggle="modal"
                 data-bs-target="#add-featured-image-form"
             >
-                <i className="fas fa-plus-circle me-2"></i>New Featured Image
+                <i className="fas fa-plus-circle"></i>
+                <span className="ms-2 res-hide">New Featured Image</span>
             </button>
 
             {count < 6 && (

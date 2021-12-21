@@ -54,7 +54,7 @@ const ReviewInfo = ({ review = {}, about = true, onRun }) => {
             )}
 
             <div className="col-12 mx-2 d-flex justify-content-between align-items-center">
-                <div className="d-flex justify-content-start align-items-center flex-grown-1">
+                <div className="d-flex justify-content-start align-items-center flex-grow-1">
                     <UserSmallCard user={review.userId} />
                     {about && (
                         <>

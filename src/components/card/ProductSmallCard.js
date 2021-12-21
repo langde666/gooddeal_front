@@ -6,10 +6,10 @@ const ProductSmallCard = ({ product = {}, bodername = false, style = {} }) => (
         className={`d-inline-flex align-items-center ${
             bodername && 'bg-body shadow'
         }`}
-        style={style}
     >
         <Link
             className="text-reset text-decoration-none me-2"
+            title={product.name}
             to={`/product/${product._id}`}
         >
             <img
@@ -22,6 +22,7 @@ const ProductSmallCard = ({ product = {}, bodername = false, style = {} }) => (
         <Link
             className="text-reset link-hover mt-2"
             to={`/product/${product._id}`}
+            title={product.name}
             style={style}
         >
             <span className="fs-6 fw-bold">{product.name}</span>

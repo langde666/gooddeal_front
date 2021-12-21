@@ -11,8 +11,8 @@ const ProfilePage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
-            <div className="account-profile-page">
-                <div className="position-relative">
+            <div className="res-mx--12-md">
+                <div className="position-relative px-2">
                     <Cover
                         cover={user.cover}
                         alt={user.firstname + ' ' + user.lastname}
@@ -32,24 +32,27 @@ const ProfilePage = (props) => {
                     </div>
                 </div>
 
-                <div className="d-flex justify-content-end mt-2">
+                <div className="d-flex justify-content-end m-2 mb-3">
                     <Link
                         className="btn btn-outline-primary ripple btn-sm"
                         to={`/user/${user._id}`}
                         target="_blank"
                     >
-                        Visit Your Page{' '}
-                        <i className="fas fa-external-link-alt ms-1"></i>
+                        <span className="me-1 res-hide">Visit Your Page</span>
+                        <i className="fas fa-external-link-alt"></i>
                     </Link>
                 </div>
 
-                <div className="mt-4 mx-2">
-                    <div className="">
-                        <UserProfileInfo user={user} isEditable={true} />
-                    </div>
-                    <div className="mt-1">
-                        <UserJoinedInfo user={user} />
-                    </div>
+                <div className="mt-1 d-none res-dis">
+                    <UserLevelInfo user={user} border={false} />
+                </div>
+
+                <div className="mt-1">
+                    <UserProfileInfo user={user} isEditable={true} />
+                </div>
+
+                <div className="mt-1">
+                    <UserJoinedInfo user={user} />
                 </div>
             </div>
         </AccountLayout>

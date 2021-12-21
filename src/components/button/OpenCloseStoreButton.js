@@ -55,7 +55,7 @@ const OpenCloseStoreButton = ({
     };
 
     return (
-        <div className="open-close-store-button-wrap position-relative">
+        <div className="position-relative">
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (
@@ -76,12 +76,14 @@ const OpenCloseStoreButton = ({
                 {openFlag ? (
                     <span>
                         <i className="fas fa-door-open"></i>
-                        {detail && <span className="ms-2">open</span>}
+                        {detail && <span className="ms-2 res-hide">open</span>}
                     </span>
                 ) : (
                     <span>
                         <i className="fas fa-door-closed"></i>
-                        {detail && <span className="ms-2">closed</span>}
+                        {detail && (
+                            <span className="ms-2 res-hide">closed</span>
+                        )}
                     </span>
                 )}
             </button>

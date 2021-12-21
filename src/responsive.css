@@ -11,6 +11,10 @@
     .res-dis-inline-xl {
         display: inline-block !important;
     }
+
+    .cus-sidebar-item--db {
+        text-align: center !important;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -91,6 +95,11 @@
         box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
         padding: 0;
     }
+
+    .res-mx--12-md {
+        margin-left: -12px !important;
+        margin-right: -12px !important;
+    }
 }
 
 @media (min-width: 768px) {
@@ -130,6 +139,11 @@
 
     .res-flex-justify-between {
         justify-content: space-between !important;
+    }
+
+    .cus-carousel-icon-wrap {
+        bottom: 50%;
+        transform: translateY(50%);
     }
 }
 

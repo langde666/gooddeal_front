@@ -22,8 +22,8 @@ const ProfilePage = (props) => {
     };
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-profile-page">
-                <div className="position-relative">
+            <div className="res-mx--12-md">
+                <div className="position-relative px-2">
                     <Cover
                         cover={store.cover}
                         alt={store.name}
@@ -51,13 +51,13 @@ const ProfilePage = (props) => {
                         />
                     </div>
 
-                    <div className="level-group-absolute">
+                    <div className="level-group-absolute res-hide">
                         <StoreLevelInfo store={store} />
                     </div>
                 </div>
 
                 {store.featured_images && store.featured_images.length > 0 && (
-                    <div className="mt-2">
+                    <div className="m-2">
                         <Carousel
                             listImages={store.featured_images}
                             alt={store.name}
@@ -67,7 +67,7 @@ const ProfilePage = (props) => {
                     </div>
                 )}
 
-                <div className="d-flex justify-content-between align-items-center mt-2">
+                <div className="d-flex justify-content-between align-items-center m-2">
                     <div className="position-relative">
                         <div className="cus-tooltip">
                             <OpenCloseStoreButton
@@ -100,17 +100,23 @@ const ProfilePage = (props) => {
                             to={`/store/${store._id}`}
                             target="_blank"
                         >
-                            Visit Your Shop{' '}
-                            <i className="fas fa-external-link-alt ms-1"></i>
+                            <span className="me-1 res-hide">
+                                Visit Your Shop
+                            </span>
+                            <i className="fas fa-external-link-alt"></i>
                         </Link>
                     </div>
                 </div>
 
-                <div className="mt-4 px-2">
+                <div className="mt-1 d-none res-dis">
+                    <StoreLevelInfo store={store} border={false} />
+                </div>
+
+                <div className="mt-1">
                     <StoreProfileInfo store={store} isEditable={true} />
                 </div>
 
-                <div className="mt-1 px-2">
+                <div className="mt-1">
                     <StoreJoinedInfo store={store} />
                 </div>
             </div>

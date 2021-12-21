@@ -797,10 +797,6 @@ header {
     cursor: pointer;
 }
 
-.cus-carousel-icon i {
-    margin-right: 4px;
-}
-
 .cus-carousel-icon:hover {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -1022,7 +1018,7 @@ header {
 
 .manager-avatar-absolute {
     position: absolute;
-    top: 46%;
+    top: 66%;
     left: 60%;
     z-index: 2;
 }
@@ -1165,13 +1161,13 @@ textarea {
 
 /* table-scroll */
 .table-scroll {
-    border-right: 1px solid skyblue;
+    border-right: 1px solid lightskyblue;
     position: relative;
     width: 100%;
     z-index: 1;
     margin: auto;
     overflow: auto;
-    height: 100%;
+    max-height: 600px;
     white-space: nowrap;
 }
 .table-scroll table {

@@ -99,7 +99,7 @@ const StoreProductsTable = ({
     };
 
     return (
-        <div className="vendor-products-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {heading && (
@@ -116,27 +116,23 @@ const StoreProductsTable = ({
                     <SearchInput onChange={handleChangeKeyword} />
 
                     {isSelling && (
-                        <div className="ms-2">
-                            <Link
-                                type="button"
-                                className="btn btn-primary ripple text-nowrap"
-                                to={`/vendor/products/createNewProduct/${storeId}`}
-                            >
-                                <i className="fas fa-plus-circle me-2"></i>New
-                                product
-                            </Link>
-                        </div>
+                        <Link
+                            type="button"
+                            className="btn btn-primary ripple text-nowrap ms-2"
+                            to={`/vendor/products/createNewProduct/${storeId}`}
+                        >
+                            <i className="fas fa-plus-circle"></i>
+                            <span className="ms-2 res-hide">New product</span>
+                        </Link>
                     )}
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <div
-                style={{
-                    overflow: 'auto',
-                }}
-            >
-                <table className="vendor-products-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -286,7 +282,7 @@ const StoreProductsTable = ({
                                         1 +
                                         (filter.page - 1) * filter.limit}
                                 </th>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <small>{product.name}</small>
                                 </td>
                                 <td>
@@ -314,7 +310,7 @@ const StoreProductsTable = ({
                                 </td>
                                 <td>
                                     <div
-                                        className="d-flex justify-content-between align-items-center"
+                                        className="d-flex justify-content-between align-items-start"
                                         style={{
                                             width: '300px',
                                             height: '200px',
@@ -363,7 +359,7 @@ const StoreProductsTable = ({
                                         )}
                                     </div>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <div
                                         style={{
                                             width: '300px',
@@ -401,14 +397,16 @@ const StoreProductsTable = ({
                                 </td>
                                 <td
                                     style={{
-                                        minWidth: '300px',
+                                        whiteSpace: 'normal',
                                     }}
                                 >
-                                    <CategorySmallCard
-                                        category={product.categoryId}
-                                    />
+                                    <div style={{ width: '200px' }}>
+                                        <CategorySmallCard
+                                            category={product.categoryId}
+                                        />
+                                    </div>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <div
                                         className="d-flex justify-content-start align-items-center text-start"
                                         style={{
@@ -439,7 +437,7 @@ const StoreProductsTable = ({
                                         />
                                     </small>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <small>
                                         {humanReadableDate(product.createdAt)}
                                     </small>

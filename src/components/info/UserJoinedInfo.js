@@ -43,7 +43,7 @@ const humanReadableDate = (date) => {
 };
 
 const UserJoinedInfo = ({ user = {} }) => (
-    <div className="container-fluid p-0">
+    <div className="container-fluid">
         <div className="row py-2 border border-primary rounded-3">
             <div className="col-12">
                 <Paragraph

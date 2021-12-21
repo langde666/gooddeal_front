@@ -8,15 +8,15 @@ const OrderDetailPage = (props) => {
     const { orderId } = useParams();
     return (
         <AccountLayout user={user}>
-            <div className="purchase-history-order-detail-page">
+            <div className="res-mx--12-md">
                 <OrderDetailInfo orderId={orderId} />
 
-                <div className="mt-4">
+                <div className="mx-4">
                     <Link
                         to="/account/purchase"
                         className="text-decoration-none cus-link-hover"
                     >
-                        <i className="fas fa-arrow-circle-left"></i> Back to
+                        <i className="fas fa-arrow-circle-left me-2"></i>Back to
                         Purchase History
                     </Link>
                 </div>

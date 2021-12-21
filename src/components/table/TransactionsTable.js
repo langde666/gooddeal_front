@@ -101,7 +101,7 @@ const TransactionsTable = ({
     };
 
     return (
-        <div className="transactions-table-wrap position-relative">
+        <div className="position-relative">
             {heading && (
                 <h4 className="mb-3">
                     {by === 'admin'
@@ -127,113 +127,122 @@ const TransactionsTable = ({
                     )}
                 </div>
 
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="transaction-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Transaction"
-                                sortBy="_id"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Created at"
-                                sortBy="createdAt"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Amount"
-                                sortBy="amount"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        {by === 'admin' && (
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
                             <th scope="col">
                                 <SortByButton
                                     currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
-                                    title="Store"
-                                    sortBy="storeId"
+                                    title="Transaction"
+                                    sortBy="_id"
                                     onSet={(order, sortBy) =>
                                         handleSetSortBy(order, sortBy)
                                     }
                                 />
                             </th>
-                        )}
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isUp"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {transactions.map((transaction, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Created at"
+                                    sortBy="createdAt"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td>
-                                <small>{transaction._id}</small>
-                            </td>
-                            <td>
-                                <small>
-                                    {humanReadableDate(transaction.createdAt)}
-                                </small>
-                            </td>
-                            <td>
-                                <small className="text-nowrap">
-                                    {transaction.amount &&
-                                        formatPrice(
-                                            transaction.amount.$numberDecimal,
-                                        )}{' '}
-                                    VND
-                                </small>
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Amount"
+                                    sortBy="amount"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
                             {by === 'admin' && (
-                                <td className="text-start ps-4">
-                                    <StoreSmallCard
-                                        store={transaction.storeId}
+                                <th scope="col">
+                                    <SortByButton
+                                        currentOrder={filter.order}
+                                        currentSortBy={filter.sortBy}
+                                        title="Store"
+                                        sortBy="storeId"
+                                        onSet={(order, sortBy) =>
+                                            handleSetSortBy(order, sortBy)
+                                        }
                                     />
-                                </td>
+                                </th>
                             )}
-                            <td>
-                                <small>
-                                    <TransactionStatusLabel
-                                        isUp={transaction.isUp}
-                                    />
-                                </small>
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isUp"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {transactions.map((transaction, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td>
+                                    <small>{transaction._id}</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {humanReadableDate(
+                                            transaction.createdAt,
+                                        )}
+                                    </small>
+                                </td>
+                                <td>
+                                    <small className="text-nowrap">
+                                        {transaction.amount &&
+                                            formatPrice(
+                                                transaction.amount
+                                                    .$numberDecimal,
+                                            )}{' '}
+                                        VND
+                                    </small>
+                                </td>
+                                {by === 'admin' && (
+                                    <td className="text-start ps-4">
+                                        <StoreSmallCard
+                                            store={transaction.storeId}
+                                        />
+                                    </td>
+                                )}
+                                <td>
+                                    <small>
+                                        <TransactionStatusLabel
+                                            isUp={transaction.isUp}
+                                        />
+                                    </small>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

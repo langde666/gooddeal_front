@@ -60,11 +60,11 @@ const DashboardPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-dashboard-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
-                <form className="ms-4 d-flex">
+                <form className="d-flex">
                     <div className="me-4">
                         <DropDownMenu
                             listItem={[

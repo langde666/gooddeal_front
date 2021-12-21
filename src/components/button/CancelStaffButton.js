@@ -43,7 +43,7 @@ const CancelStaffsButton = ({ storeId = '' }) => {
     };
 
     return (
-        <div className="cancel-staff-button-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (
@@ -60,7 +60,8 @@ const CancelStaffsButton = ({ storeId = '' }) => {
                 className="btn btn-outline-danger ripple"
                 onClick={handlecancelStaff}
             >
-                <i className="fas fa-ban me-2"></i>Out this shop
+                <i className="fas fa-ban"></i>
+                <span className="ms-2 res-hide">Out this shop</span>
             </button>
         </div>
     );

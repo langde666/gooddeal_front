@@ -49,7 +49,9 @@ const ReviewItem = ({
                         >
                             <i className="fas fa-comment-dots"></i>
                             {detail && (
-                                <span className="ms-2">Review & rate</span>
+                                <span className="ms-2 res-hide-lg">
+                                    Review & rate
+                                </span>
                             )}
                         </button>
 

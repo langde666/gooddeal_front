@@ -101,7 +101,7 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
                             className="cus-carousel-icon me-2"
                         >
                             <i className="fas fa-camera"></i>
-                            <span>Edit</span>
+                            <span className="ms-2 res-hide-md">Edit</span>
                             <input
                                 id={`uploadFeaturedImage-${index}`}
                                 className="visually-hidden"
@@ -118,7 +118,7 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
                             onClick={() => handleRemove(index)}
                         >
                             <i className="fas fa-trash-alt"></i>
-                            <span>Remove</span>
+                            <span className="ms-2 res-hide-md">Remove</span>
                         </label>
                     </div>
 

@@ -10,45 +10,37 @@ const ProductsPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-products-manager-page">
-                <div className="d-flex align-items-center my-2">
-                    <div className="position-relative d-inline-block me-2">
-                        <button
-                            type="button"
-                            className={`btn ${
-                                flag ? 'btn-primary' : 'btn-outline-primary'
-                            } btn-lg ripple cus-tooltip`}
-                            onClick={() => toggleFlag(true)}
-                        >
-                            <i className="fas fa-box"></i>
-                        </button>
+            <div className="d-flex align-items-center my-2">
+                <div className="position-relative d-inline-block me-2">
+                    <button
+                        type="button"
+                        className={`btn ${
+                            flag ? 'btn-primary' : 'btn-outline-primary'
+                        } btn-lg ripple cus-tooltip`}
+                        onClick={() => toggleFlag(true)}
+                    >
+                        <i className="fas fa-box"></i>
+                    </button>
 
-                        <small className="cus-tooltip-msg">
-                            Selling products
-                        </small>
-                    </div>
-
-                    <div className="position-relative d-inline-block">
-                        <button
-                            type="button"
-                            className={`btn ${
-                                !flag
-                                    ? 'btn-secondary'
-                                    : 'btn-outline-secondary'
-                            } btn-lg ripple cus-tooltip`}
-                            onClick={() => toggleFlag(false)}
-                        >
-                            <i className="fas fa-archive"></i>
-                        </button>
-
-                        <small className="cus-tooltip-msg">
-                            Stored products
-                        </small>
-                    </div>
+                    <small className="cus-tooltip-msg">Selling products</small>
                 </div>
 
-                <StoreProductsTable storeId={store._id} isSelling={flag} />
+                <div className="position-relative d-inline-block">
+                    <button
+                        type="button"
+                        className={`btn ${
+                            !flag ? 'btn-secondary' : 'btn-outline-secondary'
+                        } btn-lg ripple cus-tooltip`}
+                        onClick={() => toggleFlag(false)}
+                    >
+                        <i className="fas fa-archive"></i>
+                    </button>
+
+                    <small className="cus-tooltip-msg">Stored products</small>
+                </div>
             </div>
+
+            <StoreProductsTable storeId={store._id} isSelling={flag} />
         </VendorLayout>
     );
 };

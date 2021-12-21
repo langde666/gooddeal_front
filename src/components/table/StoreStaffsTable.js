@@ -138,7 +138,7 @@ const StoreStaffsTable = ({
     };
 
     return (
-        <div className="store-staffs-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -161,7 +161,7 @@ const StoreStaffsTable = ({
             {success && <Success msg={success} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="\d-flex align-items-center">
+                <div className="d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                     <div className="ms-2">
                         {ownerId && userId == ownerId._id ? (
@@ -175,105 +175,111 @@ const StoreStaffsTable = ({
                         )}
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="store-staffs-table table align-middle table-hover mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Staff"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Id card"
-                                sortBy="id_card"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Email"
-                                sortBy="email"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Phone"
-                                sortBy="phone"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        {ownerId && userId == ownerId._id && (
-                            <th scope="col"></th>
-                        )}
-                    </tr>
-                </thead>
-                <tbody>
-                    {listStaffs.map((staff, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="store-staffs-table table align-middle table-hover table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Staff"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td
-                                className="text-start ps-2"
-                                style={{ maxWidth: '300px' }}
-                            >
-                                <UserSmallCard user={staff} />
-                            </td>
-                            <td>
-                                <small>{staff.id_card || '-'}</small>
-                            </td>
-                            <td>
-                                <small>{staff.email || '-'}</small>
-                            </td>
-                            <td>
-                                <small>{staff.phone || '-'}</small>
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Id card"
+                                    sortBy="id_card"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Email"
+                                    sortBy="email"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Phone"
+                                    sortBy="phone"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
                             {ownerId && userId == ownerId._id && (
-                                <td className="text-center">
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveStaff(staff)
-                                            }
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove staff
-                                        </small>
-                                    </div>
-                                </td>
+                                <th scope="col"></th>
                             )}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {listStaffs.map((staff, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td
+                                    className="text-start ps-2"
+                                    style={{ maxWidth: '300px' }}
+                                >
+                                    <UserSmallCard user={staff} />
+                                </td>
+                                <td>
+                                    <small>{staff.id_card || '-'}</small>
+                                </td>
+                                <td>
+                                    <small>{staff.email || '-'}</small>
+                                </td>
+                                <td>
+                                    <small>{staff.phone || '-'}</small>
+                                </td>
+                                {ownerId && userId == ownerId._id && (
+                                    <td className="text-center">
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemoveStaff(staff)
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove staff
+                                            </small>
+                                        </div>
+                                    </td>
+                                )}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

@@ -89,7 +89,10 @@ const ListOrderItems = ({
             </small>
 
             {items.map((item, index) => (
-                <div key={index} className="d-flex mb-2">
+                <div
+                    key={index}
+                    className="d-flex align-items-center mb-2 res-flex-column"
+                >
                     <div
                         style={{
                             position: 'relative',

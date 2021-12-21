@@ -6,7 +6,7 @@ const AccountSideBar = ({ user = {} }) => {
     return (
         <div className="sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded res-account-sidebar">
             <ul className="nav nav-pills flex-column mb-auto">
-                <div className="d-flex justify-content-center mb-4 res-hide-lg">
+                <div className="mx-auto mb-4 res-hide-lg">
                     <Avatar
                         avatar={user.avatar}
                         name={user.firstname + ' ' + user.lastname}

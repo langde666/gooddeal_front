@@ -8,14 +8,12 @@ const GDCoinsPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-GDCoins-manager-page">
-                <TransactionsTable
-                    storeId={store._id}
-                    owner={store.ownerId}
-                    eWallet={store.e_wallet ? store.e_wallet.$numberDecimal : 0}
-                    by="store"
-                />
-            </div>
+            <TransactionsTable
+                storeId={store._id}
+                owner={store.ownerId}
+                eWallet={store.e_wallet ? store.e_wallet.$numberDecimal : 0}
+                by="store"
+            />
         </VendorLayout>
     );
 };

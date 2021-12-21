@@ -51,8 +51,8 @@ const MainNav = ({ navFor = 'user' }) => {
 
                 {navFor == 'user' && <SearchBar />}
                 {navFor != 'user' && (
-                    <h1 className="logo text-white text-center m-0">
-                        {navFor} dashboard
+                    <h1 className="logo text-white m-0">
+                        {navFor} <span className="res-hide">dashboard</span>
                     </h1>
                 )}
 
