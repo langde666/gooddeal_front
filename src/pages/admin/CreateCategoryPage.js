@@ -6,9 +6,7 @@ const CreateCategoryPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-create-category-page">
-                <AdminCreateCategoryForm />
-            </div>
+            <AdminCreateCategoryForm />
         </AdminLayout>
     );
 };

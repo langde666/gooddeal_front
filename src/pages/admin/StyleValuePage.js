@@ -8,18 +8,16 @@ const StyleValuesPage = (props) => {
     const { styleId } = useParams();
     return (
         <AdminLayout user={user}>
-            <div className="admin-style-values-manager-page">
-                <StyleValuesTable styleId={styleId} />
+            <StyleValuesTable styleId={styleId} />
 
-                <div className="mt-4">
-                    <Link
-                        to="/admin/style"
-                        className="text-decoration-none cus-link-hover"
-                    >
-                        <i className="fas fa-arrow-circle-left"></i> Back to
-                        Style Manager
-                    </Link>
-                </div>
+            <div className="mt-4">
+                <Link
+                    to="/admin/style"
+                    className="text-decoration-none cus-link-hover"
+                >
+                    <i className="fas fa-arrow-circle-left"></i> Back to Style
+                    Manager
+                </Link>
             </div>
         </AdminLayout>
     );

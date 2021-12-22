@@ -119,7 +119,7 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
     };
 
     return (
-        <div className="edit-style-form-wrap position-relative">
+        <div className="p-1 position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -130,7 +130,7 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
             )}
 
             <form
-                className="edit-style-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
@@ -154,7 +154,7 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
                     />
                 </div>
 
-                <div className="col-12 px-4">
+                <div className="col-12 px-4 mt-2">
                     <Input
                         type="text"
                         label="Style name"
@@ -182,21 +182,21 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
                         <Success msg={success} />
                     </div>
                 )}
-                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
+                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4 res-flex-reverse-md">
                     <Link
                         to="/admin/style"
-                        className="text-decoration-none cus-link-hover"
+                        className="text-decoration-none cus-link-hover res-w-100-md my-2"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
                         Style Manager
                     </Link>
                     <button
                         type="submit"
-                        className="btn btn-primary ripple"
+                        className="btn btn-primary ripple res-w-100-md"
                         onClick={handleSubmit}
-                        style={{ width: '40%' }}
+                        style={{ width: '324px', maxWidth: '100%' }}
                     >
-                        Submit
+                        Edit
                     </button>
                 </div>
             </form>

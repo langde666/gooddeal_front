@@ -147,7 +147,7 @@ const StyleValuesTable = ({
     };
 
     return (
-        <div className="style-values-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -181,88 +181,96 @@ const StyleValuesTable = ({
                         />
                     </div>
                 </div>
-                <span className="me-2">{styleValues.length || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {styleValues.length || 0} results
+                </span>
             </div>
 
-            <table className="style-values-manager-table table align-middle table-hover mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        {!isActive && (
-                            <Fragment>
-                                <th scope="col">Status</th>
-                                <th scope="col"></th>
-                            </Fragment>
-                        )}
-                    </tr>
-                </thead>
-                <tbody>
-                    {styleValues.map((value, index) => (
-                        <tr key={index}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{value.name}</td>
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
                             {!isActive && (
                                 <Fragment>
-                                    <td>
-                                        {value.isDeleted && <DeletedLabel />}
-                                    </td>
-                                    <td className="text-nowrap">
-                                        <div className="position-relative d-inline-block me-2">
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary ripple cus-tooltip"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#edit-style-value-form"
-                                                onClick={() =>
-                                                    setEditedStyleValue(value)
-                                                }
-                                            >
-                                                <i className="fas fa-pen"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Edit value
-                                            </small>
-                                        </div>
-
-                                        {!value.isDeleted ? (
-                                            <div className="position-relative d-inline-block">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-outline-danger ripple cus-tooltip"
-                                                    onClick={() =>
-                                                        handleRemove(value)
-                                                    }
-                                                >
-                                                    <i className="fas fa-trash-alt"></i>
-                                                </button>
-                                                <small className="cus-tooltip-msg">
-                                                    Remove value
-                                                </small>
-                                            </div>
-                                        ) : (
-                                            <div className="position-relative d-inline-block">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-outline-primary ripple cus-tooltip"
-                                                    onClick={() =>
-                                                        handleRestore(value)
-                                                    }
-                                                >
-                                                    <i className="fas fa-trash-restore-alt"></i>
-                                                </button>
-                                                <small className="cus-tooltip-msg">
-                                                    Restore value
-                                                </small>
-                                            </div>
-                                        )}
-                                    </td>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
                                 </Fragment>
                             )}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {styleValues.map((value, index) => (
+                            <tr key={index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{value.name}</td>
+                                {!isActive && (
+                                    <Fragment>
+                                        <td>
+                                            {value.isDeleted && (
+                                                <DeletedLabel />
+                                            )}
+                                        </td>
+                                        <td className="text-nowrap">
+                                            <div className="position-relative d-inline-block me-2">
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-primary ripple cus-tooltip"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edit-style-value-form"
+                                                    onClick={() =>
+                                                        setEditedStyleValue(
+                                                            value,
+                                                        )
+                                                    }
+                                                >
+                                                    <i className="fas fa-pen"></i>
+                                                </button>
+                                                <small className="cus-tooltip-msg">
+                                                    Edit value
+                                                </small>
+                                            </div>
+
+                                            {!value.isDeleted ? (
+                                                <div className="position-relative d-inline-block">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-danger ripple cus-tooltip"
+                                                        onClick={() =>
+                                                            handleRemove(value)
+                                                        }
+                                                    >
+                                                        <i className="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <small className="cus-tooltip-msg">
+                                                        Remove value
+                                                    </small>
+                                                </div>
+                                            ) : (
+                                                <div className="position-relative d-inline-block">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-primary ripple cus-tooltip"
+                                                        onClick={() =>
+                                                            handleRestore(value)
+                                                        }
+                                                    >
+                                                        <i className="fas fa-trash-restore-alt"></i>
+                                                    </button>
+                                                    <small className="cus-tooltip-msg">
+                                                        Restore value
+                                                    </small>
+                                                </div>
+                                            )}
+                                        </td>
+                                    </Fragment>
+                                )}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {!isActive && (
                 <Modal

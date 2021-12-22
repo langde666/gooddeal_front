@@ -6,9 +6,7 @@ const CreateStylePage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-create-style-page">
-                <AdminCreateStyleForm />
-            </div>
+            <AdminCreateStyleForm />
         </AdminLayout>
     );
 };

@@ -189,8 +189,10 @@ const MultiCategorySelector = ({
                                         )
                                     }
                                 >
-                                    {category.name}
-                                    <i className="fas fa-angle-right"></i>
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
+                                    <i className="fas fa-angle-right res-smaller-lg res-hide"></i>
                                 </button>
                             ))}
                     </div>
@@ -218,8 +220,10 @@ const MultiCategorySelector = ({
                                         )
                                     }
                                 >
-                                    {category.name}
-                                    <i className="fas fa-angle-right"></i>
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
+                                    <i className="fas fa-angle-right res-smaller-lg res-hide"></i>
                                 </button>
                             ))}
                     </div>
@@ -246,7 +250,9 @@ const MultiCategorySelector = ({
                                         handleClick(null, null, category)
                                     }
                                 >
-                                    {category.name}
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
                                 </button>
                             ))}
                     </div>

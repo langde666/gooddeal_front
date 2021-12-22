@@ -99,7 +99,7 @@ const AdminCreateCategoryForm = (props) => {
     };
 
     return (
-        <div className="create-category-form-wrap position-relative">
+        <div className="position-relative p-1">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -110,7 +110,7 @@ const AdminCreateCategoryForm = (props) => {
             )}
 
             <form
-                className="create-category-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
@@ -132,7 +132,7 @@ const AdminCreateCategoryForm = (props) => {
                     />
                 </div>
 
-                <div className="col-12 px-4">
+                <div className="col-12 px-4 mt-2">
                     <Input
                         type="text"
                         label="Category name"
@@ -178,19 +178,19 @@ const AdminCreateCategoryForm = (props) => {
                         <Success msg={success} />
                     </div>
                 )}
-                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
+                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4 res-flex-reverse-md">
                     <Link
                         to="/admin/category"
-                        className="text-decoration-none cus-link-hover"
+                        className="text-decoration-none cus-link-hover res-w-100-md my-2"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
                         Category Manager
                     </Link>
                     <button
                         type="submit"
-                        className="btn btn-primary ripple"
+                        className="btn btn-primary ripple res-w-100-md"
                         onClick={handleSubmit}
-                        style={{ width: '40%' }}
+                        style={{ width: '324px', maxWidth: '100%' }}
                     >
                         Submit
                     </button>
