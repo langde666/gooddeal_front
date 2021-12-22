@@ -182,8 +182,10 @@ const CategorySelector = ({
                                         )
                                     }
                                 >
-                                    {category.name}
-                                    <i className="fas fa-angle-right"></i>
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
+                                    <i className="fas fa-angle-right res-smaller-lg res-hide"></i>
                                 </button>
                             ))}
                     </div>
@@ -212,8 +214,10 @@ const CategorySelector = ({
                                         )
                                     }
                                 >
-                                    {category.name}
-                                    <i className="fas fa-angle-right"></i>
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
+                                    <i className="fas fa-angle-right res-smaller-lg res-hide"></i>
                                 </button>
                             ))}
                     </div>
@@ -239,7 +243,9 @@ const CategorySelector = ({
                                         handleClick(null, null, category)
                                     }
                                 >
-                                    {category.name}
+                                    <span className="res-smaller-md">
+                                        {category.name}
+                                    </span>
                                 </button>
                             ))}
                     </div>
@@ -262,18 +268,26 @@ const CategorySelector = ({
 
                         <div className="form-control border-0">
                             {selectedCategory ? (
-                                <span className="mb-1 d-flex align-items-center">
-                                    <CategorySmallCard
-                                        category={selectedCategory}
-                                    />
+                                <div className="position-relative">
+                                    <div className="me-5">
+                                        <CategorySmallCard
+                                            category={selectedCategory}
+                                        />
+                                    </div>
+
                                     <button
                                         type="button"
-                                        className="btn btn-outline-danger btn-sm ripple ms-2"
+                                        className="btn btn-outline-danger btn-sm ripple position-absolute"
+                                        style={{
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            right: '0',
+                                        }}
                                         onClick={() => handleRemove()}
                                     >
                                         <i className="fas fa-times-circle"></i>
                                     </button>
-                                </span>
+                                </div>
                             ) : (
                                 <span className={isRequired && 'text-danger'}>
                                     No category choosed

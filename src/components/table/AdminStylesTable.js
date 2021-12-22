@@ -158,7 +158,7 @@ const AdminStylesTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-styles-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -191,145 +191,156 @@ const AdminStylesTable = ({ heading = true }) => {
                             className="btn btn-primary ripple text-nowrap"
                             to="/admin/style/createNewStyle"
                         >
-                            <i className="fas fa-plus-circle me-2"></i>New Style
+                            <i className="fas fa-plus-circle"></i>
+                            <span className="ms-2 res-hide">New Style</span>
                         </Link>
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-styles-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Style"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Of categories"
-                                sortBy="categoryIds "
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isDeleted"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {styles.map((style, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Style"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td>{style.name}</td>
-
-                            <td
-                                className="text-start ps-4"
-                                style={{ maxWidth: '300px' }}
-                            >
-                                <div
-                                    className=""
-                                    style={{
-                                        maxHeight: '200px',
-                                        overflow: 'auto',
-                                    }}
-                                >
-                                    {style.categoryIds.map(
-                                        (category, index) => (
-                                            <div className="" key={index}>
-                                                <CategorySmallCard
-                                                    category={category}
-                                                />
-                                            </div>
-                                        ),
-                                    )}
-                                </div>
-                            </td>
-
-                            <td>{style.isDeleted && <DeletedLabel />}</td>
-
-                            <td className="text-nowrap">
-                                <div className="position-relative d-inline-block me-2">
-                                    <Link
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        to={`/admin/style/values/${style._id}`}
-                                    >
-                                        <i className="fas fa-list-ul"></i>
-                                    </Link>
-                                    <small className="cus-tooltip-msg">
-                                        View list of values
-                                    </small>
-                                </div>
-
-                                <div className="position-relative d-inline-block me-1">
-                                    <Link
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        to={`/admin/style/editStyle/${style._id}`}
-                                    >
-                                        <i className="fas fa-pen"></i>
-                                    </Link>
-                                    <small className="cus-tooltip-msg">
-                                        Edit style
-                                    </small>
-                                </div>
-
-                                {!style.isDeleted ? (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() => handleRemove(style)}
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove style
-                                        </small>
-                                    </div>
-                                ) : (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() => handleRestore(style)}
-                                        >
-                                            <i className="fas fa-trash-restore-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Restore style
-                                        </small>
-                                    </div>
-                                )}
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Of categories"
+                                    sortBy="categoryIds "
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isDeleted"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {styles.map((style, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td>{style.name}</td>
+
+                                <td
+                                    className="text-start ps-4"
+                                    style={{ maxWidth: '300px' }}
+                                >
+                                    <div
+                                        className=""
+                                        style={{
+                                            maxHeight: '200px',
+                                            overflow: 'auto',
+                                        }}
+                                    >
+                                        {style.categoryIds.map(
+                                            (category, index) => (
+                                                <div className="" key={index}>
+                                                    <CategorySmallCard
+                                                        category={category}
+                                                    />
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                </td>
+
+                                <td>{style.isDeleted && <DeletedLabel />}</td>
+
+                                <td className="text-nowrap">
+                                    <div className="position-relative d-inline-block me-2">
+                                        <Link
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            to={`/admin/style/values/${style._id}`}
+                                        >
+                                            <i className="fas fa-list-ul"></i>
+                                        </Link>
+                                        <small className="cus-tooltip-msg">
+                                            View list of values
+                                        </small>
+                                    </div>
+
+                                    <div className="position-relative d-inline-block me-1">
+                                        <Link
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            to={`/admin/style/editStyle/${style._id}`}
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                        </Link>
+                                        <small className="cus-tooltip-msg">
+                                            Edit style
+                                        </small>
+                                    </div>
+
+                                    {!style.isDeleted ? (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemove(style)
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove style
+                                            </small>
+                                        </div>
+                                    ) : (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-primary ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRestore(style)
+                                                }
+                                            >
+                                                <i className="fas fa-trash-restore-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Restore style
+                                            </small>
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

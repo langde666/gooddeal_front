@@ -6,9 +6,7 @@ const CommissionPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-commissions-manager-page">
-                <AdminCommissionsTable />
-            </div>
+            <AdminCommissionsTable />
         </AdminLayout>
     );
 };

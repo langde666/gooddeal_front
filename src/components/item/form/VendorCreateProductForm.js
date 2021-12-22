@@ -165,7 +165,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
     };
 
     return (
-        <div className="create-product-form-wrap position-relative">
+        <div className="position-relative p-1">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -176,7 +176,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
             )}
 
             <form
-                className="create-product-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
@@ -219,7 +219,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                 </div>
 
                 <div className="col-12 px-4">
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex flex-wrap justify-content-between align-items-center">
                         <InputFile
                             label="Product other images"
                             size="avatar"
@@ -393,9 +393,12 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                     />
                 </div>
 
-                <div className="col-12 mt-4 px-4">
+                <div className="col-12 mt-5 px-4">
                     <p className="px-2">
-                        Choose styles (need to choose category before)
+                        Choose styles{' '}
+                        <small className="text-muted">
+                            *need to choose category before
+                        </small>
                     </p>
                     <StyleSelector
                         label="Choosed styles"
@@ -423,19 +426,19 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                         <Success msg={success} />
                     </div>
                 )}
-                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
+                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4 res-flex-reverse-md">
                     <Link
                         to={`/vendor/products/${storeId}`}
-                        className="text-decoration-none cus-link-hover"
+                        className="text-decoration-none cus-link-hover res-w-100-md my-2"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
                         Product Manager
                     </Link>
                     <button
                         type="submit"
-                        className="btn btn-primary ripple"
+                        className="btn btn-primary ripple res-w-100-md"
                         onClick={handleSubmit}
-                        style={{ width: '40%' }}
+                        style={{ width: '324px', maxWidth: '100%' }}
                     >
                         Submit
                     </button>

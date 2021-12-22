@@ -56,7 +56,7 @@ const StorePage = (props) => {
 
     return (
         <AdminLayout user={user}>
-            <div className="admin-stores-manager-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 

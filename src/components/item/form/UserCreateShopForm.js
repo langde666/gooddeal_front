@@ -134,7 +134,7 @@ const CreateShopForm = (props) => {
     };
 
     return (
-        <div className="create-shop-form-wrap position-relative">
+        <div className="position-relative p-1">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -162,7 +162,7 @@ const CreateShopForm = (props) => {
             )}
 
             <form
-                className="create-shop-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
@@ -254,9 +254,6 @@ const CreateShopForm = (props) => {
                                             ' (' +
                                             c.cost.$numberDecimal +
                                             '%/order)',
-                                        icon: (
-                                            <i className="fas fa-cash-register"></i>
-                                        ),
                                     };
                                     return newC;
                                 })
@@ -283,8 +280,7 @@ const CreateShopForm = (props) => {
                         <Link to="/legal/sellOnGoodDeal" target="_blank">
                             Sell on GoodDeal
                         </Link>
-                        .
-                        <br />
+                        . <br className="res-hide" />
                         <span className="text-muted">
                             By Creating shop, you agree to GoodDeal's{' '}
                         </span>
@@ -299,19 +295,19 @@ const CreateShopForm = (props) => {
                     </small>
                 </div>
 
-                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4">
+                <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4 res-flex-reverse-md">
                     <Link
                         to="/account/shopManager"
-                        className="text-decoration-none link-hover"
+                        className="text-decoration-none link-hover res-w-100-md my-2"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
                         Shop Manager
                     </Link>
                     <button
                         type="submit"
-                        className="btn btn-primary ripple"
+                        className="btn btn-primary ripple res-w-100-md"
                         onClick={handleSubmit}
-                        style={{ width: '40%' }}
+                        style={{ width: '324px', maxWidth: '100%' }}
                     >
                         Submit
                     </button>

@@ -35,7 +35,7 @@ const VendorEditProductForm = ({ storeId = '', productId = '' }) => {
     }, [productId, storeId, run]);
 
     return (
-        <div className="vendor-edit-product-form-wrap position-relative">
+        <div className="p-1 position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 

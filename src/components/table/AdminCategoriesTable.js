@@ -209,8 +209,8 @@ const AdminCateroriesTable = ({ heading = true }) => {
                             className="btn btn-primary ripple text-nowrap"
                             to="/admin/category/createNewCategory"
                         >
-                            <i className="fas fa-plus-circle me-2"></i>New
-                            category
+                            <i className="fas fa-plus-circle"></i>
+                            <span className="ms-2 res-hide">New Category</span>
                         </Link>
                     </div>
                 </div>
@@ -219,151 +219,161 @@ const AdminCateroriesTable = ({ heading = true }) => {
                 </span>
             </div>
 
-            <table className="admin-categories-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Name"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Image"
-                                sortBy="image"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Parent category"
-                                sortBy="categoryId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isDeleted"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categories.map((category, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Name"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td>{category.name}</td>
-                            <td>
-                                <div
-                                    style={{
-                                        position: 'relative',
-                                        margin: 'auto',
-                                        paddingBottom: '72px',
-                                        width: '72px',
-                                        height: '0',
-                                    }}
-                                >
-                                    <img
-                                        src={IMG + category.image}
-                                        alt={category.name}
-                                        style={{
-                                            position: 'absolute',
-                                            width: '100%',
-                                            height: '100%',
-                                            top: '0',
-                                            left: '0',
-                                            objectFit: 'cover',
-                                        }}
-                                    />
-                                </div>
-                            </td>
-                            <td>
-                                {category.categoryId ? (
-                                    <CategorySmallCard
-                                        category={category.categoryId}
-                                    />
-                                ) : (
-                                    <span>No parent category</span>
-                                )}
-                            </td>
-                            <td>{category.isDeleted && <DeletedLabel />}</td>
-                            <td className="text-nowrap">
-                                <div className="position-relative d-inline-block me-2">
-                                    <Link
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        to={`/admin/category/editCategory/${category._id}`}
-                                    >
-                                        <i className="fas fa-pen"></i>
-                                    </Link>
-                                    <small className="cus-tooltip-msg">
-                                        Edit category
-                                    </small>
-                                </div>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Image"
+                                    sortBy="image"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
 
-                                {!category.isDeleted ? (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveCategory(category)
-                                            }
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove category
-                                        </small>
-                                    </div>
-                                ) : (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRestoreCategory(category)
-                                            }
-                                        >
-                                            <i className="fas fa-trash-restore-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Restore category
-                                        </small>
-                                    </div>
-                                )}
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Parent category"
+                                    sortBy="categoryId"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isDeleted"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {categories.map((category, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td>{category.name}</td>
+                                <td>
+                                    <div
+                                        style={{
+                                            position: 'relative',
+                                            margin: 'auto',
+                                            paddingBottom: '72px',
+                                            width: '72px',
+                                            height: '0',
+                                        }}
+                                    >
+                                        <img
+                                            src={IMG + category.image}
+                                            alt={category.name}
+                                            style={{
+                                                position: 'absolute',
+                                                width: '100%',
+                                                height: '100%',
+                                                top: '0',
+                                                left: '0',
+                                                objectFit: 'cover',
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                                <td>
+                                    {category.categoryId ? (
+                                        <CategorySmallCard
+                                            category={category.categoryId}
+                                        />
+                                    ) : (
+                                        <span>No parent category</span>
+                                    )}
+                                </td>
+                                <td>
+                                    {category.isDeleted && <DeletedLabel />}
+                                </td>
+                                <td className="text-nowrap">
+                                    <div className="position-relative d-inline-block me-2">
+                                        <Link
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            to={`/admin/category/editCategory/${category._id}`}
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                        </Link>
+                                        <small className="cus-tooltip-msg">
+                                            Edit category
+                                        </small>
+                                    </div>
+
+                                    {!category.isDeleted ? (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemoveCategory(
+                                                        category,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove category
+                                            </small>
+                                        </div>
+                                    ) : (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-primary ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRestoreCategory(
+                                                        category,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-trash-restore-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Restore category
+                                            </small>
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

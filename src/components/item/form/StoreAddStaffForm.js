@@ -140,7 +140,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
     };
 
     return (
-        <div className="add-staffs-form-wrap row mt-2 position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -163,14 +163,14 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                 />
             )}
 
-            <div className="col-12">
-                <div className="row">
-                    <div className="col-12 mb-2">
-                        <SearchInput onChange={handleChangeKeyword} />
-                    </div>
+            <div className="row">
+                <div className="col">
+                    <div className="border rounded p-2 cus-group bg-light d-flex flex-column justify-content-between">
+                        <div className="mb-2">
+                            <SearchInput onChange={handleChangeKeyword} />
+                        </div>
 
-                    <div className="col-6">
-                        <div className="border border-primary rounded p-2 cus-group">
+                        <div className="flex-grow-1 w-100">
                             {listLeft &&
                                 listLeft.map((user, index) => (
                                     <div
@@ -178,14 +178,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                                         className="d-flex justify-content-between align-items-center"
                                     >
                                         <div className="mb-2">
-                                            <UserSmallCard
-                                                user={user}
-                                                style={{
-                                                    width: '150px',
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                }}
-                                            />
+                                            <UserSmallCard user={user} />
                                         </div>
                                         <button
                                             type="button"
@@ -197,10 +190,27 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                                     </div>
                                 ))}
                         </div>
-                    </div>
 
-                    <div className="col-6">
-                        <div className="border border-primary rounded p-2 cus-group">
+                        <button
+                            type="button"
+                            disabled={
+                                pagination &&
+                                pagination.pageCount > pagination.pageCurrent
+                                    ? false
+                                    : true
+                            }
+                            className="btn btn-primary ripple w-100 mt-4"
+                            onClick={handleLoadMore}
+                        >
+                            <i className="fas fa-arrow-alt-circle-down me-1"></i>{' '}
+                            More
+                        </button>
+                    </div>
+                </div>
+
+                <div className="col">
+                    <div className="border rounded p-2 cus-group bg-light  d-flex flex-column justify-content-between align-items-center">
+                        <div className="flex-grow-1 w-100">
                             {listRight &&
                                 listRight.map((user, index) => (
                                     <div
@@ -208,14 +218,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                                         className="d-flex justify-content-between align-items-center"
                                     >
                                         <div className="mb-2">
-                                            <UserSmallCard
-                                                user={user}
-                                                style={{
-                                                    width: '150px',
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                }}
-                                            />
+                                            <UserSmallCard user={user} />
                                         </div>
                                         <button
                                             type="button"
@@ -229,33 +232,10 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                                     </div>
                                 ))}
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div className="col-12 mt-2">
-                <div className="row">
-                    <div className="col d-flex justify-content-center">
                         <button
                             type="button"
-                            disabled={
-                                pagination &&
-                                pagination.pageCount > pagination.pageCurrent
-                                    ? false
-                                    : true
-                            }
-                            className="btn btn-primary ripple"
-                            onClick={handleLoadMore}
-                        >
-                            <i className="fas fa-arrow-alt-circle-down me-1"></i>{' '}
-                            Load more
-                        </button>
-                    </div>
-
-                    <div className="col d-flex justify-content-center">
-                        <button
-                            type="button"
-                            className="btn btn-primary ripple"
+                            className="btn btn-primary ripple w-100 mt-4"
                             onClick={handleSubmit}
                         >
                             Submit

@@ -6,9 +6,7 @@ const DeliveryPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-deliveries-manager-page">
-                <AdminDeliveriesTable />
-            </div>
+            <AdminDeliveriesTable />
         </AdminLayout>
     );
 };

@@ -49,6 +49,10 @@
         padding: 0 10px !important;
         text-align: center;
     }
+
+    .res-smaller-lg {
+        font-size: 0.8rem !important;
+    }
 }
 
 @media (min-width: 992px) {
@@ -72,6 +76,10 @@
         flex-direction: column-reverse !important;
     }
 
+    .res-w-100-md {
+        width: 100% !important;
+    }
+
     .res-account-sidebar {
         width: 100%;
         padding: 6px !important;
@@ -91,7 +99,7 @@
     .res-sticky-top-md {
         position: sticky;
         top: calc(var(--header-height) + 16px);
-        z-index: 3;
+        z-index: 4;
         box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
         padding: 0;
     }
@@ -99,6 +107,10 @@
     .res-mx--12-md {
         margin-left: -12px !important;
         margin-right: -12px !important;
+    }
+
+    .res-smaller-md {
+        font-size: 0.8rem !important;
     }
 }
 
@@ -144,6 +156,10 @@
     .cus-carousel-icon-wrap {
         bottom: 50%;
         transform: translateY(50%);
+    }
+
+    .res-smaller {
+        font-size: 0.8rem !important;
     }
 }
 

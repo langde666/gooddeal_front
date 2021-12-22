@@ -9,47 +9,43 @@ const OrderPage = (props) => {
 
     return (
         <AdminLayout user={user}>
-            <div className="admin-orders-manager-page">
-                <div className="d-flex align-items-center my-2">
-                    <div className="position-relative d-inline-block me-2">
-                        <button
-                            type="button"
-                            className={`btn ${
-                                flag ? 'btn-primary' : 'btn-outline-primary'
-                            } btn-lg ripple cus-tooltip`}
-                            onClick={() => toggleFlag(true)}
-                        >
-                            <i className="fas fa-truck"></i>
-                        </button>
+            <div className="d-flex align-items-center my-2">
+                <div className="position-relative d-inline-block me-2">
+                    <button
+                        type="button"
+                        className={`btn ${
+                            flag ? 'btn-primary' : 'btn-outline-primary'
+                        } btn-lg ripple cus-tooltip`}
+                        onClick={() => toggleFlag(true)}
+                    >
+                        <i className="fas fa-truck"></i>
+                    </button>
 
-                        <small className="cus-tooltip-msg">
-                            Delivery Service
-                        </small>
-                    </div>
-
-                    <div className="position-relative d-inline-block">
-                        <button
-                            type="button"
-                            className={`btn ${
-                                !flag ? 'btn-primary' : 'btn-outline-primary'
-                            } btn-lg ripple cus-tooltip`}
-                            onClick={() => toggleFlag(false)}
-                        >
-                            <i className="fas fa-clipboard"></i>
-                        </button>
-
-                        <small className="cus-tooltip-msg">
-                            All Orders in System
-                        </small>
-                    </div>
+                    <small className="cus-tooltip-msg">Delivery Service</small>
                 </div>
 
-                <AdminOrdersTable
-                    heading={true}
-                    isEditable={flag}
-                    status={flag ? 'Shipped' : ''}
-                />
+                <div className="position-relative d-inline-block">
+                    <button
+                        type="button"
+                        className={`btn ${
+                            !flag ? 'btn-primary' : 'btn-outline-primary'
+                        } btn-lg ripple cus-tooltip`}
+                        onClick={() => toggleFlag(false)}
+                    >
+                        <i className="fas fa-clipboard"></i>
+                    </button>
+
+                    <small className="cus-tooltip-msg">
+                        All Orders in System
+                    </small>
+                </div>
             </div>
+
+            <AdminOrdersTable
+                heading={true}
+                isEditable={flag}
+                status={flag ? 'Shipped' : ''}
+            />
         </AdminLayout>
     );
 };

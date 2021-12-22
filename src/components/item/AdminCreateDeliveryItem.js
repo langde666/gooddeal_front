@@ -9,7 +9,8 @@ const AdminCreateDeliveryItem = ({ onRun = () => {} }) => (
             data-bs-toggle="modal"
             data-bs-target="#admin-create-delivery-form"
         >
-            <i className="fas fa-plus-circle me-2"></i>New delivery unit
+            <i className="fas fa-plus-circle"></i>
+            <span className="ms-2 res-hide">New delivery unit</span>
         </button>
 
         <Modal

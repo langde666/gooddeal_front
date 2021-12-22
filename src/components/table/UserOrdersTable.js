@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { listOrdersByUser } from '../../apis/order';
+import { listOrdersByUser, userCancelOrder } from '../../apis/order';
 import { formatPrice } from '../../helper/formatPrice';
 import { humanReadableDate } from '../../helper/humanReadable';
 import { calcTime } from '../../helper/calcTime';
@@ -11,10 +11,11 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
-import UserCancelOrderButton from '../button/UserCancelOrderButton';
+import ConfirmDialog from '../ui/ConfirmDialog';
 
 const UserOrdersTable = ({ heading = true }) => {
     const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [run, setRun] = useState(false);
 
@@ -29,6 +30,8 @@ const UserOrdersTable = ({ heading = true }) => {
         limit: 6,
         page: 1,
     });
+
+    const [cancelOrder, setCancelOrder] = useState({});
 
     const { _id, accessToken } = getToken();
 
@@ -75,12 +78,51 @@ const UserOrdersTable = ({ heading = true }) => {
         });
     };
 
+    const handleCancelOrder = (order) => {
+        setCancelOrder(order);
+        setIsConfirming(true);
+    };
+
+    const onSubmit = () => {
+        setError('');
+        setIsLoading(true);
+        const value = { status: 'Cancelled' };
+        userCancelOrder(_id, accessToken, value, cancelOrder._id)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setError('');
+                    }, 3000);
+                } else {
+                    setIsLoading(false);
+                    setRun(!run);
+                }
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
+            });
+    };
+
     return (
         <div className="position-relative">
             {heading && <h4 className="m-0">Your purchase history</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title="Cancel Order"
+                    color="danger"
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <div className="d-flex justify-content-end align-items-end">
                 <span className="me-2 text-nowrap res-hide">
@@ -233,21 +275,17 @@ const UserOrdersTable = ({ heading = true }) => {
                                         {order.status === 'Not processed' &&
                                             calcTime(order.createdAt) < 1 && (
                                                 <div className="position-relative d-inline-block ms-1">
-                                                    <div className="cus-tooltip d-inline-block text-start">
-                                                        <UserCancelOrderButton
-                                                            orderId={order._id}
-                                                            detail={false}
-                                                            status={
-                                                                order.status
-                                                            }
-                                                            createdAt={
-                                                                order.createdAt
-                                                            }
-                                                            onRun={() =>
-                                                                setRun(!run)
-                                                            }
-                                                        />
-                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-danger ripple cus-tooltip"
+                                                        onClick={() =>
+                                                            handleCancelOrder(
+                                                                order,
+                                                            )
+                                                        }
+                                                    >
+                                                        <i className="fas fa-ban"></i>
+                                                    </button>
 
                                                     <small className="cus-tooltip-msg">
                                                         Cancel order

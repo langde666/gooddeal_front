@@ -1117,7 +1117,7 @@ textarea {
 }
 
 .cus-group {
-    height: 240px;
+    height: 360px;
     overflow-y: auto;
 }
 
@@ -1202,7 +1202,7 @@ textarea {
     bottom: 0;
     background: lightskyblue;
     color: #fff;
-    z-index: 4;
+    z-index: 3;
 }
 
 th:first-child {
@@ -1215,5 +1215,5 @@ th:first-child {
 }
 thead th:first-child,
 tfoot th:first-child {
-    z-index: 5;
+    z-index: 4;
 }

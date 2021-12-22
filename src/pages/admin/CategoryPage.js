@@ -10,32 +10,30 @@ const CategoryPage = (props) => {
 
     return (
         <AdminLayout user={user}>
-            <div className="admin-categories-manager-page">
-                <div className="d-flex align-items-center my-2">
-                    <div className="position-relative d-inline-block me-2">
-                        <button
-                            type="button"
-                            className={`btn ${
-                                flag ? 'btn-primary' : 'btn-outline-primary'
-                            } btn-lg ripple cus-tooltip`}
-                            onClick={() => toggleFlag()}
-                        >
-                            <i class="fas fa-eye"></i>
-                        </button>
+            <div className="d-flex align-items-center my-2">
+                <div className="position-relative d-inline-block me-2">
+                    <button
+                        type="button"
+                        className={`btn ${
+                            flag ? 'btn-primary' : 'btn-outline-primary'
+                        } btn-lg ripple cus-tooltip`}
+                        onClick={() => toggleFlag()}
+                    >
+                        <i class="fas fa-eye"></i>
+                    </button>
 
-                        <small className="cus-tooltip-msg">Review</small>
-                    </div>
+                    <small className="cus-tooltip-msg">Review</small>
                 </div>
-
-                {flag && (
-                    <div className="mb-4">
-                        <h4 className="mb-3">Review</h4>
-                        <CategorySelector isActive={true} isSelected={false} />
-                    </div>
-                )}
-
-                <AdminCategoriesTable />
             </div>
+
+            {flag && (
+                <div className="mb-4">
+                    <h4 className="mb-3">Review</h4>
+                    <CategorySelector isActive={true} isSelected={false} />
+                </div>
+            )}
+
+            <AdminCategoriesTable />
         </AdminLayout>
     );
 };

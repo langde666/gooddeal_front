@@ -150,7 +150,7 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
     };
 
     return (
-        <div className="edit-profile-product-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -161,7 +161,7 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
             )}
 
             <form
-                className="edit-profile-product-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
@@ -279,9 +279,12 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
                     />
                 </div>
 
-                <div className="col-12 mt-4 px-4">
+                <div className="col-12 mt-5 px-4">
                     <p className="px-2">
-                        Choose styles (need to choose category before)
+                        Choose styles{' '}
+                        <small className="text-muted">
+                            *need to choose category before
+                        </small>
                     </p>
                     <StyleSelector
                         label="Choosed styles"
@@ -313,7 +316,7 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
                 <div className="col-12 px-4 pb-3 d-flex justify-content-end align-items-center mt-4">
                     <button
                         type="submit"
-                        className="btn btn-primary ripple"
+                        className="btn btn-primary ripple res-w-100-md"
                         onClick={handleSubmit}
                         style={{ width: '40%' }}
                     >

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { listProductsForManager } from '../../apis/product';
+import {
+    listProductsForManager,
+    sellingProduct as sellOrStore,
+} from '../../apis/product';
 import { humanReadableDate } from '../../helper/humanReadable';
 import { formatPrice } from '../../helper/formatPrice';
 import Pagination from '../ui/Pagination';
@@ -9,10 +12,10 @@ import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
 import CategorySmallCard from '../card/CategorySmallCard';
 import ProductLicenseLabel from '../label/ProductLicenseLabel';
-import SellStoreProductButton from '../button/SellStoreProductButton';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import StyleValueSelector from '../seletor/StyleValueSelector';
+import ConfirmDialog from '../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
@@ -22,6 +25,7 @@ const StoreProductsTable = ({
     storeId = '',
 }) => {
     const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [run, setRun] = useState('');
 
@@ -37,6 +41,8 @@ const StoreProductsTable = ({
         limit: 6,
         page: 1,
     });
+
+    const [sellingProduct, setsellingProduct] = useState({});
 
     const { _id, accessToken } = getToken();
 
@@ -98,10 +104,39 @@ const StoreProductsTable = ({
         });
     };
 
+    const handleSellingProduct = (product) => {
+        setsellingProduct(product);
+        setIsConfirming(true);
+    };
+
+    const onSubmit = () => {
+        setError('');
+        setIsLoading(true);
+        const value = { isSelling: !sellingProduct.isSelling };
+        sellOrStore(_id, accessToken, value, storeId, sellingProduct._id)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setError('');
+                    }, 3000);
+                } else {
+                    setIsLoading(false);
+                    setRun(!run);
+                }
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
+            });
+    };
+
     return (
         <div className="position-relative">
-            {isloading && <Loading />}
-
             {heading && (
                 <h4 className="mb-3">
                     {isSelling ? 'Selling products' : 'Stored products'}
@@ -110,6 +145,17 @@ const StoreProductsTable = ({
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title={
+                        sellingProduct.isSelling
+                            ? 'Store this product'
+                            : 'Sell this product'
+                    }
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <div className="d-flex justify-content-between align-items-end">
                 <div className="option-wrap d-flex align-items-center">
@@ -445,18 +491,25 @@ const StoreProductsTable = ({
                                 <td>
                                     <div className="d-flex justify-content-center align-items-center">
                                         <div className="position-relative d-inline-block me-2">
-                                            <div className="cus-tooltip d-inline-block text-start">
-                                                <SellStoreProductButton
-                                                    productId={product._id}
-                                                    storeId={
-                                                        product.storeId._id
-                                                    }
-                                                    isSelling={
-                                                        product.isSelling
-                                                    }
-                                                    onRun={() => setRun(!run)}
-                                                />
-                                            </div>
+                                            <button
+                                                type="button"
+                                                className={`btn btn-outline-${
+                                                    !product.isSelling
+                                                        ? 'primary'
+                                                        : 'secondary'
+                                                } ripple cus-tooltip`}
+                                                onClick={() =>
+                                                    handleSellingProduct(
+                                                        product,
+                                                    )
+                                                }
+                                            >
+                                                {!product.isSelling ? (
+                                                    <i className="fas fa-box"></i>
+                                                ) : (
+                                                    <i className="fas fa-archive"></i>
+                                                )}
+                                            </button>
 
                                             <small className="cus-tooltip-msg">
                                                 {isSelling

@@ -6,9 +6,7 @@ const CreateShopPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
-            <div className="account-create-new-shop-page">
-                <UserCreateShopForm />
-            </div>
+            <UserCreateShopForm />
         </AccountLayout>
     );
 };

@@ -11,7 +11,7 @@ const ConfirmDialog = ({
     };
 
     return (
-        <div className="confirm-dialog-wrap">
+        <div className="fixed-top">
             <div
                 className="modal fade show"
                 tabIndex="-1"
@@ -23,7 +23,7 @@ const ConfirmDialog = ({
                     animation: 'show 0.6s ease',
                 }}
             >
-                <div className="modal-dialog" style={{ zIndex: '5' }}>
+                <div className="modal-dialog" style={{ zIndex: '9999' }}>
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className={`modal-title text-${color}`}>

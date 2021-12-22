@@ -80,7 +80,7 @@ const AdminUsersTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-users-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {heading && <h4 className="mb-3">Users in the system</h4>}
@@ -92,100 +92,106 @@ const AdminUsersTable = ({ heading = true }) => {
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-users-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="User"
-                                sortBy="firstname"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Id card"
-                                sortBy="id_card"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Email"
-                                sortBy="email"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Phone"
-                                sortBy="phone"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Joined"
-                                sortBy="createdAt"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="User"
+                                    sortBy="firstname"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td
-                                className="text-start ps-4"
-                                style={{ maxWidth: '360px' }}
-                            >
-                                <UserSmallCard user={user} />
-                            </td>
-                            <td>
-                                <small>{user.id_card || '-'}</small>
-                            </td>
-                            <td>
-                                <small>{user.email || '-'}</small>
-                            </td>
-                            <td>
-                                <small>{user.phone || '-'}</small>
-                            </td>
-                            <td>
-                                <small>
-                                    {humanReadableDate(user.createdAt)}
-                                </small>
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Id card"
+                                    sortBy="id_card"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Email"
+                                    sortBy="email"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Phone"
+                                    sortBy="phone"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Joined"
+                                    sortBy="createdAt"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {users.map((user, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td
+                                    className="text-start ps-4"
+                                    style={{ maxWidth: '360px' }}
+                                >
+                                    <UserSmallCard user={user} />
+                                </td>
+                                <td>
+                                    <small>{user.id_card || '-'}</small>
+                                </td>
+                                <td>
+                                    <small>{user.email || '-'}</small>
+                                </td>
+                                <td>
+                                    <small>{user.phone || '-'}</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {humanReadableDate(user.createdAt)}
+                                    </small>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

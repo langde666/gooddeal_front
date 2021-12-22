@@ -7,16 +7,17 @@ const VendorAddProductImagesItem = ({
     storeId = '',
     onRun,
 }) => (
-    <div className="add-product-image-item position-relative d-inline-block">
+    <div className="position-relative d-inline-block">
         <div className="cus-tooltip">
             <button
                 type="button"
                 disabled={count >= 6 ? true : false}
-                className="btn btn-primary ripple text-nowrap btn-sm"
+                className="btn btn-primary ripple text-nowrap"
                 data-bs-toggle="modal"
                 data-bs-target="#add-product-image-form"
             >
-                <i className="fas fa-plus-circle me-2"></i>New product Image
+                <i className="fas fa-plus-circle"></i>
+                <span className="res-hide ms-2">New Image</span>
             </button>
 
             {count < 6 && (

@@ -9,7 +9,8 @@ const AdminCreateCommissionItem = ({ onRun = () => {} }) => (
             data-bs-toggle="modal"
             data-bs-target="#admin-create-commission-form"
         >
-            <i className="fas fa-plus-circle me-2"></i>New commission
+            <i className="fas fa-plus-circle"></i>
+            <span className="ms-2 res-hide">New commission</span>
         </button>
 
         <Modal

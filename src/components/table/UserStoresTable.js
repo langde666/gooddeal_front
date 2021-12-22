@@ -217,7 +217,7 @@ const UserStoresTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block me-2">
+                                    {/* <div className="position-relative d-inline-block me-2">
                                         <div className="cus-tooltip d-inline-block text-start">
                                             <OpenCloseStoreButton
                                                 storeId={store._id}
@@ -234,7 +234,7 @@ const UserStoresTable = ({ heading = true }) => {
                                                 ? 'Click to close shop'
                                                 : 'Click to open shop'}
                                         </small>
-                                    </div>
+                                    </div> */}
                                     <div className="position-relative d-inline-block">
                                         <Link
                                             type="button"

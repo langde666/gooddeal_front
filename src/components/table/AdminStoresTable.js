@@ -93,7 +93,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
     };
 
     return (
-        <div className="admin-stores-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {heading && (
@@ -109,127 +109,135 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-stores-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Store"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Rating"
-                                sortBy="rating"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isOpen"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Commission"
-                                sortBy="commissionId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Joined"
-                                sortBy="createdAt"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {stores.map((store, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Store"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td
-                                className="text-start ps-2"
-                                style={{ maxWidth: '300px' }}
-                            >
-                                <StoreSmallCard store={store} />
-                            </td>
-                            <td>
-                                <small>
-                                    <StarRating stars={store.rating} />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    <StoreStatusLabel isOpen={store.isOpen} />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    <StoreCommissionLabel
-                                        commission={store.commissionId}
-                                    />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    {humanReadableDate(store.createdAt)}
-                                </small>
-                            </td>
-                            <td>
-                                <div className="position-relative d-inline-block">
-                                    <div className="cus-tooltip d-inline-block text-start">
-                                        <ActiveInactiveStoreButton
-                                            storeId={store._id}
-                                            isActive={store.isActive}
-                                            onRun={() => setRun(!run)}
-                                        />
-                                    </div>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Rating"
+                                    sortBy="rating"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isOpen"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Commission"
+                                    sortBy="commissionId"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Joined"
+                                    sortBy="createdAt"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
 
-                                    <small className="cus-tooltip-msg">
-                                        {isActive
-                                            ? 'Ban this store'
-                                            : 'Liscense this store'}
-                                    </small>
-                                </div>
-                            </td>
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {stores.map((store, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td
+                                    className="text-start ps-2"
+                                    style={{ maxWidth: '300px' }}
+                                >
+                                    <StoreSmallCard store={store} />
+                                </td>
+                                <td>
+                                    <small>
+                                        <StarRating stars={store.rating} />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        <StoreStatusLabel
+                                            isOpen={store.isOpen}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        <StoreCommissionLabel
+                                            commission={store.commissionId}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {humanReadableDate(store.createdAt)}
+                                    </small>
+                                </td>
+                                <td>
+                                    <div className="position-relative d-inline-block">
+                                        <div className="cus-tooltip d-inline-block text-start">
+                                            <ActiveInactiveStoreButton
+                                                storeId={store._id}
+                                                isActive={store.isActive}
+                                                onRun={() => setRun(!run)}
+                                            />
+                                        </div>
+
+                                        <small className="cus-tooltip-msg">
+                                            {isActive
+                                                ? 'Ban this store'
+                                                : 'Liscense this store'}
+                                        </small>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

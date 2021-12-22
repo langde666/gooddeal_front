@@ -92,7 +92,7 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
     };
 
     return (
-        <div className="admin-products-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {heading && (
@@ -108,129 +108,129 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                 <div className="option-wrap d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-products-manager-table table align-middle table-hover table-bordered mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Product"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Store"
-                                sortBy="storeId"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Rating"
-                                sortBy="rating"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isSelling"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Created at"
-                                sortBy="createdAt"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Product"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td
-                                className="text-start ps-2"
-                                style={{ maxWidth: '300px' }}
-                            >
-                                <ProductSmallCard product={product} />
-                            </td>
-                            <td
-                                className="text-start ps-2"
-                                style={{ maxWidth: '300px' }}
-                            >
-                                <StoreSmallCard store={product.storeId} />
-                            </td>
-                            <td>
-                                <small>
-                                    <StarRating stars={product.rating} />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    <ProductStatusLabel
-                                        isSelling={product.isSelling}
-                                    />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    {humanReadableDate(product.createdAt)}
-                                </small>
-                            </td>
-                            <td>
-                                <div className="position-relative d-inline-block">
-                                    <div className="cus-tooltip d-inline-block text-start">
-                                        <ActiveInactiveProductButton
-                                            productId={product._id}
-                                            isActive={product.isActive}
-                                            onRun={() => setRun(!run)}
-                                        />
-                                    </div>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Store"
+                                    sortBy="storeId"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Rating"
+                                    sortBy="rating"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isSelling"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
 
-                                    <small className="cus-tooltip-msg">
-                                        {isActive
-                                            ? 'Ban this product'
-                                            : 'Liscense this product'}
-                                    </small>
-                                </div>
-                            </td>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Created at"
+                                    sortBy="createdAt"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products.map((product, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td className="text-start">
+                                    <ProductSmallCard product={product} />
+                                </td>
+                                <td className="text-start">
+                                    <StoreSmallCard store={product.storeId} />
+                                </td>
+                                <td>
+                                    <small>
+                                        <StarRating stars={product.rating} />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        <ProductStatusLabel
+                                            isSelling={product.isSelling}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {humanReadableDate(product.createdAt)}
+                                    </small>
+                                </td>
+                                <td>
+                                    <div className="position-relative d-inline-block">
+                                        <div className="cus-tooltip d-inline-block text-start">
+                                            <ActiveInactiveProductButton
+                                                productId={product._id}
+                                                isActive={product.isActive}
+                                                onRun={() => setRun(!run)}
+                                            />
+                                        </div>
+
+                                        <small className="cus-tooltip-msg">
+                                            {isActive
+                                                ? 'Ban this product'
+                                                : 'Liscense this product'}
+                                        </small>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             {pagination.size != 0 && (
                 <Pagination

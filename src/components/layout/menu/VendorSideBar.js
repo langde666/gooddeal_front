@@ -7,7 +7,7 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
     const path = useLocation().pathname.split('/')[2];
 
     return (
-        <div className="vendor-sidebar sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded res-account-sidebar">
+        <div className="sticky-sidebar d-flex flex-column flex-shrink-0 p-3 shadow bg-body rounded res-account-sidebar">
             <ul className="nav nav-pills flex-column mb-auto">
                 <div className="position-relative mx-auto mb-4 res-hide-xl">
                     <Avatar
@@ -59,6 +59,7 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                         className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple link-dark ${
                             path == store._id ? 'active' : ''
                         }`}
+                        style={{ height: '48px' }}
                     >
                         <i className="fas fa-chart-pie"></i>
                         <span className="ms-3 res-hide-xl">Dashboard</span>

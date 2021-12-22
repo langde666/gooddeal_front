@@ -10,12 +10,7 @@ const EditProductPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-edit-product-page">
-                <VendorEditProductForm
-                    storeId={store._id}
-                    productId={productId}
-                />
-            </div>
+            <VendorEditProductForm storeId={store._id} productId={productId} />
         </VendorLayout>
     );
 };

@@ -3,9 +3,9 @@ import VendorAddProductImagesItem from '../../item/VendorAddProductImagesItem';
 
 const VendorEditProductImagesForm = ({ product = {}, storeId = '', onRun }) => {
     return (
-        <div className="edit-profile-product-form-wrap position-relative">
+        <div className="position-relative">
             <form
-                className="edit-profile-product-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row"
                 onSubmit={(e) => e.preventDefault()}
             >
                 <div className="col-12 bg-primary p-3">
@@ -26,7 +26,7 @@ const VendorEditProductImagesForm = ({ product = {}, storeId = '', onRun }) => {
                     />
                 </div>
 
-                <div className="col-12 px-4 d-flex justify-content-start align-items-end">
+                <div className="col-12 px-4 mb-4 d-flex flex-wrap justify-content-start align-items-end">
                     {product.listImages &&
                         product.listImages.map((img, index) => {
                             if (index === 0) return;
@@ -53,15 +53,17 @@ const VendorEditProductImagesForm = ({ product = {}, storeId = '', onRun }) => {
                                 </div>
                             );
                         })}
-                </div>
 
-                <div className="col-12 px-4 mb-2">
-                    <VendorAddProductImagesItem
-                        count={product.listImages && product.listImages.length}
-                        productId={product._id}
-                        storeId={storeId}
-                        onRun={onRun}
-                    />
+                    <div className="my-2">
+                        <VendorAddProductImagesItem
+                            count={
+                                product.listImages && product.listImages.length
+                            }
+                            productId={product._id}
+                            storeId={storeId}
+                            onRun={onRun}
+                        />
+                    </div>
                 </div>
             </form>
         </div>

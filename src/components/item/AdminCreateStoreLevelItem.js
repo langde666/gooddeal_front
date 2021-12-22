@@ -9,7 +9,8 @@ const AdminCreateStoreLevelItem = ({ onRun = () => {} }) => (
             data-bs-toggle="modal"
             data-bs-target="#admin-create-level-form"
         >
-            <i className="fas fa-plus-circle me-2"></i>New level
+            <i className="fas fa-plus-circle"></i>
+            <span className="ms-2 res-hide">New level</span>
         </button>
 
         <Modal

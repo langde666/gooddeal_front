@@ -168,7 +168,7 @@ const AdminCommissionTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-commissions-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -215,155 +215,163 @@ const AdminCommissionTable = ({ heading = true }) => {
                         <AdminCreateCommissionItem onRun={() => setRun(!run)} />
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-commissions-manager-table table align-middle table-hover mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Commission"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Cost"
-                                sortBy="cost"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Description"
-                                sortBy="description"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isDeleted"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {commissions.map((commission, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Commission"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td>
-                                <small>
-                                    <StoreCommissionLabel
-                                        commission={commission}
-                                    />
-                                </small>
-                            </td>
-                            <td>
-                                <small>
-                                    {commission.cost &&
-                                        commission.cost.$numberDecimal}
-                                    %
-                                </small>
-                            </td>
-                            <td>
-                                <div
-                                    style={{
-                                        width: '300px',
-                                        maxHeight: '200px',
-                                        overflow: 'auto',
-                                    }}
-                                >
-                                    <small>{commission.description}</small>
-                                </div>
-                            </td>
-                            <td>
-                                <small>
-                                    {commission.isDeleted && <DeletedLabel />}
-                                </small>
-                            </td>
-                            <td>
-                                <div className="position-relative d-inline-block me-2">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#edit-commission-form"
-                                        onClick={() =>
-                                            handleEditCommission(commission)
-                                        }
-                                    >
-                                        <i className="fas fa-pen"></i>
-                                    </button>
-                                    <small className="cus-tooltip-msg">
-                                        Edit commission
-                                    </small>
-                                </div>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Cost"
+                                    sortBy="cost"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Description"
+                                    sortBy="description"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isDeleted"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
 
-                                {!commission.isDeleted ? (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveCommission(
-                                                    commission,
-                                                )
-                                            }
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove commission
-                                        </small>
-                                    </div>
-                                ) : (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRestoreCommission(
-                                                    commission,
-                                                )
-                                            }
-                                        >
-                                            <i className="fas fa-trash-restore-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Restore commission
-                                        </small>
-                                    </div>
-                                )}
-                            </td>
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {commissions.map((commission, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td>
+                                    <small>
+                                        <StoreCommissionLabel
+                                            commission={commission}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {commission.cost &&
+                                            commission.cost.$numberDecimal}
+                                        %
+                                    </small>
+                                </td>
+                                <td>
+                                    <div
+                                        style={{
+                                            width: '300px',
+                                            maxHeight: '200px',
+                                            overflow: 'auto',
+                                        }}
+                                    >
+                                        <small>{commission.description}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <small>
+                                        {commission.isDeleted && (
+                                            <DeletedLabel />
+                                        )}
+                                    </small>
+                                </td>
+                                <td>
+                                    <div className="position-relative d-inline-block me-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#edit-commission-form"
+                                            onClick={() =>
+                                                handleEditCommission(commission)
+                                            }
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                        </button>
+                                        <small className="cus-tooltip-msg">
+                                            Edit commission
+                                        </small>
+                                    </div>
+
+                                    {!commission.isDeleted ? (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemoveCommission(
+                                                        commission,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove commission
+                                            </small>
+                                        </div>
+                                    ) : (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-primary ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRestoreCommission(
+                                                        commission,
+                                                    )
+                                                }
+                                            >
+                                                <i className="fas fa-trash-restore-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Restore commission
+                                            </small>
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Modal
                 id="edit-commission-form"

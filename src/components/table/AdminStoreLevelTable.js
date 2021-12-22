@@ -168,7 +168,7 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     };
 
     return (
-        <div className="admin-store-levels-manager-table-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -211,153 +211,161 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                         <AdminCreateStoreLevelItem onRun={() => setRun(!run)} />
                     </div>
                 </div>
-                <span className="me-2">{pagination.size || 0} results</span>
+                <span className="me-2 text-nowrap res-hide">
+                    {pagination.size || 0} results
+                </span>
             </div>
 
-            <table className="admin-store-levels-manager-table table align-middle table-hover mt-2 table-sm text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="store level"
-                                sortBy="name"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Floor point"
-                                sortBy="minPoint"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Discount"
-                                sortBy="discount"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Color"
-                                sortBy="color"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-                        <th scope="col">
-                            <SortByButton
-                                currentOrder={filter.order}
-                                currentSortBy={filter.sortBy}
-                                title="Status"
-                                sortBy="isDeleted"
-                                onSet={(order, sortBy) =>
-                                    handleSetSortBy(order, sortBy)
-                                }
-                            />
-                        </th>
-
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody className="text-center">
-                    {levels.map((level, index) => (
-                        <tr key={index}>
-                            <th scope="row">
-                                {index + 1 + (filter.page - 1) * filter.limit}
+            <div className="table-scroll my-2">
+                <table className="table align-middle table-hover table-sm text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="store level"
+                                    sortBy="name"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
                             </th>
-                            <td>
-                                <small>
-                                    <StoreLevelLabel level={level} />
-                                </small>
-                            </td>
-                            <td>
-                                <small>{level.minPoint}</small>
-                            </td>
-                            <td>
-                                <small>
-                                    {level.discount &&
-                                        level.discount.$numberDecimal}
-                                    %
-                                </small>
-                            </td>
-                            <td>
-                                <small>{level.color}</small>
-                            </td>
-                            <td>
-                                <small>
-                                    {level.isDeleted && <DeletedLabel />}
-                                </small>
-                            </td>
-                            <td>
-                                <div className="position-relative d-inline-block me-2">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary ripple cus-tooltip"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#edit-level-form"
-                                        onClick={() => handleEditLevel(level)}
-                                    >
-                                        <i className="fas fa-pen"></i>
-                                    </button>
-                                    <small className="cus-tooltip-msg">
-                                        Edit Level
-                                    </small>
-                                </div>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Floor point"
+                                    sortBy="minPoint"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Discount"
+                                    sortBy="discount"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Color"
+                                    sortBy="color"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
+                                    title="Status"
+                                    sortBy="isDeleted"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
 
-                                {!level.isDeleted ? (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRemoveLevel(level)
-                                            }
-                                        >
-                                            <i className="fas fa-trash-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Remove level
-                                        </small>
-                                    </div>
-                                ) : (
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-primary ripple cus-tooltip"
-                                            onClick={() =>
-                                                handleRestoreLevel(level)
-                                            }
-                                        >
-                                            <i className="fas fa-trash-restore-alt"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Restore level
-                                        </small>
-                                    </div>
-                                )}
-                            </td>
+                            <th scope="col"></th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="text-center">
+                        {levels.map((level, index) => (
+                            <tr key={index}>
+                                <th scope="row">
+                                    {index +
+                                        1 +
+                                        (filter.page - 1) * filter.limit}
+                                </th>
+                                <td>
+                                    <small>
+                                        <StoreLevelLabel level={level} />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>{level.minPoint}</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {level.discount &&
+                                            level.discount.$numberDecimal}
+                                        %
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>{level.color}</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        {level.isDeleted && <DeletedLabel />}
+                                    </small>
+                                </td>
+                                <td>
+                                    <div className="position-relative d-inline-block me-2">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary ripple cus-tooltip"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#edit-level-form"
+                                            onClick={() =>
+                                                handleEditLevel(level)
+                                            }
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                        </button>
+                                        <small className="cus-tooltip-msg">
+                                            Edit Level
+                                        </small>
+                                    </div>
+
+                                    {!level.isDeleted ? (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRemoveLevel(level)
+                                                }
+                                            >
+                                                <i className="fas fa-trash-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Remove level
+                                            </small>
+                                        </div>
+                                    ) : (
+                                        <div className="position-relative d-inline-block">
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-primary ripple cus-tooltip"
+                                                onClick={() =>
+                                                    handleRestoreLevel(level)
+                                                }
+                                            >
+                                                <i className="fas fa-trash-restore-alt"></i>
+                                            </button>
+                                            <small className="cus-tooltip-msg">
+                                                Restore level
+                                            </small>
+                                        </div>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Modal id="edit-level-form" hasCloseBtn={false} title="Edit Level">
                 <AdminEditStoreLevelForm

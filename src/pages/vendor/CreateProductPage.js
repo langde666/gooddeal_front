@@ -8,9 +8,7 @@ const CreateProductPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="vendor-create-product-page">
-                <VendorCreateProductForm storeId={store._id} />
-            </div>
+            <VendorCreateProductForm storeId={store._id} />
         </VendorLayout>
     );
 };

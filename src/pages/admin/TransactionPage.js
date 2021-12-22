@@ -6,9 +6,7 @@ const TransactionPage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AdminLayout user={user}>
-            <div className="admin-styles-manager-page">
-                <TransactionsTable />
-            </div>
+            <TransactionsTable />
         </AdminLayout>
     );
 };
