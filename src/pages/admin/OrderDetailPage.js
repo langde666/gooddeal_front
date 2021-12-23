@@ -8,18 +8,16 @@ const OrderDetailPage = (props) => {
     const { orderId } = useParams();
     return (
         <AdminLayout user={user}>
-            <div className="admin-users-manager-page mt-2">
-                <OrderDetailInfo orderId={orderId} by="admin" />
+            <OrderDetailInfo orderId={orderId} by="admin" isEditable={true} />
 
-                <div className="mt-4">
-                    <Link
-                        to="/admin/order"
-                        className="text-decoration-none cus-link-hover"
-                    >
-                        <i className="fas fa-arrow-circle-left"></i> Back to
-                        Orders Manager
-                    </Link>
-                </div>
+            <div className="mt-4">
+                <Link
+                    to="/admin/order"
+                    className="text-decoration-none cus-link-hover"
+                >
+                    <i className="fas fa-arrow-circle-left"></i> Back to Orders
+                    Manager
+                </Link>
             </div>
         </AdminLayout>
     );

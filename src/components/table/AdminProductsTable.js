@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
-import { listProductsForAdmin } from '../../apis/product';
+import {
+    listProductsForAdmin,
+    activeProduct as activeOrInactive,
+} from '../../apis/product';
 import { humanReadableDate } from '../../helper/humanReadable';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import SortByButton from './sub/SortByButton';
 import ProductSmallCard from '../card/ProductSmallCard';
 import StoreSmallCard from '../card/StoreSmallCard';
-import ActiveInactiveProductButton from '../button/ActiveInactiveProductButton';
 import ProductStatusLabel from '../label/ProductStatusLabel';
 import StarRating from '../label/StarRating';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
+import ConfirmDialog from '../ui/ConfirmDialog';
 
 const AdminProductsTable = ({ heading = true, isActive = true }) => {
     const [isloading, setIsLoading] = useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [run, setRun] = useState('');
 
@@ -30,6 +34,8 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
         limit: 6,
         page: 1,
     });
+
+    const [activeProduct, setActiveProduct] = useState({});
 
     const { _id, accessToken } = getToken();
 
@@ -91,10 +97,39 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
         });
     };
 
+    const handleActiveProduct = (product) => {
+        setActiveProduct(product);
+        setIsConfirming(true);
+    };
+
+    const onSubmit = () => {
+        setError('');
+        setIsLoading(true);
+        const value = { isActive: !activeProduct.isActive };
+        activeOrInactive(_id, accessToken, value, activeProduct._id)
+            .then((data) => {
+                if (data.error) {
+                    setError(data.error);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setError('');
+                    }, 3000);
+                } else {
+                    setIsLoading(false);
+                    setRun(!run);
+                }
+            })
+            .catch((error) => {
+                setError('Server Error');
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                }, 3000);
+            });
+    };
+
     return (
         <div className="position-relative">
-            {isloading && <Loading />}
-
             {heading && (
                 <h4 className="mb-3">
                     {isActive ? 'Liscensed products' : 'Unlicensed products'}
@@ -103,6 +138,18 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
+            {isConfirming && (
+                <ConfirmDialog
+                    title={
+                        !activeProduct.isActive
+                            ? 'Liscense this product'
+                            : 'Ban this product'
+                    }
+                    color={!activeProduct.isActive ? 'primary' : 'danger'}
+                    onSubmit={onSubmit}
+                    onClose={() => setIsConfirming(false)}
+                />
+            )}
 
             <div className="d-flex justify-content-between align-items-end">
                 <div className="option-wrap d-flex align-items-center">
@@ -211,13 +258,23 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                                 </td>
                                 <td>
                                     <div className="position-relative d-inline-block">
-                                        <div className="cus-tooltip d-inline-block text-start">
-                                            <ActiveInactiveProductButton
-                                                productId={product._id}
-                                                isActive={product.isActive}
-                                                onRun={() => setRun(!run)}
-                                            />
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className={`btn ${
+                                                !product.isActive
+                                                    ? 'btn-outline-primary'
+                                                    : 'btn-outline-danger'
+                                            } ripple cus-tooltip`}
+                                            onClick={() =>
+                                                handleActiveProduct(product)
+                                            }
+                                        >
+                                            {!product.isActive ? (
+                                                <i className="far fa-check-circle"></i>
+                                            ) : (
+                                                <i className="fas fa-ban"></i>
+                                            )}
+                                        </button>
 
                                         <small className="cus-tooltip-msg">
                                             {isActive

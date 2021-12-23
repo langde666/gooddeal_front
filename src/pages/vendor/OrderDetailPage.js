@@ -14,6 +14,7 @@ const OrderDetailPage = (props) => {
                     orderId={orderId}
                     storeId={storeId}
                     by="store"
+                    isEditable={true}
                 />
 
                 <div className="mx-4">

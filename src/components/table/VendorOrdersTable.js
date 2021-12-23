@@ -9,7 +9,6 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
-import VendorUpdateOrderStatus from '../button/VendorUpdateOrderStatus';
 import UserSmallCard from '../card/UserSmallCard';
 
 const StoreOrdersTable = ({
@@ -20,7 +19,6 @@ const StoreOrdersTable = ({
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
 
     const [orders, setOrders] = useState([]);
     const [pagination, setPagination] = useState({
@@ -69,7 +67,7 @@ const StoreOrdersTable = ({
 
     useEffect(() => {
         init();
-    }, [filter, storeId, run]);
+    }, [filter, storeId]);
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -260,20 +258,6 @@ const StoreOrdersTable = ({
                                             status={order.status}
                                         />
                                     </small>
-
-                                    {isEditable &&
-                                        (order.status === 'Not processed' ||
-                                            order.status === 'Processing') && (
-                                            <div className="text-nowrap mt-1">
-                                                <VendorUpdateOrderStatus
-                                                    storeId={storeId}
-                                                    orderId={order._id}
-                                                    detail={false}
-                                                    status={order.status}
-                                                    onRun={() => setRun(!run)}
-                                                />
-                                            </div>
-                                        )}
                                 </td>
                                 <td>
                                     <div className="position-relative d-inline-block">
@@ -283,7 +267,7 @@ const StoreOrdersTable = ({
                                                 className="btn btn-primary ripple cus-tooltip"
                                                 to={`/vendor/orders/detail/${order._id}/${storeId}`}
                                             >
-                                                <i className="fas fa-list-ul"></i>
+                                                <i className="fas fa-info-circle"></i>
                                             </Link>
                                             <small className="cus-tooltip-msg">
                                                 View order detail

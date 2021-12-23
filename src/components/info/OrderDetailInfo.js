@@ -14,9 +14,17 @@ import Paragraph from '../ui/Paragraph';
 import UserSmallCard from '../card/UserSmallCard';
 import StoreSmallCard from '../card/StoreSmallCard';
 import ListOrderItems from '../list/ListOrderItems';
+import VendorUpdateOrderStatus from '../button/VendorUpdateOrderStatus';
+import AdminUpdateOrderStatus from '../button/AdminUpdateOrderStatus';
 
-const OrderDetailInfo = ({ orderId = '', storeId = '', by = 'user' }) => {
+const OrderDetailInfo = ({
+    orderId = '',
+    storeId = '',
+    by = 'user',
+    isEditable = false,
+}) => {
     const [isloading, setIsLoading] = useState(false);
+    const [run, setRun] = useState(false);
     const [error, setError] = useState('');
 
     const [order, setOrder] = useState({});
@@ -63,17 +71,52 @@ const OrderDetailInfo = ({ orderId = '', storeId = '', by = 'user' }) => {
 
     useEffect(() => {
         init();
-    }, [orderId, storeId, by]);
+    }, [orderId, storeId, by, run]);
 
     return (
         <div className="position-relative">
             {isloading && <Loading />}
 
-            <div className="mb-3 d-flex flex-wrap justify-content-start align-items-center">
-                <h4 className="mx-4 mb-0">Order #{order._id}</h4>
-                <span className="fs-6 mx-4">
-                    <OrderStatusLabel status={order.status} />
-                </span>
+            <div className="d-flex flex-wrap justify-content-start align-items-center">
+                <h4 className="mx-4">Order #{order._id}</h4>
+
+                {(!isEditable ||
+                    (isEditable &&
+                        by === 'store' &&
+                        order.status !== 'Not processed' &&
+                        order.status !== 'Processing') ||
+                    (isEditable &&
+                        by === 'admin' &&
+                        order.status !== 'Shipped')) && (
+                    <span className="fs-6 mx-4 mb-2">
+                        <OrderStatusLabel status={order.status} />
+                    </span>
+                )}
+
+                {isEditable &&
+                    by === 'store' &&
+                    (order.status === 'Not processed' ||
+                        order.status === 'Processing') && (
+                        <div className="mx-4 mb-2">
+                            <VendorUpdateOrderStatus
+                                storeId={storeId}
+                                orderId={orderId}
+                                status={order.status}
+                                onRun={() => setRun(!run)}
+                            />
+                        </div>
+                    )}
+
+                {isEditable && by === 'admin' && order.status === 'Shipped' && (
+                    <div className="mx-4 mb-2">
+                        <AdminUpdateOrderStatus
+                            storeId={storeId}
+                            orderId={orderId}
+                            status={order.status}
+                            onRun={() => setRun(!run)}
+                        />
+                    </div>
+                )}
             </div>
 
             {error && <Error msg={error} />}

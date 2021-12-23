@@ -20,8 +20,6 @@ const AdminOrdersTable = ({
 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
-
     const [orders, setOrders] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
@@ -68,7 +66,7 @@ const AdminOrdersTable = ({
 
     useEffect(() => {
         init();
-    }, [filter, run]);
+    }, [filter]);
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -277,17 +275,6 @@ const AdminOrdersTable = ({
                                             status={order.status}
                                         />
                                     </small>
-
-                                    {isEditable && order.status === 'Shipped' && (
-                                        <div className="text-nowrap mt-1">
-                                            <AdminUpdateOrderStatus
-                                                orderId={order._id}
-                                                detail={false}
-                                                status={order.status}
-                                                onRun={() => setRun(!run)}
-                                            />
-                                        </div>
-                                    )}
                                 </td>
                                 <td>
                                     <div className="position-relative d-inline-block">
@@ -297,7 +284,7 @@ const AdminOrdersTable = ({
                                                 className="btn btn-primary ripple cus-tooltip"
                                                 to={`/admin/order/detail/${order._id}`}
                                             >
-                                                <i className="fas fa-list-ul"></i>
+                                                <i className="fas fa-info-circle"></i>
                                             </Link>
                                             <small className="cus-tooltip-msg">
                                                 View order detail

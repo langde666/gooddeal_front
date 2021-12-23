@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Avatar from '../../image/Avatar';
 import ManagerRoleLabel from '../../label/ManagerRoleLabel';
 import StoreLicenseLabel from '../../label/StoreLicenseLabel';
+import OpenCloseStoreButton from '../../button/OpenCloseStoreButton';
 
 const VendorSideBar = ({ user = {}, store = {} }) => {
     const path = useLocation().pathname.split('/')[2];

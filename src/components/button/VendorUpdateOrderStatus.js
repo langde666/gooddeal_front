@@ -55,7 +55,7 @@ const VendorUpdateOrderStatusButton = ({
     };
 
     return (
-        <div className="user-cancel-order-button-wrap position-relative">
+        <div className="position-relative">
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (
