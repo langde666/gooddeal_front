@@ -118,11 +118,15 @@ const TransactionsTable = ({
                     {by !== 'admin' && (
                         <>
                             <EWalletInfo eWallet={eWallet} />
-                            {/* {owner && userId == owner._id && (
-                            <div className="ms-4">
-                                <CreateTransactionItem storeId={storeId} eWallet={eWallet} onRun={() => setRun(!run)} />
-                            </div>
-                            )} */}
+                            {owner && userId == owner._id && (
+                                <div className="ms-4">
+                                    <CreateTransactionItem
+                                        storeId={storeId}
+                                        eWallet={eWallet}
+                                        onRun={() => setRun(!run)}
+                                    />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

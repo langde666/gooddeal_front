@@ -11,7 +11,8 @@ const CreateTransactionItem = ({ eWallet = 0, storeId = '', onRun }) => (
                 data-bs-toggle="modal"
                 data-bs-target="#create-transaction-form"
             >
-                <i className="fas fa-arrow-circle-up me-2"></i>Withdraw
+                <i className="fas fa-comment-dollar"></i>
+                <span className="ms-2 res-hide">Withdraw</span>
             </button>
 
             {eWallet > 0 && (

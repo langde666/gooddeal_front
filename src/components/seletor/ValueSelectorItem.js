@@ -52,9 +52,13 @@ const ValueSelectorItem = ({
                     <button
                         key={index}
                         type="button"
-                        className={`btn btn-sm border ms-2 mt-2 ${
+                        className={`btn btn-sm ms-2 mt-2 ${
                             isEditable && 'ripple'
-                        } ${selectedValue._id === value._id && 'btn-primary'}`}
+                        } ${
+                            selectedValue._id === value._id
+                                ? 'btn-primary'
+                                : 'btn-outline-primary'
+                        } cus-btn-style`}
                         disabled={!isEditable}
                         onClick={() => handleChoose(value)}
                     >

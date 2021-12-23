@@ -41,7 +41,7 @@ export const createTransactionByStore = (
     storeId,
 ) => {
     return fetch(`${API}/transaction/create/by/store/${storeId}/${userId}`, {
-        method: 'PUT',
+        method: 'POST',
         mode: 'cors',
         headers: {
             Accept: 'application/json',

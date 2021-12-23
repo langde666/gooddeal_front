@@ -20,8 +20,8 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
     const { _id: userId, accessToken } = getToken();
 
     const [transaction, setTransaction] = useState({
-        isUp: false,
-        amount: 1000,
+        isUp: 'false',
+        amount: 50000,
         currentPassword: '',
         isValidAmount: true,
         isValidCurrentPassword: true,
@@ -81,7 +81,6 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
 
         createTransactionByStore(userId, accessToken, transaction, storeId)
             .then((data) => {
-                console.log(data);
                 if (data.error) {
                     setError(data.error);
                     setIsLoading(false);
@@ -91,15 +90,14 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
                 } else {
                     setTransaction({
                         ...transaction,
-                        amount: 1000,
+                        amount: 50000,
                         currentPassword: '',
                         isValidAmount: true,
                         isValidCurrentPassword: true,
                     });
 
                     updateDispatch('vendor', data.store);
-
-                    setSuccess(data.success);
+                    setSuccess('Withdraw successfully!');
                     setIsLoading(false);
                     setTimeout(() => {
                         setSuccess('');
@@ -107,8 +105,6 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
                 }
             })
             .catch((error) => {
-                console.log(error);
-
                 setError('Server error');
                 setIsLoading(false);
                 setTimeout(() => {
@@ -118,7 +114,7 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
     };
 
     return (
-        <div className="create-trasaction-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -129,10 +125,7 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
                 />
             )}
 
-            <form
-                className="create-trasaction-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="number"
