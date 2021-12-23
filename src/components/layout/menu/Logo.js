@@ -1,7 +1,7 @@
 const Logo = ({ noBackground = false }) => (
     <div className="logo d-inline-block d-flex flex-nowrap align-items-end">
         <h1
-            className={`logo m-0 p-1 noselect rounded ${
+            className={`logo m-0 noselect rounded ${
                 !noBackground ? 'bg-primary text-white' : 'bg-body text-primary'
             }`}
         >

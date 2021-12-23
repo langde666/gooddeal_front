@@ -1,4 +1,5 @@
 import MainNav from './menu/MainNav';
+import Footer from './menu/Footer';
 
 const MainLayout = ({
     container = 'container-lg',
@@ -10,9 +11,7 @@ const MainLayout = ({
 
         <main className={`body ${container}`}>{children}</main>
 
-        {/* <footer className="bg-primary mt-4" style={{ height: '50vh', display: 'block' }}>
-                footer
-            </footer> */}
+        <Footer />
     </div>
 );
 
