@@ -74,12 +74,14 @@ const DropDownMenu = ({
             >
                 <span
                     className={`d-inline-flex justify-content-start align-items-center ${
-                        size == 'large' ? 'flex-grow-1 text-start ps-2' : ''
+                        size == 'large' ? 'flex-grow-1 text-start' : ''
                     }`}
                 >
-                    {selectedItem && <span>{selectedItem.icon}</span>}
+                    {selectedItem && selectedItem.icon && (
+                        <span className="me-2">{selectedItem.icon}</span>
+                    )}
                     <span
-                        className={`ms-2 ${
+                        className={`${
                             selectedItem && selectedItem.icon && 'res-hide'
                         }`}
                     >

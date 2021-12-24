@@ -27,7 +27,7 @@ const Modal = ({
                             )}
 
                             {subTitle && (
-                                <p className="modal-title ms-2 fw-light">
+                                <p className="modal-title fw-light">
                                     {subTitle}
                                 </p>
                             )}

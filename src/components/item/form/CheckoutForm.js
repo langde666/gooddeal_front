@@ -196,7 +196,7 @@ const CheckoutForm = ({
     };
 
     return (
-        <div className="create-order-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
@@ -207,17 +207,15 @@ const CheckoutForm = ({
             )}
 
             <form
-                className="create-order-form border border-primary rounded-3 row mb-2"
+                className="border border-primary rounded-3 row mb-2"
                 onSubmit={handleSubmit}
             >
                 <div className="col-12 bg-primary p-3">
                     <Logo />
-                    <p className="text-white ms-2 fw-light">
-                        Proceed to checkout
-                    </p>
+                    <p className="text-white fw-light">Proceed to checkout</p>
                 </div>
 
-                <div className="col-12">
+                <div className="col-xl-8 col-md-6">
                     <div className="row">
                         <div className="col-12 mt-2 d-flex justify-content-between align-items-end">
                             <div className="flex-grow-1">
@@ -287,6 +285,7 @@ const CheckoutForm = ({
                                     size="large"
                                     label="Address"
                                 />
+
                                 {addresses && addresses.length <= 0 && (
                                     <small
                                         style={{
@@ -298,15 +297,20 @@ const CheckoutForm = ({
                                     </small>
                                 )}
                             </div>
-                            <div className="mb-2 ms-4">
-                                <UserAddAddressItem
-                                    count={addresses && addresses.length}
-                                    detail={false}
-                                />
+                            <div className="mb-2 ms-4 position-relative">
+                                <div className="d-inline-block cus-tooltip">
+                                    <UserAddAddressItem
+                                        count={addresses && addresses.length}
+                                        detail={false}
+                                    />
+                                </div>
+                                <small className="cus-tooltip-msg">
+                                    Add your address
+                                </small>
                             </div>
                         </div>
 
-                        <div className="col-12 mt-2">
+                        <div className="col-12 mt-4">
                             {error1 && <Error msg={error1} />}
                             {!error1 && (
                                 <DropDownMenu
@@ -353,77 +357,98 @@ const CheckoutForm = ({
                     </div>
                 </div>
 
-                <div className="col-12 d-flex flex-column align-items-end">
-                    <dl className="row">
-                        <dt className="col-3">Product's total</dt>
-                        <dd className="col-9 d-flex justify-content-between align-items-end">
-                            <div>
-                                <p className="text-decoration-line-through text-muted">
-                                    {formatPrice(order.totalPrice)} VND
-                                </p>
+                <div className="col-xl-4 col-md-6">
+                    <div className="my-2 p-2 border border-primary rounded">
+                        <h4 className="text-center">Your order</h4>
+                        <hr />
 
-                                <h4 className="text-decoration-line-through text-primary fs-5">
-                                    {formatPrice(order.totalPromotionalPrice)}{' '}
-                                    VND
-                                </h4>
-                            </div>
+                        <dl className="row">
+                            <dt className="col-sm-3 col-6">Product's total</dt>
+                            <dd className="col-sm-9 col-6">
+                                <dl className="row">
+                                    <dd className="col-sm-6 res-hide">
+                                        <p className="text-decoration-line-through text-muted">
+                                            {formatPrice(order.totalPrice)} VND
+                                        </p>
 
-                            <div className="ms-4">
-                                <small>
-                                    <UserLevelLabel level={userLevel} />
-                                </small>
+                                        <h4 className="text-decoration-line-through text-primary fs-5">
+                                            {formatPrice(
+                                                order.totalPromotionalPrice,
+                                            )}{' '}
+                                            VND
+                                        </h4>
+                                    </dd>
+                                    <dd className="col-sm-6">
+                                        <small className="res-hide">
+                                            <UserLevelLabel level={userLevel} />
+                                        </small>
 
+                                        <h4 className="text-primary fs-5">
+                                            {formatPrice(order.amountFromUser1)}{' '}
+                                            VND
+                                        </h4>
+                                    </dd>
+                                </dl>
+                            </dd>
+
+                            <dt className="col-sm-3 col-6">Delivery's total</dt>
+                            <dd className="col-sm-9 col-6">
+                                <dl className="row">
+                                    <dd className="col-sm-6 res-hide">
+                                        <p className="text-decoration-line-through text-muted">
+                                            {formatPrice(order.deliveryPrice)}{' '}
+                                            VND
+                                        </p>
+
+                                        <h4 className="text-decoration-line-through text-primary fs-5">
+                                            {formatPrice(order.deliveryPrice)}{' '}
+                                            VND
+                                        </h4>
+                                    </dd>
+                                    <dd className="col-sm-6">
+                                        <small className="res-hide">
+                                            <UserLevelLabel level={userLevel} />
+                                        </small>
+
+                                        <h4 className="text-primary fs-5">
+                                            {formatPrice(order.amountFromUser2)}{' '}
+                                            VND
+                                        </h4>
+                                    </dd>
+                                </dl>
+                            </dd>
+
+                            <dt className="col-sm-3 col-6">Final total</dt>
+                            <dd className="col-sm-9 col-6">
                                 <h4 className="text-primary fs-5">
-                                    {formatPrice(order.amountFromUser1)} VND
+                                    {formatPrice(order.amountFromUser)} VND
                                 </h4>
+                            </dd>
+                        </dl>
+
+                        {error && (
+                            <div className="my-1">
+                                <Error msg={error} />
                             </div>
-                        </dd>
-                    </dl>
+                        )}
 
-                    <dl className="row">
-                        <dt className="col-3">Delivery's total</dt>
-                        <dd className="col-9 d-flex justify-content-between align-items-end">
-                            <div>
-                                <h4 className="text-decoration-line-through text-primary fs-5">
-                                    {formatPrice(order.deliveryPrice)} VND
-                                </h4>
-                            </div>
+                        <div className="mt-2">
+                            <button
+                                type="submit"
+                                className="btn btn-primary ripple w-100"
+                                onClick={handleSubmit}
+                            >
+                                Only order
+                            </button>
 
-                            <div className="ms-4">
-                                <small>
-                                    <UserLevelLabel level={userLevel} />
-                                </small>
-
-                                <h4 className="text-primary fs-5">
-                                    {formatPrice(order.amountFromUser2)} VND
-                                </h4>
-                            </div>
-                        </dd>
-                    </dl>
-
-                    <dl className="row">
-                        <dt className="col-3">Final total</dt>
-                        <dd className="col-9 d-flex justify-content-between align-items-end">
-                            <h4 className="text-primary fs-5">
-                                {formatPrice(order.amountFromUser)} VND
-                            </h4>
-                        </dd>
-                    </dl>
-
-                    {error && (
-                        <div className="col-12">
-                            <Error msg={error} />
+                            {/* <button
+                                type="submit"
+                                className="btn btn-primary ripple w-100 mt-1"
+                                onClick={handleSubmit}
+                            >
+                                PayPal
+                            </button> */}
                         </div>
-                    )}
-
-                    <div className="col-12">
-                        <button
-                            type="submit"
-                            className="btn btn-primary ripple w-100"
-                            onClick={handleSubmit}
-                        >
-                            Only order
-                        </button>
                     </div>
                 </div>
             </form>

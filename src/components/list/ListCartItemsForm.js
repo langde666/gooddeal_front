@@ -361,7 +361,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
             )}
 
             {showCheckoutFlag && (
-                <div className="mx-2 mt-2">
+                <div className="mx-2 mt-1">
                     <CheckoutForm
                         cartId={cartId}
                         userId={userId}
