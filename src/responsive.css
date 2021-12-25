@@ -53,6 +53,10 @@
     .res-smaller-lg {
         font-size: 0.8rem !important;
     }
+
+    .res-p-1-lg {
+        padding: 0.5rem 1rem !important;
+    }
 }
 
 @media (min-width: 992px) {

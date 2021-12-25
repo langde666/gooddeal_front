@@ -11,6 +11,7 @@ const LineChart = ({
     role = 'admin',
     groupBy = groupByDate,
     title = 'Sales statistics',
+    sliceEnd = 6,
 }) => {
     const [data, setData] = useState({
         labels: [],
@@ -18,7 +19,7 @@ const LineChart = ({
     });
 
     const init = () => {
-        const newData = groupBy(items, by, role);
+        const newData = groupBy(items, by, role, sliceEnd);
         setData({
             labels: Object.keys(newData),
             datasets: [
@@ -34,7 +35,7 @@ const LineChart = ({
 
     useEffect(() => {
         init();
-    }, [items, by, role]);
+    }, [items, by, role, sliceEnd]);
 
     return (
         <div className="line-chart">

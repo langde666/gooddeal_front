@@ -21,6 +21,10 @@ body {
     padding-right: 0 !important;
 }
 
+header {
+    padding-right: 0 !important;
+}
+
 /* boostrap */
 .card {
     max-width: 240px !important;
@@ -56,7 +60,6 @@ small {
 /* main-layout */
 .body {
     margin-top: calc(var(--header-height) + 20px);
-    margin-bottom: 40px;
     min-height: calc(
         100vh - var(--footer-height) - var(--header-height) - 60px
     );
@@ -666,12 +669,7 @@ header {
     background-color: #ffd700;
 }
 
-/* color link */
-.bg-pink {
-    color: #fff;
-    background-color: #ed4956;
-}
-
+/* color funny, pink, golden */
 .link-pink {
     color: #ed4956;
 }
@@ -684,8 +682,8 @@ header {
 
 .btn.btn-pink:hover {
     color: #fff;
-    background-color: #f03444 !important;
-    border-color: #f03444 !important;
+    background-color: #fa3c4c !important;
+    border-color: #fa3c4c !important;
 }
 
 .btn-outline-pink {
@@ -704,8 +702,35 @@ header {
     background-color: #ed4956;
 }
 
+.bg-pink {
+    background-color: #ed4956;
+}
+
 .link-funny {
     color: #2ddfff;
+}
+
+.btn.btn-funny {
+    color: #fff;
+    background-color: #2ddfff;
+    border-color: #2ddfff;
+}
+
+.btn.btn-funny:hover {
+    color: #fff;
+    background-color: #00aced !important;
+    border-color: #00aced !important;
+}
+
+.btn-outline-funny {
+    color: #2ddfff;
+    border-color: #2ddfff;
+}
+
+.btn-outline-funny:hover {
+    color: #fff;
+    background-color: #2ddfff;
+    border-color: #2ddfff;
 }
 
 .nav-pills .nav-link.active-funny {
@@ -713,8 +738,35 @@ header {
     background-color: #2ddfff;
 }
 
+.bg-funny {
+    background-color: #2ddfff;
+}
+
 .link-golden {
     color: #ffd700;
+}
+
+.btn.btn-golden {
+    color: #fff;
+    background-color: #ffd700;
+    border-color: #ffd700;
+}
+
+.btn.btn-golden:hover {
+    color: #fff;
+    background-color: #f8d303 !important;
+    border-color: #f8d303 !important;
+}
+
+.btn-outline-golden {
+    color: #ffd700;
+    border-color: #ffd700;
+}
+
+.btn-outline-golden:hover {
+    color: #fff;
+    background-color: #ffd700;
+    border-color: #ffd700;
 }
 
 .nav-pills .nav-link.active-golden {
@@ -1172,12 +1224,12 @@ textarea {
     z-index: 1;
     margin: auto;
     overflow: auto;
-    max-height: 600px;
+    max-height: 460px;
     white-space: nowrap;
 }
 .table-scroll table {
-    width: 100%;
-    min-width: 960px;
+    /* width: 400px; */
+    max-width: 100%;
     margin: auto;
     border-collapse: separate;
     border-spacing: 0;
@@ -1228,6 +1280,7 @@ tfoot th:first-child {
     /* background-color: #26272b; */
     background-color: var(--primary-color);
     padding: 45px 0 20px;
+    margin-top: 40px;
     font-size: 15px;
     line-height: 24px;
     /* color: #737373; */

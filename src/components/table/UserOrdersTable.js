@@ -111,8 +111,6 @@ const UserOrdersTable = ({ heading = true }) => {
 
     return (
         <div className="position-relative">
-            {heading && <h4 className="m-0">Your purchase history</h4>}
-
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (
@@ -124,7 +122,8 @@ const UserOrdersTable = ({ heading = true }) => {
                 />
             )}
 
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-between align-items-end">
+                {heading && <h4 className="">Your purchase history</h4>}
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
                 </span>

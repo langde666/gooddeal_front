@@ -10,7 +10,7 @@ const CategoryPage = (props) => {
 
     return (
         <AdminLayout user={user}>
-            <div className="d-flex align-items-center my-2">
+            <div className="d-flex align-items-center mb-2">
                 <div className="position-relative d-inline-block me-2">
                     <button
                         type="button"
@@ -19,7 +19,7 @@ const CategoryPage = (props) => {
                         } btn-lg ripple cus-tooltip`}
                         onClick={() => toggleFlag()}
                     >
-                        <i class="fas fa-eye"></i>
+                        <i className="fas fa-eye"></i>
                     </button>
 
                     <small className="cus-tooltip-msg">Review</small>

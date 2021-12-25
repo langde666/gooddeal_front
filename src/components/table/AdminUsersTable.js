@@ -117,6 +117,17 @@ const AdminUsersTable = ({ heading = true }) => {
                                 <SortByButton
                                     currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
+                                    title="Point"
+                                    sortBy="point"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
                                     title="Id card"
                                     sortBy="id_card"
                                     onSet={(order, sortBy) =>
@@ -167,11 +178,11 @@ const AdminUsersTable = ({ heading = true }) => {
                                         1 +
                                         (filter.page - 1) * filter.limit}
                                 </th>
-                                <td
-                                    className="text-start ps-4"
-                                    style={{ maxWidth: '360px' }}
-                                >
+                                <td className="text-start">
                                     <UserSmallCard user={user} />
+                                </td>
+                                <td>
+                                    <small>{user.point}</small>
                                 </td>
                                 <td>
                                     <small>{user.id_card || '-'}</small>

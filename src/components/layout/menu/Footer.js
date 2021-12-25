@@ -9,10 +9,10 @@ const Footer = (props) => (
                 <div className="col-sm-12 col-md-6">
                     <div className="mb-4">
                         <h6>About</h6>
+                        <div className="mt-4 mb-2 d-block">
+                            <Logo />
+                        </div>
                         <p style={{ textAlign: 'justify' }}>
-                            <span className="mt-4 mb-2 d-block">
-                                <Logo />
-                            </span>
                             <i className="text-uppercase">
                                 an e-commerce website,{' '}
                             </i>

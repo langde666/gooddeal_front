@@ -9,15 +9,10 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
-import AdminUpdateOrderStatus from '../button/AdminUpdateOrderStatus';
 import StoreSmallCard from '../card/StoreSmallCard';
 import UserSmallCard from '../card/UserSmallCard';
 
-const AdminOrdersTable = ({
-    heading = true,
-    status = '',
-    isEditable = false,
-}) => {
+const AdminOrdersTable = ({ heading = true, status = '' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [orders, setOrders] = useState([]);
@@ -85,16 +80,17 @@ const AdminOrdersTable = ({
 
     return (
         <div className="position-relative">
-            {heading && status === '' ? (
-                <h4 className="mb-3">All Orders In System</h4>
-            ) : (
-                <h4 className="mb-3">Delivery Service</h4>
-            )}
-
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-between align-items-end">
+                {heading &&
+                    (status === '' ? (
+                        <h4 className="">All Orders In System</h4>
+                    ) : (
+                        <h4 className="">Delivery Service</h4>
+                    ))}
+
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
                 </span>

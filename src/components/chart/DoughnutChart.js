@@ -11,6 +11,7 @@ const DoughnutChart = ({
     role = 'admin',
     groupBy = groupByDate,
     title = 'Sales statistics',
+    sliceEnd = 6,
 }) => {
     const [data, setData] = useState({
         labels: [],
@@ -18,7 +19,7 @@ const DoughnutChart = ({
     });
 
     const init = () => {
-        const newData = groupBy(items, by, role);
+        const newData = groupBy(items, by, role, sliceEnd);
         setData({
             labels: Object.keys(newData),
             datasets: [
@@ -35,7 +36,7 @@ const DoughnutChart = ({
 
     useEffect(() => {
         init();
-    }, [items, by]);
+    }, [items, by, role, sliceEnd]);
 
     return (
         <div

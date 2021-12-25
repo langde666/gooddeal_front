@@ -7,7 +7,7 @@ const Modal = ({
     hasCloseBtn = true,
     children = null,
 }) => (
-    <div className="fixed-top">
+    <div className="">
         <div
             className="cus-modal modal fade"
             id={id}

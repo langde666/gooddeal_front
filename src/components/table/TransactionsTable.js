@@ -102,12 +102,8 @@ const TransactionsTable = ({
 
     return (
         <div className="position-relative">
-            {heading && (
-                <h4 className="mb-3">
-                    {by === 'admin'
-                        ? 'Transactions in System'
-                        : 'Your E-Wallet'}
-                </h4>
+            {heading && by !== 'admin' && (
+                <h4 className="mb-3">Your E-Wallet</h4>
             )}
 
             {isloading && <Loading />}
@@ -128,6 +124,10 @@ const TransactionsTable = ({
                                 </div>
                             )}
                         </>
+                    )}
+
+                    {heading && by === 'admin' && (
+                        <h4 className="">Transactions in System</h4>
                     )}
                 </div>
 

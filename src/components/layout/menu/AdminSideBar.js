@@ -85,7 +85,7 @@ const AdminSideBar = ({ user = {} }) => {
                             path === 'category' ? 'active' : ''
                         }`}
                     >
-                        <i className="fas fa-th-large"></i>
+                        <i className="fas fa-boxes"></i>
                         <span className="ms-3 res-hide-xl">Category</span>
                     </Link>
                 </li>

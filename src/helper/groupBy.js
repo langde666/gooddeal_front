@@ -52,3 +52,22 @@ export const groupByJoined = (items, by) => {
             return acc;
         }, {});
 };
+
+export const groupBySold = (items, by, role, sliceEnd) => {
+    return items
+        .slice(0, sliceEnd)
+        .map((item) => {
+            return {
+                name: item.name,
+                sold: item.sold,
+            };
+        })
+        .reduce((acc, value) => {
+            if (!acc[value.name]) {
+                acc[value.name] = 0;
+            }
+
+            acc[value.name] += parseFloat(value.sold);
+            return acc;
+        }, {});
+};

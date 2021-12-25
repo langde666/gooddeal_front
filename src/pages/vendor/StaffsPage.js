@@ -11,7 +11,7 @@ const StaffsPage = (props) => {
 
     return (
         <VendorLayout user={user} store={store}>
-            <div className="d-flex align-items-center my-2">
+            <div className="d-flex align-items-center mb-2">
                 <div className="position-relative d-inline-block me-2">
                     <button
                         type="button"
