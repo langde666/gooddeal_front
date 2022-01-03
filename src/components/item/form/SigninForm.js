@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { signin, setToken } from '../../../apis/auth';
+import { signin, setToken, forgotPassword } from '../../../apis/auth';
 import { regexTest } from '../../../helper/test';
 import SocialForm from './SocialForm';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
 import Error from '../../ui/Error';
+import Success from '../../ui/Success';
 
 const SigninForm = ({ onSwap = () => {} }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const [account, setAccount] = useState({
         username: '',
@@ -80,11 +82,52 @@ const SigninForm = ({ onSwap = () => {} }) => {
             });
     };
 
+    const handleForgorPassword = () => {
+        const { username } = account;
+        if (!username) {
+            setAccount({
+                ...account,
+                isValidUsername:
+                    regexTest('email', username) ||
+                    regexTest('phone', username),
+            });
+            return;
+        }
+
+        const { isValidUsername } = account;
+        if (!isValidUsername) return;
+
+        if (regexTest('phone', username)) {
+            setError('This feature is not available yet!');
+            setTimeout(() => setError(''), 3000);
+        } else {
+            setError('');
+            setSuccess('');
+            setIsLoading(true);
+
+            forgotPassword({ email: username })
+                .then((data) => {
+                    if (data.error) setError(data.error);
+                    else setSuccess(data.success);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setError('');
+                        setSuccess('');
+                    }, 3000);
+                })
+                .catch((error) => {
+                    setError('Server Error');
+                    setTimeout(() => setError(''), 3000);
+                    setIsLoading(false);
+                });
+        }
+    };
+
     return (
-        <div className="sign-in-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
-            <form className="sign-in-form mb-2 row" onSubmit={handleFormSubmit}>
+            <form className="mb-2 row" onSubmit={handleFormSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"
@@ -119,6 +162,12 @@ const SigninForm = ({ onSwap = () => {} }) => {
                     />
                 </div>
 
+                {success && (
+                    <div className="col-12">
+                        <Success msg={success} />
+                    </div>
+                )}
+
                 {error && (
                     <div className="col-12">
                         <Error msg={error} />
@@ -137,9 +186,21 @@ const SigninForm = ({ onSwap = () => {} }) => {
 
                 <div className="col-12 mt-4">
                     <small className="text-center d-block text-muted">
+                        Forgot password?{' '}
+                        <span
+                            className="text-primary text-decoration-underline"
+                            style={{ cursor: 'pointer' }}
+                            onClick={handleForgorPassword}
+                        >
+                            Send email
+                        </span>
+                    </small>
+
+                    <small className="text-center d-block text-muted">
                         Don't have an account?{' '}
                         <span
-                            className="sign-in-item text-primary text-decoration-underline"
+                            className="text-primary text-decoration-underline"
+                            style={{ cursor: 'pointer' }}
                             onClick={onSwap}
                         >
                             Sign up

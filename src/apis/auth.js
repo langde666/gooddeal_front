@@ -135,3 +135,30 @@ export const verifyEmail = (emailCode) => {
         .then((res) => res.json())
         .catch((error) => console.log(error));
 };
+
+//forgot password
+export const forgotPassword = (username) => {
+    return fetch(`${API}/forgot/password`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(username),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};
+
+export const changePassword = (passwordCode, newPassword) => {
+    return fetch(`${API}/change/password/${passwordCode}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newPassword),
+    })
+        .then((res) => res.json())
+        .catch((error) => console.log(error));
+};

@@ -173,11 +173,6 @@ header {
     border-right: 1px solid var(--muted-color);
 }
 
-/* sign-in-item */
-.sign-in-item {
-    cursor: pointer;
-}
-
 /* your accout */
 .user-small-card {
     display: flex;

@@ -132,7 +132,10 @@ const DetailPage = () => {
                                     )}
 
                                     {!getToken() && (
-                                        <SigninButton className="w-100 btn-lg" />
+                                        <SigninButton
+                                            className="w-100 btn-lg"
+                                            title="Sign in to shop!"
+                                        />
                                     )}
 
                                     {product.storeId &&
@@ -143,18 +146,20 @@ const DetailPage = () => {
                                             <AddToCartForm product={product} />
                                         )}
 
-                                    <FollowProductButton
-                                        productId={product._id}
-                                        isFollowing={product.isFollowing}
-                                        onRun={() =>
-                                            setProduct({
-                                                ...product,
-                                                isFollowing:
-                                                    !product.isFollowing,
-                                            })
-                                        }
-                                        className="mt-2 w-100 btn-lg"
-                                    />
+                                    {getToken() && (
+                                        <FollowProductButton
+                                            productId={product._id}
+                                            isFollowing={product.isFollowing}
+                                            onRun={() =>
+                                                setProduct({
+                                                    ...product,
+                                                    isFollowing:
+                                                        !product.isFollowing,
+                                                })
+                                            }
+                                            className="mt-2 w-100 btn-lg"
+                                        />
+                                    )}
                                 </div>
                             </div>
 

@@ -98,7 +98,7 @@ const AddValueStyleForm = ({ styleId = '', styleName = '', onRun }) => {
     };
 
     return (
-        <div className="create-value-style-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -109,10 +109,7 @@ const AddValueStyleForm = ({ styleId = '', styleName = '', onRun }) => {
                 />
             )}
 
-            <form
-                className="create-value-style-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

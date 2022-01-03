@@ -11,7 +11,7 @@ const MainLayout = ({
 
         <main className={`body ${container}`}>{children}</main>
 
-        {navFor !== 'admin' && <Footer />}
+        {navFor !== 'admin' ? <Footer /> : <div className="mb-4"></div>}
     </div>
 );
 

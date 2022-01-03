@@ -10,6 +10,7 @@ import { listUserForAdmin } from '../../apis/user';
 import { listStoresForAdmin } from '../../apis/store';
 import { groupByDate, groupByJoined, groupBySold } from '../../helper/groupBy';
 import { formatPrice } from '../../helper/formatPrice';
+import { humanReadableDate } from '../../helper/humanReadable';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 import DoughnutChart from './DoughnutChart';
@@ -43,6 +44,12 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
         product: [],
         user: [],
         store: [],
+    });
+    const [sizes, setSizes] = useState({
+        order: 0,
+        product: 0,
+        user: 0,
+        store: 0,
     });
     const [options, setOptions] = useState({
         flag: 'order',
@@ -94,12 +101,22 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                 page: 1,
             });
 
+            // console.log(orderData, userData, storeData, productData);
+
             setItems({
                 ...items,
                 order: orderData.orders,
                 product: productData.products,
                 user: userData.users,
                 store: storeData.stores,
+            });
+
+            setSizes({
+                ...sizes,
+                order: orderData.size,
+                product: productData.size,
+                user: userData.size,
+                store: storeData.size,
             });
         } catch (e) {
             setError('Server Error');
@@ -145,6 +162,12 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                 order: orderData.orders,
                 product: productData.products,
             });
+
+            setSizes({
+                ...sizes,
+                order: orderData.size,
+                product: productData.size,
+            });
         } catch (e) {
             setError('Server Error');
         }
@@ -161,92 +184,106 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
         <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-            <div className="d-flex justify-content-start align-items-center mb-2">
-                {by === 'admin' && (
-                    <>
+            <div className="container-fluid px-2">
+                <div className="row">
+                    {by === 'admin' && (
+                        <>
+                            <div className="col-md-3 col-6">
+                                <button
+                                    type="button"
+                                    className={`btn ${
+                                        options.flag === 'user'
+                                            ? 'btn-funny'
+                                            : 'btn-outline-funny'
+                                    } btn-lg ripple w-100 py-4 mb-2`}
+                                    onClick={() =>
+                                        setOptions({
+                                            ...options,
+                                            flag: 'user',
+                                        })
+                                    }
+                                >
+                                    <i className="fas fa-user-friends"></i>
+                                    <span className="ms-3 res-hide">
+                                        {sizes.user}
+                                    </span>
+                                    <span className="ms-1 res-hide-lg">
+                                        Users
+                                    </span>
+                                </button>
+                            </div>
+
+                            <div className="col-md-3 col-6">
+                                <button
+                                    type="button"
+                                    className={`btn ${
+                                        options.flag === 'store'
+                                            ? 'btn-golden'
+                                            : 'btn-outline-golden'
+                                    } btn-lg ripple w-100 py-4 mb-2`}
+                                    onClick={() =>
+                                        setOptions({
+                                            ...options,
+                                            flag: 'store',
+                                        })
+                                    }
+                                >
+                                    <i className="fas fa-store"></i>
+                                    <span className="ms-3 res-hide">
+                                        {sizes.store}
+                                    </span>
+                                    <span className="ms-1 res-hide-lg">
+                                        Stores
+                                    </span>
+                                </button>
+                            </div>
+                        </>
+                    )}
+
+                    <div className="col-md-3 col-6">
                         <button
                             type="button"
                             className={`btn ${
-                                options.flag === 'user'
-                                    ? 'btn-funny'
-                                    : 'btn-outline-funny'
-                            } btn-lg ripple p-4 px-5 me-2 res-p-1-lg`}
+                                options.flag === 'product'
+                                    ? 'btn-primary'
+                                    : 'btn-outline-primary'
+                            } btn-lg ripple w-100 py-4 mb-2`}
                             onClick={() =>
                                 setOptions({
                                     ...options,
-                                    flag: 'user',
+                                    flag: 'product',
                                 })
                             }
                         >
-                            <i className="fas fa-user-friends"></i>
+                            <i className="fas fa-box"></i>
                             <span className="ms-3 res-hide">
-                                {items.user.length}
+                                {sizes.product}
                             </span>
-                            <span className="ms-1 res-hide-lg">Users</span>
+                            <span className="ms-1 res-hide-lg">Products</span>
                         </button>
+                    </div>
 
+                    <div className="col-md-3 col-6">
                         <button
                             type="button"
                             className={`btn ${
-                                options.flag === 'store'
-                                    ? 'btn-golden'
-                                    : 'btn-outline-golden'
-                            } btn-lg ripple p-4 px-5 me-2 res-p-1-lg`}
+                                options.flag === 'order'
+                                    ? 'btn-pink'
+                                    : 'btn-outline-pink'
+                            } btn-lg ripple w-100 py-4 mb-2`}
                             onClick={() =>
                                 setOptions({
                                     ...options,
-                                    flag: 'store',
+                                    flag: 'order',
                                 })
                             }
                         >
-                            <i className="fas fa-store"></i>
-                            <span className="ms-3 res-hide">
-                                {items.store.length}
-                            </span>
-                            <span className="ms-1 res-hide-lg">Stores</span>
+                            <i className="fas fa-clipboard"></i>
+                            <span className="ms-3 res-hide">{sizes.order}</span>
+                            <span className="ms-1 res-hide-lg">Orders</span>
                         </button>
-                    </>
-                )}
-
-                <button
-                    type="button"
-                    className={`btn ${
-                        options.flag === 'product'
-                            ? 'btn-primary'
-                            : 'btn-outline-primary'
-                    } btn-lg ripple p-4 px-5 me-2 res-p-1-lg`}
-                    onClick={() =>
-                        setOptions({
-                            ...options,
-                            flag: 'product',
-                        })
-                    }
-                >
-                    <i className="fas fa-box"></i>
-                    <span className="ms-3 res-hide">
-                        {items.product.length}
-                    </span>
-                    <span className="ms-1 res-hide-lg">Products</span>
-                </button>
-
-                <button
-                    type="button"
-                    className={`btn ${
-                        options.flag === 'order'
-                            ? 'btn-pink'
-                            : 'btn-outline-pink'
-                    } btn-lg ripple p-4 px-5 res-p-1-lg`}
-                    onClick={() =>
-                        setOptions({
-                            ...options,
-                            flag: 'order',
-                        })
-                    }
-                >
-                    <i className="fas fa-clipboard"></i>
-                    <span className="ms-3 res-hide">{items.order.length}</span>
-                    <span className="ms-1 res-hide-lg">Orders</span>
-                </button>
+                    </div>
+                </div>
             </div>
 
             <div className="container-fluid px-2">
@@ -418,8 +455,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                                                 'Point'}
                                             {options.flag === 'product' &&
                                                 'Sold'}
-                                            {options.flag === 'order' &&
-                                                'Total'}
+                                            {options.flag === 'order' && 'Date'}
                                         </th>
                                     </tr>
                                 </thead>
@@ -429,7 +465,12 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                                         .map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index}</th>
-                                                <td className="text-start">
+                                                <td
+                                                    className="text-start"
+                                                    style={{
+                                                        whiteSpace: 'normal',
+                                                    }}
+                                                >
                                                     {options.flag ===
                                                         'user' && (
                                                         <UserSmallCard
@@ -462,29 +503,14 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                                                         item.point}
                                                     {options.flag ===
                                                         'product' && item.sold}
-                                                    {options.flag === 'order' &&
-                                                    item &&
-                                                    by === 'admin'
-                                                        ? item &&
-                                                          item.amountToGD && (
-                                                              <small>
-                                                                  {formatPrice(
-                                                                      item
-                                                                          .amountToGD
-                                                                          .$numberDecimal,
-                                                                  ) + ' VND'}
-                                                              </small>
-                                                          )
-                                                        : item &&
-                                                          item.amountToStore && (
-                                                              <small>
-                                                                  {formatPrice(
-                                                                      item
-                                                                          .amountToStore
-                                                                          .$numberDecimal,
-                                                                  ) + ' VND'}
-                                                              </small>
-                                                          )}
+                                                    {options.flag ===
+                                                        'order' && (
+                                                        <small>
+                                                            {humanReadableDate(
+                                                                item.createdAt,
+                                                            )}
+                                                        </small>
+                                                    )}
                                                 </td>
                                             </tr>
                                         ))}

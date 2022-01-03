@@ -35,6 +35,7 @@ import AccountGDCoinsPage from './account/GDCoinsPage';
 import AccountShopManagerPage from './account/ShopManagerPage';
 import AccountCreateShopPage from './account/CreateShopPage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
+import AccountChangePasswordPage from './account/ChangePasswordPage';
 import AccountCartPage from './account/CartPage';
 import AccountOrderDetailPage from './account/OrderDetailPage';
 //vendor
@@ -219,6 +220,11 @@ const Routes = () => {
                     path="/verify/email/:emailCode"
                     exact
                     component={AccountVerifyEmailPage}
+                />
+                <Route
+                    path="/change/password/:passwordCode"
+                    exact
+                    component={AccountChangePasswordPage}
                 />
 
                 <PrivateRoute
