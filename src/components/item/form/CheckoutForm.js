@@ -12,6 +12,7 @@ import ConfirmDialog from '../../ui/ConfirmDialog';
 import UserAddAddressItem from '../../item/UserAddAddressItem';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
 import { regexTest } from '../../../helper/test';
+import { convertVNDtoUSD } from '../../../helper/formatPrice';
 import {
     totalDelivery,
     totalProducts,
@@ -22,7 +23,9 @@ import Logo from '../../layout/menu/Logo';
 import Input from '../../ui/Input';
 import DropDownMenu from '../../ui/DropDownMenu';
 import UserLevelLabel from '../../label/UserLevelLabel';
+import { PayPalButton } from 'react-paypal-button-v2';
 
+const CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 const CheckoutForm = ({
     cartId = '',
     storeId = '',
@@ -32,7 +35,6 @@ const CheckoutForm = ({
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
-    const [error1, setError1] = useState('');
 
     const [updateDispatch] = useUpdateDispatch();
     const history = useHistory();
@@ -70,7 +72,6 @@ const CheckoutForm = ({
                 address: addresses[0],
                 isValidPhone: true,
                 cartId,
-                isPaidBefore: false,
                 delivery: res.deliveries[0],
                 deliveryId: res.deliveries[0]._id,
                 deliveryPrice,
@@ -84,6 +85,8 @@ const CheckoutForm = ({
                 commissionId: res2.commission._id,
                 amountToGD: amountFromUser1 + amountFromUser2 - amountToStore,
             });
+
+            // console.log(convertVNDtoUSD(amountFromUser1 + amountFromUser2));
         } catch (e) {
             setError('Server Error');
         }
@@ -158,7 +161,6 @@ const CheckoutForm = ({
             amountFromStore,
             amountToStore,
             amountToGD,
-            isPaidBefore,
         } = order;
 
         const orderBody = {
@@ -170,10 +172,8 @@ const CheckoutForm = ({
             amountFromStore,
             amountToStore,
             amountToGD,
-            isPaidBefore,
+            isPaidBefore: false,
         };
-
-        console.log('order', orderBody);
 
         setError('');
         setIsLoading(true);
@@ -195,12 +195,115 @@ const CheckoutForm = ({
             });
     };
 
+    const handlePayPalCreateOrder = (data, actions) => {
+        const {
+            cartId,
+            deliveryId,
+            commissionId,
+            address,
+            phone,
+            amountFromUser,
+            amountFromStore,
+            amountToStore,
+            amountToGD,
+        } = order;
+
+        if (
+            !cartId ||
+            !deliveryId ||
+            !commissionId ||
+            !address ||
+            !phone ||
+            !amountFromUser ||
+            !amountFromStore ||
+            !amountToStore ||
+            !amountToGD
+        ) {
+            setOrder({
+                ...order,
+                isValidPhone: regexTest('phone', order.phone),
+            });
+            return;
+        }
+
+        if (!order.isValidPhone) return;
+        else {
+            return actions.order.create({
+                purchase_units: [
+                    {
+                        amount: {
+                            currency_code: 'USD',
+                            value: convertVNDtoUSD(order.amountFromUser),
+                        },
+                    },
+                ],
+                application_context: {
+                    shipping_preference: 'NO_SHIPPING',
+                },
+            });
+        }
+    };
+
+    const handlePayPalApprove = (data, actions) => {
+        return actions.order.capture().then(function (details) {
+            // Show a success message to your buyer
+            // alert("Transaction completed by " + details.payer.name.given_name);
+            // console.log(data);
+            // console.log(details);
+
+            // OPTIONAL: Call your server to save the transaction
+            const { _id, accessToken } = getToken();
+
+            const {
+                phone,
+                address,
+                deliveryId,
+                commissionId,
+                amountFromUser,
+                amountFromStore,
+                amountToStore,
+                amountToGD,
+            } = order;
+
+            const orderBody = {
+                phone,
+                address,
+                deliveryId,
+                commissionId,
+                amountFromUser,
+                amountFromStore,
+                amountToStore,
+                amountToGD,
+                isPaidBefore: true,
+            };
+
+            setError('');
+            setIsLoading(true);
+            createOrder(_id, accessToken, cartId, orderBody)
+                .then((data) => {
+                    if (data.error) setError(data.error);
+                    else {
+                        updateDispatch('account', data.user);
+                        history.push('/account/purchase');
+                    }
+                    setIsLoading(false);
+                })
+                .catch((error) => {
+                    setError('Server Error');
+                    setTimeout(() => {
+                        setError('');
+                    }, 3000);
+                    setIsLoading(false);
+                });
+        });
+    };
+
     return (
         <div className="position-relative">
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Order"
+                    title="Only order"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
@@ -224,7 +327,7 @@ const CheckoutForm = ({
                                     label="Phone"
                                     value={order.phone}
                                     isValid={order.isValidPhone}
-                                    feedback="Please provide a valid shop name."
+                                    feedback="Please provide a valid phone number."
                                     validator="phone"
                                     onChange={(value) =>
                                         handleChange(
@@ -311,8 +414,7 @@ const CheckoutForm = ({
                         </div>
 
                         <div className="col-12 mt-4">
-                            {error1 && <Error msg={error1} />}
-                            {!error1 && (
+                            {deliveries && deliveries.length > 0 && (
                                 <DropDownMenu
                                     listItem={
                                         deliveries &&
@@ -435,19 +537,33 @@ const CheckoutForm = ({
                         <div className="mt-2">
                             <button
                                 type="submit"
-                                className="btn btn-primary ripple w-100"
+                                className="btn btn-primary btn-lg ripple w-100 mb-1"
                                 onClick={handleSubmit}
                             >
                                 Only order
                             </button>
 
-                            {/* <button
-                                type="submit"
-                                className="btn btn-primary ripple w-100 mt-1"
-                                onClick={handleSubmit}
-                            >
-                                PayPal
-                            </button> */}
+                            <div style={{ position: 'relative', zIndex: '1' }}>
+                                <PayPalButton
+                                    options={{
+                                        clientId: CLIENT_ID,
+                                    }}
+                                    style={{
+                                        layout: 'horizontal',
+                                        tagline: 'false',
+                                    }}
+                                    createOrder={(data, actions) =>
+                                        handlePayPalCreateOrder(data, actions)
+                                    }
+                                    onApprove={(data, actions) =>
+                                        handlePayPalApprove(data, actions)
+                                    }
+                                    onError={(err) =>
+                                        setError(String(err).slice(0, 300))
+                                    }
+                                    onCancel={() => setIsLoading(false)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

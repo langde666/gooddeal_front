@@ -9,6 +9,7 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
+import OrderPaymentLabel from '../label/OrderPaymentLabel';
 import UserSmallCard from '../card/UserSmallCard';
 
 const StoreOrdersTable = ({
@@ -175,6 +176,17 @@ const StoreOrdersTable = ({
                                 <SortByButton
                                     currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
+                                    title="Payment"
+                                    sortBy="isPaidBefore"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
                                     title="Status"
                                     sortBy="status"
                                     onSet={(order, sortBy) =>
@@ -251,6 +263,13 @@ const StoreOrdersTable = ({
                                             VND
                                         </small>
                                     )}
+                                </td>
+                                <td>
+                                    <small>
+                                        <OrderPaymentLabel
+                                            isPaidBefore={order.isPaidBefore}
+                                        />
+                                    </small>
                                 </td>
                                 <td>
                                     <small>

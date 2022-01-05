@@ -1,7 +1,7 @@
 import Modal from '../ui/Modal';
-import CreateTransactionForm from './form/CreateTransactionForm';
+import CreateTransactionFormForUser from './form/CreateTransactionFormForUser';
 
-const CreateTransactionItem = ({ eWallet = 0, storeId = '', onRun }) => (
+const CreateTransactionItemForUser = ({ eWallet = 0, onRun }) => (
     <div className="position-relative d-inline-block">
         <div className="cus-tooltip">
             <button
@@ -9,7 +9,7 @@ const CreateTransactionItem = ({ eWallet = 0, storeId = '', onRun }) => (
                 disabled={eWallet <= 0 ? true : false}
                 className="btn btn-primary ripple text-nowrap"
                 data-bs-toggle="modal"
-                data-bs-target="#create-transaction-form"
+                data-bs-target="#create-transaction-form-for-user"
             >
                 <i className="fas fa-comment-dollar"></i>
                 <span className="ms-2 res-hide">Withdraw</span>
@@ -17,13 +17,12 @@ const CreateTransactionItem = ({ eWallet = 0, storeId = '', onRun }) => (
 
             {eWallet > 0 && (
                 <Modal
-                    id="create-transaction-form"
+                    id="create-transaction-form-for-user"
                     hasCloseBtn={false}
                     title="Withdraw"
                 >
-                    <CreateTransactionForm
+                    <CreateTransactionFormForUser
                         eWallet={eWallet}
-                        storeId={storeId}
                         onRun={onRun}
                     />
                 </Modal>
@@ -35,4 +34,4 @@ const CreateTransactionItem = ({ eWallet = 0, storeId = '', onRun }) => (
     </div>
 );
 
-export default CreateTransactionItem;
+export default CreateTransactionItemForUser;

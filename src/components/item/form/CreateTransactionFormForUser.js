@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
-import { createTransactionByStore } from '../../../apis/transaction';
+import { createTransactionByUser } from '../../../apis/transaction';
 import { regexTest, numberTest } from '../../../helper/test';
 import Input from '../../ui/Input';
 import Loading from '../../ui/Loading';
@@ -9,7 +9,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
+const CreateTransactionFormForUser = ({ eWallet = 0 }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -55,7 +55,7 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
 
         const { amount, currentPassword } = transaction;
 
-        if (!userId || !storeId || !amount || !currentPassword) {
+        if (!userId || !amount || !currentPassword) {
             setTransaction({
                 ...transaction,
                 isValidAmount:
@@ -79,7 +79,7 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
 
         // console.log('onSubmit', transaction);
 
-        createTransactionByStore(userId, accessToken, transaction, storeId)
+        createTransactionByUser(userId, accessToken, transaction)
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
@@ -96,7 +96,7 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
                         isValidCurrentPassword: true,
                     });
 
-                    updateDispatch('vendor', data.store);
+                    updateDispatch('account', data.user);
                     setSuccess('Withdraw successfully!');
                     setIsLoading(false);
                     setTimeout(() => {
@@ -190,4 +190,4 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
     );
 };
 
-export default CreateTransactionForm;
+export default CreateTransactionFormForUser;

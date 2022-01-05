@@ -133,7 +133,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
         <div className="position-relative">
             {heading && (
                 <h4 className="mb-3">
-                    {isActive ? 'Liscensed stores' : 'Unlicensed stores'}
+                    {isActive ? 'Licensed stores' : 'Unlicensed stores'}
                 </h4>
             )}
 
@@ -143,7 +143,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                 <ConfirmDialog
                     title={
                         !activeStore.isActive
-                            ? 'Liscense this shop'
+                            ? 'License this shop'
                             : 'Ban this shop'
                     }
                     color={!activeStore.isActive ? 'primary' : 'danger'}
@@ -286,7 +286,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                                         <small className="cus-tooltip-msg">
                                             {isActive
                                                 ? 'Ban this store'
-                                                : 'Liscense this store'}
+                                                : 'License this store'}
                                         </small>
                                     </div>
                                 </td>

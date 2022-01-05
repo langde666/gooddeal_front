@@ -4,18 +4,19 @@ import { getToken } from '../../apis/auth';
 import { listOrdersByUser, userCancelOrder } from '../../apis/order';
 import { formatPrice } from '../../helper/formatPrice';
 import { humanReadableDate } from '../../helper/humanReadable';
-import { calcTime } from '../../helper/calcTime';
+// import { calcTime } from '../../helper/calcTime';
 import StoreSmallCard from '../card/StoreSmallCard';
 import Pagination from '../ui/Pagination';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
-import ConfirmDialog from '../ui/ConfirmDialog';
+import OrderPaymentLabel from '../label/OrderPaymentLabel';
+// import ConfirmDialog from '../ui/ConfirmDialog';
 
 const UserOrdersTable = ({ heading = true }) => {
     const [isloading, setIsLoading] = useState(false);
-    const [isConfirming, setIsConfirming] = useState(false);
+    // const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
     const [run, setRun] = useState(false);
 
@@ -78,49 +79,49 @@ const UserOrdersTable = ({ heading = true }) => {
         });
     };
 
-    const handleCancelOrder = (order) => {
-        setCancelOrder(order);
-        setIsConfirming(true);
-    };
+    // const handleCancelOrder = (order) => {
+    //     setCancelOrder(order);
+    //     setIsConfirming(true);
+    // };
 
-    const onSubmit = () => {
-        setError('');
-        setIsLoading(true);
-        const value = { status: 'Cancelled' };
-        userCancelOrder(_id, accessToken, value, cancelOrder._id)
-            .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setIsLoading(false);
-                    setRun(!run);
-                }
-            })
-            .catch((error) => {
-                setError('Server Error');
-                setIsLoading(false);
-                setTimeout(() => {
-                    setError('');
-                }, 3000);
-            });
-    };
+    // const onSubmit = () => {
+    //     setError('');
+    //     setIsLoading(true);
+    //     const value = { status: 'Cancelled' };
+    //     userCancelOrder(_id, accessToken, value, cancelOrder._id)
+    //         .then((data) => {
+    //             if (data.error) {
+    //                 setError(data.error);
+    //                 setIsLoading(false);
+    //                 setTimeout(() => {
+    //                     setError('');
+    //                 }, 3000);
+    //             } else {
+    //                 setIsLoading(false);
+    //                 setRun(!run);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             setError('Server Error');
+    //             setIsLoading(false);
+    //             setTimeout(() => {
+    //                 setError('');
+    //             }, 3000);
+    //         });
+    // };
 
     return (
         <div className="position-relative">
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-            {isConfirming && (
+            {/* {isConfirming && (
                 <ConfirmDialog
                     title="Cancel Order"
                     color="danger"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
-            )}
+            )} */}
 
             <div className="d-flex justify-content-between align-items-end">
                 {heading && <h4 className="">Your purchase history</h4>}
@@ -193,6 +194,17 @@ const UserOrdersTable = ({ heading = true }) => {
                                 <SortByButton
                                     currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
+                                    title="Payment"
+                                    sortBy="isPaidBefore"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
                                     title="Status"
                                     sortBy="status"
                                     onSet={(order, sortBy) =>
@@ -200,7 +212,6 @@ const UserOrdersTable = ({ heading = true }) => {
                                     }
                                 />
                             </th>
-
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -251,6 +262,13 @@ const UserOrdersTable = ({ heading = true }) => {
                                 </td>
                                 <td>
                                     <small>
+                                        <OrderPaymentLabel
+                                            isPaidBefore={order.isPaidBefore}
+                                        />
+                                    </small>
+                                </td>
+                                <td>
+                                    <small>
                                         <OrderStatusLabel
                                             status={order.status}
                                         />
@@ -271,7 +289,7 @@ const UserOrdersTable = ({ heading = true }) => {
                                             </small>
                                         </div>
 
-                                        {order.status === 'Not processed' &&
+                                        {/* {order.status === 'Not processed' &&
                                             calcTime(order.createdAt) < 1 && (
                                                 <div className="position-relative d-inline-block ms-1">
                                                     <button
@@ -290,7 +308,7 @@ const UserOrdersTable = ({ heading = true }) => {
                                                         Cancel order
                                                     </small>
                                                 </div>
-                                            )}
+                                            )} */}
                                     </div>
                                 </td>
                             </tr>

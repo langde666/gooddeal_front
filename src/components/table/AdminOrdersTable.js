@@ -9,6 +9,7 @@ import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
+import OrderPaymentLabel from '../label/OrderPaymentLabel';
 import StoreSmallCard from '../card/StoreSmallCard';
 import UserSmallCard from '../card/UserSmallCard';
 
@@ -182,6 +183,17 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
                                 <SortByButton
                                     currentOrder={filter.order}
                                     currentSortBy={filter.sortBy}
+                                    title="Payment"
+                                    sortBy="isPaidBefore"
+                                    onSet={(order, sortBy) =>
+                                        handleSetSortBy(order, sortBy)
+                                    }
+                                />
+                            </th>
+                            <th scope="col">
+                                <SortByButton
+                                    currentOrder={filter.order}
+                                    currentSortBy={filter.sortBy}
                                     title="Status"
                                     sortBy="status"
                                     onSet={(order, sortBy) =>
@@ -264,6 +276,13 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
                                             VND
                                         </small>
                                     )}
+                                </td>
+                                <td>
+                                    <small>
+                                        <OrderPaymentLabel
+                                            isPaidBefore={order.isPaidBefore}
+                                        />
+                                    </small>
                                 </td>
                                 <td>
                                     <small>

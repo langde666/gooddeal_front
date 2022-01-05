@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import {
+    listTransactionsByUser,
     listTransactionsByStore,
     listTransactionsForAdmin,
 } from '../../apis/transaction';
@@ -13,6 +14,7 @@ import SortByButton from './sub/SortByButton';
 import TransactionStatusLabel from '../label/TransactionStatusLabel';
 import EWalletInfo from '../info/EWalletInfo';
 import CreateTransactionItem from '../item/CreateTransactionItem';
+import CreateTransactionItemForUser from '../item/CreateTransactionItemForUser';
 import StoreSmallCard from '../card/StoreSmallCard';
 
 const TransactionsTable = ({
@@ -43,7 +45,25 @@ const TransactionsTable = ({
         setError('');
         setIsLoading(true);
 
-        if (by === 'store')
+        if (by === 'user')
+            listTransactionsByUser(userId, accessToken, filter)
+                .then((data) => {
+                    if (data.error) setError(data.error);
+                    else {
+                        setTransactions(data.transactions);
+                        setPagination({
+                            size: data.size,
+                            pageCurrent: data.filter.pageCurrent,
+                            pageCount: data.filter.pageCount,
+                        });
+                    }
+                    setIsLoading(false);
+                })
+                .catch((error) => {
+                    setError('Server Error');
+                    setIsLoading(false);
+                });
+        else if (by === 'store')
             listTransactionsByStore(userId, accessToken, filter, storeId)
                 .then((data) => {
                     if (data.error) setError(data.error);
@@ -111,7 +131,7 @@ const TransactionsTable = ({
 
             <div className="d-flex justify-content-between align-items-end">
                 <div className="d-flex align-items-center">
-                    {by !== 'admin' && (
+                    {by === 'store' && (
                         <>
                             <EWalletInfo eWallet={eWallet} />
                             {owner && userId == owner._id && (
@@ -123,6 +143,18 @@ const TransactionsTable = ({
                                     />
                                 </div>
                             )}
+                        </>
+                    )}
+
+                    {by === 'user' && (
+                        <>
+                            <EWalletInfo eWallet={eWallet} />
+                            <div className="ms-4">
+                                <CreateTransactionItemForUser
+                                    eWallet={eWallet}
+                                    onRun={() => setRun(!run)}
+                                />
+                            </div>
                         </>
                     )}
 

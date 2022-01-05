@@ -16,6 +16,7 @@ import StoreSmallCard from '../card/StoreSmallCard';
 import ListOrderItems from '../list/ListOrderItems';
 import VendorUpdateOrderStatus from '../button/VendorUpdateOrderStatus';
 import AdminUpdateOrderStatus from '../button/AdminUpdateOrderStatus';
+import UserCancelOrderButton from '../button/UserCancelOrderButton';
 
 const OrderDetailInfo = ({
     orderId = '',
@@ -91,6 +92,18 @@ const OrderDetailInfo = ({
                     <span className="fs-6 mx-4 mb-2">
                         <OrderStatusLabel status={order.status} />
                     </span>
+                )}
+
+                {by === 'user' && order.status === 'Not processed' && (
+                    <div className="mx-4 mb-2">
+                        <UserCancelOrderButton
+                            orderId={order._id}
+                            status={order.status}
+                            detail={true}
+                            createdAt={order.createdAt}
+                            onRun={() => setRun(!run)}
+                        />
+                    </div>
                 )}
 
                 {isEditable &&

@@ -20,7 +20,7 @@ const StorePage = (props) => {
                         <i className="fas fa-check-circle"></i>
                     </button>
 
-                    <small className="cus-tooltip-msg">Liscensed stores</small>
+                    <small className="cus-tooltip-msg">Licensed stores</small>
                 </div>
 
                 <div className="position-relative d-inline-block">
