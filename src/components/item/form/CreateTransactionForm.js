@@ -9,7 +9,7 @@ import Error from '../../ui/Error';
 import Success from '../../ui/Success';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 
-const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
+const CreateTransactionForm = ({ eWallet = 0, storeId = '', onRun }) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
@@ -102,6 +102,8 @@ const CreateTransactionForm = ({ eWallet = 0, storeId = '' }) => {
                     setTimeout(() => {
                         setSuccess('');
                     }, 3000);
+
+                    if (onRun) onRun();
                 }
             })
             .catch((error) => {
