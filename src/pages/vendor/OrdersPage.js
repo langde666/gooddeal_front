@@ -46,8 +46,8 @@ const OrdersPage = (props) => {
                 isEditable={flag}
                 status={
                     flag
-                        ? 'Not processed|Processing'
-                        : 'Shipped|Delivered|Cancelled'
+                        ? 'Not processed|Processing|Shipped'
+                        : 'Delivered|Cancelled'
                 }
             />
         </VendorLayout>

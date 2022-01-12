@@ -115,7 +115,7 @@ const VendorInit = ({ store, actions }) => {
                                 to={`/vendor/profile/${storeId}`}
                             >
                                 <i className="fas fa-store me-1"></i>
-                                Shop profile
+                                Store profile
                             </Link>
 
                             <Link
@@ -128,7 +128,7 @@ const VendorInit = ({ store, actions }) => {
 
                             <Link
                                 className="list-group-item your-shop-options-item ripple"
-                                to="/account/shopManager"
+                                to="/account/storeManager"
                             >
                                 <i className="fas fa-arrow-circle-left me-1"></i>
                                 Back

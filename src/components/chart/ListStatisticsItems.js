@@ -66,6 +66,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
 
         try {
             const orderData = await listOrdersForAdmin(_id, accessToken, {
+                search: '',
                 limit: 1000,
                 sortBy: 'createdAt',
                 order: 'desc',
@@ -134,6 +135,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                 _id,
                 accessToken,
                 {
+                    search: '',
                     limit: 1000,
                     sortBy: 'createdAt',
                     order: 'desc',

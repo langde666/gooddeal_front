@@ -21,6 +21,7 @@ const CategorySelector = ({
     const [lv1Categories, setLv1Categories] = useState([]);
     const [lv2Categories, setLv2Categories] = useState([]);
     const [lv3Categories, setLv3Categories] = useState([]);
+
     const [lv1Filter, setLv1Filter] = useState({
         search: '',
         categoryId: null,
@@ -54,11 +55,8 @@ const CategorySelector = ({
         if (isActive) {
             listActiveCategories(filter)
                 .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                    } else {
-                        setCategories(data.categories);
-                    }
+                    if (data.error) setError(data.error);
+                    else setCategories(data.categories);
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -69,11 +67,8 @@ const CategorySelector = ({
             const { _id, accessToken } = getToken();
             listCategories(_id, accessToken, filter)
                 .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                    } else {
-                        setCategories(data.categories);
-                    }
+                    if (data.error) setError(data.error);
+                    else setCategories(data.categories);
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -106,12 +101,10 @@ const CategorySelector = ({
             ...lv1Filter,
             search: keyword,
         });
-
         setLv2Filter({
             ...lv2Filter,
             categoryId: '',
         });
-
         setLv3Filter({
             ...lv3Filter,
             categoryId: '',
@@ -142,7 +135,7 @@ const CategorySelector = ({
             }
     };
 
-    const handleRemove = () => {
+    const handleDelete = () => {
         setSelectedCategory('');
         if (onSet) onSet('');
     };
@@ -283,7 +276,7 @@ const CategorySelector = ({
                                             transform: 'translateY(-50%)',
                                             right: '0',
                                         }}
-                                        onClick={() => handleRemove()}
+                                        onClick={() => handleDelete()}
                                     >
                                         <i className="fas fa-times-circle"></i>
                                     </button>

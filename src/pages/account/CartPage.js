@@ -8,7 +8,7 @@ import Success from '../../components/ui/Success';
 import StoreSmallCard from '../../components/card/StoreSmallCard';
 import ListCartItemsForm from '../../components/list/ListCartItemsForm';
 
-const AddressesPage = (props) => {
+const CartPage = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -16,8 +16,9 @@ const AddressesPage = (props) => {
 
     const [carts, setCarts] = useState([]);
 
+    const { _id, accessToken } = getToken();
+
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setSuccess('');
         setIsLoading(true);
@@ -104,4 +105,4 @@ const AddressesPage = (props) => {
     );
 };
 
-export default AddressesPage;
+export default CartPage;

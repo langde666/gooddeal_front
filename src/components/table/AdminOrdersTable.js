@@ -12,6 +12,7 @@ import OrderStatusLabel from '../label/OrderStatusLabel';
 import OrderPaymentLabel from '../label/OrderPaymentLabel';
 import StoreSmallCard from '../card/StoreSmallCard';
 import UserSmallCard from '../card/UserSmallCard';
+import SearchInput from '../ui/SearchInput';
 
 const AdminOrdersTable = ({ heading = true, status = '' }) => {
     const [isloading, setIsLoading] = useState(false);
@@ -21,6 +22,7 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
         size: 0,
     });
     const [filter, setFilter] = useState({
+        search: '',
         sortBy: 'createdAt',
         order: 'desc',
         status,
@@ -64,6 +66,14 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
         init();
     }, [filter]);
 
+    const handleChangeKeyword = (keyword) => {
+        setFilter({
+            ...filter,
+            search: keyword,
+            page: 1,
+        });
+    };
+
     const handleChangePage = (newPage) => {
         setFilter({
             ...filter,
@@ -81,16 +91,20 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
 
     return (
         <div className="position-relative">
+            {heading &&
+                (status === '' ? (
+                    <h4 className="">All Orders In System</h4>
+                ) : (
+                    <h4 className="">Delivery Service</h4>
+                ))}
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                {heading &&
-                    (status === '' ? (
-                        <h4 className="">All Orders In System</h4>
-                    ) : (
-                        <h4 className="">Delivery Service</h4>
-                    ))}
+                <div className="d-flex align-items-center">
+                    <SearchInput onChange={handleChangeKeyword} />
+                </div>
 
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
@@ -216,7 +230,7 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
                                 <td>
                                     <small>{order._id}</small>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <small>
                                         {humanReadableDate(order.createdAt)}
                                     </small>

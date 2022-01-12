@@ -97,12 +97,12 @@ const MainNav = ({ navFor = 'user' }) => {
                                 <li className="nav-item position-relative">
                                     <Link
                                         className="btn btn-outline-light cus-outline ripple cus-tooltip"
-                                        to="/account/shopManager"
+                                        to="/account/storeManager"
                                     >
                                         <i className="fas fa-store"></i>
                                     </Link>
                                     <small className="cus-tooltip-msg">
-                                        Shop Manager
+                                        Store Manager
                                     </small>
                                 </li>
                             )}
@@ -241,10 +241,10 @@ const MainNav = ({ navFor = 'user' }) => {
                                         <li className="nav-item p-2">
                                             <Link
                                                 className="link-hover link-dark d-block"
-                                                to="/account/shopManager"
+                                                to="/account/storeManager"
                                             >
                                                 <i className="fas fa-store me-2"></i>
-                                                Shop Manager
+                                                Store Manager
                                             </Link>
                                         </li>
                                     )}

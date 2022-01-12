@@ -71,7 +71,7 @@ export const updateCommission = (userId, token, commissionId, commission) => {
         .catch((error) => console.log(error));
 };
 
-export const removeCommission = (userId, token, commissionId) => {
+export const deleteCommission = (userId, token, commissionId) => {
     return fetch(`${API}/commission/${commissionId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

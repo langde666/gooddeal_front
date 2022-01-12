@@ -30,11 +30,11 @@ const OrderDetailInfo = ({
 
     const [order, setOrder] = useState({});
 
+    const { _id, accessToken } = getToken();
+
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
-
         if (by === 'store')
             getOrderByStore(_id, accessToken, orderId, storeId)
                 .then((data) => {
@@ -71,6 +71,7 @@ const OrderDetailInfo = ({
     };
 
     useEffect(() => {
+        // console.log('render');
         init();
     }, [orderId, storeId, by, run]);
 

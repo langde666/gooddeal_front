@@ -55,7 +55,7 @@ export const listItemsByCart = (userId, token, cartId) => {
         .catch((error) => console.log(error));
 };
 
-export const removeFromCart = (userId, token, cartItemId) => {
+export const deleteFromCart = (userId, token, cartItemId) => {
     return fetch(`${API}/cart/remove/${cartItemId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

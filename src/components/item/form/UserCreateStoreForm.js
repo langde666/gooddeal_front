@@ -13,14 +13,14 @@ import Error from '../../ui/Error';
 import ConfirmDialog from '../../ui/ConfirmDialog';
 import Logo from '../../layout/menu/Logo';
 
-const CreateShopForm = (props) => {
+const CreateStoreForm = (props) => {
     const [isloading, setIsLoading] = useState(false);
     const [isConfirming, setIsConfirming] = useState(false);
     const [error1, setError1] = useState('');
     const [error, setError] = useState('');
 
     const [listActiveCommissions, setListActiveCommissions] = useState([]);
-    const [shop, setShop] = useState({
+    const [store, setStore] = useState({
         name: '',
         bio: '',
         commissionId: '',
@@ -33,16 +33,16 @@ const CreateShopForm = (props) => {
     });
 
     const history = useHistory();
+    const { _id, accessToken } = getToken();
 
     const init = () => {
         getlistCommissions()
             .then((data) => {
-                if (data.error) {
-                    setError1(data.error);
-                } else {
+                if (data.error) setError1(data.error);
+                else {
                     setListActiveCommissions(data.commissions);
-                    setShop({
-                        ...shop,
+                    setStore({
+                        ...store,
                         commissionId: data.commissions[0]._id,
                     });
                 }
@@ -55,45 +55,45 @@ const CreateShopForm = (props) => {
     }, []);
 
     const handleChange = (name, isValidName, value) => {
-        setShop({
-            ...shop,
+        setStore({
+            ...store,
             [name]: value,
             [isValidName]: true,
         });
     };
 
     const handleValidate = (isValidName, flag) => {
-        setShop({
-            ...shop,
+        setStore({
+            ...store,
             [isValidName]: flag,
         });
     };
 
     const handleSelect = (value) => {
-        setShop({
-            ...shop,
+        setStore({
+            ...store,
             commissionId: value,
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!shop.name || !shop.bio || !shop.avatar || !shop.cover) {
-            setShop({
-                ...shop,
-                isValidName: regexTest('name', shop.name),
-                isValidBio: regexTest('bio', shop.bio),
-                isValidAvatar: !!shop.avatar,
-                isValidCover: !!shop.cover,
+        if (!store.name || !store.bio || !store.avatar || !store.cover) {
+            setStore({
+                ...store,
+                isValidName: regexTest('name', store.name),
+                isValidBio: regexTest('bio', store.bio),
+                isValidAvatar: !!store.avatar,
+                isValidCover: !!store.cover,
             });
             return;
         }
 
         if (
-            !shop.isValidName ||
-            !shop.isValidBio ||
-            !shop.avatar ||
-            !shop.cover
+            !store.isValidName ||
+            !store.isValidBio ||
+            !store.avatar ||
+            !store.cover
         )
             return;
 
@@ -101,14 +101,12 @@ const CreateShopForm = (props) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         const formData = new FormData();
-        formData.set('name', shop.name);
-        formData.set('bio', shop.bio);
-        formData.set('commissionId', shop.commissionId);
-        formData.set('avatar', shop.avatar);
-        formData.set('cover', shop.cover);
+        formData.set('name', store.name);
+        formData.set('bio', store.bio);
+        formData.set('commissionId', store.commissionId);
+        formData.set('avatar', store.avatar);
+        formData.set('cover', store.cover);
 
         setError('');
         setIsLoading(true);
@@ -138,10 +136,10 @@ const CreateShopForm = (props) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create shop"
+                    title="Create store"
                     message={
                         <small>
-                            By Creating your shop, you agree to GoodDeal's{' '}
+                            By Creating your store, you agree to GoodDeal's{' '}
                             <Link to="/legal/termsOfUse" target="_blank">
                                 Terms of Use
                             </Link>{' '}
@@ -168,17 +166,17 @@ const CreateShopForm = (props) => {
                 <div className="col-12 bg-primary p-3">
                     <Logo />
                     <p className="text-white ms-2 fw-light">
-                        Creating shop is easy.
+                        Creating store is easy.
                     </p>
                 </div>
 
                 <div className="col-12 px-4 mt-2">
                     <Input
                         type="text"
-                        label="Shop name"
-                        value={shop.name}
-                        isValid={shop.isValidName}
-                        feedback="Please provide a valid shop name."
+                        label="store name"
+                        value={store.name}
+                        isValid={store.isValidName}
+                        feedback="Please provide a valid store name."
                         validator="name"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
@@ -192,10 +190,10 @@ const CreateShopForm = (props) => {
                 <div className="col-12 px-4">
                     <TextArea
                         type="text"
-                        label="Shop bio"
-                        value={shop.bio}
-                        isValid={shop.isValidBio}
-                        feedback="Please provide a valid shop bio."
+                        label="store bio"
+                        value={store.bio}
+                        isValid={store.isValidBio}
+                        feedback="Please provide a valid store bio."
                         validator="bio"
                         onChange={(value) =>
                             handleChange('bio', 'isValidBio', value)
@@ -208,11 +206,11 @@ const CreateShopForm = (props) => {
 
                 <div className="col-12 px-4">
                     <InputFile
-                        label="Shop avatar"
+                        label="store avatar"
                         size="avatar"
-                        value={shop.avatar}
-                        isValid={shop.isValidAvatar}
-                        feedback="Please provide a valid shop avatar."
+                        value={store.avatar}
+                        isValid={store.isValidAvatar}
+                        feedback="Please provide a valid store avatar."
                         accept="image/jpg, image/jpeg, image/png, image/gif"
                         onChange={(value) =>
                             handleChange('avatar', 'isValidAvatar', value)
@@ -225,11 +223,11 @@ const CreateShopForm = (props) => {
 
                 <div className="col-12 px-4">
                     <InputFile
-                        label="Shop cover"
+                        label="store cover"
                         size="cover"
-                        value={shop.cover}
-                        isValid={shop.isValidCover}
-                        feedback="Please provide a valid shop cover."
+                        value={store.cover}
+                        isValid={store.isValidCover}
+                        feedback="Please provide a valid store cover."
                         accept="image/jpg, image/jpeg, image/png, image/gif"
                         onChange={(value) =>
                             handleChange('cover', 'isValidCover', value)
@@ -258,7 +256,7 @@ const CreateShopForm = (props) => {
                                     return newC;
                                 })
                             }
-                            value={shop.commissionId}
+                            value={store.commissionId}
                             setValue={handleSelect}
                             size="large"
                             label="Commission"
@@ -282,7 +280,7 @@ const CreateShopForm = (props) => {
                         </Link>
                         . <br className="res-hide" />
                         <span className="text-muted">
-                            By Creating shop, you agree to GoodDeal's{' '}
+                            By Creating store, you agree to GoodDeal's{' '}
                         </span>
                         <Link to="/legal/termsOfUse" target="_blank">
                             Terms of Use
@@ -297,11 +295,11 @@ const CreateShopForm = (props) => {
 
                 <div className="col-12 px-4 pb-3 d-flex justify-content-between align-items-center mt-4 res-flex-reverse-md">
                     <Link
-                        to="/account/shopManager"
+                        to="/account/storeManager"
                         className="text-decoration-none link-hover res-w-100-md my-2"
                     >
                         <i className="fas fa-arrow-circle-left"></i> Back to
-                        Shop Manager
+                        store Manager
                     </Link>
                     <button
                         type="submit"
@@ -317,4 +315,4 @@ const CreateShopForm = (props) => {
     );
 };
 
-export default CreateShopForm;
+export default CreateStoreForm;

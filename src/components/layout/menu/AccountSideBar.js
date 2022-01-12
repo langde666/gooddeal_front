@@ -44,7 +44,7 @@ const AccountSideBar = ({ user = {} }) => {
                                 Purchase history
                             </span>
                             <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
-                                Purchase
+                                Purchases
                             </span>
                         </Link>
                     </li>
@@ -72,17 +72,17 @@ const AccountSideBar = ({ user = {} }) => {
                 {user.role == 'user' && (
                     <li className="nav-item">
                         <Link
-                            to="/account/shopManager"
-                            className={`nav-link cus-sidebar-item ripple link-dark ${
-                                path == 'shopManager' ? 'active' : ''
+                            to="/account/storeManager"
+                            className={`nav-link cus-sidebar-item cus-sidebar-item--funny ripple link-funny ${
+                                path == 'storeManager' ? 'active-funny' : ''
                             }`}
                         >
                             <i className="fas fa-store"></i>
                             <span className="ms-3 res-hide-xl">
-                                Shop manager
+                                Store manager
                             </span>
                             <span className="ms-3 d-none res-dis-inline-xl res-hide-lg">
-                                Shops
+                                Stores
                             </span>
                         </Link>
                     </li>
@@ -122,8 +122,8 @@ const AccountSideBar = ({ user = {} }) => {
                                 path == 'GDCoins' ? 'active-golden' : ''
                             }`}
                         >
-                            <i className="fas fa-coins me-3"></i>
-                            GD coins
+                            <i className="fas fa-coins"></i>
+                            <span className="ms-3 res-hide-lg">GD coins</span>
                         </Link>
                     </li>
                 )}

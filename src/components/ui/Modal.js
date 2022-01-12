@@ -19,7 +19,7 @@ const Modal = ({
                     <div className="modal-header">
                         <div>
                             {title ? (
-                                <h5 className="modal-title ms-2 text-primary">
+                                <h5 className="modal-title ms-2 text-primary text-capitalize">
                                     {title}
                                 </h5>
                             ) : (

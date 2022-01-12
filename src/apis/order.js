@@ -97,9 +97,9 @@ export const listItemsByOrderForAdmin = (userId, token, orderId) => {
 };
 
 export const listOrdersByUser = (userId, token, filter) => {
-    const { sortBy, order, limit, page, status } = filter;
+    const { search, sortBy, order, limit, page, status } = filter;
     return fetch(
-        `${API}/orders/by/user/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/orders/by/user/${userId}?search=${search}&status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {
@@ -114,9 +114,9 @@ export const listOrdersByUser = (userId, token, filter) => {
 };
 
 export const listOrdersByStore = (userId, token, filter, storeId) => {
-    const { sortBy, order, limit, page, status } = filter;
+    const { search, sortBy, order, limit, page, status } = filter;
     return fetch(
-        `${API}/orders/by/store/${storeId}/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/orders/by/store/${storeId}/${userId}?search=${search}&status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {
@@ -131,9 +131,9 @@ export const listOrdersByStore = (userId, token, filter, storeId) => {
 };
 
 export const listOrdersForAdmin = (userId, token, filter) => {
-    const { sortBy, order, limit, page, status } = filter;
+    const { search, sortBy, order, limit, page, status } = filter;
     return fetch(
-        `${API}/orders/for/admin/${userId}?status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
+        `${API}/orders/for/admin/${userId}?search=${search}&status=${status}&sortBy=${sortBy}&order=${order}&limit=${limit}&page=${page}`,
         {
             method: 'GET',
             headers: {

@@ -15,17 +15,30 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [address, setAddress] = useState({});
+    const [address, setAddress] = useState({
+        street: oldAddress.split(', ')[0],
+        ward: oldAddress.split(', ')[1],
+        district_city: oldAddress.split(', ')[2],
+        city_province: oldAddress.split(', ')[3],
+        country: oldAddress.split(', ')[4],
+        isValidStreet: true,
+        isValidWard: true,
+        isValidDistrict: true,
+        isValidProvince: true,
+        isValidCountry: true,
+    });
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
+        // console.log('render');
         setAddress({
             street: oldAddress.split(', ')[0],
             ward: oldAddress.split(', ')[1],
             district_city: oldAddress.split(', ')[2],
             city_province: oldAddress.split(', ')[3],
-            country: 'Việt Nam',
+            country: oldAddress.split(', ')[4],
             isValidStreet: true,
             isValidWard: true,
             isValidDistrict: true,
@@ -95,29 +108,23 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
             address.city_province +
             ', ' +
             address.country;
-        const { _id, accessToken } = getToken();
-
-        console.log(addressString);
 
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateAddress(_id, accessToken, index, { address: addressString })
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('account', data.user);
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -129,18 +136,18 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
     };
 
     return (
-        <div className="add-address-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this address"
+                    title="Edit address"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form className="add-address-form row mb-2" onSubmit={handleSubmit}>
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

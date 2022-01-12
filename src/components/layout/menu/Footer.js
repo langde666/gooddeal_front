@@ -72,9 +72,8 @@ const Footer = (props) => {
                         <ul className="footer-links">
                             {categories &&
                                 categories.map((category, index) => (
-                                    <li>
+                                    <li key={index}>
                                         <Link
-                                            key={index}
                                             className="link-hover text-reset"
                                             to={`/category/${category._id}`}
                                             title={category.name}

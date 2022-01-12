@@ -2,7 +2,7 @@ import Modal from '../ui/Modal';
 import UserAddAddressForm from './form/UserAddAddressForm';
 
 const UserAddAddressItem = ({ count = 0, detail = true }) => (
-    <div className="add-address-item position-relative d-inline-block">
+    <div className="position-relative d-inline-block">
         <div className="cus-tooltip">
             <button
                 type="button"
@@ -12,7 +12,7 @@ const UserAddAddressItem = ({ count = 0, detail = true }) => (
                 data-bs-target="#add-address-form"
             >
                 <i className="fas fa-plus-circle"></i>
-                {detail && <span className="ms-2 res-hide">New address</span>}
+                {detail && <span className="ms-2 res-hide">Add address</span>}
             </button>
 
             {count < 6 && (

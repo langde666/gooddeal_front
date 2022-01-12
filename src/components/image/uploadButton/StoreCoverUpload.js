@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { updateCover } from '../../../apis/store';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
@@ -14,10 +14,8 @@ const StoreCoverUpload = ({ storeId = '' }) => {
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
-
         const formData = new FormData();
         formData.set('photo', e.target.files[0]);
-
         setError('');
         setIsLoading(true);
         updateCover(_id, accessToken, formData, storeId)
@@ -42,7 +40,7 @@ const StoreCoverUpload = ({ storeId = '' }) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             <label className="cus-cover-icon">
                 <i className="fas fa-camera"></i>
@@ -55,7 +53,7 @@ const StoreCoverUpload = ({ storeId = '' }) => {
                     onChange={handleChange}
                 />
             </label>
-        </Fragment>
+        </>
     );
 };
 

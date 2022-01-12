@@ -16,13 +16,9 @@ const VerifyEmailPage = (props) => {
         setIsLoading(true);
         verifyEmail(emailCode)
             .then((data) => {
-                if (data.error) {
-                    setError('Verify email failed');
-                    setIsLoading(false);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                }
+                if (data.error) setError('Verify email failed');
+                else setSuccess(data.success);
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server error');

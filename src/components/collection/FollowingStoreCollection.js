@@ -30,11 +30,8 @@ const FollowingStoresCollection = (props) => {
         setIsLoading(true);
         listFollowingStores(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setIsLoading(false);
-                    setError(data.error);
-                } else {
-                    setIsLoading(false);
+                if (data.error) setError(data.error);
+                else {
                     setListStores(data.stores);
                     setPagination({
                         size: data.size,
@@ -42,10 +39,11 @@ const FollowingStoresCollection = (props) => {
                         pageCount: data.filter.pageCount,
                     });
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
-                setIsLoading(false);
                 setError('Server Error');
+                setIsLoading(false);
             });
     };
 

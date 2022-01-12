@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import { listStoresByUser } from '../../apis/store';
-import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import StoreSmallCard from '../card/StoreSmallCard';
 import ManagerRoleLabel from '../label/ManagerRoleLabel';
 import StoreLicenseLabel from '../label/StoreLicenseLabel';
 import StoreStatusLabel from '../label/StoreStatusLabel';
-import OpenCloseStoreButton from '../button/OpenCloseStoreButton';
 import Pagination from '../ui/Pagination';
 import SearchInput from '../ui/SearchInput';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 
-const UserStoresTable = ({ heading = true }) => {
+const UserStoresTable = ({ heading = 'Your stores' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
 
     const [stores, setStores] = useState([]);
     const [pagination, setPagination] = useState({
@@ -34,26 +30,22 @@ const UserStoresTable = ({ heading = true }) => {
     });
 
     const { _id, accessToken } = getToken();
-    const store = useSelector((state) => state.vendor.store);
-    const [updateDispatch] = useUpdateDispatch();
 
     const init = () => {
         setError('');
         setIsLoading(true);
         listStoresByUser(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setStores(data.stores);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -63,7 +55,7 @@ const UserStoresTable = ({ heading = true }) => {
 
     useEffect(() => {
         init();
-    }, [filter, run]);
+    }, [filter]);
 
     const handleChangeKeyword = (keyword) => {
         setFilter({
@@ -80,12 +72,6 @@ const UserStoresTable = ({ heading = true }) => {
         });
     };
 
-    const onHandleRun = (newStore) => {
-        setRun(!run);
-        if (store && store._id == newStore._id)
-            updateDispatch('vendor', newStore);
-    };
-
     const handleSetSortBy = (order, sortBy) => {
         setFilter({
             ...filter,
@@ -96,7 +82,9 @@ const UserStoresTable = ({ heading = true }) => {
 
     return (
         <div className="position-relative">
-            {heading && <h4 className="mb-3">Your shops</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -108,10 +96,10 @@ const UserStoresTable = ({ heading = true }) => {
                         <Link
                             type="button"
                             className="btn btn-primary ripple text-nowrap"
-                            to="/account/shopManager/createNewShop"
+                            to="/account/storeManager/createNewStore"
                         >
                             <i className="fas fa-plus-circle"></i>
-                            <span className="ms-2 res-hide">New shop</span>
+                            <span className="ms-2 res-hide">Create store</span>
                         </Link>
                     </div>
                 </div>
@@ -121,7 +109,7 @@ const UserStoresTable = ({ heading = true }) => {
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-sm text-center table-bordered">
+                <table className="table table-sm table-hover align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">
@@ -137,7 +125,7 @@ const UserStoresTable = ({ heading = true }) => {
                             <th scope="col">
                                 <SortByButton
                                     currentSortBy={filter.sortBy}
-                                    title="Shop"
+                                    title="store"
                                     sortBy="name"
                                     onSet={(order, sortBy) =>
                                         handleSetSortBy(order, sortBy)
@@ -217,36 +205,16 @@ const UserStoresTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    {/* <div className="position-relative d-inline-block me-2">
-                                        <div className="cus-tooltip d-inline-block text-start">
-                                            <OpenCloseStoreButton
-                                                storeId={store._id}
-                                                isOpen={store.isOpen}
-                                                detail={false}
-                                                onRun={(store) =>
-                                                    onHandleRun(store)
-                                                }
-                                            />
-                                        </div>
-
-                                        <small className="cus-tooltip-msg">
-                                            {store.isOpen
-                                                ? 'Click to close shop'
-                                                : 'Click to open shop'}
-                                        </small>
-                                    </div> */}
-                                    <div className="position-relative d-inline-block">
-                                        <Link
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            to={`/vendor/${store._id}`}
-                                        >
-                                            <i className="fas fa-user-tie"></i>
-                                        </Link>
-                                        <small className="cus-tooltip-msg">
-                                            Go to dashboard
-                                        </small>
-                                    </div>
+                                    <Link
+                                        type="button"
+                                        className="btn btn-primary ripple"
+                                        to={`/vendor/${store._id}`}
+                                    >
+                                        <i className="fas fa-user-tie"></i>
+                                        <span className="ms-2 res-hide">
+                                            Dsh
+                                        </span>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

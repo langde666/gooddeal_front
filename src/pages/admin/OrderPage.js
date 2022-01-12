@@ -44,7 +44,7 @@ const OrderPage = (props) => {
             <AdminOrdersTable
                 heading={true}
                 isEditable={flag}
-                status={flag ? 'Shipped' : ''}
+                status={flag ? 'Not processed|Processing|Shipped' : ''}
             />
         </AdminLayout>
     );

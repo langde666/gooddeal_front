@@ -26,7 +26,9 @@ const ConfirmDialog = ({
                 <div className="modal-dialog" style={{ zIndex: '9999' }}>
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className={`modal-title text-${color}`}>
+                            <h5
+                                className={`modal-title text-${color} text-capitalize`}
+                            >
                                 {title}
                             </h5>
                             <button

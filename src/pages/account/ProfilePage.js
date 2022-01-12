@@ -38,7 +38,7 @@ const ProfilePage = (props) => {
                         to={`/user/${user._id}`}
                         target="_blank"
                     >
-                        <span className="me-1 res-hide">Visit Your Page</span>
+                        <span className="me-2 res-hide">Visit Your Page</span>
                         <i className="fas fa-external-link-alt"></i>
                     </Link>
                 </div>

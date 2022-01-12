@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import {
     listCommissions,
-    removeCommission,
+    deleteCommission,
     restoreCommission,
 } from '../../apis/commission';
 import Pagination from '../ui/Pagination';
@@ -18,7 +18,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const AdminCommissionTable = ({ heading = true }) => {
+const AdminCommissionTable = ({ heading = 'Commission' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -27,7 +27,7 @@ const AdminCommissionTable = ({ heading = true }) => {
     const [run, setRun] = useState(false);
 
     const [editedCommission, setEditedCommission] = useState({});
-    const [removedCommission, setRemovedCommission] = useState({});
+    const [deletedCommission, setDeletedCommission] = useState({});
     const [restoredCommission, setRestoredCommission] = useState({});
 
     const [commissions, setCommissions] = useState([]);
@@ -49,18 +49,16 @@ const AdminCommissionTable = ({ heading = true }) => {
         setIsLoading(true);
         listCommissions(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setCommissions(data.commissions);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -99,8 +97,8 @@ const AdminCommissionTable = ({ heading = true }) => {
         setEditedCommission(commission);
     };
 
-    const handleRemoveCommission = (commission) => {
-        setRemovedCommission(commission);
+    const handleDeleteCommission = (commission) => {
+        setDeletedCommission(commission);
         setIsConfirming(true);
     };
 
@@ -109,32 +107,29 @@ const AdminCommissionTable = ({ heading = true }) => {
         setIsConfirming1(true);
     };
 
-    const onSubmitRemove = () => {
+    const onSubmitDelete = () => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeCommission(_id, accessToken, removedCommission._id)
+        deleteCommission(_id, accessToken, deletedCommission._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -144,26 +139,23 @@ const AdminCommissionTable = ({ heading = true }) => {
         setIsLoading(true);
         restoreCommission(_id, accessToken, restoredCommission._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -172,23 +164,23 @@ const AdminCommissionTable = ({ heading = true }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this commission"
+                    title="Delete commission"
                     message={
                         <span>
-                            Are you sure you want to remove{' '}
+                            Are you sure you want to delete{' '}
                             <StoreCommissionLabel
-                                commission={removedCommission}
+                                commission={deletedCommission}
                             />
                         </span>
                     }
                     color="danger"
-                    onSubmit={onSubmitRemove}
+                    onSubmit={onSubmitDelete}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this commission"
+                    title="Restore commission"
                     message={
                         <span>
                             Are you sure you want to restore{' '}
@@ -202,7 +194,9 @@ const AdminCommissionTable = ({ heading = true }) => {
                 />
             )}
 
-            {heading && <h4 className="mb-3">Commission</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -221,7 +215,7 @@ const AdminCommissionTable = ({ heading = true }) => {
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-sm text-center">
+                <table className="table table-hover table-sm align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -314,57 +308,51 @@ const AdminCommissionTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block me-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edit-commission-form"
-                                            onClick={() =>
-                                                handleEditCommission(commission)
-                                            }
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Edit commission
-                                        </small>
-                                    </div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary ripple me-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#edit-commission-form"
+                                        onClick={() =>
+                                            handleEditCommission(commission)
+                                        }
+                                    >
+                                        <i className="fas fa-pen"></i>
+                                        <span className="ms-2 res-hide">
+                                            Edit
+                                        </span>
+                                    </button>
 
                                     {!commission.isDeleted ? (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveCommission(
-                                                        commission,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove commission
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger ripple"
+                                            onClick={() =>
+                                                handleDeleteCommission(
+                                                    commission,
+                                                )
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     ) : (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-primary ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRestoreCommission(
-                                                        commission,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-restore-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Restore commission
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary ripple"
+                                            onClick={() =>
+                                                handleRestoreCommission(
+                                                    commission,
+                                                )
+                                            }
+                                        >
+                                            <i className="fas fa-trash-restore-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Res
+                                            </span>
+                                        </button>
                                     )}
                                 </td>
                             </tr>

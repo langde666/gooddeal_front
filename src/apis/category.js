@@ -73,7 +73,7 @@ export const updateCategory = (userId, token, categoryId, category) => {
         .catch((error) => console.log(error));
 };
 
-export const removeCategory = (userId, token, categoryId) => {
+export const deleteCategory = (userId, token, categoryId) => {
     return fetch(`${API}/category/${categoryId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
 import AccountLayout from '../../components/layout/AccountLayout';
-import UserStoresTable from '../../components/table/UserStoresTable';
+import UserCreatetoreForm from '../../components/item/form/UserCreateStoreForm';
 
-const ShopManagerPage = (props) => {
+const CreateStorePage = (props) => {
     const user = useSelector((state) => state.account.user);
     return (
         <AccountLayout user={user}>
-            <UserStoresTable />
+            <UserCreatetoreForm />
         </AccountLayout>
     );
 };
 
-export default ShopManagerPage;
+export default CreateStorePage;

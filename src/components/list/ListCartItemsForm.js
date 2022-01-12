@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
 import {
     listItemsByCart,
-    removeFromCart,
+    deleteFromCart,
     updateCartItem,
 } from '../../apis/cart';
 import { totalProducts } from '../../helper/total';
@@ -27,13 +27,15 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [run, setRun] = useState(false);
+
     const [showCheckoutFlag, toogleShowCheckoutFlag] = useToggle(false);
 
     const { level } = useSelector((state) => state.account.user);
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     const [items, setItems] = useState([]);
-    const [removedItem, setRemovedItem] = useState({});
+    const [deleteItem, setDeleteItem] = useState({});
     const [totals, setTotals] = useState({
         totalPrice: 0,
         totalPromotionalPrice: 0,
@@ -41,7 +43,6 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     });
 
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setSuccess('');
         setIsLoading(true);
@@ -70,22 +71,21 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     };
 
     useEffect(() => {
+        // console.log('render');
         if (cartId) init();
     }, [cartId, storeId, userId, level, run]);
 
-    const handleRemove = (item) => {
+    const handleDelete = (item) => {
         if (!item) return;
-        setRemovedItem(item);
+        setDeleteItem(item);
         setIsConfirming(true);
     };
 
     const onSubmit = () => {
-        // console.log(removedItem);
-        const { _id, accessToken } = getToken();
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeFromCart(_id, accessToken, removedItem._id)
+        deleteFromCart(_id, accessToken, deleteItem._id)
             .then((data) => {
                 if (data.error) setError(data.error);
                 else {
@@ -109,8 +109,6 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     };
 
     const handleUpdate = (value, item) => {
-        // console.log(value, item);
-        const { _id, accessToken } = getToken();
         setError('');
         setSuccess('');
         setIsLoading(true);
@@ -144,7 +142,7 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
             {success && <Success msg={success} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this product"
+                    title="Delete product"
                     color="danger"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
@@ -239,14 +237,14 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                             {item.productId &&
                                 item.productId.isActive &&
                                 !item.productId.isSelling && (
-                                    <Error msg="The product is out of business, please remove it from your cart, you can continue with others!" />
+                                    <Error msg="The product is out of business, please delete it from your cart, you can continue with others!" />
                                 )}
 
                             {item.productId &&
                                 item.productId.isActive &&
                                 item.productId.isSelling &&
                                 item.productId.quantity <= 0 && (
-                                    <Error msg="The product is sold out, please remove it from your cart, you can continue with others!" />
+                                    <Error msg="The product is sold out, please delete it from your cart, you can continue with others!" />
                                 )}
 
                             {item.productId &&
@@ -293,18 +291,14 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
                                     </div>
                                 )}
 
-                            <div className="d-inline-block position-relative">
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-danger ripple cus-tooltip"
-                                    onClick={() => handleRemove(item)}
-                                >
-                                    <i className="fas fa-trash-alt"></i>
-                                </button>
-                                <small className="cus-tooltip-msg">
-                                    Remove from cart
-                                </small>
-                            </div>
+                            <button
+                                type="button"
+                                className="btn btn-outline-danger ripple"
+                                onClick={() => handleDelete(item)}
+                            >
+                                <i className="fas fa-trash-alt"></i>
+                                <span className="ms-2 res-hide">Del</span>
+                            </button>
                         </div>
                     </div>
                 </div>

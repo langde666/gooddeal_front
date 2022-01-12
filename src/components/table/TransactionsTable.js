@@ -18,9 +18,9 @@ import CreateTransactionItemForUser from '../item/CreateTransactionItemForUser';
 import StoreSmallCard from '../card/StoreSmallCard';
 
 const TransactionsTable = ({
+    heading = 'Your E-Wallet',
     storeId = '',
     by = 'admin',
-    heading = true,
     owner = {},
     eWallet = 0,
 }) => {
@@ -44,7 +44,6 @@ const TransactionsTable = ({
     const init = () => {
         setError('');
         setIsLoading(true);
-
         if (by === 'user')
             listTransactionsByUser(userId, accessToken, filter)
                 .then((data) => {
@@ -102,6 +101,7 @@ const TransactionsTable = ({
     };
 
     useEffect(() => {
+        // console.log('render');
         init();
     }, [storeId, by, filter, run]);
 
@@ -123,7 +123,7 @@ const TransactionsTable = ({
     return (
         <div className="position-relative">
             {heading && by !== 'admin' && (
-                <h4 className="mb-3">Your E-Wallet</h4>
+                <h4 className="text-center text-uppercase">{heading}</h4>
             )}
 
             {isloading && <Loading />}
@@ -135,7 +135,7 @@ const TransactionsTable = ({
                         <>
                             <EWalletInfo eWallet={eWallet} />
                             {owner && userId == owner._id && (
-                                <div className="ms-4">
+                                <div className="ms-3">
                                     <CreateTransactionItem
                                         storeId={storeId}
                                         eWallet={eWallet}
@@ -149,7 +149,7 @@ const TransactionsTable = ({
                     {by === 'user' && (
                         <>
                             <EWalletInfo eWallet={eWallet} />
-                            <div className="ms-4">
+                            <div className="ms-3">
                                 <CreateTransactionItemForUser
                                     eWallet={eWallet}
                                     onRun={() => setRun(!run)}
@@ -169,7 +169,7 @@ const TransactionsTable = ({
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table table-sm table-hover align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

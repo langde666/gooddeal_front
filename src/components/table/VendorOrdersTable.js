@@ -11,6 +11,7 @@ import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
 import OrderPaymentLabel from '../label/OrderPaymentLabel';
 import UserSmallCard from '../card/UserSmallCard';
+import SearchInput from '../ui/SearchInput';
 
 const StoreOrdersTable = ({
     heading = true,
@@ -26,6 +27,7 @@ const StoreOrdersTable = ({
         size: 0,
     });
     const [filter, setFilter] = useState({
+        search: '',
         status,
         sortBy: 'createdAt',
         order: 'desc',
@@ -70,6 +72,14 @@ const StoreOrdersTable = ({
         init();
     }, [filter, storeId]);
 
+    const handleChangeKeyword = (keyword) => {
+        setFilter({
+            ...filter,
+            search: keyword,
+            page: 1,
+        });
+    };
+
     const handleChangePage = (newPage) => {
         setFilter({
             ...filter,
@@ -95,7 +105,11 @@ const StoreOrdersTable = ({
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="d-flex justify-content-between align-items-end">
+                <div className="d-flex align-items-center">
+                    <SearchInput onChange={handleChangeKeyword} />
+                </div>
+
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
                 </span>
@@ -209,7 +223,7 @@ const StoreOrdersTable = ({
                                 <td>
                                     <small>{order._id}</small>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <small>
                                         {humanReadableDate(order.createdAt)}
                                     </small>

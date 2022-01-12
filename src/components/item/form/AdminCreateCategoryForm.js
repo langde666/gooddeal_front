@@ -25,6 +25,8 @@ const AdminCreateCategoryForm = (props) => {
         isValidImage: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setNewCategory({
             ...newCategory,
@@ -60,37 +62,27 @@ const AdminCreateCategoryForm = (props) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         const formData = new FormData();
         formData.set('name', newCategory.name);
         formData.set('image', newCategory.image);
         if (newCategory.categoryId)
             formData.set('categoryId', newCategory.categoryId);
 
-        // console.log(newCategory);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createCategory(_id, accessToken, formData)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
-                setError('Sever error');
+                setError('Sever Error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
@@ -103,7 +95,7 @@ const AdminCreateCategoryForm = (props) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this category"
+                    title="Create category"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
@@ -118,7 +110,7 @@ const AdminCreateCategoryForm = (props) => {
                 </div>
 
                 <div className="col-12 mt-4 px-4">
-                    <p className="">Choose category</p>
+                    <p className="">Choose parent category</p>
                     <CategorySelector
                         label="Choosed parent category"
                         selected="parent"

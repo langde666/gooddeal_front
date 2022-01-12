@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { updateCover } from '../../../apis/user';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
@@ -10,14 +10,12 @@ const UserCoverUpload = (props) => {
     const [error, setError] = useState('');
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     const handleChange = (e) => {
         if (e.target.files[0] == null) return;
-
-        const { _id, accessToken } = getToken();
         const formData = new FormData();
         formData.set('photo', e.target.files[0]);
-
         setError('');
         setIsLoading(true);
         updateCover(_id, accessToken, formData)
@@ -42,7 +40,7 @@ const UserCoverUpload = (props) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             <label className="cus-cover-icon">
                 <i className="fas fa-camera"></i>
@@ -55,7 +53,7 @@ const UserCoverUpload = (props) => {
                     onChange={handleChange}
                 />
             </label>
-        </Fragment>
+        </>
     );
 };
 

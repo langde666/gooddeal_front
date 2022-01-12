@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
-import { listOrdersByUser, userCancelOrder } from '../../apis/order';
+import { listOrdersByUser } from '../../apis/order';
 import { formatPrice } from '../../helper/formatPrice';
 import { humanReadableDate } from '../../helper/humanReadable';
-// import { calcTime } from '../../helper/calcTime';
 import StoreSmallCard from '../card/StoreSmallCard';
 import Pagination from '../ui/Pagination';
 import Loading from '../ui/Loading';
@@ -12,27 +11,24 @@ import Error from '../ui/Error';
 import SortByButton from './sub/SortByButton';
 import OrderStatusLabel from '../label/OrderStatusLabel';
 import OrderPaymentLabel from '../label/OrderPaymentLabel';
-// import ConfirmDialog from '../ui/ConfirmDialog';
+import SearchInput from '../ui/SearchInput';
 
-const UserOrdersTable = ({ heading = true }) => {
+const UserOrdersTable = ({ heading = true, status = '' }) => {
     const [isloading, setIsLoading] = useState(false);
-    // const [isConfirming, setIsConfirming] = useState(false);
     const [error, setError] = useState('');
-    const [run, setRun] = useState(false);
 
     const [orders, setOrders] = useState([]);
     const [pagination, setPagination] = useState({
         size: 0,
     });
     const [filter, setFilter] = useState({
-        status: '',
+        search: '',
+        status,
         sortBy: 'createdAt',
         order: 'desc',
         limit: 6,
         page: 1,
     });
-
-    const [cancelOrder, setCancelOrder] = useState({});
 
     const { _id, accessToken } = getToken();
 
@@ -41,18 +37,16 @@ const UserOrdersTable = ({ heading = true }) => {
         setIsLoading(true);
         listOrdersByUser(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setOrders(data.orders);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -62,7 +56,22 @@ const UserOrdersTable = ({ heading = true }) => {
 
     useEffect(() => {
         init();
-    }, [filter, run]);
+    }, [filter]);
+
+    useEffect(() => {
+        setFilter({
+            ...filter,
+            status,
+        });
+    }, [status]);
+
+    const handleChangeKeyword = (keyword) => {
+        setFilter({
+            ...filter,
+            search: keyword,
+            page: 1,
+        });
+    };
 
     const handleChangePage = (newPage) => {
         setFilter({
@@ -79,59 +88,31 @@ const UserOrdersTable = ({ heading = true }) => {
         });
     };
 
-    // const handleCancelOrder = (order) => {
-    //     setCancelOrder(order);
-    //     setIsConfirming(true);
-    // };
-
-    // const onSubmit = () => {
-    //     setError('');
-    //     setIsLoading(true);
-    //     const value = { status: 'Cancelled' };
-    //     userCancelOrder(_id, accessToken, value, cancelOrder._id)
-    //         .then((data) => {
-    //             if (data.error) {
-    //                 setError(data.error);
-    //                 setIsLoading(false);
-    //                 setTimeout(() => {
-    //                     setError('');
-    //                 }, 3000);
-    //             } else {
-    //                 setIsLoading(false);
-    //                 setRun(!run);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             setError('Server Error');
-    //             setIsLoading(false);
-    //             setTimeout(() => {
-    //                 setError('');
-    //             }, 3000);
-    //         });
-    // };
-
     return (
         <div className="position-relative">
+            {heading && status === 'Not processed|Processing|Shipped' ? (
+                <h4 className="text-center text-uppercase">
+                    Processing Orders
+                </h4>
+            ) : (
+                <h4 className="text-center text-uppercase">Processed Orders</h4>
+            )}
+
             {isloading && <Loading />}
             {error && <Error msg={error} />}
-            {/* {isConfirming && (
-                <ConfirmDialog
-                    title="Cancel Order"
-                    color="danger"
-                    onSubmit={onSubmit}
-                    onClose={() => setIsConfirming(false)}
-                />
-            )} */}
 
             <div className="d-flex justify-content-between align-items-end">
-                {heading && <h4 className="">Your purchase history</h4>}
+                <div className="d-flex align-items-center">
+                    <SearchInput onChange={handleChangeKeyword} />
+                </div>
+
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
                 </span>
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table table-sm table-hover align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -226,7 +207,7 @@ const UserOrdersTable = ({ heading = true }) => {
                                 <td>
                                     <small>{order._id}</small>
                                 </td>
-                                <td>
+                                <td style={{ whiteSpace: 'normal' }}>
                                     <small>
                                         {humanReadableDate(order.createdAt)}
                                     </small>
@@ -275,41 +256,16 @@ const UserOrdersTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td className="text-nowrap text-start">
-                                    <div className="position-relative d-inline-block">
-                                        <div className="position-relative d-inline-block">
-                                            <Link
-                                                type="button"
-                                                className="btn btn-primary ripple cus-tooltip"
-                                                to={`/account/purchase/detail/${order._id}`}
-                                            >
-                                                <i className="fas fa-info-circle"></i>
-                                            </Link>
-                                            <small className="cus-tooltip-msg">
-                                                View order detail
-                                            </small>
-                                        </div>
-
-                                        {/* {order.status === 'Not processed' &&
-                                            calcTime(order.createdAt) < 1 && (
-                                                <div className="position-relative d-inline-block ms-1">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-outline-danger ripple cus-tooltip"
-                                                        onClick={() =>
-                                                            handleCancelOrder(
-                                                                order,
-                                                            )
-                                                        }
-                                                    >
-                                                        <i className="fas fa-ban"></i>
-                                                    </button>
-
-                                                    <small className="cus-tooltip-msg">
-                                                        Cancel order
-                                                    </small>
-                                                </div>
-                                            )} */}
-                                    </div>
+                                    <Link
+                                        type="button"
+                                        className="btn btn-primary ripple"
+                                        to={`/account/purchase/detail/${order._id}`}
+                                    >
+                                        <i className="fas fa-info-circle"></i>
+                                        <span className="ms-2 res-hide">
+                                            Detail
+                                        </span>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

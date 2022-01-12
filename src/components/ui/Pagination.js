@@ -46,7 +46,7 @@ const Pagination = ({
     };
 
     return (
-        <nav className="">
+        <nav className="my-4">
             <ul className="pagination justify-content-center mb-0">
                 <div
                     className="btn-group"

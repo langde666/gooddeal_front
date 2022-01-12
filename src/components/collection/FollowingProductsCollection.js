@@ -30,11 +30,8 @@ const FollowingProductsCollection = (props) => {
         setIsLoading(true);
         listFollowingProducts(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setIsLoading(false);
-                    setError(data.error);
-                } else {
-                    setIsLoading(false);
+                if (data.error) setError(data.error);
+                else {
                     setListProducts(data.products);
                     setPagination({
                         size: data.size,
@@ -42,14 +39,16 @@ const FollowingProductsCollection = (props) => {
                         pageCount: data.filter.pageCount,
                     });
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
-                setIsLoading(false);
                 setError('Server Error');
+                setIsLoading(false);
             });
     };
 
     useEffect(() => {
+        // console.log('render');
         init();
     }, [filter, run]);
 

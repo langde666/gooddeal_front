@@ -32,8 +32,8 @@ import AccountPurchasePage from './account/PurchasePage';
 import AccountFollowingPage from './account/FollowingPage';
 // import AccountGiftWalletPage from './account/GiftWalletPage';
 import AccountGDCoinsPage from './account/GDCoinsPage';
-import AccountShopManagerPage from './account/ShopManagerPage';
-import AccountCreateShopPage from './account/CreateShopPage';
+import AccountStoreManagerPage from './account/StoreManagerPage';
+import AccountCreateStorePage from './account/CreateStorePage';
 import AccountVerifyEmailPage from './account/VerifyEmailPage';
 import AccountChangePasswordPage from './account/ChangePasswordPage';
 import AccountCartPage from './account/CartPage';
@@ -206,14 +206,14 @@ const Routes = () => {
                     component={AccountGDCoinsPage}
                 />
                 <PrivateRoute
-                    path="/account/shopManager"
+                    path="/account/storeManager"
                     exact
-                    component={AccountShopManagerPage}
+                    component={AccountStoreManagerPage}
                 />
                 <PrivateRoute
-                    path="/account/shopManager/createNewShop"
+                    path="/account/storeManager/createNewStore"
                     exact
-                    component={AccountCreateShopPage}
+                    component={AccountCreateStorePage}
                 />
                 <PrivateRoute path="/cart" exact component={AccountCartPage} />
                 <Route

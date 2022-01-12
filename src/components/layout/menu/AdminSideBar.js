@@ -71,10 +71,11 @@ const AdminSideBar = ({ user = {} }) => {
                         className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple link-dark ${
                             path === 'transaction' ? 'active' : ''
                         }`}
-                        style={{ height: '48px' }}
+                        style={{ height: '48px', whiteSpace: 'nowrap' }}
                     >
                         <i className="fas fa-retweet"></i>
                         <span className="ms-3 res-hide-xl">Transaction</span>
+                        {/* <span className="ms-3 d-none res-dis-lg res-hide-xl">Trans</span> */}
                     </Link>
                 </li>
 
@@ -143,7 +144,7 @@ const AdminSideBar = ({ user = {} }) => {
                         className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple link-dark ${
                             path === 'commission' ? 'active' : ''
                         }`}
-                        style={{ height: '48px' }}
+                        style={{ height: '48px', whiteSpace: 'nowrap' }}
                     >
                         <i className="fas fa-calculator"></i>
                         <span className="ms-3 res-hide-xl">Commission</span>

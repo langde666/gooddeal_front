@@ -1,7 +1,6 @@
 import { useState } from 'react';
-// import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
-import { removeAddresses } from '../../apis/user';
+import { deleteAddresses } from '../../apis/user';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import UserEditAddressForm from '../item/form/UserEditAddressForm';
 import UserAddAddressItem from '../item/UserAddAddressItem';
@@ -11,7 +10,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const UserAddressesTable = ({ heading = true, addresses = [] }) => {
+const UserAddressesTable = ({ heading = 'Your addresses', addresses = [] }) => {
     const [editAddress, setEditAddress] = useState({});
     const [deleteAddress, setDeleteAddress] = useState({});
 
@@ -21,6 +20,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
     const [isConfirming, setIsConfirming] = useState(false);
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     const handleEditAddress = (address, index) => {
         setEditAddress({
@@ -29,7 +29,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
         });
     };
 
-    const handleRemoveAddress = (address, index) => {
+    const handleDeleteAddress = (address, index) => {
         setDeleteAddress({
             index: index,
             address: address,
@@ -38,26 +38,21 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeAddresses(_id, accessToken, deleteAddress.index)
+        deleteAddresses(_id, accessToken, deleteAddress.index)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('account', data.user);
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -73,7 +68,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this address"
+                    title="Delete address"
                     message={deleteAddress.address}
                     color="danger"
                     onSubmit={onSubmit}
@@ -81,24 +76,24 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
                 />
             )}
 
-            {heading && <h4 className="mb-3">Your addresses</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap">
-                    <UserAddAddressItem
-                        count={(addresses && addresses.length) || 0}
-                    />
-                </div>
-                <span className="me-2 text-nowrap res-hide">
+                <UserAddAddressItem
+                    count={(addresses && addresses.length) || 0}
+                />
+                <span className="me-2 text-nowrap">
                     {(addresses && addresses.length) || 0} results
                 </span>
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover text-center table-bordered">
+                <table className="table table-sm table-hover align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -113,43 +108,39 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
                                     <th scope="row">{index + 1}</th>
                                     <td>{address}</td>
                                     <td>
-                                        <div className="position-relative d-inline-block me-2">
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary ripple cus-tooltip"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#edit-address-form"
-                                                onClick={() =>
-                                                    handleEditAddress(
-                                                        address,
-                                                        index,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-pen"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Edit Address
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary ripple me-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#edit-address-form"
+                                            onClick={() =>
+                                                handleEditAddress(
+                                                    address,
+                                                    index,
+                                                )
+                                            }
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                            <span className="ms-2 res-hide">
+                                                Edit
+                                            </span>
+                                        </button>
 
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveAddress(
-                                                        address,
-                                                        index,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove address
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger ripple"
+                                            onClick={() =>
+                                                handleDeleteAddress(
+                                                    address,
+                                                    index,
+                                                )
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -160,7 +151,7 @@ const UserAddressesTable = ({ heading = true, addresses = [] }) => {
             <Modal
                 id="edit-address-form"
                 hasCloseBtn={false}
-                title="Edit address"
+                title="Edit Address"
             >
                 <UserEditAddressForm
                     oldAddress={editAddress.address}

@@ -13,10 +13,7 @@ const StoreCommissionLabel = ({ commission = {}, detail = true }) => (
                     commission.name.charAt(0).toUpperCase() +
                         commission.name.slice(1)}{' '}
                 - Commission:{' '}
-                {commission.cost &&
-                    commission.cost.$numberDecimal &&
-                    (commission.cost.$numberDecimal * 100).toFixed(2)}
-                %
+                {commission.cost && commission.cost.$numberDecimal}% / order
             </small>
         )}
     </span>

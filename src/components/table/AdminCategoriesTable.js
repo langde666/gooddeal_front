@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getToken } from '../../apis/auth';
 import {
     listCategories,
-    removeCategory,
+    deleteCategory,
     restoreCategory,
 } from '../../apis/category';
 import Pagination from '../ui/Pagination';
@@ -18,7 +18,7 @@ import ConfirmDialog from '../ui/ConfirmDialog';
 
 const IMG = process.env.REACT_APP_STATIC_URL;
 
-const AdminCateroriesTable = ({ heading = true }) => {
+const AdminCateroriesTable = ({ heading = 'Category' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,7 +26,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
     const [isConfirming1, setIsConfirming1] = useState(false);
     const [run, setRun] = useState(false);
 
-    const [removedCategory, setRemovedCategory] = useState({});
+    const [deletedCategory, setDeletedCategory] = useState({});
     const [restoredCategory, setRestoredCategory] = useState({});
 
     const [categories, setCategories] = useState([]);
@@ -95,8 +95,8 @@ const AdminCateroriesTable = ({ heading = true }) => {
         });
     };
 
-    const handleRemoveCategory = (category) => {
-        setRemovedCategory(category);
+    const handleDeleteCategory = (category) => {
+        setDeletedCategory(category);
         setIsConfirming(true);
     };
 
@@ -105,32 +105,29 @@ const AdminCateroriesTable = ({ heading = true }) => {
         setIsConfirming1(true);
     };
 
-    const onSubmitRemove = () => {
+    const onSubmitDelete = () => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeCategory(_id, accessToken, removedCategory._id)
+        deleteCategory(_id, accessToken, deletedCategory._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -140,26 +137,23 @@ const AdminCateroriesTable = ({ heading = true }) => {
         setIsLoading(true);
         restoreCategory(_id, accessToken, restoredCategory._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -168,24 +162,24 @@ const AdminCateroriesTable = ({ heading = true }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this category"
+                    title="Delete category"
                     message={
                         <span>
-                            Are you sure you want to remove{' '}
-                            <CategorySmallCard category={removedCategory} />
+                            Are you sure you want to delete
+                            <CategorySmallCard category={deletedCategory} />
                         </span>
                     }
                     color="danger"
-                    onSubmit={onSubmitRemove}
+                    onSubmit={onSubmitDelete}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this category"
+                    title="Restore category"
                     message={
                         <span>
-                            Are you sure you want to restore{' '}
+                            Are you sure you want to restore
                             <CategorySmallCard category={restoredCategory} />
                         </span>
                     }
@@ -194,7 +188,9 @@ const AdminCateroriesTable = ({ heading = true }) => {
                 />
             )}
 
-            {heading && <h4 className="mb-3">Category</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -210,7 +206,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
                             to="/admin/category/createNewCategory"
                         >
                             <i className="fas fa-plus-circle"></i>
-                            <span className="ms-2 res-hide">New Category</span>
+                            <span className="ms-2 res-hide">Add category</span>
                         </Link>
                     </div>
                 </div>
@@ -220,7 +216,7 @@ const AdminCateroriesTable = ({ heading = true }) => {
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table table-hover table-sm align-middle text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -317,56 +313,50 @@ const AdminCateroriesTable = ({ heading = true }) => {
                                     )}
                                 </td>
                                 <td>
-                                    {category.isDeleted && <DeletedLabel />}
-                                </td>
-                                <td className="text-nowrap">
-                                    <div className="position-relative d-inline-block me-2">
-                                        <Link
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            to={`/admin/category/editCategory/${category._id}`}
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </Link>
-                                        <small className="cus-tooltip-msg">
-                                            Edit category
+                                    {category.isDeleted && (
+                                        <small>
+                                            <DeletedLabel />
                                         </small>
-                                    </div>
+                                    )}
+                                </td>
+                                <td>
+                                    <Link
+                                        type="button"
+                                        className="btn btn-primary ripple me-2"
+                                        to={`/admin/category/editCategory/${category._id}`}
+                                    >
+                                        <i className="fas fa-pen"></i>
+                                        <span className="ms-2 res-hide">
+                                            Edit
+                                        </span>
+                                    </Link>
 
                                     {!category.isDeleted ? (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveCategory(
-                                                        category,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove category
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger ripple cus-tooltip"
+                                            onClick={() =>
+                                                handleDeleteCategory(category)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     ) : (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-primary ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRestoreCategory(
-                                                        category,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-restore-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Restore category
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary ripple cus-tooltip"
+                                            onClick={() =>
+                                                handleRestoreCategory(category)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-restore-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Res
+                                            </span>
+                                        </button>
                                     )}
                                 </td>
                             </tr>

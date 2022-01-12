@@ -148,7 +148,7 @@ export const addAddress = (userId, token, address) => {
         .catch((error) => console.log(error));
 };
 
-export const removeAddresses = (userId, token, index) => {
+export const deleteAddresses = (userId, token, index) => {
     return fetch(`${API}/user/address/${userId}?index=${index}`, {
         method: 'DELETE',
         headers: {

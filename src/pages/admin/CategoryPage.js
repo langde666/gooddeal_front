@@ -7,7 +7,6 @@ import CategorySelector from '../../components/seletor/CategorySelector';
 const CategoryPage = (props) => {
     const user = useSelector((state) => state.account.user);
     const [flag, toggleFlag] = useToggle(false);
-
     return (
         <AdminLayout user={user}>
             <div className="d-flex align-items-center mb-2">
@@ -28,7 +27,7 @@ const CategoryPage = (props) => {
 
             {flag && (
                 <div className="mb-4">
-                    <h4 className="mb-3">Review</h4>
+                    <h4 className="mb-3">Review category tree</h4>
                     <CategorySelector isActive={true} isSelected={false} />
                 </div>
             )}

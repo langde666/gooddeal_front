@@ -61,23 +61,16 @@ const ChangePasswordPage = (props) => {
             setIsLoading(true);
             changePassword(passwordCode, { password: account.password })
                 .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                        setIsLoading(false);
-                        setTimeout(() => {
-                            setError('');
-                        }, 3000);
-                    } else {
-                        setSuccess(data.success);
-                        setIsLoading(false);
-                    }
-                })
-                .catch((error) => {
-                    setError('Server error');
+                    if (data.error) setError(data.error);
+                    else setSuccess(data.success);
                     setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
+                })
+                .catch((error) => {
+                    setError('Server error');
+                    setIsLoading(false);
                 });
         }
     };
