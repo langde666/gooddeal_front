@@ -60,7 +60,7 @@ export const updateUserLevel = (userId, token, levelId, level) => {
         .catch((error) => console.log(error));
 };
 
-export const removeUserLevel = (userId, token, levelId) => {
+export const deleteUserLevel = (userId, token, levelId) => {
     return fetch(`${API}/user/level/${levelId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',
@@ -148,7 +148,7 @@ export const updateStoreLevel = (userId, token, levelId, level) => {
         .catch((error) => console.log(error));
 };
 
-export const removeStoreLevel = (userId, token, levelId) => {
+export const deleteStoreLevel = (userId, token, levelId) => {
     return fetch(`${API}/store/level/${levelId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

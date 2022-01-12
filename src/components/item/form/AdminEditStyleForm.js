@@ -23,8 +23,9 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
         isValidName: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
         getStyleById(_id, accessToken, styleId)
@@ -87,30 +88,21 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-        // console.log(newStyle);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateStyle(_id, accessToken, styleId, newStyle)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
-                setError('Sever error');
+                setError('Sever Error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
@@ -123,7 +115,7 @@ const AdminEditStyleForm = ({ styleId = '' }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Update this category"
+                    title="Update category"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />

@@ -45,18 +45,16 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
         setIsLoading(true);
         listStoresForAdmin(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setStores(data.stores);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -111,14 +109,11 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    setIsLoading(false);
-                    setRun(!run);
-                }
+                } else setRun(!run);
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -132,7 +127,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
     return (
         <div className="position-relative">
             {heading && (
-                <h4 className="mb-3">
+                <h4 className="text-center text-uppercase">
                     {isActive ? 'Licensed stores' : 'Unlicensed stores'}
                 </h4>
             )}
@@ -141,11 +136,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title={
-                        !activeStore.isActive
-                            ? 'License this shop'
-                            : 'Ban this shop'
-                    }
+                    title={!activeStore.isActive ? 'License shop' : 'Ban shop'}
                     color={!activeStore.isActive ? 'primary' : 'danger'}
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
@@ -162,7 +153,7 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table align-middle table-hover table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -264,31 +255,31 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className={`btn ${
-                                                !store.isActive
-                                                    ? 'btn-outline-primary'
-                                                    : 'btn-outline-danger'
-                                            } ripple cus-tooltip`}
-                                            onClick={() =>
-                                                handleActiveStore(store)
-                                            }
-                                        >
-                                            {!store.isActive ? (
+                                    <button
+                                        type="button"
+                                        className={`btn ${
+                                            !store.isActive
+                                                ? 'btn-outline-primary'
+                                                : 'btn-outline-danger'
+                                        } ripple cus-tooltip`}
+                                        onClick={() => handleActiveStore(store)}
+                                    >
+                                        {!store.isActive ? (
+                                            <>
                                                 <i className="far fa-check-circle"></i>
-                                            ) : (
+                                                <span className="ms-2 res-hide">
+                                                    License
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>
                                                 <i className="fas fa-ban"></i>
-                                            )}
-                                        </button>
-
-                                        <small className="cus-tooltip-msg">
-                                            {isActive
-                                                ? 'Ban this store'
-                                                : 'License this store'}
-                                        </small>
-                                    </div>
+                                                <span className="ms-2 res-hide">
+                                                    Ban
+                                                </span>
+                                            </>
+                                        )}
+                                    </button>
                                 </td>
                             </tr>
                         ))}

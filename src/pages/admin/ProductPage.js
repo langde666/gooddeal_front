@@ -21,7 +21,9 @@ const ProductPage = (props) => {
                         <i className="fas fa-check-circle"></i>
                     </button>
 
-                    <small className="cus-tooltip-msg">Liscensed stores</small>
+                    <small className="cus-tooltip-msg">
+                        Liscensed products
+                    </small>
                 </div>
 
                 <div className="position-relative d-inline-block">
@@ -35,7 +37,7 @@ const ProductPage = (props) => {
                         <i className="fas fa-times-circle"></i>
                     </button>
 
-                    <small className="cus-tooltip-msg">Banned stores</small>
+                    <small className="cus-tooltip-msg">Banned products</small>
                 </div>
             </div>
 

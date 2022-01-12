@@ -164,8 +164,9 @@ const CategorySelector = ({
                                     key={index}
                                     type="button"
                                     className={`list-group-item ripple list-group-item-action d-flex justify-content-between align-items-center ${
-                                        category._id == lv2Filter.categoryId &&
-                                        'active'
+                                        category._id == lv2Filter.categoryId
+                                            ? 'active'
+                                            : ''
                                     }`}
                                     onClick={() =>
                                         handleClick(
@@ -229,8 +230,9 @@ const CategorySelector = ({
                                     type="button"
                                     className={`list-group-item ripple list-group-item-action ${
                                         selectedCategory &&
-                                        category._id == selectedCategory._id &&
-                                        'active'
+                                        category._id == selectedCategory._id
+                                            ? 'active'
+                                            : ''
                                     }`}
                                     onClick={() =>
                                         handleClick(null, null, category)
@@ -282,7 +284,9 @@ const CategorySelector = ({
                                     </button>
                                 </div>
                             ) : (
-                                <span className={isRequired && 'text-danger'}>
+                                <span
+                                    className={isRequired ? 'text-danger' : ''}
+                                >
                                     No category choosed
                                 </span>
                             )}

@@ -9,7 +9,6 @@ const StyleValuesPage = (props) => {
     return (
         <AdminLayout user={user}>
             <StyleValuesTable styleId={styleId} />
-
             <div className="mt-4">
                 <Link
                     to="/admin/style"

@@ -3,7 +3,7 @@ import { getToken } from '../../apis/auth';
 import {
     listStyleValues,
     listActiveStyleValues,
-    removeStyleValue,
+    deleteStyleValue,
     restoreStyleValue,
 } from '../../apis/style';
 import DeletedLabel from '../label/DeletedLabel';
@@ -27,7 +27,7 @@ const StyleValuesTable = ({
     const [isConfirming1, setIsConfirming1] = useState(false);
     const [run, setRun] = useState(false);
 
-    const [removedStyleValue, setRemovedStyleValue] = useState({});
+    const [deletedStyleValue, setDeletedStyleValue] = useState({});
     const [restoredStyleValue, setRestoredStyleValue] = useState({});
     const [editedStyleValue, setEditedStyleValue] = useState({});
 
@@ -42,14 +42,12 @@ const StyleValuesTable = ({
         if (!isActive) {
             listStyleValues(_id, accessToken, styleId)
                 .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                        setIsLoading(false);
-                    } else {
+                    if (data.error) setError(data.error);
+                    else {
                         setStyleValues(data.styleValues);
                         setStyle(data.style);
-                        setIsLoading(false);
                     }
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     setError('Server Error');
@@ -58,14 +56,12 @@ const StyleValuesTable = ({
         } else {
             listActiveStyleValues(styleId)
                 .then((data) => {
-                    if (data.error) {
-                        setError(data.error);
-                        setIsLoading(false);
-                    } else {
+                    if (data.error) setError(data.error);
+                    else {
                         setStyleValues(data.styleValues);
                         setStyle(data.style);
-                        setIsLoading(false);
                     }
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     setError('Server Error');
@@ -78,8 +74,8 @@ const StyleValuesTable = ({
         init();
     }, [styleId, run]);
 
-    const handleRemove = (styleValue) => {
-        setRemovedStyleValue(styleValue);
+    const handleDelete = (styleValue) => {
+        setDeletedStyleValue(styleValue);
         setIsConfirming(true);
     };
 
@@ -88,25 +84,22 @@ const StyleValuesTable = ({
         setIsConfirming1(true);
     };
 
-    const onSubmitRemove = () => {
+    const onSubmitDelete = () => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeStyleValue(_id, accessToken, removedStyleValue._id)
+        deleteStyleValue(_id, accessToken, deletedStyleValue._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -123,26 +116,23 @@ const StyleValuesTable = ({
         setIsLoading(true);
         restoreStyleValue(_id, accessToken, restoredStyleValue._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -151,36 +141,36 @@ const StyleValuesTable = ({
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this value"
+                    title="Delete style value"
                     color="danger"
-                    onSubmit={onSubmitRemove}
+                    onSubmit={onSubmitDelete}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this value"
+                    title="Restore style value"
                     onSubmit={onSubmitRestore}
                     onClose={() => setIsConfirming1(false)}
                 />
             )}
 
-            {heading && <h4 className="mb-3">Values of '{style.name}'</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">
+                    Values of <span className="text-primary">{style.name}</span>
+                </h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
-                    <div className="ms-2">
-                        <AddValueStyleItem
-                            styleId={styleId}
-                            styleName={style.name}
-                            onRun={() => setRun(!run)}
-                        />
-                    </div>
-                </div>
+                <AddValueStyleItem
+                    styleId={styleId}
+                    styleName={style.name}
+                    onRun={() => setRun(!run)}
+                />
                 <span className="me-2 text-nowrap res-hide">
                     {styleValues.length || 0} results
                 </span>
@@ -209,59 +199,53 @@ const StyleValuesTable = ({
                                     <Fragment>
                                         <td>
                                             {value.isDeleted && (
-                                                <DeletedLabel />
+                                                <small>
+                                                    <DeletedLabel />
+                                                </small>
                                             )}
                                         </td>
                                         <td className="text-nowrap">
-                                            <div className="position-relative d-inline-block me-2">
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-primary ripple cus-tooltip"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#edit-style-value-form"
-                                                    onClick={() =>
-                                                        setEditedStyleValue(
-                                                            value,
-                                                        )
-                                                    }
-                                                >
-                                                    <i className="fas fa-pen"></i>
-                                                </button>
-                                                <small className="cus-tooltip-msg">
-                                                    Edit value
-                                                </small>
-                                            </div>
+                                            <button
+                                                type="button"
+                                                className="btn btn-primary ripple me-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#edit-style-value-form"
+                                                onClick={() =>
+                                                    setEditedStyleValue(value)
+                                                }
+                                            >
+                                                <i className="fas fa-pen"></i>
+                                                <span className="ms-2 res-hide">
+                                                    Edit
+                                                </span>
+                                            </button>
 
                                             {!value.isDeleted ? (
-                                                <div className="position-relative d-inline-block">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-outline-danger ripple cus-tooltip"
-                                                        onClick={() =>
-                                                            handleRemove(value)
-                                                        }
-                                                    >
-                                                        <i className="fas fa-trash-alt"></i>
-                                                    </button>
-                                                    <small className="cus-tooltip-msg">
-                                                        Remove value
-                                                    </small>
-                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-outline-danger ripple"
+                                                    onClick={() =>
+                                                        handleDelete(value)
+                                                    }
+                                                >
+                                                    <i className="fas fa-trash-alt"></i>
+                                                    <span className="ms-2 res-hide">
+                                                        Del
+                                                    </span>
+                                                </button>
                                             ) : (
-                                                <div className="position-relative d-inline-block">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-outline-primary ripple cus-tooltip"
-                                                        onClick={() =>
-                                                            handleRestore(value)
-                                                        }
-                                                    >
-                                                        <i className="fas fa-trash-restore-alt"></i>
-                                                    </button>
-                                                    <small className="cus-tooltip-msg">
-                                                        Restore value
-                                                    </small>
-                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-outline-primary ripple"
+                                                    onClick={() =>
+                                                        handleRestore(value)
+                                                    }
+                                                >
+                                                    <i className="fas fa-trash-restore-alt"></i>
+                                                    <span className="ms-2 res-hide">
+                                                        Res
+                                                    </span>
+                                                </button>
                                             )}
                                         </td>
                                     </Fragment>

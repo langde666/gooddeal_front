@@ -21,6 +21,8 @@ const AddValueStyleForm = ({ styleId = '', styleName = '', onRun }) => {
         isValidName: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setNewValue({
             ...newValue,
@@ -63,30 +65,25 @@ const AddValueStyleForm = ({ styleId = '', styleName = '', onRun }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createStyleValue(_id, accessToken, newValue)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setNewValue({
                         ...newValue,
                         name: '',
                     });
                     if (onRun) onRun();
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');

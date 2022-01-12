@@ -9,7 +9,7 @@ import UserSmallCard from '../card/UserSmallCard';
 import Loading from '../ui/Loading';
 import Error from '../ui/Error';
 
-const AdminUsersTable = ({ heading = true }) => {
+const AdminUsersTable = ({ heading = 'Users in the system' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -83,22 +83,21 @@ const AdminUsersTable = ({ heading = true }) => {
         <div className="position-relative">
             {isloading && <Loading />}
 
-            {heading && <h4 className="mb-3">Users in the system</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
-            {isloading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
-                    <SearchInput onChange={handleChangeKeyword} />
-                </div>
+                <SearchInput onChange={handleChangeKeyword} />
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
                 </span>
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table align-middle table-hover table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

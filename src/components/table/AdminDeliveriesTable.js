@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import {
     listDeliveries,
-    removeDelivery,
+    deleteDelivery,
     restoreDelivery,
 } from '../../apis/delivery';
 import Pagination from '../ui/Pagination';
@@ -17,7 +17,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const AdminDeliveriesTable = ({ heading = true }) => {
+const AdminDeliveriesTable = ({ heading = 'Delivery unit' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -26,7 +26,7 @@ const AdminDeliveriesTable = ({ heading = true }) => {
     const [run, setRun] = useState(false);
 
     const [editedDelivery, setEditedDelivery] = useState({});
-    const [removedDelivery, setRemovedDelivery] = useState({});
+    const [deletedDelivery, setDeletedDelivery] = useState({});
     const [restoredDelivery, setRestoredDelivery] = useState({});
 
     const [deliveries, setDeliveries] = useState([]);
@@ -48,18 +48,16 @@ const AdminDeliveriesTable = ({ heading = true }) => {
         setIsLoading(true);
         listDeliveries(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setDeliveries(data.deliveries);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -98,8 +96,8 @@ const AdminDeliveriesTable = ({ heading = true }) => {
         setEditedDelivery(delivery);
     };
 
-    const handleRemoveCommission = (delivery) => {
-        setRemovedDelivery(delivery);
+    const handleDeleteCommission = (delivery) => {
+        setDeletedDelivery(delivery);
         setIsConfirming(true);
     };
 
@@ -108,32 +106,29 @@ const AdminDeliveriesTable = ({ heading = true }) => {
         setIsConfirming1(true);
     };
 
-    const onSubmitRemove = () => {
+    const onSubmitDelete = () => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeDelivery(_id, accessToken, removedDelivery._id)
+        deleteDelivery(_id, accessToken, deletedDelivery._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -143,26 +138,23 @@ const AdminDeliveriesTable = ({ heading = true }) => {
         setIsLoading(true);
         restoreDelivery(_id, accessToken, restoredDelivery._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -171,21 +163,23 @@ const AdminDeliveriesTable = ({ heading = true }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this delivery"
+                    title="Delete delivery"
                     color="danger"
-                    onSubmit={onSubmitRemove}
+                    onSubmit={onSubmitDelete}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this delivery"
+                    title="Restore delivery"
                     onSubmit={onSubmitRestore}
                     onClose={() => setIsConfirming1(false)}
                 />
             )}
 
-            {heading && <h4 className="mb-3">Delivery unites</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -283,57 +277,49 @@ const AdminDeliveriesTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block me-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edit-delivery-form"
-                                            onClick={() =>
-                                                handleEditCommission(delivery)
-                                            }
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Edit delivery
-                                        </small>
-                                    </div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary ripple me-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#edit-delivery-form"
+                                        onClick={() =>
+                                            handleEditCommission(delivery)
+                                        }
+                                    >
+                                        <i className="fas fa-pen"></i>
+                                        <span className="ms-2 res-hide">
+                                            Edit
+                                        </span>
+                                    </button>
 
                                     {!delivery.isDeleted ? (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveCommission(
-                                                        delivery,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove delivery
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger"
+                                            onClick={() =>
+                                                handleDeleteCommission(delivery)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     ) : (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-primary ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRestoreCommission(
-                                                        delivery,
-                                                    )
-                                                }
-                                            >
-                                                <i className="fas fa-trash-restore-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Restore delivery
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary ripple"
+                                            onClick={() =>
+                                                handleRestoreCommission(
+                                                    delivery,
+                                                )
+                                            }
+                                        >
+                                            <i className="fas fa-trash-restore-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Res
+                                            </span>
+                                        </button>
                                     )}
                                 </td>
                             </tr>

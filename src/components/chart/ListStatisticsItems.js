@@ -63,7 +63,6 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
     const adminInit = async () => {
         setError('');
         setIsLoading(true);
-
         try {
             const orderData = await listOrdersForAdmin(_id, accessToken, {
                 search: '',
@@ -101,8 +100,6 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                 limit: 1000,
                 page: 1,
             });
-
-            // console.log(orderData, userData, storeData, productData);
 
             setItems({
                 ...items,

@@ -24,6 +24,8 @@ const AdminCreateDeliveryForm = ({ onRun = () => {} }) => {
         isValidPrice: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setDelivery({
             ...delivery,
@@ -60,27 +62,14 @@ const AdminCreateDeliveryForm = ({ onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
-        console.log(delivery);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createDelivery(_id, accessToken, delivery)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setDelivery({
                         name: '',
                         description: '',
@@ -91,6 +80,11 @@ const AdminCreateDeliveryForm = ({ onRun = () => {} }) => {
                     });
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -102,21 +96,18 @@ const AdminCreateDeliveryForm = ({ onRun = () => {} }) => {
     };
 
     return (
-        <div className="create-delivery-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this delivery"
+                    title="Create delivery"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="create-delivery-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

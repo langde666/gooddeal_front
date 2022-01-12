@@ -2,7 +2,7 @@ import Modal from '../ui/Modal';
 import AdminCreateDeliveryForm from './form/AdminCreateDeliveryForm';
 
 const AdminCreateDeliveryItem = ({ onRun = () => {} }) => (
-    <div className="admin-create-delivery-item d-inline-block">
+    <div className="d-inline-block">
         <button
             type="button"
             className="btn btn-primary ripple text-nowrap"
@@ -10,7 +10,7 @@ const AdminCreateDeliveryItem = ({ onRun = () => {} }) => (
             data-bs-target="#admin-create-delivery-form"
         >
             <i className="fas fa-plus-circle"></i>
-            <span className="ms-2 res-hide">New delivery unit</span>
+            <span className="ms-2 res-hide">Add delivery unit</span>
         </button>
 
         <Modal

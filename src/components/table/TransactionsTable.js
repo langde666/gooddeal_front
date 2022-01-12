@@ -16,6 +16,7 @@ import EWalletInfo from '../info/EWalletInfo';
 import CreateTransactionItem from '../item/CreateTransactionItem';
 import CreateTransactionItemForUser from '../item/CreateTransactionItemForUser';
 import StoreSmallCard from '../card/StoreSmallCard';
+import UserSmallCard from '../card/UserSmallCard';
 
 const TransactionsTable = ({
     heading = 'Your E-Wallet',
@@ -122,8 +123,12 @@ const TransactionsTable = ({
 
     return (
         <div className="position-relative">
-            {heading && by !== 'admin' && (
+            {heading && by !== 'admin' ? (
                 <h4 className="text-center text-uppercase">{heading}</h4>
+            ) : (
+                <h4 className="text-center text-uppercase">
+                    Transactions in System
+                </h4>
             )}
 
             {isloading && <Loading />}
@@ -156,10 +161,6 @@ const TransactionsTable = ({
                                 />
                             </div>
                         </>
-                    )}
-
-                    {heading && by === 'admin' && (
-                        <h4 className="">Transactions in System</h4>
                     )}
                 </div>
 
@@ -211,7 +212,7 @@ const TransactionsTable = ({
                                     <SortByButton
                                         currentOrder={filter.order}
                                         currentSortBy={filter.sortBy}
-                                        title="Store"
+                                        title="By"
                                         sortBy="storeId"
                                         onSet={(order, sortBy) =>
                                             handleSetSortBy(order, sortBy)
@@ -262,9 +263,15 @@ const TransactionsTable = ({
                                 </td>
                                 {by === 'admin' && (
                                     <td className="text-start ps-4">
-                                        <StoreSmallCard
-                                            store={transaction.storeId}
-                                        />
+                                        {transaction && transaction.storeId ? (
+                                            <StoreSmallCard
+                                                store={transaction.storeId}
+                                            />
+                                        ) : (
+                                            <UserSmallCard
+                                                user={transaction.userId}
+                                            />
+                                        )}
                                     </td>
                                 )}
                                 <td>

@@ -27,14 +27,15 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
         isValidImage: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const init = () => {
         setError('');
         setIsLoading(true);
         getCategoryById(categoryId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                } else {
+                if (data.error) setError(data.error);
+                else
                     setNewCategory({
                         name: data.category.name,
                         image: '',
@@ -48,7 +49,6 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
                         isValidName: true,
                         isValidImage: true,
                     });
-                }
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -95,36 +95,24 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         const formData = new FormData();
         formData.set('name', newCategory.name);
         if (newCategory.image) formData.set('image', newCategory.image);
         if (newCategory.categoryId)
             formData.set('categoryId', newCategory.categoryId);
 
-        for (var value of formData.values()) {
-            console.log(value);
-        }
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateCategory(_id, accessToken, categoryId, formData)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -140,7 +128,7 @@ const AdminEditCategoryForm = ({ categoryId = '' }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Update this category"
+                    title="Update category"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />

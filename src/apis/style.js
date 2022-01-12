@@ -72,7 +72,7 @@ export const updateStyle = (userId, token, styleId, style) => {
         .catch((error) => console.log(error));
 };
 
-export const removeStyle = (userId, token, styleId) => {
+export const deleteStyle = (userId, token, styleId) => {
     return fetch(`${API}/style/${styleId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',
@@ -156,7 +156,7 @@ export const updateStyleValue = (userId, token, valueId, styleValue) => {
         .catch((error) => console.log(error));
 };
 
-export const removeStyleValue = (userId, token, styleValueId) => {
+export const deleteStyleValue = (userId, token, styleValueId) => {
     return fetch(`${API}/style/value/${styleValueId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

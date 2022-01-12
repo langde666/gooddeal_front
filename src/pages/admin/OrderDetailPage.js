@@ -9,7 +9,6 @@ const OrderDetailPage = (props) => {
     return (
         <AdminLayout user={user}>
             <OrderDetailInfo orderId={orderId} by="admin" isEditable={true} />
-
             <div className="mt-4">
                 <Link
                     to="/admin/order"

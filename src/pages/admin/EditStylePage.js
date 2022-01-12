@@ -8,9 +8,7 @@ const EditStylePage = (props) => {
     const { styleId } = useParams();
     return (
         <AdminLayout user={user}>
-            <div className="admin-edit-style-page">
-                <AdminEditStyleForm styleId={styleId} />
-            </div>
+            <AdminEditStyleForm styleId={styleId} />
         </AdminLayout>
     );
 };

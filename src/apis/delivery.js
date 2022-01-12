@@ -59,7 +59,7 @@ export const updateDelivery = (userId, token, deliveryId, delivery) => {
         .catch((error) => console.log(error));
 };
 
-export const removeDelivery = (userId, token, deliveryId) => {
+export const deleteDelivery = (userId, token, deliveryId) => {
     return fetch(`${API}/delivery/${deliveryId}/${userId}`, {
         method: 'DELETE',
         mode: 'cors',

@@ -14,7 +14,18 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [level, setLevel] = useState({});
+    const [level, setLevel] = useState({
+        name: oldLevel.name,
+        minPoint: oldLevel.minPoint,
+        discount: oldLevel.discount && oldLevel.discount.$numberDecimal,
+        color: oldLevel.color,
+        isValidName: true,
+        isValidMinPoint: true,
+        isValidDiscount: true,
+        isValidColor: true,
+    });
+
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
         setLevel({
@@ -75,28 +86,21 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateStoreLevel(_id, accessToken, oldLevel._id, level)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -108,21 +112,18 @@ const AdminEditStoreLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     };
 
     return (
-        <div className="edit-store-level-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this level"
+                    title="Edit level"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="edit-store-level-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

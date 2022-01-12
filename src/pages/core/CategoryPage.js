@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getCategoryById } from '../../apis/category';
 import { listActiveProducts } from '../../apis/product';
-import useUpdateEffect from '../../hooks/useUpdateEffect';
 import MainLayout from '../../components/layout/MainLayout';
 import ProductCard from '../../components/card/ProductCard';
 import Pagination from '../../components/ui/Pagination.js';
@@ -96,7 +95,7 @@ const CategoryPage = (props) => {
                 {error && <Error msg={error} />}
 
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+                    <ol className="breadcrumb">
                         {category.categoryId && category.categoryId.categoryId && (
                             <Link
                                 to={`/category/${category.categoryId.categoryId._id}`}

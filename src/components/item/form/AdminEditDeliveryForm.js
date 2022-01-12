@@ -15,7 +15,16 @@ const AdminEditDeliveryForm = ({ oldDelivery = '', onRun = () => {} }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [delivery, setDelivery] = useState({});
+    const [delivery, setDelivery] = useState({
+        name: oldDelivery.name,
+        description: oldDelivery.description,
+        price: oldDelivery.price && oldDelivery.price.$numberDecimal,
+        isValidName: true,
+        isValidDescription: true,
+        isValidPrice: true,
+    });
+
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
         setDelivery({
@@ -64,30 +73,21 @@ const AdminEditDeliveryForm = ({ oldDelivery = '', onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
-        console.log(delivery);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateDelivery(_id, accessToken, oldDelivery._id, delivery)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -99,21 +99,18 @@ const AdminEditDeliveryForm = ({ oldDelivery = '', onRun = () => {} }) => {
     };
 
     return (
-        <div className="edit-delivery-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this delivery"
+                    title="Edit delivery"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="edit-delivery-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

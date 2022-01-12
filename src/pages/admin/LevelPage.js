@@ -7,7 +7,6 @@ import AdminStoreLevelTable from '../../components/table/AdminStoreLevelTable';
 const LevelPage = (props) => {
     const user = useSelector((state) => state.account.user);
     const [flag, toggleFlag] = useToggle(true);
-
     return (
         <AdminLayout user={user}>
             <div className="d-flex align-items-center mb-2">

@@ -30,24 +30,23 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
         page: 1,
     });
 
+    const { _id, accessToken } = getToken();
+
     const init = () => {
-        const { _id, accessToken } = getToken();
         setError('');
         setIsLoading(true);
         listOrdersForAdmin(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setOrders(data.orders);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -93,9 +92,13 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
         <div className="position-relative">
             {heading &&
                 (status === '' ? (
-                    <h4 className="">All Orders In System</h4>
+                    <h4 className="text-center text-uppercase">
+                        All Orders In System
+                    </h4>
                 ) : (
-                    <h4 className="">Delivery Service</h4>
+                    <h4 className="text-center text-uppercase">
+                        Delivery Service
+                    </h4>
                 ))}
 
             {isloading && <Loading />}
@@ -112,7 +115,7 @@ const AdminOrdersTable = ({ heading = true, status = '' }) => {
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table align-middle table-hover table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>

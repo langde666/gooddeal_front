@@ -44,18 +44,16 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
         setIsLoading(true);
         listProductsForAdmin(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setProducts(data.products);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -110,14 +108,11 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    setIsLoading(false);
-                    setRun(!run);
-                }
+                } else setRun(!run);
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -131,8 +126,8 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
     return (
         <div className="position-relative">
             {heading && (
-                <h4 className="mb-3">
-                    {isActive ? 'Liscensed products' : 'Unlicensed products'}
+                <h4 className="text-center text-uppercase">
+                    {isActive ? 'Licensed products' : 'Unlicensed products'}
                 </h4>
             )}
 
@@ -142,8 +137,8 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                 <ConfirmDialog
                     title={
                         !activeProduct.isActive
-                            ? 'Liscense this product'
-                            : 'Ban this product'
+                            ? 'License product'
+                            : 'Ban product'
                     }
                     color={!activeProduct.isActive ? 'primary' : 'danger'}
                     onSubmit={onSubmit}
@@ -233,7 +228,10 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                                         1 +
                                         (filter.page - 1) * filter.limit}
                                 </th>
-                                <td className="text-start">
+                                <td
+                                    className="text-start"
+                                    style={{ whiteSpace: 'normal' }}
+                                >
                                     <ProductSmallCard product={product} />
                                 </td>
                                 <td className="text-start">
@@ -257,31 +255,33 @@ const AdminProductsTable = ({ heading = true, isActive = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block">
-                                        <button
-                                            type="button"
-                                            className={`btn ${
-                                                !product.isActive
-                                                    ? 'btn-outline-primary'
-                                                    : 'btn-outline-danger'
-                                            } ripple cus-tooltip`}
-                                            onClick={() =>
-                                                handleActiveProduct(product)
-                                            }
-                                        >
-                                            {!product.isActive ? (
+                                    <button
+                                        type="button"
+                                        className={`btn ${
+                                            !product.isActive
+                                                ? 'btn-outline-primary'
+                                                : 'btn-outline-danger'
+                                        } ripple cus-tooltip`}
+                                        onClick={() =>
+                                            handleActiveProduct(product)
+                                        }
+                                    >
+                                        {!product.isActive ? (
+                                            <>
                                                 <i className="far fa-check-circle"></i>
-                                            ) : (
+                                                <span className="ms-2 res-hide">
+                                                    License
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <>
                                                 <i className="fas fa-ban"></i>
-                                            )}
-                                        </button>
-
-                                        <small className="cus-tooltip-msg">
-                                            {isActive
-                                                ? 'Ban this product'
-                                                : 'Liscense this product'}
-                                        </small>
-                                    </div>
+                                                <span className="ms-2 res-hide">
+                                                    Ban
+                                                </span>
+                                            </>
+                                        )}
+                                    </button>
                                 </td>
                             </tr>
                         ))}

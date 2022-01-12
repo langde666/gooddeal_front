@@ -25,6 +25,8 @@ const AdminCreateUserLevelForm = ({ onRun = () => {} }) => {
         isValidColor: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setLevel({
             ...level,
@@ -71,26 +73,14 @@ const AdminCreateUserLevelForm = ({ onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createUserLevel(_id, accessToken, level)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     setLevel({
                         name: '',
                         minPoint: 0,
@@ -99,9 +89,14 @@ const AdminCreateUserLevelForm = ({ onRun = () => {} }) => {
                         isValidMinPoint: true,
                         isValidDiscount: true,
                     });
-
                     if (onRun) onRun();
                 }
+
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -113,21 +108,18 @@ const AdminCreateUserLevelForm = ({ onRun = () => {} }) => {
     };
 
     return (
-        <div className="create-user-level-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this level"
+                    title="Create user level"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="create-user-level-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

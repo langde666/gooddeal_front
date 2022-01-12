@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getToken } from '../../apis/auth';
 import {
     listStoreLevels,
-    removeStoreLevel,
+    deleteStoreLevel,
     restoreStoreLevel,
 } from '../../apis/level';
 import Pagination from '../ui/Pagination';
@@ -18,7 +18,7 @@ import Error from '../ui/Error';
 import Success from '../ui/Success';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const AdminStoreLevelsTable = ({ heading = true }) => {
+const AdminStoreLevelsTable = ({ heading = 'Store level' }) => {
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -27,7 +27,7 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
     const [run, setRun] = useState(false);
 
     const [editedLevel, setEditedLevel] = useState({});
-    const [removedLevel, setRemovedLevel] = useState({});
+    const [deletedLevel, setDeletedLevel] = useState({});
     const [restoredLevel, setRestoredLevel] = useState({});
 
     const [levels, setLevels] = useState([]);
@@ -49,18 +49,16 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setIsLoading(true);
         listStoreLevels(_id, accessToken, filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setLevels(data.levels);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -99,8 +97,8 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setEditedLevel(level);
     };
 
-    const handleRemoveLevel = (level) => {
-        setRemovedLevel(level);
+    const handleDeleteLevel = (level) => {
+        setDeletedLevel(level);
         setIsConfirming(true);
     };
 
@@ -109,32 +107,29 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setIsConfirming1(true);
     };
 
-    const onSubmitRemove = () => {
+    const onSubmitDelete = () => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeStoreLevel(_id, accessToken, removedLevel._id)
+        deleteStoreLevel(_id, accessToken, deletedLevel._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-                setIsLoading(false);
             });
     };
 
@@ -144,19 +139,16 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
         setIsLoading(true);
         restoreStoreLevel(_id, accessToken, restoredLevel._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setRun(!run);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -172,21 +164,21 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this level"
+                    title="Delete level"
                     message={
                         <span>
-                            Are you sure you want to remove{' '}
-                            <StoreLevelLabel level={removedLevel} />
+                            Are you sure you want to delete{' '}
+                            <StoreLevelLabel level={deletedLevel} />
                         </span>
                     }
                     color="danger"
-                    onSubmit={onSubmitRemove}
+                    onSubmit={onSubmitDelete}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
             {isConfirming1 && (
                 <ConfirmDialog
-                    title="Restore this level"
+                    title="Restore level"
                     message={
                         <span>
                             Are you sure you want to restore{' '}
@@ -198,7 +190,9 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                 />
             )}
 
-            {heading && <h4 className="mb-3">Store Levels</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
@@ -312,53 +306,45 @@ const AdminStoreLevelsTable = ({ heading = true }) => {
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block me-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary ripple cus-tooltip"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edit-level-form"
-                                            onClick={() =>
-                                                handleEditLevel(level)
-                                            }
-                                        >
-                                            <i className="fas fa-pen"></i>
-                                        </button>
-                                        <small className="cus-tooltip-msg">
-                                            Edit Level
-                                        </small>
-                                    </div>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary ripple me-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#edit-level-form"
+                                        onClick={() => handleEditLevel(level)}
+                                    >
+                                        <i className="fas fa-pen"></i>
+                                        <span className="ms-2 res-hide">
+                                            Edit
+                                        </span>
+                                    </button>
 
                                     {!level.isDeleted ? (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveLevel(level)
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove level
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger ripple"
+                                            onClick={() =>
+                                                handleDeleteLevel(level)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     ) : (
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-primary ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRestoreLevel(level)
-                                                }
-                                            >
-                                                <i className="fas fa-trash-restore-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Restore level
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary ripple"
+                                            onClick={() =>
+                                                handleRestoreLevel(level)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-restore-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     )}
                                 </td>
                             </tr>

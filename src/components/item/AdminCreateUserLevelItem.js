@@ -2,7 +2,7 @@ import Modal from '../ui/Modal';
 import AdminCreateUserLevelForm from './form/AdminCreateUserLevelForm';
 
 const AdminCreateUserLevelItem = ({ onRun = () => {} }) => (
-    <div className="admin-create-level-item d-inline-block">
+    <div className="d-inline-block">
         <button
             type="button"
             className="btn btn-primary ripple text-nowrap"
@@ -10,7 +10,7 @@ const AdminCreateUserLevelItem = ({ onRun = () => {} }) => (
             data-bs-target="#admin-create-level-form"
         >
             <i className="fas fa-plus-circle"></i>
-            <span className="ms-2 res-hide">New level</span>
+            <span className="ms-2 res-hide">Add user level</span>
         </button>
 
         <Modal

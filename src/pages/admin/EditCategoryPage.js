@@ -8,9 +8,7 @@ const EditCategoryPage = (props) => {
     const { categoryId } = useParams();
     return (
         <AdminLayout user={user}>
-            <div className="admin-edit-category-page">
-                <AdminEditCategoryForm categoryId={categoryId} />
-            </div>
+            <AdminEditCategoryForm categoryId={categoryId} />
         </AdminLayout>
     );
 };

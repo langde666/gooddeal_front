@@ -22,6 +22,8 @@ const AdminCreateStyleForm = (props) => {
         isValidName: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setNewStyle({
             ...newStyle,
@@ -56,30 +58,21 @@ const AdminCreateStyleForm = (props) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-        // console.log(newStyle);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createStyle(_id, accessToken, newStyle)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
-                setError('Sever error');
+                setError('Sever Error');
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');
@@ -92,7 +85,7 @@ const AdminCreateStyleForm = (props) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this category"
+                    title="Create category"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />

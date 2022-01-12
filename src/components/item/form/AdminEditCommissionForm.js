@@ -15,7 +15,16 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => {} }) => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const [commission, setCommission] = useState({});
+    const [commission, setCommission] = useState({
+        name: oldCommission.name,
+        description: oldCommission.description,
+        cost: oldCommission.cost && oldCommission.cost.$numberDecimal,
+        isValidName: true,
+        isValidDescription: true,
+        isValidCost: true,
+    });
+
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
         setCommission({
@@ -64,28 +73,21 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateCommission(_id, accessToken, oldCommission._id, commission)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -97,21 +99,18 @@ const AdminEditCommissionForm = ({ oldCommission = '', onRun = () => {} }) => {
     };
 
     return (
-        <div className="edit-store-commission-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this commission"
+                    title="Edit commission"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="edit-store-commission-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

@@ -16,6 +16,8 @@ const AdminEditUserLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
 
     const [level, setLevel] = useState({});
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setLevel({
             name: oldLevel.name,
@@ -75,28 +77,21 @@ const AdminEditUserLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateUserLevel(_id, accessToken, oldLevel._id, level)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -108,21 +103,18 @@ const AdminEditUserLevelForm = ({ oldLevel = '', onRun = () => {} }) => {
     };
 
     return (
-        <div className="edit-user-level-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this level"
+                    title="Edit level"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="edit-user-level-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"
