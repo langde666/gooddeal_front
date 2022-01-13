@@ -1,11 +1,22 @@
 import Modal from '../ui/Modal';
 import AddValueStyleForm from './form/AddValueStyleForm';
 
-const AddValueStyleItem = ({ styleId = '', styleName = '', onRun }) => (
-    <div className="position-relative d-inline-block">
+const AddValueStyleItem = ({
+    styleId = '',
+    styleName = '',
+    onRun,
+    isFullWidth = false,
+}) => (
+    <div
+        className={`position-relative d-inline-block ${
+            isFullWidth ? 'w-100' : ''
+        }`}
+    >
         <button
             type="button"
-            className="btn btn-primary ripple text-nowrap"
+            className={`btn btn-primary ripple text-nowrap ${
+                isFullWidth ? 'w-100' : ''
+            }`}
             data-bs-toggle="modal"
             data-bs-target={`#add-style-value-form-${styleId}`}
         >

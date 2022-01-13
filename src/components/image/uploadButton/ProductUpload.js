@@ -19,26 +19,21 @@ const ProductUpload = ({ storeId = '', productId = '', index = 0, onRun }) => {
         const formData = new FormData();
         formData.set('photo', e.target.files[0]);
 
-        console.log(formData, index);
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateListImages(_id, accessToken, formData, index, productId, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     if (onRun) onRun();
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -59,23 +54,18 @@ const ProductUpload = ({ storeId = '', productId = '', index = 0, onRun }) => {
         setIsLoading(true);
         removeListImages(_id, accessToken, index, productId, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
                 setIsLoading(false);
                 if (onRun) onRun();
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
-                setIsLoading(false);
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
@@ -89,7 +79,7 @@ const ProductUpload = ({ storeId = '', productId = '', index = 0, onRun }) => {
             {isConfirming && (
                 <div className="text-start">
                     <ConfirmDialog
-                        title="Remove this images"
+                        title="Remove images"
                         color="danger"
                         onSubmit={onRemoveSubmit}
                         onClose={() => setIsConfirming(false)}

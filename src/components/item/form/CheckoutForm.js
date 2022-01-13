@@ -60,7 +60,6 @@ const CheckoutForm = ({
             );
             const { totalPrice, totalPromotionalPrice, amountFromUser1 } =
                 totalProducts(items, userLevel);
-            // console.log(res1.level, res2.commission);
             const { amountFromStore, amountToStore } = totalCommission(
                 items,
                 res1.level,
@@ -85,8 +84,6 @@ const CheckoutForm = ({
                 commissionId: res2.commission._id,
                 amountToGD: amountFromUser1 + amountFromUser2 - amountToStore,
             });
-
-            // console.log(convertVNDtoUSD(amountFromUser1 + amountFromUser2));
         } catch (e) {
             setError('Server Error');
         }
@@ -248,9 +245,6 @@ const CheckoutForm = ({
         return actions.order.capture().then(function (details) {
             // Show a success message to your buyer
             // alert("Transaction completed by " + details.payer.name.given_name);
-            // console.log(data);
-            // console.log(details);
-
             // OPTIONAL: Call your server to save the transaction
             const { _id, accessToken } = getToken();
 

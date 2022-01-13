@@ -29,6 +29,7 @@ const UserAddAddressForm = (props) => {
     });
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     const handleChange = (name, isValidName, value) => {
         setAddress({
@@ -91,20 +92,14 @@ const UserAddAddressForm = (props) => {
             address.city_province +
             ', ' +
             address.country;
-        const { _id, accessToken } = getToken();
 
         setError('');
         setSuccess('');
         setIsLoading(true);
         addAddress(_id, accessToken, { address: addressString })
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('account', data.user);
                     setAddress({
                         street: '',
@@ -119,11 +114,12 @@ const UserAddAddressForm = (props) => {
                         isValidCountry: true,
                     });
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -135,7 +131,7 @@ const UserAddAddressForm = (props) => {
     };
 
     return (
-        <div className="add-address-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -146,7 +142,7 @@ const UserAddAddressForm = (props) => {
                 />
             )}
 
-            <form className="add-address-form row mb-2" onSubmit={handleSubmit}>
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

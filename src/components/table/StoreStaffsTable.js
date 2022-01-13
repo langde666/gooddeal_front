@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
 import { getToken } from '../../apis/auth';
-import { removeStaff } from '../../apis/store';
+import { deleteStaff } from '../../apis/store';
 import useUpdateDispatch from '../../hooks/useUpdateDispatch';
 import UserSmallCard from '../card/UserSmallCard';
 import StoreAddStaffItem from '../item/StoreAddStaffItem';
@@ -15,12 +14,12 @@ import ConfirmDialog from '../ui/ConfirmDialog';
 import SortByButton from './sub/SortByButton';
 
 const StoreStaffsTable = ({
-    heading = true,
+    heading = `Store's staffs`,
     staffIds = [],
     ownerId = {},
     storeId = '',
 }) => {
-    const [removedStaff, setRemovedStaff] = useState({});
+    const [deletedStaff, setDeletedStaff] = useState({});
 
     const [isloading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -102,35 +101,32 @@ const StoreStaffsTable = ({
         });
     };
 
-    const handleRemoveStaff = (staff) => {
-        setRemovedStaff(staff);
+    const handleDeleteStaff = (staff) => {
+        setDeletedStaff(staff);
         setIsConfirming(true);
     };
 
-    const onRemoveSubmitStaff = () => {
-        const staff = removedStaff._id;
+    const onDeleteSubmitStaff = () => {
+        const staff = deletedStaff._id;
         setError('');
         setSuccess('');
         setIsLoading(true);
-        removeStaff(userId, accessToken, staff, storeId)
+        deleteStaff(userId, accessToken, staff, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('vendor', data.store);
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
-                setIsLoading(false);
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
@@ -142,20 +138,22 @@ const StoreStaffsTable = ({
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove staff"
+                    title="Delete staff"
                     color="danger"
                     message={
                         <span className="mt-2 d-block">
-                            Are you sure you want to remove{' '}
-                            <UserSmallCard user={removedStaff} /> ?
+                            Are you sure you want to delete{' '}
+                            <UserSmallCard user={deletedStaff} /> ?
                         </span>
                     }
-                    onSubmit={onRemoveSubmitStaff}
+                    onSubmit={onDeleteSubmitStaff}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            {heading && <h4 className="mb-3">Shop staffs</h4>}
+            {heading && (
+                <h4 className="text-center text-uppercase">{heading}</h4>
+            )}
 
             {error && <Error msg={error} />}
             {success && <Success msg={success} />}
@@ -259,20 +257,18 @@ const StoreStaffsTable = ({
                                 </td>
                                 {ownerId && userId == ownerId._id && (
                                     <td className="text-center">
-                                        <div className="position-relative d-inline-block">
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-danger ripple cus-tooltip"
-                                                onClick={() =>
-                                                    handleRemoveStaff(staff)
-                                                }
-                                            >
-                                                <i className="fas fa-trash-alt"></i>
-                                            </button>
-                                            <small className="cus-tooltip-msg">
-                                                Remove staff
-                                            </small>
-                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger ripple cus-tooltip"
+                                            onClick={() =>
+                                                handleDeleteStaff(staff)
+                                            }
+                                        >
+                                            <i className="fas fa-trash-alt"></i>
+                                            <span className="ms-2 res-hide">
+                                                Del
+                                            </span>
+                                        </button>
                                     </td>
                                 )}
                             </tr>

@@ -102,7 +102,6 @@ const TransactionsTable = ({
     };
 
     useEffect(() => {
-        // console.log('render');
         init();
     }, [storeId, by, filter, run]);
 

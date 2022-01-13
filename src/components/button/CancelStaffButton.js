@@ -48,7 +48,7 @@ const CancelStaffsButton = ({ storeId = '' }) => {
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Out this shop"
+                    title="Leave store"
                     color="danger"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
@@ -61,7 +61,7 @@ const CancelStaffsButton = ({ storeId = '' }) => {
                 onClick={handlecancelStaff}
             >
                 <i className="fas fa-ban"></i>
-                <span className="ms-2 res-hide">Out this shop</span>
+                <span className="ms-2 res-hide">Leave store</span>
             </button>
         </div>
     );

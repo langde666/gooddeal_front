@@ -35,15 +35,14 @@ const OpenCloseStoreButton = ({
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
                 } else {
-                    setIsLoading(false);
                     setOpenFlag(!openFlag);
                     if (onRun) onRun(data.store);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');

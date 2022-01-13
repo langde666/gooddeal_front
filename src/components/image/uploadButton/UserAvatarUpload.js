@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { updateAvatar } from '../../../apis/user';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
@@ -27,9 +27,7 @@ const UserAvatarUpload = (props) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    updateDispatch('account', data.user);
-                }
+                } else updateDispatch('account', data.user);
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -42,7 +40,7 @@ const UserAvatarUpload = (props) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             <label className="cus-avatar-icon">
                 <i className="fas fa-camera"></i>
@@ -58,7 +56,7 @@ const UserAvatarUpload = (props) => {
                     onChange={handleChange}
                 />
             </label>
-        </Fragment>
+        </>
     );
 };
 

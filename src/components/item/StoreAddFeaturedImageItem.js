@@ -2,7 +2,7 @@ import Modal from '../ui/Modal';
 import StoreAddFeaturedImageForm from './form/StoreAddFeaturedImageForm';
 
 const StoreAddFeaturedImageItem = ({ count = 6, storeId = '' }) => (
-    <div className="add-featured-image-item position-relative d-inline-block">
+    <div className="position-relative d-inline-block">
         <div className="cus-tooltip">
             <button
                 type="button"
@@ -12,7 +12,7 @@ const StoreAddFeaturedImageItem = ({ count = 6, storeId = '' }) => (
                 data-bs-target="#add-featured-image-form"
             >
                 <i className="fas fa-plus-circle"></i>
-                <span className="ms-2 res-hide">New Featured Image</span>
+                <span className="ms-2 res-hide">Add featured image</span>
             </button>
 
             {count < 6 && (

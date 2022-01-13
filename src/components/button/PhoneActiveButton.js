@@ -1,8 +1,6 @@
-import { Fragment } from 'react';
-
 const PhoneActiveItem = ({ phone = '', isPhoneActive = false }) => {
     return (
-        <Fragment>
+        <>
             {phone && isPhoneActive && (
                 <div className="position-relative d-inline-block">
                     <span className="badge bg-primary cus-tooltip">
@@ -35,7 +33,7 @@ const PhoneActiveItem = ({ phone = '', isPhoneActive = false }) => {
                     </small>
                 </div>
             )}
-        </Fragment>
+        </>
     );
 };
 

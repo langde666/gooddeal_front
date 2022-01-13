@@ -199,7 +199,7 @@ export const addStaffs = (userId, token, staffs, storeId) => {
         .catch((error) => console.log(error));
 };
 
-export const removeStaff = (userId, token, staff, storeId) => {
+export const deleteStaff = (userId, token, staff, storeId) => {
     return fetch(`${API}/store/staff/remove/${storeId}/${userId}`, {
         method: 'DELETE',
         headers: {

@@ -9,7 +9,6 @@ import {
 import { listUserForAdmin } from '../../apis/user';
 import { listStoresForAdmin } from '../../apis/store';
 import { groupByDate, groupByJoined, groupBySold } from '../../helper/groupBy';
-import { formatPrice } from '../../helper/formatPrice';
 import { humanReadableDate } from '../../helper/humanReadable';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
@@ -440,7 +439,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                             Top 6 {options.flag}s
                         </h4>
                         <div className="table-scroll my-2">
-                            <table className="table align-middle table-hover table-bordered table-sm text-center">
+                            <table className="table align-middle table-hover table-sm text-center">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>

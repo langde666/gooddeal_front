@@ -18,6 +18,8 @@ const VendorAddProductImageForm = ({ productId = '', storeId = '', onRun }) => {
         isValidImage: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setNewImages({
             ...newImage,
@@ -49,7 +51,6 @@ const VendorAddProductImageForm = ({ productId = '', storeId = '', onRun }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
         const formData = new FormData();
         formData.set('photo', newImage.image);
 
@@ -58,23 +59,20 @@ const VendorAddProductImageForm = ({ productId = '', storeId = '', onRun }) => {
         setIsLoading(true);
         addListImages(_id, accessToken, formData, productId, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setNewImages({
                         image: '',
                         isValidImage: true,
                     });
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     if (onRun) onRun();
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -86,7 +84,7 @@ const VendorAddProductImageForm = ({ productId = '', storeId = '', onRun }) => {
     };
 
     return (
-        <div className="add-product-image-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -97,10 +95,7 @@ const VendorAddProductImageForm = ({ productId = '', storeId = '', onRun }) => {
                 />
             )}
 
-            <form
-                className="add-product-image-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <InputFile
                         label="Product other image"

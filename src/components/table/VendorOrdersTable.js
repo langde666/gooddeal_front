@@ -42,18 +42,16 @@ const StoreOrdersTable = ({
         setIsLoading(true);
         listOrdersByStore(_id, accessToken, filter, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setOrders(data.orders);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -98,17 +96,17 @@ const StoreOrdersTable = ({
     return (
         <div className="position-relative">
             {heading && isEditable ? (
-                <h4>Processing Orders</h4>
+                <h4 className="text-center text-uppercase">
+                    Processing Orders
+                </h4>
             ) : (
-                <h4>Processed Orders</h4>
+                <h4 className="text-center text-uppercase">Processed Orders</h4>
             )}
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="d-flex align-items-center">
-                    <SearchInput onChange={handleChangeKeyword} />
-                </div>
+                <SearchInput onChange={handleChangeKeyword} />
 
                 <span className="me-2 text-nowrap res-hide">
                     {pagination.size || 0} results
@@ -116,7 +114,7 @@ const StoreOrdersTable = ({
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table align-middle table-hover table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -293,20 +291,16 @@ const StoreOrdersTable = ({
                                     </small>
                                 </td>
                                 <td>
-                                    <div className="position-relative d-inline-block">
-                                        <div className="position-relative d-inline-block">
-                                            <Link
-                                                type="button"
-                                                className="btn btn-primary ripple cus-tooltip"
-                                                to={`/vendor/orders/detail/${order._id}/${storeId}`}
-                                            >
-                                                <i className="fas fa-info-circle"></i>
-                                            </Link>
-                                            <small className="cus-tooltip-msg">
-                                                View order detail
-                                            </small>
-                                        </div>
-                                    </div>
+                                    <Link
+                                        type="button"
+                                        className="btn btn-primary ripple cus-tooltip"
+                                        to={`/vendor/orders/detail/${order._id}/${storeId}`}
+                                    >
+                                        <i className="fas fa-info-circle"></i>
+                                        <span className="ms-2 res-hide">
+                                            Detail
+                                        </span>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}

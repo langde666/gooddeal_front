@@ -21,6 +21,8 @@ const UserEditPasswordForm = (props) => {
         isValidNewPassword: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setAccount({
             ...account,
@@ -62,20 +64,14 @@ const UserEditPasswordForm = (props) => {
             currentPassword: account.currentPassword,
             newPassword: account.newPassword,
         };
-        const { _id, accessToken } = getToken();
 
         setError('');
         setSuccess('');
         setIsLoading(true);
         updatePassword(_id, accessToken, user)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setAccount({
                         currentPassword: '',
                         newPassword: '',
@@ -83,11 +79,12 @@ const UserEditPasswordForm = (props) => {
                         isValidNewPassword: true,
                     });
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server error');
@@ -99,7 +96,7 @@ const UserEditPasswordForm = (props) => {
     };
 
     return (
-        <div className="password-edit-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -110,10 +107,7 @@ const UserEditPasswordForm = (props) => {
                 />
             )}
 
-            <form
-                className="password-edit-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="password"

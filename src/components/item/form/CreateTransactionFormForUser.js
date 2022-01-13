@@ -76,18 +76,10 @@ const CreateTransactionFormForUser = ({ eWallet = 0, onRun }) => {
         setError('');
         setSuccess('');
         setIsLoading(true);
-
-        // console.log('onSubmit', transaction);
-
         createTransactionByUser(userId, accessToken, transaction)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setTransaction({
                         ...transaction,
                         amount: 50000,
@@ -95,16 +87,15 @@ const CreateTransactionFormForUser = ({ eWallet = 0, onRun }) => {
                         isValidAmount: true,
                         isValidCurrentPassword: true,
                     });
-
                     updateDispatch('account', data.user);
                     setSuccess('Withdraw successfully!');
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server error');

@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Paragraph from '../ui/Paragraph';
 import PhoneActiveButton from '../button/PhoneActiveButton';
 import EmailActiveButton from '../button/EmailActiveButton';
@@ -21,7 +20,7 @@ const UserProfileInfo = ({ user = {}, isEditable = false }) => (
                     <Paragraph label="Email" value={user.email || '-'} />
                 </div>
             ) : (
-                <Fragment>
+                <>
                     <div className="col-sm-6">
                         <Paragraph label="Email" value={user.email || '-'} />
                     </div>
@@ -34,7 +33,7 @@ const UserProfileInfo = ({ user = {}, isEditable = false }) => (
                             facebookId={user.facebookId}
                         />
                     </div>
-                </Fragment>
+                </>
             )}
 
             {!isEditable ? (
@@ -42,7 +41,7 @@ const UserProfileInfo = ({ user = {}, isEditable = false }) => (
                     <Paragraph label="Phone" value={user.phone || '-'} />
                 </div>
             ) : (
-                <Fragment>
+                <>
                     <div className="col-sm-6">
                         <Paragraph label="Phone" value={user.phone || '-'} />
                     </div>
@@ -53,7 +52,7 @@ const UserProfileInfo = ({ user = {}, isEditable = false }) => (
                             isPhoneActive={user.isPhoneActive}
                         />
                     </div>
-                </Fragment>
+                </>
             )}
 
             <div className="col-sm-6">

@@ -12,10 +12,7 @@ const ReviewAndRatingPage = (props) => {
         </MainLayout>
     ) : (
         <StoreLayout store={store}>
-            <div
-                className="store-review-and-rating-page"
-                style={{ maxWidth: '990px', margin: '0 auto' }}
-            >
+            <div style={{ maxWidth: '990px', margin: '0 auto' }}>
                 <div className="mt-4">
                     <ListReviews storeId={store._id} heading={false} />
                 </div>

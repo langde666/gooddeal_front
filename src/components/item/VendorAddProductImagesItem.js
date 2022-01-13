@@ -17,7 +17,7 @@ const VendorAddProductImagesItem = ({
                 data-bs-target="#add-product-image-form"
             >
                 <i className="fas fa-plus-circle"></i>
-                <span className="res-hide ms-2">New Image</span>
+                <span className="res-hide ms-2">Add image</span>
             </button>
 
             {count < 6 && (

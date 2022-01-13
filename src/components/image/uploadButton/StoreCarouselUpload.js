@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { updateFeaturedImage, removeFeaturedImage } from '../../../apis/store';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
@@ -26,19 +26,16 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
         setIsLoading(true);
         updateFeaturedImage(_id, accessToken, formData, index, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('vendor', data.store);
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -59,19 +56,16 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
         setIsLoading(true);
         removeFeaturedImage(_id, accessToken, index, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('vendor', data.store);
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -83,11 +77,11 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Remove this featured photo"
+                    title="Remove featured photo"
                     onSubmit={onRemoveSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
@@ -134,7 +128,7 @@ const StoreCarouselUpload = ({ storeId = '', index = 0 }) => {
                     )}
                 </div>
             </div>
-        </Fragment>
+        </>
     );
 };
 

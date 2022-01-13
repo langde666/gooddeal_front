@@ -136,7 +136,9 @@ const AdminStoresTable = ({ heading = true, isActive = true }) => {
             {error && <Error msg={error} />}
             {isConfirming && (
                 <ConfirmDialog
-                    title={!activeStore.isActive ? 'License shop' : 'Ban shop'}
+                    title={
+                        !activeStore.isActive ? 'License store' : 'Ban store'
+                    }
                     color={!activeStore.isActive ? 'primary' : 'danger'}
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}

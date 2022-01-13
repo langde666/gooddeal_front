@@ -148,11 +148,12 @@ const MultiStyleValueSelector = ({
                                 </button>
                             ))}
 
-                            <span className="list-group-item d-flex justify-content-end">
+                            <span className="list-group-item">
                                 <AddValueStyleItem
                                     styleId={styleId}
                                     styleName={styleName}
                                     onRun={() => setRun(!run)}
+                                    isFullWidth={true}
                                 />
                             </span>
                         </div>

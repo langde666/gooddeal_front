@@ -1,8 +1,3 @@
-// const shields = {
-//     normal: '#C0C0C0',
-//     premium: '#FFD700',
-// };
-
 const StoreLevelLabel = ({ level = {}, detail = true }) => (
     <span className="position-relative d-inline-block">
         <span

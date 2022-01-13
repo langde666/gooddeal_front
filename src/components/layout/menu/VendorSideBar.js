@@ -115,17 +115,6 @@ const VendorSideBar = ({ user = {}, store = {} }) => {
                     </Link>
                 </li>
 
-                {/* <li className="nav-item">
-                    <Link
-                        to={`/vendor/gifts/${store._id}`}
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple cus-sidebar-item--funny link-funny ${path == 'gifts' ? 'active-funny' : ''
-                            }`}
-                    >
-                        <i className="fas fa-gift me-3"></i>
-                        Gift
-                    </Link>
-                </li> */}
-
                 <li className="nav-item">
                     <Link
                         to={`/vendor/GDCoins/${store._id}`}

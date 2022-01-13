@@ -25,6 +25,7 @@ const UserEditProfileForm = ({
     const [profile, setProfile] = useState({});
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
         setProfile({
@@ -105,26 +106,21 @@ const UserEditProfileForm = ({
         if (profile.phone) user.phone = profile.phone;
         if (profile.id_card) user.id_card = profile.id_card;
 
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateProfile(_id, accessToken, user)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     updateDispatch('account', data.user);
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setIsLoading(false);
@@ -136,7 +132,7 @@ const UserEditProfileForm = ({
     };
 
     return (
-        <div className="profile-edit-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -147,10 +143,7 @@ const UserEditProfileForm = ({
                 />
             )}
 
-            <form
-                className="profile-edit-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-6">
                     <Input
                         type="text"

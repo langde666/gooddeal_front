@@ -67,45 +67,41 @@ const ProfilePage = (props) => {
                     </div>
                 )}
 
-                <div className="d-flex justify-content-between align-items-center m-2">
-                    <div className="position-relative">
-                        <div className="cus-tooltip">
-                            <OpenCloseStoreButton
-                                storeId={store._id}
-                                isOpen={store.isOpen}
-                                className="btn-sm px-4"
-                                onRun={(store) => onHandleRun(store)}
-                            />
-                        </div>
-                        <small className="cus-tooltip-msg">
-                            {store.isOpen
-                                ? 'Click to close shop'
-                                : 'Click to open shop'}
-                        </small>
-                    </div>
-
-                    <div className="d-flex justify-content-end">
-                        <div className="me-1">
-                            <StoreAddFeaturedImageItem
-                                count={
-                                    store.featured_images &&
-                                    store.featured_images.length
-                                }
-                                storeId={store._id}
-                            />
+                <div className="d-flex justify-content-between align-items-center m-2 mb-4">
+                    <div className="d-flex justify-content-between align-items-start">
+                        <div className="position-relative me-2">
+                            <div className="cus-tooltip">
+                                <OpenCloseStoreButton
+                                    storeId={store._id}
+                                    isOpen={store.isOpen}
+                                    className="btn-sm px-4"
+                                    onRun={(store) => onHandleRun(store)}
+                                />
+                            </div>
+                            <small className="cus-tooltip-msg">
+                                {store.isOpen
+                                    ? 'Click to close store'
+                                    : 'Click to open store'}
+                            </small>
                         </div>
 
-                        <Link
-                            className="btn btn-outline-primary ripple btn-sm"
-                            to={`/store/${store._id}`}
-                            target="_blank"
-                        >
-                            <span className="me-1 res-hide">
-                                Visit Your Shop
-                            </span>
-                            <i className="fas fa-external-link-alt"></i>
-                        </Link>
+                        <StoreAddFeaturedImageItem
+                            count={
+                                store.featured_images &&
+                                store.featured_images.length
+                            }
+                            storeId={store._id}
+                        />
                     </div>
+
+                    <Link
+                        className="btn btn-outline-primary ripple btn-sm"
+                        to={`/store/${store._id}`}
+                        target="_blank"
+                    >
+                        <span className="me-2 res-hide">Visit Your Store</span>
+                        <i className="fas fa-external-link-alt"></i>
+                    </Link>
                 </div>
 
                 <div className="mt-1 d-none res-dis">

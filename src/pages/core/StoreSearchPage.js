@@ -33,18 +33,16 @@ const StoreSearchPage = (props) => {
         setIsLoading(true);
         getlistStores(filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
                     setListStores(data.stores);
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -73,7 +71,7 @@ const StoreSearchPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="store-search-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -81,7 +79,7 @@ const StoreSearchPage = (props) => {
                     <span className="me-3">{pagination.size || 0} results</span>
                 </div>
 
-                <div className="store-search-list row mt-3">
+                <div className="row mt-3">
                     {listStores &&
                         listStores.map((store, index) => (
                             <div

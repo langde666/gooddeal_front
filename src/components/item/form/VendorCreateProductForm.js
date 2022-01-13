@@ -46,6 +46,8 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
         isValidPromotionalPrice: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setNewProduct({
             ...newProduct,
@@ -116,8 +118,6 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         const formData = new FormData();
         formData.set('name', newProduct.name);
         formData.set('description', newProduct.description);
@@ -134,26 +134,18 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
         if (newProduct.image4) formData.set('image4', newProduct.image4);
         if (newProduct.image5) formData.set('image5', newProduct.image5);
 
-        // console.log(formData.values());
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createProduct(_id, accessToken, formData, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -169,7 +161,7 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this product"
+                    title="Create product"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
@@ -404,7 +396,6 @@ const VendorCreateProductForm = ({ storeId = '' }) => {
                         label="Choosed styles"
                         categoryId={newProduct.categoryId}
                         onSet={(styleValues) => {
-                            // console.log('createProduct: ', styleValues);
                             setNewProduct({
                                 ...newProduct,
                                 styleValueIds: styleValues.map(

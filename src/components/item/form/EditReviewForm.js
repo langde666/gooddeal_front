@@ -22,6 +22,8 @@ const EditReviewForm = ({ oldReview = {}, onRun }) => {
         isValidContent: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setNewReview({
             ...newReview,
@@ -62,35 +64,28 @@ const EditReviewForm = ({ oldReview = {}, onRun }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setSuccess('');
         setError('');
         setIsLoading(true);
         editReview(_id, accessToken, newReview, oldReview._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     if (onRun) onRun();
                 }
-
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-
-                setIsLoading(false);
             });
     };
 

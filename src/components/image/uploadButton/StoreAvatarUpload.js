@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { getToken } from '../../../apis/auth';
 import { updateAvatar } from '../../../apis/store';
 import useUpdateDispatch from '../../../hooks/useUpdateDispatch';
@@ -27,9 +27,7 @@ const StoreAvatarUpload = ({ storeId = '' }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    updateDispatch('vendor', data.store);
-                }
+                } else updateDispatch('vendor', data.store);
                 setIsLoading(false);
             })
             .catch((error) => {
@@ -42,7 +40,7 @@ const StoreAvatarUpload = ({ storeId = '' }) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             <label className="cus-avatar-icon">
                 <i className="fas fa-camera"></i>
@@ -58,7 +56,7 @@ const StoreAvatarUpload = ({ storeId = '' }) => {
                     onChange={handleChange}
                 />
             </label>
-        </Fragment>
+        </>
     );
 };
 

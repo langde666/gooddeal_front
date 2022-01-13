@@ -36,14 +36,11 @@ const VendorUpdateOrderStatusButton = ({
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    setIsLoading(false);
-                    if (onRun) onRun();
-                }
+                } else if (onRun) onRun();
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');

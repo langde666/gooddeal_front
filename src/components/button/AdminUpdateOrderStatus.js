@@ -31,14 +31,11 @@ const AdminUpdateOrderStatusButton = ({ orderId = '', status = '', onRun }) => {
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    setIsLoading(false);
-                    if (onRun) onRun();
-                }
+                } else if (onRun) onRun();
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -50,7 +47,7 @@ const AdminUpdateOrderStatusButton = ({ orderId = '', status = '', onRun }) => {
     };
 
     return (
-        <div className="user-cancel-order-button-wrap position-relative">
+        <div className="position-relative">
             {isLoading && <Loading />}
             {error && <Error msg={error} />}
             {isConfirming && (

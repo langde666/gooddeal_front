@@ -100,20 +100,6 @@ const AccountSideBar = ({ user = {} }) => {
                     </Link>
                 </li>
 
-                {/* {user.role == 'user' && (
-                    <li className="nav-item">
-                        <Link
-                            to="/account/giftWallet"
-                            className={`nav-link cus-sidebar-item cus-sidebar-item--funny ripple link-funny ${
-                                path == 'giftWallet' ? 'active-funny' : ''
-                            }`}
-                        >
-                            <i className="fas fa-gift me-3"></i>
-                            Gift wallet
-                        </Link>
-                    </li>
-                )} */}
-
                 {user.role == 'user' && (
                     <li className="nav-item">
                         <Link

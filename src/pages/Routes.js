@@ -30,7 +30,6 @@ import AccountProfilePage from './account/ProfilePage';
 import AccountAddressesPage from './account/AddressesPage';
 import AccountPurchasePage from './account/PurchasePage';
 import AccountFollowingPage from './account/FollowingPage';
-// import AccountGiftWalletPage from './account/GiftWalletPage';
 import AccountGDCoinsPage from './account/GDCoinsPage';
 import AccountStoreManagerPage from './account/StoreManagerPage';
 import AccountCreateStorePage from './account/CreateStorePage';
@@ -45,9 +44,7 @@ import VendorProductsPage from './vendor/ProductsPage';
 import VendorOrdersPage from './vendor/OrdersPage';
 import VendorOrderDetailPage from './vendor/OrderDetailPage';
 import VendorStaffsPage from './vendor/StaffsPage';
-// import VendorGiftsPage from './vendor/GiftsPage';
 import VendorGDCoinsPage from './vendor/GDCoinsPage';
-import VendorStyleValuePage from './vendor/StyleValuePage';
 import VendorCreateProductPage from './vendor/CreateProductPage';
 import VendorEditProductPage from './vendor/EditProductPage';
 //user
@@ -57,7 +54,6 @@ import UserAboutPage from './user/UserAboutPage';
 import StoreHomePage from './store/HomePage';
 import StoreAboutPage from './store/AboutPage';
 import StoreCollectionPage from './store/CollectionPage';
-// import StoreGiftPage from './store/GiftPage';
 import StoreReviewAndRatingPage from './store/ReviewAndRatingPage';
 //product
 import ProductDetailPage from './product/DetailPage';
@@ -66,6 +62,7 @@ const Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
+                {/* core */}
                 <Route path="/" exact component={HomePage} />
                 <Route
                     path="/products/search"
@@ -84,6 +81,7 @@ const Routes = () => {
                     component={CategoryPage}
                 />
 
+                {/* admin */}
                 <AdminRoute
                     path="/admin/dashboard"
                     exact
@@ -170,6 +168,7 @@ const Routes = () => {
                     component={AdminTransactionPage}
                 />
 
+                {/* account */}
                 <PrivateRoute
                     path="/account/profile"
                     exact
@@ -195,11 +194,6 @@ const Routes = () => {
                     exact
                     component={AccountFollowingPage}
                 />
-                {/* <PrivateRoute
-                    path="/account/giftWallet"
-                    exact
-                    component={AccountGiftWalletPage}
-                /> */}
                 <PrivateRoute
                     path="/account/GDCoins"
                     exact
@@ -227,6 +221,7 @@ const Routes = () => {
                     component={AccountChangePasswordPage}
                 />
 
+                {/* vendor */}
                 <PrivateRoute
                     path="/vendor/:storeId"
                     exact
@@ -253,11 +248,6 @@ const Routes = () => {
                     component={VendorEditProductPage}
                 />
                 <PrivateRoute
-                    path="/vendor/products/createNewStyleValue/:styleId/:storeId"
-                    exact
-                    component={VendorStyleValuePage}
-                />
-                <PrivateRoute
                     path="/vendor/orders/:storeId"
                     exact
                     component={VendorOrdersPage}
@@ -272,17 +262,13 @@ const Routes = () => {
                     exact
                     component={VendorStaffsPage}
                 />
-                {/* <PrivateRoute
-                    path="/vendor/gifts/:storeId"
-                    exact
-                    component={VendorGiftsPage}
-                /> */}
                 <PrivateRoute
                     path="/vendor/GDCoins/:storeId"
                     exact
                     component={VendorGDCoinsPage}
                 />
 
+                {/* user */}
                 <Route path="/user/:userId" exact component={UserHomePage} />
                 <Route
                     path="/user/about/:userId"
@@ -290,17 +276,13 @@ const Routes = () => {
                     component={UserAboutPage}
                 />
 
+                {/* store */}
                 <Route path="/store/:storeId" exact component={StoreHomePage} />
                 <Route
                     path="/store/collection/:storeId"
                     exact
                     component={StoreCollectionPage}
                 />
-                {/* <Route
-                    path="/store/gift/:storeId"
-                    exact
-                    component={StoreGiftPage}
-                /> */}
                 <Route
                     path="/store/review&rating/:storeId"
                     exact
@@ -311,6 +293,8 @@ const Routes = () => {
                     exact
                     component={StoreAboutPage}
                 />
+
+                {/* product */}
                 <Route
                     path="/product/:productId"
                     exact

@@ -21,6 +21,8 @@ const AdminEditValueStyleForm = ({ oldStyleValue = {}, onRun }) => {
         isValidName: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setNewValue({
             _id: oldStyleValue._id,
@@ -64,26 +66,21 @@ const AdminEditValueStyleForm = ({ oldStyleValue = {}, onRun }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateStyleValue(_id, accessToken, newValue._id, newValue)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     if (onRun) onRun();
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -95,7 +92,7 @@ const AdminEditValueStyleForm = ({ oldStyleValue = {}, onRun }) => {
     };
 
     return (
-        <div className="edit-value-style-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
@@ -106,10 +103,7 @@ const AdminEditValueStyleForm = ({ oldStyleValue = {}, onRun }) => {
                 />
             )}
 
-            <form
-                className="edit-value-style-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

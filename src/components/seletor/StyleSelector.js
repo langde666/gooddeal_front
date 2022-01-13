@@ -19,9 +19,8 @@ const StyleSelector = ({ defaultValue = '', categoryId = '', onSet }) => {
         setIsLoading(true);
         listStyleByCategory(categoryId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setStyles(data.styles);
                     if (data.styles.length <= 0)
                         setSuccess('This category does not have styles.');
@@ -50,8 +49,6 @@ const StyleSelector = ({ defaultValue = '', categoryId = '', onSet }) => {
     }, [defaultValue]);
 
     const handleSet = (olds, news) => {
-        // console.log(olds, news);
-
         let newArray = selectedStyleValues;
         let newValues = [];
         let flag = true;
@@ -83,7 +80,6 @@ const StyleSelector = ({ defaultValue = '', categoryId = '', onSet }) => {
         }
 
         setSelectedStyleValues(newArray);
-        // console.log('styleSelector: ', newArray);
         if (onSet) onSet(newArray);
     };
 

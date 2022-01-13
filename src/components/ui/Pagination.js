@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 const pages = (pageCurrent, pageCount) => {
     let topPages = [];
     let midPages = [];
@@ -64,7 +62,7 @@ const Pagination = ({
                     </button>
 
                     {!isSmall && (
-                        <Fragment>
+                        <>
                             {topPages.map((p) => (
                                 <button
                                     type="button"
@@ -132,7 +130,7 @@ const Pagination = ({
                                     {p}
                                 </button>
                             ))}
-                        </Fragment>
+                        </>
                     )}
 
                     <button

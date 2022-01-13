@@ -7,15 +7,15 @@ const StoreEditProfileItem = ({ store = {} }) => (
             type="button"
             className="btn btn-primary ripple cus-tooltip"
             data-bs-toggle="modal"
-            data-bs-target="#shop-profile-edit-form"
+            data-bs-target="#store-profile-edit-form"
         >
             <i className="fas fa-pen"></i>
         </button>
 
         <Modal
-            id="shop-profile-edit-form"
+            id="store-profile-edit-form"
             hasCloseBtn={false}
-            title="Edit Shop profile"
+            title="Edit Store profile"
         >
             <StoreEditProfileForm
                 storeId={store._id}
@@ -24,7 +24,7 @@ const StoreEditProfileItem = ({ store = {} }) => (
             />
         </Modal>
 
-        <small className="cus-tooltip-msg">Edit Shop Profile</small>
+        <small className="cus-tooltip-msg">Edit Store Profile</small>
     </div>
 );
 

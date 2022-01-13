@@ -91,17 +91,6 @@ const AdminSideBar = ({ user = {} }) => {
                     </Link>
                 </li>
 
-                {/* <li className="nav-item">
-                    <Link
-                        to={`/admin/brand`}
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple link-dark ${path === 'brand' ? 'active' : ''
-                            }`}
-                    >
-                        <i className="fas fa-copyright me-3"></i>
-                        Brand
-                    </Link>
-                </li> */}
-
                 <li className="nav-item">
                     <Link
                         to={`/admin/style`}
@@ -162,30 +151,6 @@ const AdminSideBar = ({ user = {} }) => {
                         <span className="ms-3 res-hide-xl">Delivery</span>
                     </Link>
                 </li>
-
-                {/* <li className="nav-item">
-                    <Link
-                        to="/admin/gifts"
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--db ripple cus-sidebar-item--funny link-funny ${
-                            path === 'gifts' ? 'active-funny' : ''
-                        }`}
-                    >
-                        <i className="fas fa-gift me-3"></i>
-                        Gifts
-                    </Link>
-                </li> */}
-
-                {/* <li className="nav-item">
-                    <Link
-                        to="/admin/GDCoin"
-                        className={`nav-link cus-sidebar-item cus-sidebar-item--db cus-sidebar-item--golden ripple link-golden ${
-                            path === 'GDCoin' ? 'active-golden' : ''
-                        }`}
-                    >
-                        <i className="fas fa-coins me-3"></i>
-                        GD coin
-                    </Link>
-                </li> */}
             </ul>
         </div>
     );

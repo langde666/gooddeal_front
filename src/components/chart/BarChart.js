@@ -39,18 +39,16 @@ const BarChart = ({
     }, [items, by, role, sliceEnd]);
 
     return (
-        <div className="bar-chart">
-            <Bar
-                data={data}
-                options={{
-                    legend: { display: false },
-                    title: {
-                        display: true,
-                        text: title,
-                    },
-                }}
-            />
-        </div>
+        <Bar
+            data={data}
+            options={{
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: title,
+                },
+            }}
+        />
     );
 };
 

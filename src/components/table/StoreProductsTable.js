@@ -51,18 +51,16 @@ const StoreProductsTable = ({
         setIsLoading(true);
         listProductsForManager(_id, accessToken, filter, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setProducts(data.products);
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -117,14 +115,11 @@ const StoreProductsTable = ({
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    setIsLoading(false);
-                    setRun(!run);
-                }
+                } else setRun(!run);
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -138,7 +133,7 @@ const StoreProductsTable = ({
     return (
         <div className="position-relative">
             {heading && (
-                <h4 className="mb-3">
+                <h4 className="text-center text-uppercase">
                     {isSelling ? 'Selling products' : 'Stored products'}
                 </h4>
             )}
@@ -149,8 +144,8 @@ const StoreProductsTable = ({
                 <ConfirmDialog
                     title={
                         sellingProduct.isSelling
-                            ? 'Store this product'
-                            : 'Sell this product'
+                            ? 'Store product'
+                            : 'Sell product'
                     }
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
@@ -158,7 +153,7 @@ const StoreProductsTable = ({
             )}
 
             <div className="d-flex justify-content-between align-items-end">
-                <div className="option-wrap d-flex align-items-center">
+                <div className="d-flex align-items-center">
                     <SearchInput onChange={handleChangeKeyword} />
 
                     {isSelling && (
@@ -168,7 +163,9 @@ const StoreProductsTable = ({
                             to={`/vendor/products/createNewProduct/${storeId}`}
                         >
                             <i className="fas fa-plus-circle"></i>
-                            <span className="ms-2 res-hide">New product</span>
+                            <span className="ms-2 res-hide">
+                                Create product
+                            </span>
                         </Link>
                     )}
                 </div>
@@ -178,7 +175,7 @@ const StoreProductsTable = ({
             </div>
 
             <div className="table-scroll my-2">
-                <table className="table align-middle table-hover table-bordered table-sm text-center">
+                <table className="table align-middle table-hover table-sm text-center">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -490,46 +487,44 @@ const StoreProductsTable = ({
                                 </td>
                                 <td>
                                     <div className="d-flex justify-content-center align-items-center">
-                                        <div className="position-relative d-inline-block me-2">
-                                            <button
-                                                type="button"
-                                                className={`btn btn-outline-${
-                                                    !product.isSelling
-                                                        ? 'primary'
-                                                        : 'secondary'
-                                                } ripple cus-tooltip`}
-                                                onClick={() =>
-                                                    handleSellingProduct(
-                                                        product,
-                                                    )
-                                                }
-                                            >
-                                                {!product.isSelling ? (
+                                        <button
+                                            type="button"
+                                            className={`btn btn-outline-${
+                                                !product.isSelling
+                                                    ? 'primary'
+                                                    : 'secondary'
+                                            } ripple me-2`}
+                                            onClick={() =>
+                                                handleSellingProduct(product)
+                                            }
+                                        >
+                                            {!product.isSelling ? (
+                                                <>
                                                     <i className="fas fa-box"></i>
-                                                ) : (
+                                                    <span className="ms-2 res-hide">
+                                                        Sell
+                                                    </span>
+                                                </>
+                                            ) : (
+                                                <>
                                                     <i className="fas fa-archive"></i>
-                                                )}
-                                            </button>
+                                                    <span className="ms-2 res-hide">
+                                                        Store
+                                                    </span>
+                                                </>
+                                            )}
+                                        </button>
 
-                                            <small className="cus-tooltip-msg">
-                                                {isSelling
-                                                    ? 'Store this product'
-                                                    : 'Sell this product'}
-                                            </small>
-                                        </div>
-
-                                        <div className="position-relative d-inline-block me-2">
-                                            <Link
-                                                type="button"
-                                                className="btn btn-primary ripple cus-tooltip"
-                                                to={`/vendor/products/editProduct/${product._id}/${storeId}`}
-                                            >
-                                                <i className="fas fa-pen"></i>
-                                            </Link>
-                                            <small className="cus-tooltip-msg">
-                                                Edit product
-                                            </small>
-                                        </div>
+                                        <Link
+                                            type="button"
+                                            className="btn btn-primary ripple"
+                                            to={`/vendor/products/editProduct/${product._id}/${storeId}`}
+                                        >
+                                            <i className="fas fa-pen"></i>
+                                            <span className="ms-2 res-hide">
+                                                Edit
+                                            </span>
+                                        </Link>
                                     </div>
                                 </td>
                             </tr>

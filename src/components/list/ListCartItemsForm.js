@@ -71,7 +71,6 @@ const ListCartItems = ({ cartId = '', storeId = '', userId = '', onRun }) => {
     };
 
     useEffect(() => {
-        // console.log('render');
         if (cartId) init();
     }, [cartId, storeId, userId, level, run]);
 

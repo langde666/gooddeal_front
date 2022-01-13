@@ -18,6 +18,7 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
     const [profile, setProfile] = useState({});
 
     const [updateDispatch] = useUpdateDispatch();
+    const { _id, accessToken } = getToken();
 
     useEffect(() => {
         setProfile({
@@ -51,27 +52,21 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
 
     const onSubmit = () => {
         let store = { name: profile.name, bio: profile.bio };
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateProfile(_id, accessToken, store, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
                     updateDispatch('vendor', data.store);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server error');
@@ -83,28 +78,25 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
     };
 
     return (
-        <div className="shop-profile-edit-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit shop profile"
+                    title="Edit store profile"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="shop-profile-edit-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"
-                        label="Shop name"
+                        label="Store name"
                         value={profile.name}
                         isValid={profile.isValidName}
-                        feedback="Please provide a valid shop name."
+                        feedback="Please provide a valid store name."
                         validator="name"
                         onChange={(value) =>
                             handleChange('name', 'isValidName', value)
@@ -118,10 +110,10 @@ const StoreEditProfileForm = ({ name = '', bio = '', storeId = '' }) => {
                 <div className="col-12">
                     <TextArea
                         type="text"
-                        label="Shop bio"
+                        label="Store bio"
                         value={profile.bio}
                         isValid={profile.isValidBio}
-                        feedback="Please provide a valid shop bio."
+                        feedback="Please provide a valid store bio."
                         validator="bio"
                         onChange={(value) =>
                             handleChange('bio', 'isValidBio', value)

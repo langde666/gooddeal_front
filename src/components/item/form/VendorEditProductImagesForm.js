@@ -26,7 +26,7 @@ const VendorEditProductImagesForm = ({ product = {}, storeId = '', onRun }) => {
                     />
                 </div>
 
-                <div className="col-12 px-4 mb-4 d-flex flex-wrap justify-content-start align-items-end">
+                <div className="col-12 px-4 my-4 d-flex flex-wrap justify-content-start align-items-end">
                     {product.listImages &&
                         product.listImages.map((img, index) => {
                             if (index === 0) return;

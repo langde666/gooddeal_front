@@ -28,18 +28,17 @@ const FollowProductButton = ({
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
-                        setIsLoading(false);
                         setTimeout(() => {
                             setError('');
                         }, 3000);
                     } else {
                         setFollowingFlag(true);
-                        setIsLoading(false);
                         if (onRun) {
                             data.product.isFollowing = true;
                             onRun(data.product);
                         }
                     }
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     setError('Server Error');
@@ -53,18 +52,17 @@ const FollowProductButton = ({
                 .then((data) => {
                     if (data.error) {
                         setError(data.error);
-                        setIsLoading(false);
                         setTimeout(() => {
                             setError('');
                         }, 3000);
                     } else {
                         setFollowingFlag(false);
-                        setIsLoading(false);
                         if (onRun) {
                             data.product.isFollowing = false;
                             onRun(data.product);
                         }
                     }
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     setError('Server Error');

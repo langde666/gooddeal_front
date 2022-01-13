@@ -13,11 +13,11 @@ const StoreLicenseLabel = ({ isActive = false, detail = true }) => (
         )}
         {isActive ? (
             <small className="cus-tooltip-msg">
-                This shop is licensed by GoodDeal!
+                This store is licensed by GoodDeal!
             </small>
         ) : (
             <small className="cus-tooltip-msg">
-                This shop is banned by GoodDeal, contact us for more
+                This store is banned by GoodDeal, contact us for more
                 information!
             </small>
         )}

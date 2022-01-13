@@ -25,9 +25,7 @@ const UserCoverUpload = (props) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    updateDispatch('account', data.user);
-                }
+                } else updateDispatch('account', data.user);
                 setIsLoading(false);
             })
             .catch((error) => {

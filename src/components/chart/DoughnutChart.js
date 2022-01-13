@@ -39,10 +39,7 @@ const DoughnutChart = ({
     }, [items, by, role, sliceEnd]);
 
     return (
-        <div
-            className="doughnut-chart"
-            style={{ width: '360px', maxWidth: '100%', margin: '0 auto' }}
-        >
+        <div style={{ width: '360px', maxWidth: '100%', margin: '0 auto' }}>
             <Doughnut
                 data={data}
                 options={{

@@ -1,4 +1,4 @@
-import { regexTest, numberTest } from '../../helper/test';
+import { regexTest } from '../../helper/test';
 
 const TextArea = ({
     onChange = () => {},

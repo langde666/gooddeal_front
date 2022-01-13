@@ -19,6 +19,8 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
 
     const [newProduct, setNewProduct] = useState({});
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setNewProduct({
             name: product.name,
@@ -107,8 +109,6 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         const formData = new FormData();
         formData.set('name', newProduct.name);
         formData.set('description', newProduct.description);
@@ -119,26 +119,18 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
         if (newProduct.styleValueIds && newProduct.styleValueIds.length > 0)
             formData.set('styleValueIds', newProduct.styleValueIds.join('|'));
 
-        console.log(formData.values());
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         updateProduct(_id, accessToken, formData, product._id, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setSuccess('');
+                    setError('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -154,7 +146,7 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
             {isloading && <Loading />}
             {isConfirming && (
                 <ConfirmDialog
-                    title="Edit this product information"
+                    title="Edit product information"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
@@ -291,7 +283,6 @@ const VendorEditProductProfileForm = ({ product = {}, storeId = '' }) => {
                         defaultValue={newProduct.defaultStyleValues}
                         categoryId={newProduct.categoryId}
                         onSet={(styleValues) => {
-                            // console.log('createProduct: ', styleValues);
                             setNewProduct({
                                 ...newProduct,
                                 styleValueIds: styleValues.map(

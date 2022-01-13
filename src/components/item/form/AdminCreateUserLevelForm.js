@@ -91,7 +91,6 @@ const AdminCreateUserLevelForm = ({ onRun = () => {} }) => {
                     });
                     if (onRun) onRun();
                 }
-
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');

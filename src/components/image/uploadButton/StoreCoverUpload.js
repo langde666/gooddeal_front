@@ -25,9 +25,7 @@ const StoreCoverUpload = ({ storeId = '' }) => {
                     setTimeout(() => {
                         setError('');
                     }, 3000);
-                } else {
-                    updateDispatch('vendor', data.store);
-                }
+                } else updateDispatch('vendor', data.store);
                 setIsLoading(false);
             })
             .catch((error) => {

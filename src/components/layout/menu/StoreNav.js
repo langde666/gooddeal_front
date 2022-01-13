@@ -41,16 +41,6 @@ const StoreNav = ({ store = {} }) => {
                                 Collection
                             </Link>
                         </li>
-                        {/* <li className="nav-item">
-                            <Link
-                                className={`nav-link ${
-                                    path === 'gift' ? 'active' : ''
-                                }`}
-                                to={`/store/gift/${store._id}`}
-                            >
-                                Gift
-                            </Link>
-                        </li> */}
                         <li className="nav-item">
                             <Link
                                 className={`nav-link ${

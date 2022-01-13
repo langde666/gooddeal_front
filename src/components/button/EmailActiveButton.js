@@ -24,19 +24,13 @@ const EmailActiveButton = ({
 
         sendConfirmationEmail(_id, accessToken)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
-                    setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
-                }
+                if (data.error) setError(data.error);
+                else setSuccess(data.success);
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Error server');

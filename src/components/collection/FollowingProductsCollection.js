@@ -48,7 +48,6 @@ const FollowingProductsCollection = (props) => {
     };
 
     useEffect(() => {
-        // console.log('render');
         init();
     }, [filter, run]);
 

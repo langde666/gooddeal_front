@@ -65,7 +65,6 @@ const AddToCartForm = ({ product = {} }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(cartItem);
         setIsConfirming(true);
     };
 
@@ -79,7 +78,6 @@ const AddToCartForm = ({ product = {} }) => {
             .then((data) => {
                 if (data.error) setError(data.error);
                 else {
-                    // console.log(data);
                     setSuccess(data.success);
                     updateDispatch('account', data.user);
                 }
@@ -99,7 +97,7 @@ const AddToCartForm = ({ product = {} }) => {
     };
 
     return (
-        <div className="add-to-cart-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (

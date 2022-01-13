@@ -24,6 +24,8 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
         isValidCost: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     const handleChange = (name, isValidName, value) => {
         setCommission({
             ...commission,
@@ -60,25 +62,15 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setError('');
         setSuccess('');
         setIsLoading(true);
         createCommission(_id, accessToken, commission)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
                     setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     setCommission({
                         name: '',
                         description: '',
@@ -89,6 +81,11 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
                     });
                     if (onRun) onRun();
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Sever error');
@@ -100,21 +97,18 @@ const AdminCreateCommissionForm = ({ onRun = () => {} }) => {
     };
 
     return (
-        <div className="create-commission-form-wrap position-relative">
+        <div className="position-relative">
             {isloading && <Loading />}
 
             {isConfirming && (
                 <ConfirmDialog
-                    title="Create this commission"
+                    title="Create commission"
                     onSubmit={onSubmit}
                     onClose={() => setIsConfirming(false)}
                 />
             )}
 
-            <form
-                className="create-commission-form row mb-2"
-                onSubmit={handleSubmit}
-            >
+            <form className="row mb-2" onSubmit={handleSubmit}>
                 <div className="col-12">
                     <Input
                         type="text"

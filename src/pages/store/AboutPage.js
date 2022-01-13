@@ -14,10 +14,7 @@ const AboutPage = (props) => {
         </MainLayout>
     ) : (
         <StoreLayout store={store}>
-            <div
-                className="store-about-page"
-                style={{ maxWidth: '990px', margin: '0 auto' }}
-            >
+            <div style={{ maxWidth: '990px', margin: '0 auto' }}>
                 <div className="mb-1 d-none res-dis">
                     <StoreLevelInfo store={store} border={false} />
                 </div>

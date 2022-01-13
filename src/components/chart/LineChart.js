@@ -38,21 +38,19 @@ const LineChart = ({
     }, [items, by, role, sliceEnd]);
 
     return (
-        <div className="line-chart">
-            <Line
-                data={data}
-                options={{
-                    title: {
-                        display: true,
-                        text: title,
-                    },
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                    },
-                }}
-            />
-        </div>
+        <Line
+            data={data}
+            options={{
+                title: {
+                    display: true,
+                    text: title,
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+            }}
+        />
     );
 };
 

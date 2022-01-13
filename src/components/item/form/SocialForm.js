@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { authsocial, setToken } from '../../../apis/auth';
 import { GoogleLogin } from 'react-google-login';
@@ -59,7 +59,7 @@ const SocialForm = (props) => {
     };
 
     return (
-        <Fragment>
+        <>
             {isloading && <Loading />}
             {error && (
                 <div className="col-12">
@@ -89,7 +89,7 @@ const SocialForm = (props) => {
             />
 
             <FacebookLogin
-                appId="1038015060349155"
+                appId={process.env.REACT_APP_FACEBOOK_APP_ID}
                 autoLoad
                 fields="name,email,picture"
                 onClick={onRequest}
@@ -108,7 +108,7 @@ const SocialForm = (props) => {
                     </button>
                 )}
             />
-        </Fragment>
+        </>
     );
 };
 

@@ -41,13 +41,13 @@ const ListHotStores = ({
     }, []);
 
     return (
-        <div className="categories-list-wrap position-relative">
+        <div className="position-relative">
             {heading && <h4>{heading}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
-            <div className="categories-list row mt-3">
+            <div className="row mt-3">
                 {stores &&
                     stores.map((store, index) => (
                         <div className={`${col} mb-4`} key={index}>

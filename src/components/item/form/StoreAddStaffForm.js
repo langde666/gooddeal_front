@@ -29,20 +29,16 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
     const init = () => {
         getlistUsers(filter)
             .then((data) => {
-                if (data.error) {
-                    return;
-                } else {
+                if (data.error) return;
+                else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
 
-                    if (filter.page == 1) {
-                        setListUsers(data.users);
-                    } else {
-                        setListUsers([...listUsers, ...data.users]);
-                    }
+                    if (filter.page == 1) setListUsers(data.users);
+                    else setListUsers([...listUsers, ...data.users]);
                 }
             })
             .catch((error) => {
@@ -114,21 +110,17 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
         setIsLoading(true);
         addStaffs(_id, accessToken, staffs, storeId)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setListRight([]);
                     updateDispatch('vendor', data.store);
                     setSuccess(data.success);
-                    setIsLoading(false);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                 }
+                setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -149,7 +141,7 @@ const StoreAddStaffsForm = ({ storeId = '', owner = {}, staffs = [] }) => {
                     title="Add staffs"
                     message={
                         <span>
-                            Are you sure you want to add to this shop: <br />
+                            Are you sure you want to add to this store: <br />
                             {listRight &&
                                 listRight.map((user, index) => (
                                     <span className="mt-2 d-block" key={index}>

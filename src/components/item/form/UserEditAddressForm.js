@@ -32,7 +32,6 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
     const { _id, accessToken } = getToken();
 
     useEffect(() => {
-        // console.log('render');
         setAddress({
             street: oldAddress.split(', ')[0],
             ward: oldAddress.split(', ')[1],
@@ -119,7 +118,6 @@ const UserEditAddressForm = ({ oldAddress = '', index = null }) => {
                     updateDispatch('account', data.user);
                     setSuccess(data.success);
                 }
-
                 setIsLoading(false);
                 setTimeout(() => {
                     setError('');

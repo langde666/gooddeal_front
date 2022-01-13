@@ -10,7 +10,7 @@ const StoreAddStaffItem = ({ storeId = '', owner = {}, staffs = [] }) => (
             data-bs-target="#add-staff-form"
         >
             <i className="fas fa-plus-circle"></i>
-            <span className="ms-2 res-hide">Add Staff</span>
+            <span className="ms-2 res-hide">Add staff</span>
         </button>
 
         <Modal id="add-staff-form" hasCloseBtn={false} title="Add new staff">

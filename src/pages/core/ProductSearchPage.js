@@ -36,18 +36,16 @@ const ProductSearchPage = (props) => {
         setIsLoading(true);
         listActiveProducts(filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
                     setListProducts(data.products);
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -76,7 +74,7 @@ const ProductSearchPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="product-search-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -87,7 +85,7 @@ const ProductSearchPage = (props) => {
                     </span>
                 </div>
 
-                <div className="product-search-list row mt-3">
+                <div className="row mt-3">
                     {listProducts &&
                         listProducts.map((product, index) => (
                             <div

@@ -40,18 +40,16 @@ const CollectionPage = (props) => {
         setIsLoading(true);
         listSellingProductsByStore(filter, store._id)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
                     setListProducts(data.products);
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -84,7 +82,7 @@ const CollectionPage = (props) => {
         </MainLayout>
     ) : (
         <StoreLayout store={store}>
-            <div className="store-collection-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -95,7 +93,7 @@ const CollectionPage = (props) => {
                     <span className="me-3">{pagination.size || 0} results</span>
                 </div>
 
-                <div className="product-search-list row mt-3">
+                <div className="row mt-3">
                     {listProducts &&
                         listProducts.map((product, index) => (
                             <div

@@ -45,13 +45,13 @@ const ListBestSellerProducts = ({
     }, [categoryId]);
 
     return (
-        <div className="products-list-wrap position-relative">
+        <div className="position-relative">
             {heading && <h4>{heading}</h4>}
 
             {isloading && <Loading />}
             {error && <Error msg={error} />}
 
-            <div className="products-list row mt-3">
+            <div className="row mt-3">
                 {products &&
                     products.map((product, index) => (
                         <div className={`${col} mb-4`} key={index}>

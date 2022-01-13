@@ -34,18 +34,16 @@ const UserSearchPage = (props) => {
 
         getlistUsers(filter)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setIsLoading(false);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setPagination({
                         size: data.size,
                         pageCurrent: data.filter.pageCurrent,
                         pageCount: data.filter.pageCount,
                     });
                     setListUsers(data.users);
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server Error');
@@ -74,7 +72,7 @@ const UserSearchPage = (props) => {
 
     return (
         <MainLayout>
-            <div className="user-search-page position-relative">
+            <div className="position-relative">
                 {isloading && <Loading />}
                 {error && <Error msg={error} />}
 
@@ -82,7 +80,7 @@ const UserSearchPage = (props) => {
                     <span className="me-3">{pagination.size || 0} results</span>
                 </div>
 
-                <div className="user-search-list row mt-3">
+                <div className="row mt-3">
                     {listUsers &&
                         listUsers.map((user, index) => (
                             <div

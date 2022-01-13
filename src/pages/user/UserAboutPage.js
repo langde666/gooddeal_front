@@ -8,10 +8,7 @@ const UserAboutPage = (props) => {
     const user = useSelector((state) => state.user.user);
     return (
         <UserLayout user={user}>
-            <div
-                className="user-about-page"
-                style={{ maxWidth: '990px', margin: '0 auto' }}
-            >
+            <div style={{ maxWidth: '990px', margin: '0 auto' }}>
                 <div className="mb-1 d-none res-dis">
                     <UserLevelInfo user={user} border={false} />
                 </div>

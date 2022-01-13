@@ -25,6 +25,8 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
         isValidContent: true,
     });
 
+    const { _id, accessToken } = getToken();
+
     useEffect(() => {
         setReview({
             ...review,
@@ -71,35 +73,28 @@ const ReviewForm = ({ storeId = '', orderId = '', productId = '', onRun }) => {
     };
 
     const onSubmit = () => {
-        const { _id, accessToken } = getToken();
-
         setSuccess('');
         setError('');
         setIsLoading(true);
         reviewProduct(_id, accessToken, review)
             .then((data) => {
-                if (data.error) {
-                    setError(data.error);
-                    setTimeout(() => {
-                        setError('');
-                    }, 3000);
-                } else {
+                if (data.error) setError(data.error);
+                else {
                     setSuccess(data.success);
-                    setTimeout(() => {
-                        setSuccess('');
-                    }, 3000);
                     if (onRun) onRun();
                 }
-
                 setIsLoading(false);
+                setTimeout(() => {
+                    setError('');
+                    setSuccess('');
+                }, 3000);
             })
             .catch((error) => {
                 setError('Server Error');
+                setIsLoading(false);
                 setTimeout(() => {
                     setError('');
                 }, 3000);
-
-                setIsLoading(false);
             });
     };
 

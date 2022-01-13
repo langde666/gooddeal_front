@@ -84,7 +84,6 @@ const SignupForm = ({ onSwap = () => {} }) => {
             .then((data) => {
                 if (data.error) {
                     setError(data.error);
-                    setIsLoading(false);
                 } else {
                     setAccount({
                         ...account,
@@ -94,8 +93,8 @@ const SignupForm = ({ onSwap = () => {} }) => {
                         password: '',
                     });
                     setSuccess(data.success);
-                    setIsLoading(false);
                 }
+                setIsLoading(false);
             })
             .catch((error) => {
                 setError('Server error!');

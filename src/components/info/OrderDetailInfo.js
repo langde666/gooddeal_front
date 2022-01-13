@@ -71,7 +71,6 @@ const OrderDetailInfo = ({
     };
 
     useEffect(() => {
-        // console.log('render');
         init();
     }, [orderId, storeId, by, run]);
 

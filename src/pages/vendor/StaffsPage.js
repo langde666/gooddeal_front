@@ -23,7 +23,7 @@ const StaffsPage = (props) => {
                         <i className="fas fa-user-friends"></i>
                     </button>
 
-                    <small className="cus-tooltip-msg">Shop staffs</small>
+                    <small className="cus-tooltip-msg">Store's staffs</small>
                 </div>
 
                 <div className="position-relative d-inline-block">
@@ -37,7 +37,7 @@ const StaffsPage = (props) => {
                         <i className="fas fa-user-shield"></i>
                     </button>
 
-                    <small className="cus-tooltip-msg">Shop owner</small>
+                    <small className="cus-tooltip-msg">Store's owner</small>
                 </div>
             </div>
 

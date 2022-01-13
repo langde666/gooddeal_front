@@ -31,8 +31,6 @@ const StyleValueSelector = ({
 
             if (flag) defaultList.push([value]);
         });
-
-        // console.log(defaultList);
         setValues(defaultList);
     };
 
@@ -41,7 +39,6 @@ const StyleValueSelector = ({
     }, [listValues]);
 
     useEffect(() => {
-        // console.log('render', defaultValue);
         setSelectedValues(defaultValue);
         if (onSet && defaultValue) onSet(defaultValue);
     }, [defaultValue]);
@@ -53,11 +50,8 @@ const StyleValueSelector = ({
             if (index !== -1) {
                 newArray.splice(index, 1);
                 newArray.push(newValue);
-            } else {
-                newArray.push(newValue);
-            }
+            } else newArray.push(newValue);
 
-            // console.log(newArray);
             setSelectedValues(newArray);
             if (onSet) onSet(newArray);
         }

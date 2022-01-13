@@ -54,7 +54,7 @@ const VendorEditProductForm = ({ storeId = '', productId = '' }) => {
                 />
             </div>
 
-            <div className="mb-4">
+            <div className="">
                 <Link
                     to={`/vendor/products/${storeId}`}
                     className="text-decoration-none cus-link-hover"
