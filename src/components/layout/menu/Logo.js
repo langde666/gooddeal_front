@@ -6,7 +6,7 @@ const Logo = ({ noBackground = false }) => (
             }`}
         >
             <span
-                className={`px-2 me-1 rounded-2 ${
+                className={`px-2 me-1b rounded-2 ${
                     !noBackground
                         ? 'bg-body text-primary'
                         : 'bg-primary text-white'

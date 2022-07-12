@@ -14,7 +14,7 @@ export const groupByDate = (items, by, role) => {
     return items
         .map((item) => {
             return {
-                amountToGD:
+                amount:
                     role === 'admin'
                         ? item.amountToGD.$numberDecimal
                         : item.amountToStore.$numberDecimal,
@@ -22,13 +22,21 @@ export const groupByDate = (items, by, role) => {
             };
         })
         .reduce((acc, value) => {
-            if (!acc[value.createdAt]) {
-                acc[value.createdAt] = 0;
+            let i = 0;
+            let flag = false;
+
+            while (i < acc.length) {
+                if (acc[i][0] == value.createdAt) {
+                    acc[i][1] = parseFloat(acc[i][1]) + parseFloat(value.amount);
+                    flag = true;
+                    i = acc.length;
+                }
+                else i++;
             }
 
-            acc[value.createdAt] += parseFloat(value.amountToGD);
+            if (!flag) acc.push([value.createdAt, value.amount]);
             return acc;
-        }, {});
+        }, []);
 };
 
 export const groupByJoined = (items, by) => {
@@ -38,19 +46,28 @@ export const groupByJoined = (items, by) => {
     if (by === 'year') formatFunc = formatYear;
 
     return items
+        .sort((a, b) => a.createdAt - b.createdAt)
         .map((item) => {
             return {
                 createdAt: formatFunc(item.createdAt),
             };
         })
         .reduce((acc, value) => {
-            if (!acc[value.createdAt]) {
-                acc[value.createdAt] = 0;
+            let i = 0;
+            let flag = false;
+
+            while (i < acc.length) {
+                if (acc[i][0] == value.createdAt) {
+                    acc[i][1] += 1;
+                    flag = true;
+                    i = acc.length;
+                }
+                else i++;
             }
 
-            acc[value.createdAt] += 1;
+            if (!flag) acc.push([value.createdAt, 1]);
             return acc;
-        }, {});
+        }, [])
 };
 
 export const groupBySold = (items, by, role, sliceEnd) => {
@@ -63,11 +80,19 @@ export const groupBySold = (items, by, role, sliceEnd) => {
             };
         })
         .reduce((acc, value) => {
-            if (!acc[value.name]) {
-                acc[value.name] = 0;
+            let i = 0;
+            let flag = false;
+
+            while (i < acc.length) {
+                if (acc[i][0] == value.name) {
+                    acc[i][1] = parseFloat(acc[i][1]) + parseFloat(value.sold);
+                    flag = true;
+                    i = acc.length;
+                }
+                else i++;
             }
 
-            acc[value.name] += parseFloat(value.sold);
+            if (!flag) acc.push([value.name, value.sold]);
             return acc;
-        }, {});
+        }, []);
 };

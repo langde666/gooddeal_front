@@ -21,10 +21,10 @@ const BarChart = ({
     const init = () => {
         const newData = groupBy(items, by, role, sliceEnd);
         setData({
-            labels: Object.keys(newData),
+            labels: newData.reduce((labels, currentData) => [...labels, currentData[0]], []),
             datasets: [
                 {
-                    data: Object.values(newData),
+                    data: newData.reduce((datas, currentData) => [...datas, currentData[1]], []),
                     label: title,
                     backgroundColor: randomColorsArray(
                         Object.values(newData).length,

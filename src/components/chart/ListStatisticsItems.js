@@ -102,7 +102,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
 
             setItems({
                 ...items,
-                order: orderData.orders,
+                order: orderData.orders.reverse(),
                 product: productData.products,
                 user: userData.users,
                 store: storeData.stores,
@@ -157,7 +157,7 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
 
             setItems({
                 ...items,
-                order: orderData.orders,
+                order: orderData.orders.reverse(),
                 product: productData.products,
             });
 
@@ -458,8 +458,9 @@ const ListStatisticsItems = ({ by = 'admin', storeId = '' }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {items[options.flag]
-                                        .slice(0, 6)
+                                    {((options.flag === 'order') ?
+                                        items[options.flag].slice(-6).reverse() :
+                                        items[options.flag].slice(0,6))
                                         .map((item, index) => (
                                             <tr key={index}>
                                                 <th scope="row">{index}</th>
