@@ -1,4 +1,4 @@
-## (SERVER) MERN STACK E-COMMERCE WEBSITE | AN E-COMMERCE EXCHANGE SYSTEM LIKE SHOPEE, TIKI
+## (CLIENT) MERN STACK E-COMMERCE WEBSITE | AN E-COMMERCE EXCHANGE SYSTEM LIKE SHOPEE, TIKI
 
 ### Source [Server](https://github.com/langde666/gooddeal) [Client](https://github.com/langde666/gooddeal_front) [App](https://github.com/langde666/gooddeal_app)
 ### Doc [Drive](https://drive.google.com/drive/folders/116zdlRDduq4NhTKdxk4soLIXoRWTy92R)
